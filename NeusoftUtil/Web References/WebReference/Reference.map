@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="file:///E:/VCPRO/环保内蒙联网/v122(通辽等地)/exhaustDetect(v1.0)(单机联网统一v170107)/exhaustDetect(广西昭平)/NeusoftUtil/bin/Debug/WebCtrlCenter.wsdl" filename="WebCtrlCenter.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

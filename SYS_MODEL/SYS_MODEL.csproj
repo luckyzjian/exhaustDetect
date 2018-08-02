@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E43A16D8-0BCA-42AB-B0DC-5D8FEE37958C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SYS_MODEL</RootNamespace>
+    <AssemblyName>SYS_MODEL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="compensationModel.cs" />
+    <Compile Include="ASM.cs" />
+    <Compile Include="VMASseconds.cs" />
+    <Compile Include="ASM_XZDB.cs" />
+    <Compile Include="BDB.cs" />
+    <Compile Include="BJCLXXB.cs" />
+    <Compile Include="BTGseconds.cs" />
+    <Compile Include="comModel.cs" />
+    <Compile Include="ZYJSseconds.cs" />
+    <Compile Include="postModel.cs" />
+    <Compile Include="staffModel.cs" />
+    <Compile Include="stationInfModel.cs" />
+    <Compile Include="stationModel.cs" />
+    <Compile Include="VMAS_XZDB.cs" />
+    <Compile Include="CLXHXXB.cs" />
+    <Compile Include="JCB.cs" />
+    <Compile Include="JCXGXXB.cs" />
+    <Compile Include="JCXXXB.cs" />
+    <Compile Include="JCZXXB.cs" />
+    <Compile Include="JZJS.cs" />
+    <Compile Include="JZJS_XZDB.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SBXXB.cs" />
+    <Compile Include="SDS.cs" />
+    <Compile Include="SDS_XZGB.cs" />
+    <Compile Include="SYSConfig.cs" />
+    <Compile Include="TDPZB.cs" />
+    <Compile Include="XTKXGCSB.cs" />
+    <Compile Include="XTYHB.cs" />
+    <Compile Include="XXXXB.cs" />
+    <Compile Include="YGB.cs" />
+    <Compile Include="ZWB.cs" />
+    <Compile Include="Zyjs_Btg.cs" />
+    <Compile Include="ZYJS_XZGB.cs" />
+    <Compile Include="VMAS.cs" />
+    <Compile Include="VMAS_XSGLZ.cs" />
+    <Compile Include="VMAS_JCXXB.cs" />
+    <Compile Include="JZJS_JCXXB.cs" />
+    <Compile Include="SDS_JCXXB.cs" />
+    <Compile Include="ZYJS_JCXXB.cs" />
+    <Compile Include="CARINF.cs" />
+    <Compile Include="CARATWAIT.cs" />
+    <Compile Include="CARDETECTED.cs" />
+    <Compile Include="loginInfModel.cs" />
+    <Compile Include="lineModel.cs" />
+    <Compile Include="shoufei.cs" />
+    <Compile Include="othersModel.cs" />
+    <Compile Include="lshModel.cs" />
+    <Compile Include="equipmentModel.cs" />
+    <Compile Include="BDSX.cs" />
+    <Compile Include="LINESBBD.cs" />
+    <Compile Include="ANALYSISMETER.cs" />
+    <Compile Include="FLOWMETER.cs" />
+    <Compile Include="GLIDE.cs" />
+    <Compile Include="INERTNESS.cs" />
+    <Compile Include="PARASITIC.cs" />
+    <Compile Include="VMAS_XZBZ.cs" />
+    <Compile Include="JZJS_XZBZ.cs" />
+    <Compile Include="JZJSseconds.cs" />
+    <Compile Include="SDSseconds.cs" />
+    <Compile Include="ASMseconds.cs" />
+    <Compile Include="selfcheckdata.cs" />
+    <Compile Include="设备自检信息.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

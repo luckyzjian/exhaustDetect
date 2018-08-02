@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDBF661A-E4F8-45A3-AA1F-F3CFD075587C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>safeLogin</RootNamespace>
+    <AssemblyName>safeLogin</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph">
+      <HintPath>F:\install\zedgraph_dll_v515\zedgraph_dll_v515\zedgraph_dll_v5.1.5\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="carDetectData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="carDetectData.Designer.cs">
+      <DependentUpon>carDetectData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="carLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="carLogin.Designer.cs">
+      <DependentUpon>carLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gongweiState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gongweiState.Designer.cs">
+      <DependentUpon>gongweiState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mainPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainPanel.Designer.cs">
+      <DependentUpon>mainPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GongWei.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GongWei.Designer.cs">
+      <DependentUpon>GongWei.cs</DependentUpon>
+    </Compile>
+    <Compile Include="staffLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="staffLogin.Designer.cs">
+      <DependentUpon>staffLogin.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="carDetectData.resx">
+      <DependentUpon>carDetectData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="carLogin.resx">
+      <DependentUpon>carLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gongweiState.resx">
+      <DependentUpon>gongweiState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainPanel.resx">
+      <DependentUpon>mainPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="GongWei.resx">
+      <DependentUpon>GongWei.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="staffLogin.resx">
+      <DependentUpon>staffLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\INIIO\INIIO.csproj">
+      <Project>{66AB13FC-AE00-42C8-B107-F375867E6363}</Project>
+      <Name>INIIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_DAL\SYS_DAL.csproj">
+      <Project>{0C158118-DD0C-42DC-9B67-EA3055AE46CF}</Project>
+      <Name>SYS_DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_MODEL\SYS_MODEL.csproj">
+      <Project>{E43A16D8-0BCA-42AB-B0DC-5D8FEE37958C}</Project>
+      <Name>SYS_MODEL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

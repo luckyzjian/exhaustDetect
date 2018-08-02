@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="wsInvokeInterface">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="KEY" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="JKID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="XML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="wsInvokeInterfaceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsInvokeInterfaceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="wsInvokeInterfaceSoapIn">
+    <wsdl:part name="parameters" element="tns:wsInvokeInterface" />
+  </wsdl:message>
+  <wsdl:message name="wsInvokeInterfaceSoapOut">
+    <wsdl:part name="parameters" element="tns:wsInvokeInterfaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="wsInvokeInterfaceHttpGetIn">
+    <wsdl:part name="KEY" type="s:string" />
+    <wsdl:part name="JKID" type="s:string" />
+    <wsdl:part name="XML" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wsInvokeInterfaceHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="wsInvokeInterfaceHttpPostIn">
+    <wsdl:part name="KEY" type="s:string" />
+    <wsdl:part name="JKID" type="s:string" />
+    <wsdl:part name="XML" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="wsInvokeInterfaceHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="ExternalAccessSoap">
+    <wsdl:operation name="wsInvokeInterface">
+      <wsdl:input message="tns:wsInvokeInterfaceSoapIn" />
+      <wsdl:output message="tns:wsInvokeInterfaceSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ExternalAccessHttpGet">
+    <wsdl:operation name="wsInvokeInterface">
+      <wsdl:input message="tns:wsInvokeInterfaceHttpGetIn" />
+      <wsdl:output message="tns:wsInvokeInterfaceHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ExternalAccessHttpPost">
+    <wsdl:operation name="wsInvokeInterface">
+      <wsdl:input message="tns:wsInvokeInterfaceHttpPostIn" />
+      <wsdl:output message="tns:wsInvokeInterfaceHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExternalAccessSoap" type="tns:ExternalAccessSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wsInvokeInterface">
+      <soap:operation soapAction="http://tempuri.org/wsInvokeInterface" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExternalAccessSoap12" type="tns:ExternalAccessSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="wsInvokeInterface">
+      <soap12:operation soapAction="http://tempuri.org/wsInvokeInterface" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExternalAccessHttpGet" type="tns:ExternalAccessHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="wsInvokeInterface">
+      <http:operation location="/wsInvokeInterface" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExternalAccessHttpPost" type="tns:ExternalAccessHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="wsInvokeInterface">
+      <http:operation location="/wsInvokeInterface" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExternalAccess">
+    <wsdl:port name="ExternalAccessSoap" binding="tns:ExternalAccessSoap">
+      <soap:address location="http://192.168.1.230/jcz_jk/ExternalAccess.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExternalAccessSoap12" binding="tns:ExternalAccessSoap12">
+      <soap12:address location="http://192.168.1.230/jcz_jk/ExternalAccess.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExternalAccessHttpGet" binding="tns:ExternalAccessHttpGet">
+      <http:address location="http://192.168.1.230/jcz_jk/ExternalAccess.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExternalAccessHttpPost" binding="tns:ExternalAccessHttpPost">
+      <http:address location="http://192.168.1.230/jcz_jk/ExternalAccess.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DFF2F804-0F3D-447A-8354-DF1DFBBAFE51}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>exhaustDetect</RootNamespace>
+    <AssemblyName>exhaustDetect</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>main.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=8.2.0.2, Culture=neutral, PublicKeyToken=5fd520d36328f741, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JxWebClient\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="carLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="carLogin.designer.cs">
+      <DependentUpon>carLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="chartViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chartViewer.Designer.cs">
+      <DependentUpon>chartViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataQuery.Designer.cs">
+      <DependentUpon>dataQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataSecondsViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataSecondsViewer.Designer.cs">
+      <DependentUpon>dataSecondsViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetASMDATASECONDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetASMDATASECONDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetSDSDATASECONDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetSDSDATASECONDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetStaff1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetStaff.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="demarcateItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="demarcateItems.Designer.cs">
+      <DependentUpon>demarcateItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DriverShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DriverShow.Designer.cs">
+      <DependentUpon>DriverShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="hyDatabaseInter.cs" />
+    <Compile Include="lineEquipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="lineEquipment.Designer.cs">
+      <DependentUpon>lineEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lineState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="lineState.Designer.cs">
+      <DependentUpon>lineState.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mainPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainPanel.designer.cs">
+      <DependentUpon>mainPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="printer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="printer.Designer.cs">
+      <DependentUpon>printer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reportViewLz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewLz.designer.cs">
+      <DependentUpon>reportViewLz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewVmas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewVmas.Designer.cs">
+      <DependentUpon>reportViewVmas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="staffLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="staffLogin.designer.cs">
+      <DependentUpon>staffLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="startTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="startTest.Designer.cs">
+      <DependentUpon>startTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewVmasBefore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewVmasBefore.Designer.cs">
+      <DependentUpon>reportViewVmasBefore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="stationConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="stationConfig.Designer.cs">
+      <DependentUpon>stationConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="systemConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="systemConfig.Designer.cs">
+      <DependentUpon>systemConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewJzjs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewJzjs.Designer.cs">
+      <DependentUpon>reportViewJzjs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewZyjs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewZyjs.Designer.cs">
+      <DependentUpon>reportViewZyjs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewSds.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewSds.Designer.cs">
+      <DependentUpon>reportViewSds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewSdsCH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewSdsCH.Designer.cs">
+      <DependentUpon>reportViewSdsCH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="startdemarcate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="startdemarcate.Designer.cs">
+      <DependentUpon>startdemarcate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewASM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewASM.Designer.cs">
+      <DependentUpon>reportViewASM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="startSelfCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="startSelfCheck.Designer.cs">
+      <DependentUpon>startSelfCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reportViewSelfCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportViewSelfCheck.Designer.cs">
+      <DependentUpon>reportViewSelfCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebThread.cs" />
+    <Compile Include="XNCarLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XNCarLogin.Designer.cs">
+      <DependentUpon>XNCarLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="检测线配置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="检测线配置.Designer.cs">
+      <DependentUpon>检测线配置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="过程数据查看.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="过程数据查看.Designer.cs">
+      <DependentUpon>过程数据查看.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="carLogin.resx">
+      <DependentUpon>carLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="chartViewer.resx">
+      <DependentUpon>chartViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataQuery.resx">
+      <DependentUpon>dataQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataSecondsViewer.resx">
+      <DependentUpon>dataSecondsViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="demarcateItems.resx">
+      <DependentUpon>demarcateItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DriverShow.resx">
+      <DependentUpon>DriverShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lineEquipment.resx">
+      <DependentUpon>lineEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lineState.resx">
+      <DependentUpon>lineState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainPanel.resx">
+      <DependentUpon>mainPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="printer.resx">
+      <DependentUpon>printer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ReportStaff.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportVmasDataseconds.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportAsmDataseconds.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportZyjsDataseconds.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportSdsDataseconds.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportJzjsDataseconds.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportBDAsm.rdlc" />
+    <EmbeddedResource Include="ReportBDJzjs.rdlc" />
+    <EmbeddedResource Include="ReportBDLz.rdlc" />
+    <EmbeddedResource Include="ReportBDSds.rdlc" />
+    <EmbeddedResource Include="ReportBDZyjs.rdlc" />
+    <EmbeddedResource Include="ReportStatistic.rdlc" />
+    <EmbeddedResource Include="ReportStatistics.rdlc" />
+    <EmbeddedResource Include="reportViewLz.resx">
+      <DependentUpon>reportViewLz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportVmas.rdlc" />
+    <EmbeddedResource Include="reportViewVmas.resx">
+      <DependentUpon>reportViewVmas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="staffLogin.resx">
+      <DependentUpon>staffLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="startTest.resx">
+      <DependentUpon>startTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportVmasBefore.rdlc" />
+    <EmbeddedResource Include="reportViewVmasBefore.resx">
+      <DependentUpon>reportViewVmasBefore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="stationConfig.resx">
+      <DependentUpon>stationConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="systemConfig.resx">
+      <DependentUpon>systemConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportZyjs.rdlc" />
+    <EmbeddedResource Include="ReportJzjs.rdlc" />
+    <EmbeddedResource Include="ReportSds.rdlc" />
+    <EmbeddedResource Include="ReportSdsCH.rdlc" />
+    <EmbeddedResource Include="reportViewJzjs.resx">
+      <DependentUpon>reportViewJzjs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportViewZyjs.resx">
+      <DependentUpon>reportViewZyjs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportViewSds.resx">
+      <DependentUpon>reportViewSds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportViewSdsCH.resx">
+      <DependentUpon>reportViewSdsCH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="startdemarcate.resx">
+      <DependentUpon>startdemarcate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportAsm.rdlc" />
+    <EmbeddedResource Include="reportViewASM.resx">
+      <DependentUpon>reportViewASM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="startSelfCheck.resx">
+      <DependentUpon>startSelfCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportViewSelfCheck.resx">
+      <DependentUpon>reportViewSelfCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportSelfCheckData.rdlc" />
+    <EmbeddedResource Include="XNCarLogin.resx">
+      <DependentUpon>XNCarLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="检测线配置.resx">
+      <DependentUpon>检测线配置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="过程数据查看.resx">
+      <DependentUpon>过程数据查看.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="DataSetASMDATASECONDS.xsc">
+      <DependentUpon>DataSetASMDATASECONDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetASMDATASECONDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetASMDATASECONDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetASMDATASECONDS.xss">
+      <DependentUpon>DataSetASMDATASECONDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetSDSDATASECONDS.xsc">
+      <DependentUpon>DataSetSDSDATASECONDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetSDSDATASECONDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetSDSDATASECONDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetSDSDATASECONDS.xss">
+      <DependentUpon>DataSetSDSDATASECONDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetStaff.xsc">
+      <DependentUpon>DataSetStaff.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetStaff.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetStaff1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSetStaff.xss">
+      <DependentUpon>DataSetStaff.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AhWebClient\AhWebClient.csproj">
+      <Project>{a46658b7-5314-48a9-8694-5939178aec4a}</Project>
+      <Name>AhWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapturePicture\CapturePicture.csproj">
+      <Project>{fb5e5673-dd05-4fde-aedf-513c0dae0f61}</Project>
+      <Name>CapturePicture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\carinfor\carinfor.csproj">
+      <Project>{82414900-9F68-46FC-B559-D204A1B839F1}</Project>
+      <Name>carinfor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSVcontrol\CSVcontrol.csproj">
+      <Project>{E17C9A82-FEB1-45D1-9577-9E301B645950}</Project>
+      <Name>CSVcontrol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DlWebClient\DlWebClient.csproj">
+      <Project>{1c8e0f8e-d965-4f11-8b3a-a17f00c185cb}</Project>
+      <Name>DlWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dynamometer\Dynamometer.csproj">
+      <Project>{7a9cbaba-8772-4613-a7eb-1e69eab7180c}</Project>
+      <Name>Dynamometer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EzWebClient\EzWebClient.csproj">
+      <Project>{9451bfd1-044f-416e-b45c-79283022d5f3}</Project>
+      <Name>EzWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GxWebClient\GxWebClient.csproj">
+      <Project>{eba4aefe-778a-4222-87c4-d7fa1184b7ec}</Project>
+      <Name>GxWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HhzWebClient\HhzWebClient\HhzWebClient.csproj">
+      <Project>{1a9e21ec-475c-4b1e-9c25-a8433a4207a7}</Project>
+      <Name>HhzWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HnWebClient\HnWebClient.csproj">
+      <Project>{f664d01f-8a52-4144-b425-66d6ea03f7a9}</Project>
+      <Name>HnWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\INIIO\INIIO.csproj">
+      <Project>{66AB13FC-AE00-42C8-B107-F375867E6363}</Project>
+      <Name>INIIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JHWebClient\JHWebClient\JHWebClient.csproj">
+      <Project>{8fb41111-2ef7-491c-9289-e6e3bf7a1516}</Project>
+      <Name>JHWebClient</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\JxWebClient\JxWebClient.csproj">
+      <Project>{339780ea-a82c-482a-8f18-d965e9b86ac1}</Project>
+      <Name>JxWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeusoftUtil\NeusoftUtil.csproj">
+      <Project>{005be518-28ef-4d7e-9fcb-0a8a3ff4e3a4}</Project>
+      <Name>NeusoftUtil</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NhWebClient\NhWebClient.csproj">
+      <Project>{e4e9bd5c-80d5-4778-8993-0446a5d45227}</Project>
+      <Name>NhWebClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_DAL\SYS_DAL.csproj">
+      <Project>{0C158118-DD0C-42DC-9B67-EA3055AE46CF}</Project>
+      <Name>SYS_DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_MODEL\SYS_MODEL.csproj">
+      <Project>{E43A16D8-0BCA-42AB-B0DC-5D8FEE37958C}</Project>
+      <Name>SYS_MODEL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VIDEOapi\VIDEOapi.csproj">
+      <Project>{C397E411-8595-463D-BF67-6CC66363B467}</Project>
+      <Name>VIDEOapi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YichangInter\YichangInter.csproj">
+      <Project>{110b17e0-d7d3-4567-ac0f-c661e0c6f2ba}</Project>
+      <Name>YichangInter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\中科宇图启动端\中科宇图启动端.csproj">
+      <Project>{0e2ab692-702a-4759-bcc7-9d5108216d93}</Project>
+      <Name>中科宇图启动端</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

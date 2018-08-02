@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{82414900-9F68-46FC-B559-D204A1B839F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>carinfor</RootNamespace>
+    <AssemblyName>carinfor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bzglide.cs" />
+    <Compile Include="carIni.cs" />
+    <Compile Include="configInf.cs" />
+    <Compile Include="demacatefqy.cs" />
+    <Compile Include="Gb2312Encoding.cs" />
+    <Compile Include="Gb2312toUnicodeDictinary.cs" />
+    <Compile Include="inertness.cs" />
+    <Compile Include="jsSocketControl.cs" />
+    <Compile Include="jzjsData.cs" />
+    <Compile Include="jzjsDataSeconds.cs" />
+    <Compile Include="limitdata.cs" />
+    <Compile Include="NetControl.cs" />
+    <Compile Include="ortSocketControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="selfCheckdata.cs" />
+    <Compile Include="Smokemeter.cs" />
+    <Compile Include="SocketControlNn.cs" />
+    <Compile Include="systimeControl.cs" />
+    <Compile Include="temperatureCal.cs" />
+    <Compile Include="TyNetDictionary.cs" />
+    <Compile Include="vmasdata.cs" />
+    <Compile Include="vmasDataSeconds.cs" />
+    <Compile Include="sdsData.cs" />
+    <Compile Include="sdsDataSeconds.cs" />
+    <Compile Include="wanguoSocketControl.cs" />
+    <Compile Include="xysjData.cs" />
+    <Compile Include="zyjsBtgData.cs" />
+    <Compile Include="glide.cs" />
+    <Compile Include="AnalysisMeter.cs" />
+    <Compile Include="fqyconfigInf.cs" />
+    <Compile Include="yureconfigInf.cs" />
+    <Compile Include="Flowmeter.cs" />
+    <Compile Include="asmdata.cs" />
+    <Compile Include="SocketControl.cs" />
+    <Compile Include="statusconfigInf.cs" />
+    <Compile Include="workLogData.cs" />
+    <Compile Include="chenChuangSocketControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSVcontrol\CSVcontrol.csproj">
+      <Project>{E17C9A82-FEB1-45D1-9577-9E301B645950}</Project>
+      <Name>CSVcontrol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\INIIO\INIIO.csproj">
+      <Project>{66AB13FC-AE00-42C8-B107-F375867E6363}</Project>
+      <Name>INIIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_MODEL\SYS_MODEL.csproj">
+      <Project>{e43a16d8-0bca-42ab-b0dc-5d8fee37958c}</Project>
+      <Name>SYS_MODEL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="parasitic.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="LineClient">
+      <Guid>{8B3A7B3A-A6E3-4970-8D6C-2554AAE6E636}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

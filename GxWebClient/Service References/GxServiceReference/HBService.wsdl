@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="QueryObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xtlb" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="jkid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDoc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="yhdh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mm" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryObjectResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="WriteObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xtlb" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="jkid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlDoc" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="yhdh" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mm" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="WriteObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="WriteObjectResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryObject" />
+  </wsdl:message>
+  <wsdl:message name="QueryObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:WriteObject" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:WriteObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueryObjectHttpGetIn">
+    <wsdl:part name="xtlb" type="s:string" />
+    <wsdl:part name="jkid" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="yhdh" type="s:string" />
+    <wsdl:part name="mm" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="QueryObjectHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectHttpGetIn">
+    <wsdl:part name="xtlb" type="s:string" />
+    <wsdl:part name="jkid" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="yhdh" type="s:string" />
+    <wsdl:part name="mm" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="QueryObjectHttpPostIn">
+    <wsdl:part name="xtlb" type="s:string" />
+    <wsdl:part name="jkid" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="yhdh" type="s:string" />
+    <wsdl:part name="mm" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="QueryObjectHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectHttpPostIn">
+    <wsdl:part name="xtlb" type="s:string" />
+    <wsdl:part name="jkid" type="s:string" />
+    <wsdl:part name="xmlDoc" type="s:string" />
+    <wsdl:part name="yhdh" type="s:string" />
+    <wsdl:part name="mm" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="WriteObjectHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="HBServiceSoap">
+    <wsdl:operation name="QueryObject">
+      <wsdl:input message="tns:QueryObjectSoapIn" />
+      <wsdl:output message="tns:QueryObjectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <wsdl:input message="tns:WriteObjectSoapIn" />
+      <wsdl:output message="tns:WriteObjectSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="HBServiceHttpGet">
+    <wsdl:operation name="QueryObject">
+      <wsdl:input message="tns:QueryObjectHttpGetIn" />
+      <wsdl:output message="tns:QueryObjectHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <wsdl:input message="tns:WriteObjectHttpGetIn" />
+      <wsdl:output message="tns:WriteObjectHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="HBServiceHttpPost">
+    <wsdl:operation name="QueryObject">
+      <wsdl:input message="tns:QueryObjectHttpPostIn" />
+      <wsdl:output message="tns:QueryObjectHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <wsdl:input message="tns:WriteObjectHttpPostIn" />
+      <wsdl:output message="tns:WriteObjectHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HBServiceSoap" type="tns:HBServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryObject">
+      <soap:operation soapAction="http://tempuri.org/QueryObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <soap:operation soapAction="http://tempuri.org/WriteObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HBServiceSoap12" type="tns:HBServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryObject">
+      <soap12:operation soapAction="http://tempuri.org/QueryObject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <soap12:operation soapAction="http://tempuri.org/WriteObject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HBServiceHttpGet" type="tns:HBServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="QueryObject">
+      <http:operation location="/QueryObject" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <http:operation location="/WriteObject" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HBServiceHttpPost" type="tns:HBServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="QueryObject">
+      <http:operation location="/QueryObject" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteObject">
+      <http:operation location="/WriteObject" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HBService">
+    <wsdl:port name="HBServiceSoap" binding="tns:HBServiceSoap">
+      <soap:address location="http://192.168.16.2:9903/HBService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HBServiceSoap12" binding="tns:HBServiceSoap12">
+      <soap12:address location="http://192.168.16.2:9903/HBService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HBServiceHttpGet" binding="tns:HBServiceHttpGet">
+      <http:address location="http://192.168.16.2:9903/HBService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HBServiceHttpPost" binding="tns:HBServiceHttpPost">
+      <http:address location="http://192.168.16.2:9903/HBService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

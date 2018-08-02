@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetTimeResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RetVal">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetVehicleList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVehicleListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetVehicleListResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVehicleInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVehicleInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetVehicleInfoResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VehicleInspection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VehicleInspectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="VehicleInspectionResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VehicleInspectionCancel">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VehicleInspectionCancelResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="VehicleInspectionCancelResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartTest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartTestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="StartTestResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TakePhoto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TakePhotoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TakePhotoResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopTest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopTestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="StopTestResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAppearanceData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAppearanceDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAppearanceDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAppearancePhoto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="photo" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAppearancePhotoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAppearancePhotoResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadASMData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadASMDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadASMDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadVMASData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadVMASDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadVMASDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadLUGDOWNData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadLUGDOWNDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadLUGDOWNDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDISData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDISDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDISDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFAOPAData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFAOPADataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadFAOPADataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFASMOData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFASMODataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadFASMODataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAVFSUData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAVFSUDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAVFSUDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadMISData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadMISDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadMISDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadMDISData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadMDISDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadMDISDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynConstLoadData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynConstLoadDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDynConstLoadDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynPLHPData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynPLHPDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDynPLHPDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynForceCalData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynForceCalDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDynForceCalDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynForceChkData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynForceChkDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDynForceChkDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaGasCalData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaGasCalDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAnaGasCalDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaGasChkLoadData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaGasChkLoadDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAnaGasChkLoadDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadOpaChkLoadData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadOpaChkLoadDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadOpaChkLoadDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadSmoChkLoadData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadSmoChkLoadDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadSmoChkLoadDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFloFluxChkLoadData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFloFluxChkLoadDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadFloFluxChkLoadDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynSelfTestData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadDynSelfTestDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadDynSelfTestDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaSelfTestData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadAnaSelfTestDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadAnaSelfTestDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadOpaSelfTestData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadOpaSelfTestDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadOpaSelfTestDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFloSelfTestData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadFloSelfTestDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadFloSelfTestDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadTacSelfTestData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadTacSelfTestDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadTacSelfTestDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadEleEnvData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadEleEnvDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadEleEnvDataResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadEquipmentStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UploadEquipmentStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UploadEquipmentStatusResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SystemRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SystemRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SystemRequestResult" type="tns:RetVal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTime" />
+  </wsdl:message>
+  <wsdl:message name="GetTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVehicleListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVehicleList" />
+  </wsdl:message>
+  <wsdl:message name="GetVehicleListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVehicleListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetVehicleInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVehicleInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetVehicleInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVehicleInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="VehicleInspectionSoapIn">
+    <wsdl:part name="parameters" element="tns:VehicleInspection" />
+  </wsdl:message>
+  <wsdl:message name="VehicleInspectionSoapOut">
+    <wsdl:part name="parameters" element="tns:VehicleInspectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="VehicleInspectionCancelSoapIn">
+    <wsdl:part name="parameters" element="tns:VehicleInspectionCancel" />
+  </wsdl:message>
+  <wsdl:message name="VehicleInspectionCancelSoapOut">
+    <wsdl:part name="parameters" element="tns:VehicleInspectionCancelResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartTestSoapIn">
+    <wsdl:part name="parameters" element="tns:StartTest" />
+  </wsdl:message>
+  <wsdl:message name="StartTestSoapOut">
+    <wsdl:part name="parameters" element="tns:StartTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="TakePhotoSoapIn">
+    <wsdl:part name="parameters" element="tns:TakePhoto" />
+  </wsdl:message>
+  <wsdl:message name="TakePhotoSoapOut">
+    <wsdl:part name="parameters" element="tns:TakePhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="StopTestSoapIn">
+    <wsdl:part name="parameters" element="tns:StopTest" />
+  </wsdl:message>
+  <wsdl:message name="StopTestSoapOut">
+    <wsdl:part name="parameters" element="tns:StopTestResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAppearanceDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAppearanceData" />
+  </wsdl:message>
+  <wsdl:message name="UploadAppearanceDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAppearanceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAppearancePhotoSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAppearancePhoto" />
+  </wsdl:message>
+  <wsdl:message name="UploadAppearancePhotoSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAppearancePhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadASMDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadASMData" />
+  </wsdl:message>
+  <wsdl:message name="UploadASMDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadASMDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadVMASDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadVMASData" />
+  </wsdl:message>
+  <wsdl:message name="UploadVMASDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadVMASDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadLUGDOWNDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadLUGDOWNData" />
+  </wsdl:message>
+  <wsdl:message name="UploadLUGDOWNDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadLUGDOWNDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDISDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDISData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDISDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDISDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFAOPADataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFAOPAData" />
+  </wsdl:message>
+  <wsdl:message name="UploadFAOPADataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFAOPADataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFASMODataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFASMOData" />
+  </wsdl:message>
+  <wsdl:message name="UploadFASMODataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFASMODataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAVFSUDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAVFSUData" />
+  </wsdl:message>
+  <wsdl:message name="UploadAVFSUDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAVFSUDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadMISDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadMISData" />
+  </wsdl:message>
+  <wsdl:message name="UploadMISDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadMISDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadMDISDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadMDISData" />
+  </wsdl:message>
+  <wsdl:message name="UploadMDISDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadMDISDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynConstLoadDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDynConstLoadData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynConstLoadDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDynConstLoadDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynPLHPDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDynPLHPData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynPLHPDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDynPLHPDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynForceCalDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDynForceCalData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynForceCalDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDynForceCalDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynForceChkDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDynForceChkData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynForceChkDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDynForceChkDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaGasCalDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAnaGasCalData" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaGasCalDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAnaGasCalDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaGasChkLoadDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAnaGasChkLoadData" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaGasChkLoadDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAnaGasChkLoadDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadOpaChkLoadDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadOpaChkLoadData" />
+  </wsdl:message>
+  <wsdl:message name="UploadOpaChkLoadDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadOpaChkLoadDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadSmoChkLoadDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadSmoChkLoadData" />
+  </wsdl:message>
+  <wsdl:message name="UploadSmoChkLoadDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadSmoChkLoadDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFloFluxChkLoadDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFloFluxChkLoadData" />
+  </wsdl:message>
+  <wsdl:message name="UploadFloFluxChkLoadDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFloFluxChkLoadDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynSelfTestDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadDynSelfTestData" />
+  </wsdl:message>
+  <wsdl:message name="UploadDynSelfTestDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadDynSelfTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaSelfTestDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadAnaSelfTestData" />
+  </wsdl:message>
+  <wsdl:message name="UploadAnaSelfTestDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadAnaSelfTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadOpaSelfTestDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadOpaSelfTestData" />
+  </wsdl:message>
+  <wsdl:message name="UploadOpaSelfTestDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadOpaSelfTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadFloSelfTestDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadFloSelfTestData" />
+  </wsdl:message>
+  <wsdl:message name="UploadFloSelfTestDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadFloSelfTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadTacSelfTestDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadTacSelfTestData" />
+  </wsdl:message>
+  <wsdl:message name="UploadTacSelfTestDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadTacSelfTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadEleEnvDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadEleEnvData" />
+  </wsdl:message>
+  <wsdl:message name="UploadEleEnvDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadEleEnvDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadEquipmentStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:UploadEquipmentStatus" />
+  </wsdl:message>
+  <wsdl:message name="UploadEquipmentStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:UploadEquipmentStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="SystemRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:SystemRequest" />
+  </wsdl:message>
+  <wsdl:message name="SystemRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:SystemRequestResponse" />
+  </wsdl:message>
+  <wsdl:portType name="NHDSWebServiceSoap">
+    <wsdl:operation name="GetTime">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">同步系统时间</wsdl:documentation>
+      <wsdl:input message="tns:GetTimeSoapIn" />
+      <wsdl:output message="tns:GetTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取待检测车辆列表</wsdl:documentation>
+      <wsdl:input message="tns:GetVehicleListSoapIn" />
+      <wsdl:output message="tns:GetVehicleListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">获取车辆信息</wsdl:documentation>
+      <wsdl:input message="tns:GetVehicleInfoSoapIn" />
+      <wsdl:output message="tns:GetVehicleInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspection">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">车辆报检</wsdl:documentation>
+      <wsdl:input message="tns:VehicleInspectionSoapIn" />
+      <wsdl:output message="tns:VehicleInspectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspectionCancel">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">车辆取消待检</wsdl:documentation>
+      <wsdl:input message="tns:VehicleInspectionCancelSoapIn" />
+      <wsdl:output message="tns:VehicleInspectionCancelSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">开始检测</wsdl:documentation>
+      <wsdl:input message="tns:StartTestSoapIn" />
+      <wsdl:output message="tns:StartTestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TakePhoto">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">拍照</wsdl:documentation>
+      <wsdl:input message="tns:TakePhotoSoapIn" />
+      <wsdl:output message="tns:TakePhotoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopTest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">终止检测</wsdl:documentation>
+      <wsdl:input message="tns:StopTestSoapIn" />
+      <wsdl:output message="tns:StopTestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearanceData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传外观查验数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadAppearanceDataSoapIn" />
+      <wsdl:output message="tns:UploadAppearanceDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearancePhoto">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传外观查验照片</wsdl:documentation>
+      <wsdl:input message="tns:UploadAppearancePhotoSoapIn" />
+      <wsdl:output message="tns:UploadAppearancePhotoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadASMData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传稳态检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadASMDataSoapIn" />
+      <wsdl:output message="tns:UploadASMDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadVMASData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传简易瞬态检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadVMASDataSoapIn" />
+      <wsdl:output message="tns:UploadVMASDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadLUGDOWNData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传加载减速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadLUGDOWNDataSoapIn" />
+      <wsdl:output message="tns:UploadLUGDOWNDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDISData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传双怠速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDISDataSoapIn" />
+      <wsdl:output message="tns:UploadDISDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFAOPAData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传不透光自由加速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadFAOPADataSoapIn" />
+      <wsdl:output message="tns:UploadFAOPADataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFASMOData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传滤纸自由加速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadFASMODataSoapIn" />
+      <wsdl:output message="tns:UploadFASMODataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAVFSUData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传农用车自由加速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadAVFSUDataSoapIn" />
+      <wsdl:output message="tns:UploadAVFSUDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadMISData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传摩托车怠速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadMISDataSoapIn" />
+      <wsdl:output message="tns:UploadMISDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadMDISData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传摩托车双怠速检测数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadMDISDataSoapIn" />
+      <wsdl:output message="tns:UploadMDISDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynConstLoadData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传测功机加载滑行标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDynConstLoadDataSoapIn" />
+      <wsdl:output message="tns:UploadDynConstLoadDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynPLHPData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传测功机寄生功率滑行标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDynPLHPDataSoapIn" />
+      <wsdl:output message="tns:UploadDynPLHPDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceCalData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传测功机力校准标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDynForceCalDataSoapIn" />
+      <wsdl:output message="tns:UploadDynForceCalDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceChkData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传测功机力检查标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDynForceChkDataSoapIn" />
+      <wsdl:output message="tns:UploadDynForceChkDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasCalData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传分析仪气体校准标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadAnaGasCalDataSoapIn" />
+      <wsdl:output message="tns:UploadAnaGasCalDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasChkLoadData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传分析仪气体检查标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadAnaGasChkLoadDataSoapIn" />
+      <wsdl:output message="tns:UploadAnaGasChkLoadDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaChkLoadData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传不透光度计示值校准标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadOpaChkLoadDataSoapIn" />
+      <wsdl:output message="tns:UploadOpaChkLoadDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadSmoChkLoadData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传滤纸式烟度计示值检查标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadSmoChkLoadDataSoapIn" />
+      <wsdl:output message="tns:UploadSmoChkLoadDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloFluxChkLoadData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传流量计流量检查标定数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadFloFluxChkLoadDataSoapIn" />
+      <wsdl:output message="tns:UploadFloFluxChkLoadDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynSelfTestData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传测功机自检数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadDynSelfTestDataSoapIn" />
+      <wsdl:output message="tns:UploadDynSelfTestDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaSelfTestData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传分析仪自检数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadAnaSelfTestDataSoapIn" />
+      <wsdl:output message="tns:UploadAnaSelfTestDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaSelfTestData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传不透光度计自检数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadOpaSelfTestDataSoapIn" />
+      <wsdl:output message="tns:UploadOpaSelfTestDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloSelfTestData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传流量计自检数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadFloSelfTestDataSoapIn" />
+      <wsdl:output message="tns:UploadFloSelfTestDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadTacSelfTestData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传转速计自检数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadTacSelfTestDataSoapIn" />
+      <wsdl:output message="tns:UploadTacSelfTestDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadEleEnvData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传电子环境信息仪数据</wsdl:documentation>
+      <wsdl:input message="tns:UploadEleEnvDataSoapIn" />
+      <wsdl:output message="tns:UploadEleEnvDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadEquipmentStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">上传设备状态</wsdl:documentation>
+      <wsdl:input message="tns:UploadEquipmentStatusSoapIn" />
+      <wsdl:output message="tns:UploadEquipmentStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SystemRequest">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">系统内部调用接口</wsdl:documentation>
+      <wsdl:input message="tns:SystemRequestSoapIn" />
+      <wsdl:output message="tns:SystemRequestSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NHDSWebServiceSoap" type="tns:NHDSWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetTime">
+      <soap:operation soapAction="http://tempuri.org/GetTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleList">
+      <soap:operation soapAction="http://tempuri.org/GetVehicleList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleInfo">
+      <soap:operation soapAction="http://tempuri.org/GetVehicleInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspection">
+      <soap:operation soapAction="http://tempuri.org/VehicleInspection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspectionCancel">
+      <soap:operation soapAction="http://tempuri.org/VehicleInspectionCancel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartTest">
+      <soap:operation soapAction="http://tempuri.org/StartTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakePhoto">
+      <soap:operation soapAction="http://tempuri.org/TakePhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopTest">
+      <soap:operation soapAction="http://tempuri.org/StopTest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearanceData">
+      <soap:operation soapAction="http://tempuri.org/UploadAppearanceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearancePhoto">
+      <soap:operation soapAction="http://tempuri.org/UploadAppearancePhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadASMData">
+      <soap:operation soapAction="http://tempuri.org/UploadASMData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadVMASData">
+      <soap:operation soapAction="http://tempuri.org/UploadVMASData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadLUGDOWNData">
+      <soap:operation soapAction="http://tempuri.org/UploadLUGDOWNData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDISData">
+      <soap:operation soapAction="http://tempuri.org/UploadDISData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFAOPAData">
+      <soap:operation soapAction="http://tempuri.org/UploadFAOPAData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFASMOData">
+      <soap:operation soapAction="http://tempuri.org/UploadFASMOData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAVFSUData">
+      <soap:operation soapAction="http://tempuri.org/UploadAVFSUData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadMISData">
+      <soap:operation soapAction="http://tempuri.org/UploadMISData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadMDISData">
+      <soap:operation soapAction="http://tempuri.org/UploadMDISData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynConstLoadData">
+      <soap:operation soapAction="http://tempuri.org/UploadDynConstLoadData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynPLHPData">
+      <soap:operation soapAction="http://tempuri.org/UploadDynPLHPData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceCalData">
+      <soap:operation soapAction="http://tempuri.org/UploadDynForceCalData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceChkData">
+      <soap:operation soapAction="http://tempuri.org/UploadDynForceChkData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasCalData">
+      <soap:operation soapAction="http://tempuri.org/UploadAnaGasCalData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasChkLoadData">
+      <soap:operation soapAction="http://tempuri.org/UploadAnaGasChkLoadData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaChkLoadData">
+      <soap:operation soapAction="http://tempuri.org/UploadOpaChkLoadData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSmoChkLoadData">
+      <soap:operation soapAction="http://tempuri.org/UploadSmoChkLoadData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloFluxChkLoadData">
+      <soap:operation soapAction="http://tempuri.org/UploadFloFluxChkLoadData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynSelfTestData">
+      <soap:operation soapAction="http://tempuri.org/UploadDynSelfTestData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaSelfTestData">
+      <soap:operation soapAction="http://tempuri.org/UploadAnaSelfTestData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaSelfTestData">
+      <soap:operation soapAction="http://tempuri.org/UploadOpaSelfTestData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloSelfTestData">
+      <soap:operation soapAction="http://tempuri.org/UploadFloSelfTestData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadTacSelfTestData">
+      <soap:operation soapAction="http://tempuri.org/UploadTacSelfTestData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadEleEnvData">
+      <soap:operation soapAction="http://tempuri.org/UploadEleEnvData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadEquipmentStatus">
+      <soap:operation soapAction="http://tempuri.org/UploadEquipmentStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SystemRequest">
+      <soap:operation soapAction="http://tempuri.org/SystemRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NHDSWebServiceSoap12" type="tns:NHDSWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetTime">
+      <soap12:operation soapAction="http://tempuri.org/GetTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleList">
+      <soap12:operation soapAction="http://tempuri.org/GetVehicleList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVehicleInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetVehicleInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspection">
+      <soap12:operation soapAction="http://tempuri.org/VehicleInspection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VehicleInspectionCancel">
+      <soap12:operation soapAction="http://tempuri.org/VehicleInspectionCancel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartTest">
+      <soap12:operation soapAction="http://tempuri.org/StartTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakePhoto">
+      <soap12:operation soapAction="http://tempuri.org/TakePhoto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopTest">
+      <soap12:operation soapAction="http://tempuri.org/StopTest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearanceData">
+      <soap12:operation soapAction="http://tempuri.org/UploadAppearanceData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAppearancePhoto">
+      <soap12:operation soapAction="http://tempuri.org/UploadAppearancePhoto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadASMData">
+      <soap12:operation soapAction="http://tempuri.org/UploadASMData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadVMASData">
+      <soap12:operation soapAction="http://tempuri.org/UploadVMASData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadLUGDOWNData">
+      <soap12:operation soapAction="http://tempuri.org/UploadLUGDOWNData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDISData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDISData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFAOPAData">
+      <soap12:operation soapAction="http://tempuri.org/UploadFAOPAData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFASMOData">
+      <soap12:operation soapAction="http://tempuri.org/UploadFASMOData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAVFSUData">
+      <soap12:operation soapAction="http://tempuri.org/UploadAVFSUData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadMISData">
+      <soap12:operation soapAction="http://tempuri.org/UploadMISData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadMDISData">
+      <soap12:operation soapAction="http://tempuri.org/UploadMDISData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynConstLoadData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDynConstLoadData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynPLHPData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDynPLHPData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceCalData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDynForceCalData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynForceChkData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDynForceChkData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasCalData">
+      <soap12:operation soapAction="http://tempuri.org/UploadAnaGasCalData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaGasChkLoadData">
+      <soap12:operation soapAction="http://tempuri.org/UploadAnaGasChkLoadData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaChkLoadData">
+      <soap12:operation soapAction="http://tempuri.org/UploadOpaChkLoadData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadSmoChkLoadData">
+      <soap12:operation soapAction="http://tempuri.org/UploadSmoChkLoadData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloFluxChkLoadData">
+      <soap12:operation soapAction="http://tempuri.org/UploadFloFluxChkLoadData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadDynSelfTestData">
+      <soap12:operation soapAction="http://tempuri.org/UploadDynSelfTestData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadAnaSelfTestData">
+      <soap12:operation soapAction="http://tempuri.org/UploadAnaSelfTestData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadOpaSelfTestData">
+      <soap12:operation soapAction="http://tempuri.org/UploadOpaSelfTestData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFloSelfTestData">
+      <soap12:operation soapAction="http://tempuri.org/UploadFloSelfTestData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadTacSelfTestData">
+      <soap12:operation soapAction="http://tempuri.org/UploadTacSelfTestData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadEleEnvData">
+      <soap12:operation soapAction="http://tempuri.org/UploadEleEnvData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadEquipmentStatus">
+      <soap12:operation soapAction="http://tempuri.org/UploadEquipmentStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SystemRequest">
+      <soap12:operation soapAction="http://tempuri.org/SystemRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NHDSWebService">
+    <wsdl:port name="NHDSWebServiceSoap" binding="tns:NHDSWebServiceSoap">
+      <soap:address location="http://192.168.1.20:8081/NHDSWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="NHDSWebServiceSoap12" binding="tns:NHDSWebServiceSoap12">
+      <soap12:address location="http://192.168.1.20:8081/NHDSWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

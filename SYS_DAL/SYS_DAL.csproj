@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0C158118-DD0C-42DC-9B67-EA3055AE46CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SYS_DAL</RootNamespace>
+    <AssemblyName>SYS_DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ASMdal.cs" />
+    <Compile Include="atsaControl.cs" />
+    <Compile Include="ATSADBHelperSQL.cs" />
+    <Compile Include="baseControl.cs" />
+    <Compile Include="BJCLXX.cs" />
+    <Compile Include="DBHelperSQL.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GBDal.cs" />
+    <Compile Include="hashControl.cs" />
+    <Compile Include="JCXGXX.cs" />
+    <Compile Include="JCXXX.cs" />
+    <Compile Include="JCZdal.cs" />
+    <Compile Include="JZJSdal.cs" />
+    <Compile Include="loginInfControl.cs" />
+    <Compile Include="Main_dal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SBXX.cs" />
+    <Compile Include="SDSdal.cs" />
+    <Compile Include="shuju.cs" />
+    <Compile Include="stationControl.cs" />
+    <Compile Include="time.cs" />
+    <Compile Include="tool.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="XTKXGCS.cs" />
+    <Compile Include="XXXXB.cs" />
+    <Compile Include="Zyjsdal.cs" />
+    <Compile Include="VMASdal.cs" />
+    <Compile Include="YGBdal.cs" />
+    <Compile Include="VMAS_jcxxdal.cs" />
+    <Compile Include="JZJS_jcxxdal.cs" />
+    <Compile Include="ZYJS_jcxxdal.cs" />
+    <Compile Include="SDS_jcxxdal.cs" />
+    <Compile Include="ZWBdal.cs" />
+    <Compile Include="demarcateControl.cs" />
+    <Compile Include="systemControl.cs" />
+    <Compile Include="selfcheckdal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\carinfor\carinfor.csproj">
+      <Project>{82414900-9F68-46FC-B559-D204A1B839F1}</Project>
+      <Name>carinfor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\INIIO\INIIO.csproj">
+      <Project>{66AB13FC-AE00-42C8-B107-F375867E6363}</Project>
+      <Name>INIIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SYS_MODEL\SYS_MODEL.csproj">
+      <Project>{E43A16D8-0BCA-42AB-B0DC-5D8FEE37958C}</Project>
+      <Name>SYS_MODEL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

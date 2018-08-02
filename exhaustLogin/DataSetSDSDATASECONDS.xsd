@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetSDSDATASECONDS" targetNamespace="http://tempuri.org/DataSetSDSDATASECONDS.xsd" xmlns:mstns="http://tempuri.org/DataSetSDSDATASECONDS.xsd" xmlns="http://tempuri.org/DataSetSDSDATASECONDS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetSDSDATASECONDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSetSDSDATASECONDS" msprop:Generator_UserDSName="DataSetSDSDATASECONDS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="时间序列" msprop:Generator_ColumnVarNameInTable="column时间序列" msprop:Generator_ColumnPropNameInRow="时间序列" msprop:Generator_ColumnPropNameInTable="时间序列Column" msprop:Generator_UserColumnName="时间序列" type="xs:string" minOccurs="0" />
+              <xs:element name="HC" msprop:Generator_ColumnVarNameInTable="columnHC" msprop:Generator_ColumnPropNameInRow="HC" msprop:Generator_ColumnPropNameInTable="HCColumn" msprop:Generator_UserColumnName="HC" type="xs:string" minOccurs="0" />
+              <xs:element name="CO" msprop:Generator_ColumnVarNameInTable="columnCO" msprop:Generator_ColumnPropNameInRow="CO" msprop:Generator_ColumnPropNameInTable="COColumn" msprop:Generator_UserColumnName="CO" type="xs:string" minOccurs="0" />
+              <xs:element name="CO2" msprop:Generator_ColumnVarNameInTable="columnCO2" msprop:Generator_ColumnPropNameInRow="CO2" msprop:Generator_ColumnPropNameInTable="CO2Column" msprop:Generator_UserColumnName="CO2" type="xs:string" minOccurs="0" />
+              <xs:element name="O2" msprop:Generator_ColumnVarNameInTable="columnO2" msprop:Generator_ColumnPropNameInRow="O2" msprop:Generator_ColumnPropNameInTable="O2Column" msprop:Generator_UserColumnName="O2" type="xs:string" minOccurs="0" />
+              <xs:element name="过量空气系数" msprop:Generator_ColumnVarNameInTable="column过量空气系数" msprop:Generator_ColumnPropNameInRow="过量空气系数" msprop:Generator_ColumnPropNameInTable="过量空气系数Column" msprop:Generator_UserColumnName="过量空气系数" type="xs:string" minOccurs="0" />
+              <xs:element name="发动机转速" msprop:Generator_ColumnVarNameInTable="column发动机转速" msprop:Generator_ColumnPropNameInRow="发动机转速" msprop:Generator_ColumnPropNameInTable="发动机转速Column" msprop:Generator_UserColumnName="发动机转速" type="xs:string" minOccurs="0" />
+              <xs:element name="油温" msprop:Generator_ColumnVarNameInTable="column油温" msprop:Generator_ColumnPropNameInRow="油温" msprop:Generator_ColumnPropNameInTable="油温Column" msprop:Generator_UserColumnName="油温" type="xs:string" minOccurs="0" />
+              <xs:element name="温度" msprop:Generator_ColumnVarNameInTable="column温度" msprop:Generator_ColumnPropNameInRow="温度" msprop:Generator_ColumnPropNameInTable="温度Column" msprop:Generator_UserColumnName="温度" type="xs:string" minOccurs="0" />
+              <xs:element name="湿度" msprop:Generator_ColumnVarNameInTable="column湿度" msprop:Generator_ColumnPropNameInRow="湿度" msprop:Generator_ColumnPropNameInTable="湿度Column" msprop:Generator_UserColumnName="湿度" type="xs:string" minOccurs="0" />
+              <xs:element name="大气压" msprop:Generator_ColumnVarNameInTable="column大气压" msprop:Generator_ColumnPropNameInRow="大气压" msprop:Generator_ColumnPropNameInTable="大气压Column" msprop:Generator_UserColumnName="大气压" type="xs:string" minOccurs="0" />
+              <xs:element name="工况状态" msprop:Generator_ColumnVarNameInTable="column工况状态" msprop:Generator_ColumnPropNameInRow="工况状态" msprop:Generator_ColumnPropNameInTable="工况状态Column" msprop:Generator_UserColumnName="工况状态" type="xs:string" minOccurs="0" />
+              <xs:element name="采样时间" msprop:Generator_ColumnVarNameInTable="column采样时间" msprop:Generator_ColumnPropNameInRow="采样时间" msprop:Generator_ColumnPropNameInTable="采样时间Column" msprop:Generator_UserColumnName="采样时间" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
