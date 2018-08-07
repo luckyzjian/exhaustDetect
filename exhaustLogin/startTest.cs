@@ -15591,17 +15591,20 @@ namespace exhaustDetect
                                                 {
                                                     #region 安车
                                                     Thread.Sleep(1000);
-                                                    if (!saveSdsResutl2Net())
+                                                    if (!saveSdsMResutl2Net())
                                                     {
                                                         Thread.Sleep(1000);
-                                                        if (!saveSdsResutl2Net())
+                                                        if (!saveSdsMResutl2Net())
                                                         {
                                                             MessageBox.Show("结果数据上传服务器失败", "错误提示");
                                                             ini.INIIO.saveLogInf("安车联网信息：结果数据上传服务器失败");
-                                                            return;
+                                                            //return;
                                                         }
+                                                        else
+                                                            ini.INIIO.saveLogInf("安车联网信息：结果数据上传服务器成功");
                                                     }
-                                                    ini.INIIO.saveLogInf("安车联网信息：结果数据上传服务器成功");
+                                                    else
+                                                        ini.INIIO.saveLogInf("安车联网信息：结果数据上传服务器成功");
                                                     #endregion
                                                 }
                                                 else if (mainPanel.NetMode == mainPanel.TYNETMODE)
@@ -16610,7 +16613,11 @@ namespace exhaustDetect
                 mainPanel.netregcarwait.DLSP = model.DLSP;
                 mainPanel.netregcarwait.CHZZ = model.CHZZ;
                 // return true;
-                string ackstring = mainPanel.netregcarwait.writenetRegCarWait(int.Parse(mainPanel.logininfcontrol.getComBoBoxItemsID("检测方法", modelwait.JCFF)));
+                string ackstring = "";
+                if(modelwait.JCFF=="SDSM")//辽宁本溪联网时，安车说摩托车双怠速按双怠速传
+                    ackstring=mainPanel.netregcarwait.writenetRegCarWait(3);
+                else
+                    ackstring = mainPanel.netregcarwait.writenetRegCarWait(int.Parse(mainPanel.logininfcontrol.getComBoBoxItemsID("检测方法", modelwait.JCFF)));
                 if (ackstring == "成功")
                 {
                     ini.INIIO.saveLogInf("regCarWait2Net()" + "成功");
@@ -16765,6 +16772,41 @@ namespace exhaustDetect
             sdsresultdata.JCKSSJ = sdsdata.JCKSSJ;
             sdsresultdata.JCJSSJ = sdsdata.JCJSSJ;
             return (sdsresultdata.writeSDSresultData() == "成功");
+        }
+        private bool saveSdsMResutl2Net()
+        {
+            carinfor.SDSMresultData sdsresultdata = new carinfor.SDSMresultData();
+            sdsresultdata.JCBGBH = sdsdata.JCBGBH;
+            sdsresultdata.WD = sdsdata.WD;
+            sdsresultdata.XDSD = sdsdata.SD;
+            sdsresultdata.DQY = sdsdata.DQY;
+            sdsresultdata.GLKQXSZ = sdsdata.LAMDAHIGHCLZ;
+            sdsresultdata.GLKQXSPDJG = sdsdata.LAMDAHIGHPD;
+            sdsresultdata.DDSCOXZ = sdsdata.COLOWXZ;
+            sdsresultdata.DDSCOZ = sdsdata.COLOWCLZ;
+            sdsresultdata.DDSCOPDJG = sdsdata.COLOWPD;
+            sdsresultdata.DDSHCXZ = sdsdata.HCLOWXZ;
+            sdsresultdata.DDSHCZ = sdsdata.HCLOWCLZ;
+            sdsresultdata.DDSHCPDJG = sdsdata.HCLOWPD;
+            sdsresultdata.FDJDSZS = sdsdata.ZSLOW;
+            sdsresultdata.DDSJYWD = sdsdata.JYWDLOW;
+            sdsresultdata.GDSCOXZ = sdsdata.COHIGHXZ;
+            sdsresultdata.GDSCOZ = sdsdata.COHIGHCLZ;
+            sdsresultdata.GDSCOPDJG = sdsdata.COHIGHPD;
+            sdsresultdata.GDSHCPDJG = sdsdata.HCHIGHPD;
+            sdsresultdata.GDSHCXZ = sdsdata.HCHIGHXZ;
+            sdsresultdata.GDSHCZ = sdsdata.HCHIGHCLZ;
+            sdsresultdata.GDSZS = sdsdata.ZSHIGH;
+            sdsresultdata.GDSJYWD = sdsdata.JYWDHIGH;
+            sdsresultdata.PDJG = sdsdata.ZHPD;
+            sdsresultdata.SHY = sdsdata.SHY;
+            sdsresultdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            sdsresultdata.YW = sdsdata.YW;
+            sdsresultdata.GLKQXSSX = sdsdata.GLKQXSSX;
+            sdsresultdata.GLKQXSXX = sdsdata.GLKQXSXX;
+            sdsresultdata.JCKSSJ = sdsdata.JCKSSJ;
+            sdsresultdata.JCJSSJ = sdsdata.JCJSSJ;
+            return (sdsresultdata.writeSDSMresultData() == "成功");
         }
         private bool saveBtgResult2Net()
         {
@@ -20847,8 +20889,8 @@ namespace exhaustDetect
             {
                 if (carLogin.modelbj.CCS == "")
                 {
-                    carLogin.modelbj.CCS = "2";
-                    ini.INIIO.saveLogInf("车辆信息冲程数为空，默认采用2");
+                    carLogin.modelbj.CCS = "4";
+                    ini.INIIO.saveLogInf("车辆信息冲程数为空，默认采用4");
                 }
                 switch (carLogin.modelbj.CCS)
                 {
@@ -20867,7 +20909,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            if (carLogin.modelbj.CLLX.StartsWith("M2"))//二轮摩托车
+                            if (carLogin.modelbj.CLLX.StartsWith("M2")|| carLogin.modelbj.CLLX.Contains("两轮"))//二轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2010-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {
@@ -20886,7 +20928,7 @@ namespace exhaustDetect
                                     sdsm_xz_lx = 5;
                                 }
                             }
-                            else if (carLogin.modelbj.CLLX.StartsWith("M1"))//三轮摩托车
+                            else if (carLogin.modelbj.CLLX.StartsWith("M1") || carLogin.modelbj.CLLX.Contains("三轮"))//三轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2011-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {
@@ -20928,7 +20970,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            if (carLogin.modelbj.CLLX.StartsWith("M2"))//二轮摩托车
+                            if (carLogin.modelbj.CLLX.StartsWith("M2") || carLogin.modelbj.CLLX.Contains("两轮"))//二轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2010-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {
@@ -20947,7 +20989,7 @@ namespace exhaustDetect
                                     sdsm_xz_lx = 5;
                                 }
                             }
-                            else if (carLogin.modelbj.CLLX.StartsWith("M1"))//三轮摩托车
+                            else if (carLogin.modelbj.CLLX.StartsWith("M1") || carLogin.modelbj.CLLX.Contains("三轮"))//三轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2011-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {

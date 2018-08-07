@@ -1224,6 +1224,86 @@ namespace carinfor
             }
         }
     }
+    public class SDSMresultData
+    {
+        public string JCBGBH;	//检测报告编号（关联对应检测车辆注册信息）
+        public string WD;	//温度（℃）
+        public string DQY;//大气压(Kpa)
+        public string XDSD;	//相对湿度(%)
+        public string GLKQXSZ;	//过量空气系数值（λ）
+        public string GLKQXSPDJG;	//过量空气判定结果（合格/不合格）
+        public string DDSCOXZ;	//低怠速[CO%]限值
+        public string DDSCOZ;	//低怠速[CO%]值
+        public string DDSCOPDJG;	//低怠速[CO%]（合格/不合格）
+        public string DDSHCXZ;	//低怠速[HC10-6]限值
+        public string DDSHCZ;	//低怠速[HC10-6]值
+        public string DDSHCPDJG;	//低怠速[HC10-6]（合格/不合格）
+        public string FDJDSZS;	//发动机怠速转速(r/min)
+        public string DDSJYWD;	//低怠速油温（℃）；可取低怠速检测过程中油温的平均值
+        public string GDSCOXZ;	//高怠速[CO%]限值
+        public string GDSCOZ;//高怠速[CO%]值
+        public string GDSCOPDJG;	//高怠速[CO%]（合格/不合格）
+        public string GDSHCZ;	//高怠速[HC10-6]值
+        public string GDSHCXZ;	//高怠速[HC10-6]限值
+        public string GDSHCPDJG;	//高怠速[HC10-6]（合格/不合格）
+        public string GDSZS;		//高怠速转速(r/min)
+        public string GDSJYWD;		//高怠速油温（℃）可取高怠速检测过程中过程数据油温的平均值
+        public string PDJG;	//判定结果（合格/不合格）
+        public string SHY;	//审核员
+        public string SynchDate;	//发送时间(表示：2008年1月21日18点18分18秒888毫秒精确到毫秒)
+        public string YW;//油温（℃）；取对应过程数据油温的平均值
+        public string GLKQXSSX;//过量空气系数限值上限
+        public string GLKQXSXX;	//过量空气系数限值下限
+        public string JCKSSJ;	//检测开始时间
+        public string JCJSSJ;//	检测结束时间
+        public string writeSDSMresultData()
+        {
+            string ackstring;
+            string CODE;
+            string MESSAGE;
+            if (acNetInf.acArea == acNetInf.acArea_NN)
+            {
+                if (SocketControlNn.SendToServerEx('D', 8, "JCBGBH=" + JCBGBH + "\r\n" + "WD=" + WD + "\r\n" + "DQY=" + DQY + "\r\n" + "XDSD=" + XDSD + "\r\n"
+                + "GLKQXSZ=" + GLKQXSZ + "\r\n" + "GLKQXSPDJG=" + GLKQXSPDJG + "\r\n" + "DDSCOXZ=" + DDSCOXZ + "\r\n" + "DDSCOZ=" + DDSCOZ + "\r\n" + "DDSCOPDJG=" + DDSCOPDJG + "\r\n"
+                + "DDSHCXZ=" + DDSHCXZ + "\r\n" + "DDSHCZ=" + DDSHCZ + "\r\n" + "DDSHCPDJG=" + DDSHCPDJG + "\r\n" + "FDJDSZS=" + FDJDSZS + "\r\n" + "DDSJYWD=" + DDSJYWD + "\r\n"
+                + "GDSCOXZ=" + GDSCOXZ + "\r\n" + "GDSCOZ=" + GDSCOZ + "\r\n" + "GDSCOPDJG=" + GDSCOPDJG + "\r\n" + "GDSHCZ=" + GDSHCZ + "\r\n" + "GDSHCXZ=" + GDSHCXZ + "\r\n"
+                + "GDSHCPDJG=" + GDSHCPDJG + "\r\n" + "GDSZS=" + GDSZS + "\r\n" + "GDSJYWD=" + GDSJYWD + "\r\n" + "PDJG=" + PDJG + "\r\n" + "SHY=" + SHY + "\r\n"
+                + "SynchDate=" + SynchDate + "\r\n" + "YW=" + YW + "\r\n" + "GLKQXSSX=" + GLKQXSSX + "\r\n" + "GLKQXSXX=" + GLKQXSXX + "\r\n" + "JCKSSJ=" + JCKSSJ + "\r\n" + "JCJSSJ=" + JCJSSJ + "\r\n"))
+                {
+                    return "成功";
+                }
+                else
+                {
+                    return "发送失败";
+                }
+            }
+            else
+            {
+                ackstring = SocketControl.SendToServerEx('D', 3, "JCBGBH=" + JCBGBH + "\r\n" + "WD=" + WD + "\r\n" + "DQY=" + DQY + "\r\n" + "XDSD=" + XDSD + "\r\n"
+                + "GLKQXSZ=" + GLKQXSZ + "\r\n" + "GLKQXSPDJG=" + GLKQXSPDJG + "\r\n" + "DDSCOXZ=" + DDSCOXZ + "\r\n" + "DDSCOZ=" + DDSCOZ + "\r\n" + "DDSCOPDJG=" + DDSCOPDJG + "\r\n"
+                + "DDSHCXZ=" + DDSHCXZ + "\r\n" + "DDSHCZ=" + DDSHCZ + "\r\n" + "DDSHCPDJG=" + DDSHCPDJG + "\r\n" + "FDJDSZS=" + FDJDSZS + "\r\n" + "DDSJYWD=" + DDSJYWD + "\r\n"
+                + "GDSCOXZ=" + GDSCOXZ + "\r\n" + "GDSCOZ=" + GDSCOZ + "\r\n" + "GDSCOPDJG=" + GDSCOPDJG + "\r\n" + "GDSHCZ=" + GDSHCZ + "\r\n" + "GDSHCXZ=" + GDSHCXZ + "\r\n"
+                + "GDSHCPDJG=" + GDSHCPDJG + "\r\n" + "GDSZS=" + GDSZS + "\r\n" + "GDSJYWD=" + GDSJYWD + "\r\n" + "PDJG=" + PDJG + "\r\n" + "SHY=" + SHY + "\r\n"
+                + "SynchDate=" + SynchDate + "\r\n" + "YW=" + YW + "\r\n" + "GLKQXSSX=" + GLKQXSSX + "\r\n" + "GLKQXSXX=" + GLKQXSXX + "\r\n" + "JCKSSJ=" + JCKSSJ + "\r\n" + "JCJSSJ=" + JCJSSJ + "\r\n");
+                if (ackstring.Contains("<"))
+                {
+                    return "成功";
+                }
+                else
+                {
+                    CODE = ackstring.Replace("\r\n", ";").Split(';')[0].Split('=')[1];
+                    MESSAGE = ackstring.Replace("\r\n", ";").Split(';')[1].Split('=')[1];
+                    switch (CODE)
+                    {
+                        case "0": return "成功"; break;
+                        case "1": return CODE + ":" + MESSAGE; break;
+                        case "-1": return CODE + ":" + MESSAGE; break;
+                        default: return "发送失败"; break;
+                    }
+                }
+            }
+        }
+    }
     public class BTGprocessData
     {
         public string JCBGBH;	//检测报告编码，对应检测方法中的JCBGBH
