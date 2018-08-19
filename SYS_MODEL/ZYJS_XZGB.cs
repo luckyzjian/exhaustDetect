@@ -38,6 +38,8 @@ namespace SYS.Model
 			get{return _wldate20011001btgxz;}
 		}
         public bool onlyUseThis { set; get; }
+        public int XZTABLE { set; get; }
+        public bool USESDJNXZ { set; get; }
 		#endregion Model
 
 	}

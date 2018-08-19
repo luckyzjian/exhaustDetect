@@ -18,6 +18,7 @@ namespace SYS.Model
             FWLX = "";
             ICCARDNO = "";
             DPFS = "";
+            SOURCE = "";
     }
         #region Model
         private string clid;//clph+cpys+dlsj
@@ -186,6 +187,7 @@ namespace SYS.Model
         public string FWLX { set; get; }
         public string ICCARDNO { set; get; }
         public string DPFS { set; get; }
+        public string SOURCE { set; get; }
         #endregion Model
     }
 }

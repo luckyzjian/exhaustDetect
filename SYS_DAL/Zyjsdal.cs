@@ -238,8 +238,8 @@ namespace SYS_DAL
         /// <returns>int 0为失败，1为插入成功，2为更新成功</returns>
         public int Save_ZYJSseconds(ZYJSseconds jzjs)
         {
-            string sqli = "insert into ZYJS_DATASECONDS(JYLSH,JYCS,CYDS,CLID,CLHP,JCSJ,MMTIME,MMSX,MMLB,MMZS,MMK) values(@JYLSH,@JYCS,@CYDS,@CLID,@CLHP,@JCSJ,@MMTIME,@MMSX,@MMLB,@MMZS,@MMK)";
-            string sqlu = "update ZYJS_DATASECONDS set JYLSH=@JYLSH,JYCS=@JYCS,CYDS=@CYDS,CLHP=@CLHP,JCSJ=@JCSJ,MMTIME=@MMTIME,MMSX=@MMSX,MMLB=@MMLB,MMZS=@MMZS,MMK=@MMK where CLID=@CLID";
+            string sqli = "insert into ZYJS_DATASECONDS(JYLSH,JYCS,CYDS,CLID,CLHP,JCSJ,MMTIME,MMSX,MMLB,MMZS,MMYW,MMK) values(@JYLSH,@JYCS,@CYDS,@CLID,@CLHP,@JCSJ,@MMTIME,@MMSX,@MMLB,@MMZS,@MMYW,@MMK)";
+            string sqlu = "update ZYJS_DATASECONDS set JYLSH=@JYLSH,JYCS=@JYCS,CYDS=@CYDS,CLHP=@CLHP,JCSJ=@JCSJ,MMTIME=@MMTIME,MMSX=@MMSX,MMLB=@MMLB,MMZS=@MMZS,MMYW=@MMYW,MMK=@MMK where CLID=@CLID";
             SqlParameter[] spr ={
                                    new SqlParameter("@JYLSH",jzjs.JYLSH),
                                    new SqlParameter("@JYCS",jzjs.JYCS),
@@ -251,6 +251,7 @@ namespace SYS_DAL
                                    new SqlParameter("@MMSX",jzjs.MMSX),
                                    new SqlParameter("@MMLB",jzjs.MMLB),//6
                                    new SqlParameter("@MMZS",jzjs.MMZS),
+                                   new SqlParameter("@MMYW",jzjs.MMYW),
                                    new SqlParameter("@MMK",jzjs.MMK)
                                    //47
                                };

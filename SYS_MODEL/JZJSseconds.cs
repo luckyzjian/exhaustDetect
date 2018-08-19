@@ -88,6 +88,13 @@ namespace SYS.Model
         public string JYCS { set; get; }
         public string CYDS { set; get; }
         public string MMNO { set; get; }
+
+        private string mmyw;
+        public string MMYW
+        {
+            get { return mmyw; }
+            set { mmyw = value; }
+        }
         #endregion Model
 
     }

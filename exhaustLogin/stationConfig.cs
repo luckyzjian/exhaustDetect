@@ -70,6 +70,7 @@ namespace exhaustDetect
             showSDSXzInf();
             showLugdownXzInf();
             showASMGDInf();
+            init_sdjn_btgxz();
         }
         private bool init_wginf()
         {
@@ -691,16 +692,12 @@ namespace exhaustDetect
         }
         private void showbBTGXzInf()
         {
-            DataTable vmasxzdt = gbdal.Get_ALL_BTG_XZBZ();
-            if (vmasxzdt != null)
-            {
-                dataGridViewBTGXZ.DataSource = vmasxzdt;
-                //dataGridViewVmasXz1.DataSource = vmasxzdt;
-            }
-            ZYJS_XZGB zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
+            ZYJS_XZGB zyjs_xzgb = gbdal.Get_ZYJS_XZGB();            
             textBoxBTGZRXQ.Text = zyjs_xzgb.ZRDate20011001btgxz;
             textBoxBTGWLZY.Text = zyjs_xzgb.WLDate20011001btgxz;
             checkBoxBtgXz.Checked = zyjs_xzgb.onlyUseThis;
+            comboBoxBTGXZTABLE.SelectedIndex = zyjs_xzgb.XZTABLE;
+            checkBoxBTG_SDJN.Checked = zyjs_xzgb.USESDJNXZ;
         }
         private bool isdatagridviewinit = true;
         
@@ -1544,7 +1541,7 @@ namespace exhaustDetect
                 }
             }
             listname = "ZYJS_XZGB";
-            string[] addkeyarrayBTG = { "ONLYTHIS" };
+            string[] addkeyarrayBTG = { "ONLYTHIS","XZTABLE", "USESDJNXZ" };
             //keyname = "FOURTHDATA";
             foreach (string keyname in addkeyarrayBTG)
             {
@@ -1647,7 +1644,7 @@ namespace exhaustDetect
                 }
             }
             listname = "待检车辆";
-            string[] addkeyarray3 = { "SFCJ", "JYLSH", "HPZL", "ZT", "WXBJ", "WXCD", "WXSJ", "WXFY", "GYXTXS", "SFLJ", "FWLX", "ICCARDNO", "DPFS" };
+            string[] addkeyarray3 = { "SFCJ", "JYLSH", "HPZL", "ZT", "WXBJ", "WXCD", "WXSJ", "WXFY", "GYXTXS", "SFLJ", "FWLX", "ICCARDNO", "DPFS","SOURCE" };
             foreach (string keyname in addkeyarray3)
             {
                 if (basecontrol.testKeyIsExist(listname, keyname))
@@ -2035,6 +2032,17 @@ namespace exhaustDetect
             {
                 textBoxUpdate.AppendText("表[SpecialVehicleXz]已存在\r\n");
             }
+            textBoxUpdate.AppendText("检查表[山东烟度限值]是否存在？\r\n");
+            if (!basecontrol.checkTableIsExist("山东烟度限值"))
+            {
+                textBoxUpdate.AppendText("表[山东烟度限值]不存在\r\n");
+                basecontrol.createTalbe("山东烟度限值", "ID int not null primary key IDENTITY(1, 1), CX varchar(50), PFBZ varchar(50), XZ varchar(50), YL1 varchar(50)");
+                textBoxUpdate.AppendText("表[山东烟度限值]已创建\r\n");
+            }
+            else
+            {
+                textBoxUpdate.AppendText("表[山东烟度限值]已存在\r\n");
+            }
             listname = "车辆检测状态";
             string[] addkeyarrayTestState = { "JCCZY", "YCY", "DLY" };
             foreach (string keyname in addkeyarrayTestState)
@@ -2142,7 +2150,7 @@ namespace exhaustDetect
                 }
             }
             listname = "JZJS_DATASECONDS";
-            string[] addkeyarrayJZJSD = { "JYLSH", "JYCS", "CYDS", "MMZS", "MMZGL", "MMZSGL", "MMGLXZXS", "MMJSGL", "MMBTGD", "MMDQYL", "MMXDSD", "MMHJWD", "MMNL", "MMNO" };
+            string[] addkeyarrayJZJSD = { "JYLSH", "JYCS", "CYDS", "MMZS", "MMZGL", "MMZSGL", "MMGLXZXS", "MMJSGL", "MMBTGD", "MMDQYL", "MMXDSD", "MMHJWD", "MMNL", "MMNO" ,"MMYW"};
             foreach (string keyname in addkeyarrayJZJSD)
             {
                 if (basecontrol.testKeyIsExist(listname, keyname))
@@ -2169,7 +2177,7 @@ namespace exhaustDetect
                 }
             }
             listname = "ZYJS_DATASECONDS";
-            string[] addkeyarrayZYJSD = { "JYLSH", "JYCS", "CYDS" };
+            string[] addkeyarrayZYJSD = { "JYLSH", "JYCS", "CYDS", "MMYW" };
             foreach (string keyname in addkeyarrayZYJSD)
             {
                 if (basecontrol.testKeyIsExist(listname, keyname))
@@ -2198,9 +2206,8 @@ namespace exhaustDetect
             textBoxUpdate.AppendText("检查表[烟度限值数据]是否存在？\r\n");
             if (!basecontrol.checkTableIsExist("烟度限值数据"))
             {
-                textBoxUpdate.AppendText("表[烟度限值数据]不存在\r\n");
-                basecontrol.createTalbe("烟度限值数据", "ID varchar(255), MANUFNAME varchar(255), VEHICLEMODEL varchar(255), VEHICLENAME varchar(255), ENGINEMODEL varchar(255), ENGINEMANUF varchar(255), MAXNETPOWER varchar(255), TACLIMITVALUE real, LIMITVALUE real, EMISSION int, IMPBATCH int, SMOKEVTYPE int");
-                textBoxUpdate.AppendText("表[烟度限值数据]已创建\r\n");
+                textBoxUpdate.AppendText("表[烟度限值数据]不存在，请打开sql server maganement studio导入'烟度限值数据.mdb'\r\n");
+                
             }
             else
             {
@@ -2290,14 +2297,6 @@ namespace exhaustDetect
 
         private void buttonSaveBtg_Click(object sender, EventArgs e)
         {
-            ZYJS_XZGB btgxz = new ZYJS_XZGB();
-            btgxz.WLDate20011001btgxz = textBoxBTGWLZY.Text;
-            btgxz.ZRDate20011001btgxz = textBoxBTGZRXQ.Text;
-            btgxz.onlyUseThis = checkBoxBtgXz.Checked;
-            if (gbdal.updateZYJS_XZGB(btgxz))
-                MessageBox.Show("保存成功");
-            else
-                MessageBox.Show("保存失败");
 
         }
 
@@ -2385,6 +2384,87 @@ namespace exhaustDetect
             comboBoxEDUCATION.Items.Add("博士");
             comboBoxEDUCATION.Items.Add("大学学历");
             comboBoxEDUCATION.SelectedIndex = 0;
+        }
+        private void init_sdjn_btgxz()
+        {
+            init_sdjn_datagrid();
+            comboBoxBtg_Cx.SelectedIndex = 0;
+            comboBoxBtg_PFBZ.SelectedIndex = 0;
+            textBoxBtg_xz.Text = "1.0";
+            ref_SdjnBtgXz();
+        }
+        private void init_sdjn_datagrid()
+        {
+            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
+            columnHeaderStyle.BackColor = Color.Beige;
+            columnHeaderStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+            dataGridViewStaff.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+            DataGridViewButtonColumn btnsave = new DataGridViewButtonColumn();
+            btnsave.Name = "btnsave";
+            btnsave.DefaultCellStyle.NullValue = "保存";
+            btnsave.HeaderText = "保存";
+            btnsave.Width = 50;
+            DataGridViewButtonColumn btndelete = new DataGridViewButtonColumn();
+            btndelete.Name = "btndelete";
+            btndelete.DefaultCellStyle.NullValue = "删除";
+            btndelete.HeaderText = "删除";
+            btndelete.Width = 50;
+            DataGridViewComboBoxColumn colcomboboxcx = new DataGridViewComboBoxColumn();
+            colcomboboxcx.Items.Add("轻型车");
+            colcomboboxcx.Items.Add("重型车");
+            DataGridViewComboBoxColumn colcomboboxpfbz = new DataGridViewComboBoxColumn();
+            colcomboboxpfbz.Items.Add("国〇");
+            colcomboboxpfbz.Items.Add("国Ⅰ");
+            colcomboboxpfbz.Items.Add("国Ⅱ");
+            colcomboboxpfbz.Items.Add("国Ⅲ");
+            colcomboboxpfbz.Items.Add("国Ⅳ");
+            colcomboboxpfbz.Items.Add("国Ⅴ");
+            colcomboboxpfbz.Items.Add("国Ⅵ");
+            colcomboboxcx.HeaderText = "车型";
+            colcomboboxcx.Width = 80;
+            colcomboboxpfbz.HeaderText = "排放标准";
+            colcomboboxpfbz.Width = 80;
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add("1", "编号");
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add(colcomboboxcx);
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add(colcomboboxpfbz);
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add("4", "限值");
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add(btnsave);
+            this.dataGridViewBtg_SDJN_XZ.Columns.Add(btndelete);
+            dataGridViewBtg_SDJN_XZ.Columns[0].ReadOnly = true;
+            dataGridViewBtg_SDJN_XZ.Columns[1].ReadOnly = true;
+            dataGridViewBtg_SDJN_XZ.Columns[2].ReadOnly = true;
+        }
+        public void ref_SdjnBtgXz()
+        {
+            try
+            {
+                DataTable dt = mainPanel.logininfcontrol.getAllSdJnXz();
+                DataRow dr = null;
+                if (dt != null)
+                {
+                    this.dataGridViewBtg_SDJN_XZ.Rows.Clear();
+                    foreach (DataRow dR in dt.Rows)
+                    {
+                        DataGridViewRow dr1 = new DataGridViewRow();
+                        foreach (DataGridViewColumn c in this.dataGridViewBtg_SDJN_XZ.Columns)
+                        {
+                            dr1.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);
+                        }
+                        dr1.Cells[0].Value = dR["ID"].ToString();
+                        dr1.Cells[1].Value = dR["CX"].ToString();
+                        dr1.Cells[2].Value = dR["PFBZ"].ToString();
+                        dr1.Cells[3].Value = dR["XZ"].ToString();
+                        this.dataGridViewBtg_SDJN_XZ.Rows.Add(dr1);
+
+                    }
+                }
+                //dataGridViewStaff.DataSource = dt_wait;
+                //dataGridViewStaff.Sort(dataGridViewStaff.Columns["职务ID"], ListSortDirection.Ascending);
+            }
+            catch (Exception)
+            {
+
+            }
         }
         private void init_datagrid()
         {
@@ -3056,6 +3136,108 @@ namespace exhaustDetect
                 mainPanel.stationcontrol.setStationLshCount(mainPanel.stationid, "0");
                 MessageBox.Show("业务流水号已清零.", "系统提示");
             }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+            ZYJS_XZGB btgxz = new ZYJS_XZGB();
+            btgxz.WLDate20011001btgxz = textBoxBTGWLZY.Text;
+            btgxz.ZRDate20011001btgxz = textBoxBTGZRXQ.Text;
+            btgxz.onlyUseThis = checkBoxBtgXz.Checked;
+            btgxz.XZTABLE = comboBoxBTGXZTABLE.SelectedIndex;
+            btgxz.USESDJNXZ = checkBoxBTG_SDJN.Checked;
+            if (gbdal.updateZYJS_XZGB(btgxz))
+                MessageBox.Show("保存成功");
+            else
+                MessageBox.Show("保存失败");
+        }
+
+        private void comboBoxBTGXZTABLE_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable vmasxzdt = gbdal.Get_ALL_BTG_XZBZ(comboBoxBTGXZTABLE.SelectedIndex);
+                if (vmasxzdt != null)
+                {
+                    dataGridViewBTGXZ.DataSource = vmasxzdt;
+                    //dataGridViewVmasXz1.DataSource = vmasxzdt;
+                }
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show("读取限值表出现异常：" + er.Message);
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string cx, pfbz, xz;
+            double xz_temp;
+            cx = comboBoxBtg_Cx.Text;
+            pfbz = comboBoxBtg_PFBZ.Text;
+            xz = textBoxBtg_xz.Text;
+            if (!double.TryParse(xz, out xz_temp))
+            {
+                MessageBox.Show("限值格式不正确" );
+                return;
+            }
+            if (mainPanel.logininfcontrol.checkSdJnXzAlive(cx,pfbz))
+            {
+                MessageBox.Show("该项限值已存在，不能重复添加", "系统提示");
+                return;
+            }
+            if (mainPanel.logininfcontrol.saveSdjnxz(cx, pfbz,xz))
+            {                
+                MessageBox.Show("添加成功", "系统提示");
+            }
+            else
+                MessageBox.Show("添加失败", "系统提示");
+            ref_SdjnBtgXz();
+        }
+
+        private void dataGridViewBtg_SDJN_XZ_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                string cx, pfbz, xz;
+                double xz_temp;
+                if (e.ColumnIndex == dataGridViewBtg_SDJN_XZ.Columns["btnsave"].Index)
+                {
+                    int index = e.RowIndex;
+                    cx = dataGridViewBtg_SDJN_XZ.Rows[index].Cells[1].Value.ToString();
+                    pfbz = dataGridViewBtg_SDJN_XZ.Rows[index].Cells[2].Value.ToString();
+                    xz = dataGridViewBtg_SDJN_XZ.Rows[index].Cells[3].Value.ToString();
+                    if (!double.TryParse(xz, out xz_temp))
+                    {
+                        MessageBox.Show("限值格式不正确");
+                        return;
+                    }
+                    if (mainPanel.logininfcontrol.updateSdydxz(cx,pfbz,xz))
+                    {
+                        MessageBox.Show("信息更改成功", "系统提示");
+                    }
+                    else
+                        MessageBox.Show("未知原因导致信息更改失败", "系统提示");
+                }
+                else if (e.ColumnIndex == dataGridViewBtg_SDJN_XZ.Columns["btndelete"].Index)
+                {
+                    int index = e.RowIndex;
+                    cx = dataGridViewBtg_SDJN_XZ.Rows[index].Cells[1].Value.ToString();
+                    pfbz = dataGridViewBtg_SDJN_XZ.Rows[index].Cells[2].Value.ToString();
+
+                    mainPanel.logininfcontrol.deleteOneSdjnXz(cx, pfbz);
+                    MessageBox.Show("删除成功", "系统提示");
+                    ref_SdjnBtgXz();
+                }
+            }
+            catch
+            { }
         }
 
         private void button8_Click(object sender, EventArgs e)

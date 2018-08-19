@@ -2754,7 +2754,7 @@ namespace exhaustDetect
                         textBoxWXFY.Text = caratwait.WXFY;
 
                     }
-                    else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HHZNNETMODE)
+                    else if ((mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HHZNNETMODE)||caratwait.SOURCE=="1")//如果是红河州联网或者由web接口登录 的车
                     {
                         labelCLPH.Text = modelbj.CLHP;
                         labelCPYS.Text = modelbj.HPZL;

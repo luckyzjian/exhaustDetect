@@ -182,7 +182,20 @@
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.dataGridViewSDSXZ = new System.Windows.Forms.DataGridView();
             this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.buttonSaveBtg = new System.Windows.Forms.Button();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.button16 = new System.Windows.Forms.Button();
+            this.label169 = new System.Windows.Forms.Label();
+            this.label168 = new System.Windows.Forms.Label();
+            this.label167 = new System.Windows.Forms.Label();
+            this.textBoxBtg_xz = new System.Windows.Forms.TextBox();
+            this.comboBoxBtg_PFBZ = new System.Windows.Forms.ComboBox();
+            this.comboBoxBtg_Cx = new System.Windows.Forms.ComboBox();
+            this.dataGridViewBtg_SDJN_XZ = new System.Windows.Forms.DataGridView();
+            this.checkBoxBTG_SDJN = new System.Windows.Forms.CheckBox();
+            this.button15 = new System.Windows.Forms.Button();
+            this.dataGridViewBTGXZ = new System.Windows.Forms.DataGridView();
+            this.comboBoxBTGXZTABLE = new System.Windows.Forms.ComboBox();
+            this.label166 = new System.Windows.Forms.Label();
             this.checkBoxBtgXz = new System.Windows.Forms.CheckBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label69 = new System.Windows.Forms.Label();
@@ -206,7 +219,6 @@
             this.label60 = new System.Windows.Forms.Label();
             this.textBoxBTGCLXH = new System.Windows.Forms.TextBox();
             this.label59 = new System.Windows.Forms.Label();
-            this.dataGridViewBTGXZ = new System.Windows.Forms.DataGridView();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.dataGridViewLUGDOWNXZ = new System.Windows.Forms.DataGridView();
             this.tabPage13 = new System.Windows.Forms.TabPage();
@@ -487,9 +499,11 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSDSXZ)).BeginInit();
             this.tabPage11.SuspendLayout();
+            this.panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBtg_SDJN_XZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBTGXZ)).BeginInit();
             this.panel10.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBTGXZ)).BeginInit();
             this.tabPage12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLUGDOWNXZ)).BeginInit();
             this.tabPage13.SuspendLayout();
@@ -2119,7 +2133,13 @@
             // 
             // tabPage11
             // 
-            this.tabPage11.Controls.Add(this.buttonSaveBtg);
+            this.tabPage11.Controls.Add(this.panel16);
+            this.tabPage11.Controls.Add(this.dataGridViewBtg_SDJN_XZ);
+            this.tabPage11.Controls.Add(this.checkBoxBTG_SDJN);
+            this.tabPage11.Controls.Add(this.button15);
+            this.tabPage11.Controls.Add(this.dataGridViewBTGXZ);
+            this.tabPage11.Controls.Add(this.comboBoxBTGXZTABLE);
+            this.tabPage11.Controls.Add(this.label166);
             this.tabPage11.Controls.Add(this.checkBoxBtgXz);
             this.tabPage11.Controls.Add(this.panel10);
             this.tabPage11.Controls.Add(this.label67);
@@ -2141,7 +2161,6 @@
             this.tabPage11.Controls.Add(this.label60);
             this.tabPage11.Controls.Add(this.textBoxBTGCLXH);
             this.tabPage11.Controls.Add(this.label59);
-            this.tabPage11.Controls.Add(this.dataGridViewBTGXZ);
             this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Size = new System.Drawing.Size(1044, 420);
@@ -2149,15 +2168,168 @@
             this.tabPage11.Text = "不透光烟度法限值";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
-            // buttonSaveBtg
+            // panel16
             // 
-            this.buttonSaveBtg.Location = new System.Drawing.Point(860, 34);
-            this.buttonSaveBtg.Name = "buttonSaveBtg";
-            this.buttonSaveBtg.Size = new System.Drawing.Size(75, 23);
-            this.buttonSaveBtg.TabIndex = 130;
-            this.buttonSaveBtg.Text = "保存";
-            this.buttonSaveBtg.UseVisualStyleBackColor = true;
-            this.buttonSaveBtg.Click += new System.EventHandler(this.buttonSaveBtg_Click);
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel16.Controls.Add(this.button16);
+            this.panel16.Controls.Add(this.label169);
+            this.panel16.Controls.Add(this.label168);
+            this.panel16.Controls.Add(this.label167);
+            this.panel16.Controls.Add(this.textBoxBtg_xz);
+            this.panel16.Controls.Add(this.comboBoxBtg_PFBZ);
+            this.panel16.Controls.Add(this.comboBoxBtg_Cx);
+            this.panel16.Location = new System.Drawing.Point(646, 324);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(301, 93);
+            this.panel16.TabIndex = 136;
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(211, 61);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 131;
+            this.button16.Text = "添加";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // label169
+            // 
+            this.label169.AutoSize = true;
+            this.label169.Font = new System.Drawing.Font("宋体", 11F);
+            this.label169.Location = new System.Drawing.Point(11, 64);
+            this.label169.Name = "label169";
+            this.label169.Size = new System.Drawing.Size(37, 15);
+            this.label169.TabIndex = 130;
+            this.label169.Text = "限值";
+            // 
+            // label168
+            // 
+            this.label168.AutoSize = true;
+            this.label168.Font = new System.Drawing.Font("宋体", 11F);
+            this.label168.Location = new System.Drawing.Point(11, 36);
+            this.label168.Name = "label168";
+            this.label168.Size = new System.Drawing.Size(67, 15);
+            this.label168.TabIndex = 129;
+            this.label168.Text = "排放标准";
+            // 
+            // label167
+            // 
+            this.label167.AutoSize = true;
+            this.label167.Font = new System.Drawing.Font("宋体", 11F);
+            this.label167.Location = new System.Drawing.Point(11, 8);
+            this.label167.Name = "label167";
+            this.label167.Size = new System.Drawing.Size(37, 15);
+            this.label167.TabIndex = 128;
+            this.label167.Text = "车型";
+            // 
+            // textBoxBtg_xz
+            // 
+            this.textBoxBtg_xz.Location = new System.Drawing.Point(84, 62);
+            this.textBoxBtg_xz.Name = "textBoxBtg_xz";
+            this.textBoxBtg_xz.Size = new System.Drawing.Size(121, 23);
+            this.textBoxBtg_xz.TabIndex = 2;
+            // 
+            // comboBoxBtg_PFBZ
+            // 
+            this.comboBoxBtg_PFBZ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBtg_PFBZ.FormattingEnabled = true;
+            this.comboBoxBtg_PFBZ.Items.AddRange(new object[] {
+            "国〇",
+            "国Ⅰ",
+            "国Ⅱ",
+            "国Ⅲ",
+            "国Ⅳ",
+            "国Ⅴ",
+            "国Ⅵ"});
+            this.comboBoxBtg_PFBZ.Location = new System.Drawing.Point(84, 34);
+            this.comboBoxBtg_PFBZ.Name = "comboBoxBtg_PFBZ";
+            this.comboBoxBtg_PFBZ.Size = new System.Drawing.Size(121, 22);
+            this.comboBoxBtg_PFBZ.TabIndex = 1;
+            // 
+            // comboBoxBtg_Cx
+            // 
+            this.comboBoxBtg_Cx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBtg_Cx.FormattingEnabled = true;
+            this.comboBoxBtg_Cx.Items.AddRange(new object[] {
+            "轻型车",
+            "重型车"});
+            this.comboBoxBtg_Cx.Location = new System.Drawing.Point(84, 6);
+            this.comboBoxBtg_Cx.Name = "comboBoxBtg_Cx";
+            this.comboBoxBtg_Cx.Size = new System.Drawing.Size(121, 22);
+            this.comboBoxBtg_Cx.TabIndex = 0;
+            // 
+            // dataGridViewBtg_SDJN_XZ
+            // 
+            this.dataGridViewBtg_SDJN_XZ.AllowUserToAddRows = false;
+            this.dataGridViewBtg_SDJN_XZ.AllowUserToDeleteRows = false;
+            this.dataGridViewBtg_SDJN_XZ.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewBtg_SDJN_XZ.Location = new System.Drawing.Point(4, 324);
+            this.dataGridViewBtg_SDJN_XZ.Name = "dataGridViewBtg_SDJN_XZ";
+            this.dataGridViewBtg_SDJN_XZ.RowHeadersVisible = false;
+            this.dataGridViewBtg_SDJN_XZ.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridViewBtg_SDJN_XZ.RowTemplate.Height = 23;
+            this.dataGridViewBtg_SDJN_XZ.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewBtg_SDJN_XZ.Size = new System.Drawing.Size(636, 93);
+            this.dataGridViewBtg_SDJN_XZ.TabIndex = 135;
+            this.dataGridViewBtg_SDJN_XZ.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBtg_SDJN_XZ_CellContentClick);
+            // 
+            // checkBoxBTG_SDJN
+            // 
+            this.checkBoxBTG_SDJN.AutoSize = true;
+            this.checkBoxBTG_SDJN.Location = new System.Drawing.Point(49, 300);
+            this.checkBoxBTG_SDJN.Name = "checkBoxBTG_SDJN";
+            this.checkBoxBTG_SDJN.Size = new System.Drawing.Size(166, 18);
+            this.checkBoxBTG_SDJN.TabIndex = 134;
+            this.checkBoxBTG_SDJN.Text = "山东济宁烟度限值要求";
+            this.checkBoxBTG_SDJN.UseVisualStyleBackColor = true;
+            // 
+            // button15
+            // 
+            this.button15.Font = new System.Drawing.Font("宋体", 11F);
+            this.button15.Location = new System.Drawing.Point(390, 100);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(106, 23);
+            this.button15.TabIndex = 133;
+            this.button15.Text = "查询";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // dataGridViewBTGXZ
+            // 
+            this.dataGridViewBTGXZ.AllowUserToAddRows = false;
+            this.dataGridViewBTGXZ.AllowUserToDeleteRows = false;
+            this.dataGridViewBTGXZ.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewBTGXZ.Location = new System.Drawing.Point(4, 128);
+            this.dataGridViewBTGXZ.Name = "dataGridViewBTGXZ";
+            this.dataGridViewBTGXZ.ReadOnly = true;
+            this.dataGridViewBTGXZ.RowHeadersVisible = false;
+            this.dataGridViewBTGXZ.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridViewBTGXZ.RowTemplate.Height = 23;
+            this.dataGridViewBTGXZ.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewBTGXZ.Size = new System.Drawing.Size(943, 163);
+            this.dataGridViewBTGXZ.TabIndex = 6;
+            // 
+            // comboBoxBTGXZTABLE
+            // 
+            this.comboBoxBTGXZTABLE.Font = new System.Drawing.Font("宋体", 11F);
+            this.comboBoxBTGXZTABLE.FormattingEnabled = true;
+            this.comboBoxBTGXZTABLE.Items.AddRange(new object[] {
+            "不透光限值",
+            "烟度限值数据"});
+            this.comboBoxBTGXZTABLE.Location = new System.Drawing.Point(134, 100);
+            this.comboBoxBTGXZTABLE.Name = "comboBoxBTGXZTABLE";
+            this.comboBoxBTGXZTABLE.Size = new System.Drawing.Size(222, 23);
+            this.comboBoxBTGXZTABLE.TabIndex = 132;
+            // 
+            // label166
+            // 
+            this.label166.AutoSize = true;
+            this.label166.Location = new System.Drawing.Point(46, 104);
+            this.label166.Name = "label166";
+            this.label166.Size = new System.Drawing.Size(49, 14);
+            this.label166.TabIndex = 131;
+            this.label166.Text = "限值表";
             // 
             // checkBoxBtgXz
             // 
@@ -2250,146 +2422,145 @@
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("宋体", 11F);
-            this.button10.Location = new System.Drawing.Point(860, 300);
+            this.button10.Location = new System.Drawing.Point(870, 239);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 49);
             this.button10.TabIndex = 20;
             this.button10.Text = "添加";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Visible = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // label65
             // 
             this.label65.AutoSize = true;
             this.label65.Font = new System.Drawing.Font("宋体", 11F);
-            this.label65.Location = new System.Drawing.Point(450, 334);
+            this.label65.Location = new System.Drawing.Point(450, 271);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(112, 15);
             this.label65.TabIndex = 19;
             this.label65.Text = "发动机生产企业";
+            this.label65.Visible = false;
             // 
             // textBoxBTGFDJSCQY
             // 
             this.textBoxBTGFDJSCQY.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGFDJSCQY.Location = new System.Drawing.Point(564, 329);
+            this.textBoxBTGFDJSCQY.Location = new System.Drawing.Point(564, 266);
             this.textBoxBTGFDJSCQY.Name = "textBoxBTGFDJSCQY";
             this.textBoxBTGFDJSCQY.Size = new System.Drawing.Size(290, 24);
             this.textBoxBTGFDJSCQY.TabIndex = 18;
+            this.textBoxBTGFDJSCQY.Visible = false;
             // 
             // label64
             // 
             this.label64.AutoSize = true;
             this.label64.Font = new System.Drawing.Font("宋体", 11F);
-            this.label64.Location = new System.Drawing.Point(464, 305);
+            this.label64.Location = new System.Drawing.Point(464, 242);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(97, 15);
             this.label64.TabIndex = 17;
             this.label64.Text = "车辆生产企业";
+            this.label64.Visible = false;
             // 
             // textBoxBTGCLSCQY
             // 
             this.textBoxBTGCLSCQY.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGCLSCQY.Location = new System.Drawing.Point(564, 300);
+            this.textBoxBTGCLSCQY.Location = new System.Drawing.Point(564, 237);
             this.textBoxBTGCLSCQY.Name = "textBoxBTGCLSCQY";
             this.textBoxBTGCLSCQY.Size = new System.Drawing.Size(290, 24);
             this.textBoxBTGCLSCQY.TabIndex = 16;
+            this.textBoxBTGCLSCQY.Visible = false;
             // 
             // label63
             // 
             this.label63.AutoSize = true;
             this.label63.Font = new System.Drawing.Font("宋体", 11F);
-            this.label63.Location = new System.Drawing.Point(271, 305);
+            this.label63.Location = new System.Drawing.Point(271, 242);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(67, 15);
             this.label63.TabIndex = 15;
             this.label63.Text = "车辆类型";
+            this.label63.Visible = false;
             // 
             // textBoxBTGCLLX
             // 
             this.textBoxBTGCLLX.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGCLLX.Location = new System.Drawing.Point(344, 300);
+            this.textBoxBTGCLLX.Location = new System.Drawing.Point(344, 237);
             this.textBoxBTGCLLX.Name = "textBoxBTGCLLX";
             this.textBoxBTGCLLX.Size = new System.Drawing.Size(106, 24);
             this.textBoxBTGCLLX.TabIndex = 14;
+            this.textBoxBTGCLLX.Visible = false;
             // 
             // label62
             // 
             this.label62.AutoSize = true;
             this.label62.Font = new System.Drawing.Font("宋体", 11F);
-            this.label62.Location = new System.Drawing.Point(271, 335);
+            this.label62.Location = new System.Drawing.Point(271, 272);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(97, 15);
             this.label62.TabIndex = 13;
             this.label62.Text = "型式核准限值";
+            this.label62.Visible = false;
             // 
             // textBoxBTGFDJXSHZZ
             // 
             this.textBoxBTGFDJXSHZZ.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGFDJXSHZZ.Location = new System.Drawing.Point(368, 330);
+            this.textBoxBTGFDJXSHZZ.Location = new System.Drawing.Point(368, 267);
             this.textBoxBTGFDJXSHZZ.Name = "textBoxBTGFDJXSHZZ";
             this.textBoxBTGFDJXSHZZ.Size = new System.Drawing.Size(82, 24);
             this.textBoxBTGFDJXSHZZ.TabIndex = 12;
+            this.textBoxBTGFDJXSHZZ.Visible = false;
             // 
             // label61
             // 
             this.label61.AutoSize = true;
             this.label61.Font = new System.Drawing.Font("宋体", 11F);
-            this.label61.Location = new System.Drawing.Point(71, 335);
+            this.label61.Location = new System.Drawing.Point(71, 272);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(82, 15);
             this.label61.TabIndex = 11;
             this.label61.Text = "发动机型号";
+            this.label61.Visible = false;
             // 
             // textBoxBTGFDJXH
             // 
             this.textBoxBTGFDJXH.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGFDJXH.Location = new System.Drawing.Point(154, 330);
+            this.textBoxBTGFDJXH.Location = new System.Drawing.Point(154, 267);
             this.textBoxBTGFDJXH.Name = "textBoxBTGFDJXH";
             this.textBoxBTGFDJXH.Size = new System.Drawing.Size(106, 24);
             this.textBoxBTGFDJXH.TabIndex = 10;
+            this.textBoxBTGFDJXH.Visible = false;
             // 
             // label60
             // 
             this.label60.AutoSize = true;
             this.label60.Font = new System.Drawing.Font("宋体", 11F);
-            this.label60.Location = new System.Drawing.Point(81, 305);
+            this.label60.Location = new System.Drawing.Point(81, 242);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(67, 15);
             this.label60.TabIndex = 9;
             this.label60.Text = "车辆型号";
+            this.label60.Visible = false;
             // 
             // textBoxBTGCLXH
             // 
             this.textBoxBTGCLXH.Font = new System.Drawing.Font("宋体", 11F);
-            this.textBoxBTGCLXH.Location = new System.Drawing.Point(154, 300);
+            this.textBoxBTGCLXH.Location = new System.Drawing.Point(154, 237);
             this.textBoxBTGCLXH.Name = "textBoxBTGCLXH";
             this.textBoxBTGCLXH.Size = new System.Drawing.Size(106, 24);
             this.textBoxBTGCLXH.TabIndex = 8;
+            this.textBoxBTGCLXH.Visible = false;
             // 
             // label59
             // 
             this.label59.AutoSize = true;
             this.label59.Font = new System.Drawing.Font("宋体", 11F);
-            this.label59.Location = new System.Drawing.Point(8, 312);
+            this.label59.Location = new System.Drawing.Point(8, 249);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(67, 30);
             this.label59.TabIndex = 7;
             this.label59.Text = "添加车型\r\n排放数据";
-            // 
-            // dataGridViewBTGXZ
-            // 
-            this.dataGridViewBTGXZ.AllowUserToAddRows = false;
-            this.dataGridViewBTGXZ.AllowUserToDeleteRows = false;
-            this.dataGridViewBTGXZ.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewBTGXZ.Location = new System.Drawing.Point(2, 97);
-            this.dataGridViewBTGXZ.Name = "dataGridViewBTGXZ";
-            this.dataGridViewBTGXZ.ReadOnly = true;
-            this.dataGridViewBTGXZ.RowHeadersVisible = false;
-            this.dataGridViewBTGXZ.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridViewBTGXZ.RowTemplate.Height = 23;
-            this.dataGridViewBTGXZ.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewBTGXZ.Size = new System.Drawing.Size(943, 197);
-            this.dataGridViewBTGXZ.TabIndex = 6;
+            this.label59.Visible = false;
             // 
             // tabPage12
             // 
@@ -2552,6 +2723,7 @@
             this.button9.TabIndex = 8;
             this.button9.Text = "保存";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // tabPage5
             // 
@@ -5209,11 +5381,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSDSXZ)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBtg_SDJN_XZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBTGXZ)).EndInit();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBTGXZ)).EndInit();
             this.tabPage12.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLUGDOWNXZ)).EndInit();
             this.tabPage13.ResumeLayout(false);
@@ -5457,7 +5632,6 @@
         private System.Windows.Forms.TextBox textBoxAHLINEID;
         private System.Windows.Forms.Label label76;
         private System.Windows.Forms.CheckBox checkBoxBtgXz;
-        private System.Windows.Forms.Button buttonSaveBtg;
         private System.Windows.Forms.Label label77;
         private System.Windows.Forms.TextBox textBoxNhWsdl;
         private System.Windows.Forms.Label label78;
@@ -5690,6 +5864,19 @@
         private System.Windows.Forms.ComboBox comboBoxLshRule;
         private System.Windows.Forms.ComboBox comboBoxJHAREA;
         private System.Windows.Forms.Label label165;
+        private System.Windows.Forms.ComboBox comboBoxBTGXZTABLE;
+        private System.Windows.Forms.Label label166;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.CheckBox checkBoxBTG_SDJN;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.ComboBox comboBoxBtg_PFBZ;
+        private System.Windows.Forms.ComboBox comboBoxBtg_Cx;
+        private System.Windows.Forms.DataGridView dataGridViewBtg_SDJN_XZ;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Label label169;
+        private System.Windows.Forms.Label label168;
+        private System.Windows.Forms.Label label167;
+        private System.Windows.Forms.TextBox textBoxBtg_xz;
     }
 }
 

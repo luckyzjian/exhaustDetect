@@ -603,9 +603,9 @@ namespace SYS_DAL
         }
         #endregion
         #region 根据id号查询一条VMAS限值
-        public DataTable Get_ALL_BTG_XZBZ()
+        public DataTable Get_ALL_BTG_XZBZ(int btgxztable)
         {
-            string sql = "select * from [不透光限值]";
+            string sql = "";if (btgxztable == 0) sql = "select * from [不透光限值]"; else sql = "select * from [烟度限值数据]";
             try
             {
                 DataTable dt = DBHelperSQL.GetDataTable(sql);
@@ -780,6 +780,23 @@ namespace SYS_DAL
                     }
                     else
                         zyjs_xzgb.onlyUseThis = true;
+                    if (dt.Columns.Contains("XZTABLE"))
+                    {
+                        try
+                        {
+                            zyjs_xzgb.XZTABLE = int.Parse(dt.Rows[0]["XZTABLE"].ToString());
+                        }
+                        catch
+                        { zyjs_xzgb.XZTABLE = 0; }
+                    }
+                    else
+                        zyjs_xzgb.XZTABLE = 0;
+                    if (dt.Columns.Contains("USESDJNXZ"))
+                    {
+                        zyjs_xzgb.USESDJNXZ = (dt.Rows[0]["USESDJNXZ"].ToString() == "Y");
+                    }
+                    else
+                        zyjs_xzgb.USESDJNXZ = false;
                 }
                 return zyjs_xzgb;
             }
@@ -796,11 +813,13 @@ namespace SYS_DAL
         /// <returns>ZYJS_XZGB</returns>
         public  bool updateZYJS_XZGB(ZYJS_XZGB model)
         {
-            string sql = "update ZYJS_XZGB set ZRDate20011001btgxz=@ZRDate20011001btgxz,WLDate20011001btgxz=@WLDate20011001btgxz,ONLYTHIS=@ONLYTHIS";
+            string sql = "update ZYJS_XZGB set ZRDate20011001btgxz=@ZRDate20011001btgxz,WLDate20011001btgxz=@WLDate20011001btgxz,ONLYTHIS=@ONLYTHIS,XZTABLE=@XZTABLE,USESDJNXZ=@USESDJNXZ";
             SqlParameter[] spr ={
                                    new SqlParameter("@ZRDate20011001btgxz",model.ZRDate20011001btgxz), //1
                                    new SqlParameter("@WLDate20011001btgxz",model.WLDate20011001btgxz),
-                                   new SqlParameter("@ONLYTHIS",model.onlyUseThis?"Y":"N")
+                                   new SqlParameter("@ONLYTHIS",model.onlyUseThis?"Y":"N"),
+                                   new SqlParameter("@XZTABLE",model.XZTABLE.ToString("0")),
+                                   new SqlParameter("@USESDJNXZ",model.USESDJNXZ?"Y":"N")
                                };
             try
             {
@@ -870,7 +889,7 @@ namespace SYS_DAL
         /// <param name="clxh">车辆型号</param>
         /// <param name="lx">类型 0：联合查询 1：按发动机型号查询  2：按车辆型号查询  </param>
         /// <returns></returns>
-        public bool Get_BTG_XZGB_JH(String fdjxh, string clxh, int lx, int type, out double xz)
+        public bool Get_BTG_XZGB_JH(String fdjxh, string clxh, int lx, int type,string edgl, out double xz)
         {
             xz = 0;
             string sql = "";
@@ -878,6 +897,8 @@ namespace SYS_DAL
                 sql = "select LIMITVALUE from [烟度限值数据] where UPPER(ENGINEMODEL)='" + fdjxh.ToUpper() + "' and UPPER(VEHICLEMODEL)='" + clxh.ToUpper() + "' and SMOKEVTYPE='" + type+"'";
             else if (lx == 1)
                 sql = "select LIMITVALUE from [烟度限值数据] where UPPER(ENGINEMODEL)='" + fdjxh.ToUpper() + "' and SMOKEVTYPE='" + type + "'";
+            else if (lx == 2)
+                sql = "select LIMITVALUE from [烟度限值数据] where UPPER(ENGINEMODEL)='" + fdjxh.ToUpper() + "' and SMOKEVTYPE='" + type + "' and MAXNETPOWER=" + edgl;
             else
                 sql = "select LIMITVALUE from [烟度限值数据] where UPPER(VEHICLEMODEL)='" + clxh.ToUpper() + "' and SMOKEVTYPE='" + type + "'";
             ini.INIIO.saveLogInf("查询不透光限值语句：" + sql);

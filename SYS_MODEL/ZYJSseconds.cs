@@ -64,6 +64,12 @@ namespace SYS.Model
             get { return mmk; }
             set { mmk = value; }
         }
+        private string mmyw;
+        public string MMYW
+        {
+            get { return mmyw; }
+            set { mmyw = value; }
+        }
         public string JYLSH { set; get; }
         public string JYCS { set; get; }
         public string CYDS { set; get; }

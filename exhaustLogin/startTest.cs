@@ -16870,6 +16870,7 @@ namespace exhaustDetect
                 zyjsmodel.MMLB = model.MMLB.Remove(model.MMLB.Length - 1);
                 zyjsmodel.MMZS = model.MMFDJZS.Remove(model.MMFDJZS.Length - 1);
                 zyjsmodel.MMK = model.MMYDZDS.Remove(model.MMYDZDS.Length - 1);
+                zyjsmodel.MMYW=model.MMYW.Remove(model.MMYW.Length - 1);
                 if (zyjsdal.Save_ZYJSseconds(zyjsmodel) > 0)
                     ini.INIIO.saveLogInf( "过程数据保存本地成功");
                 else
@@ -17436,6 +17437,7 @@ namespace exhaustDetect
                 model.MMXDSD += dr["相对湿度"].ToString() + ",";
                 model.MMHJWD += dr["环境温度"].ToString() + ",";
                 model.MMNL += dr["扭力"].ToString() + ",";
+                model.MMYW += dr["油温"].ToString() + ",";
                 model.MMNO +=(dtSeconds.Columns.Contains("NO")?dr["NO"].ToString():"-") + ",";
 
                 mmbtgd += dr["不透光度"].ToString() + ",";
@@ -18496,6 +18498,37 @@ namespace exhaustDetect
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HHZNNETMODE)
             {
                 if (carLogin.modelbj.GYFS == "闭环电喷" && carLogin.modelbj.JHZZ == "是"&&carLogin.modelbj.SFYQBF=="三元催化")
+                {
+                    if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
+                    {
+                        sdsdata.ZHPD = "合格";
+                        return true;
+                    }
+                    else
+                    {
+                        sdsdata.ZHPD = "不合格";
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    sdsdata.LAMDAHIGHPD = "";
+                    if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
+                    {
+                        sdsdata.ZHPD = "合格";
+                        return true;
+                    }
+                    else
+                    {
+                        sdsdata.ZHPD = "不合格";
+                        return false;
+                    }
+                }
+            }
+            else if (carLogin.carbj.SOURCE=="1")
+            {
+                if (carLogin.modelbj.GYFS == "闭环电喷" && carLogin.modelbj.JHZZ == "是" && carLogin.modelbj.SFYQBF == "三元催化")
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -20392,16 +20425,16 @@ namespace exhaustDetect
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     //if(true)
                     {
-                        if (int.Parse(carLogin.modelbj.ZZL) < 3500)//轻型车
+                        if (int.Parse(carLogin.modelbj.ZZL) <= 3500)//轻型车
                         {
                             ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配");
-                            isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 0,1, out btgxz);
+                            isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 0,1, carLogin.modelbj.EDGL, out btgxz);
                             if (isFindXzSuccess)
                                 ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配成功：" + btgxz.ToString());
                             else
                             {
                                 ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配失败，按【车辆型号】匹配");
-                                isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2,1, out btgxz);
+                                isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2,1, carLogin.modelbj.EDGL, out btgxz);
                                 if (isFindXzSuccess)
                                     ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配成功：" + btgxz.ToString());
                                 else
@@ -20411,7 +20444,7 @@ namespace exhaustDetect
                         else//重型车
                         {
                             ini.INIIO.saveLogInf("重型车按【发动机型号】匹配");
-                            isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 1,2, out btgxz);
+                            isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 1,2, carLogin.modelbj.EDGL, out btgxz);
                             if (isFindXzSuccess)
                                 ini.INIIO.saveLogInf("重型车按【发动机型号】匹配成功：" + btgxz.ToString());
                             else
@@ -20422,54 +20455,110 @@ namespace exhaustDetect
                     }
                     else
                     {
-                        if (int.Parse(carLogin.modelbj.ZZL) < 3500)//轻型车
+                        if (zyjs_xzgb.XZTABLE == 0)//取“不透光限值”数据来匹配
                         {
-                            ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配");
-                            isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 0, out btgxz);
-                            if (isFindXzSuccess)
-                                ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配成功：" + btgxz.ToString());
-                            else
+                            if (int.Parse(carLogin.modelbj.ZZL) <= 3500)//轻型车
                             {
-                                ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配失败，按【车辆型号】匹配");
-                                isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2, out btgxz);
+                                ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配");
+                                isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 0,  out btgxz);
                                 if (isFindXzSuccess)
-                                    ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配成功：" + btgxz.ToString());
+                                    ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配成功：" + btgxz.ToString());
                                 else
-                                    ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配失败");
+                                {
+                                    ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配失败，按【车辆型号】匹配");
+                                    isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2,  out btgxz);
+                                    if (isFindXzSuccess)
+                                        ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配成功：" + btgxz.ToString());
+                                    else
+                                        ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配失败");
+                                }
+                            }
+                            else//重型车
+                            {
+                                ini.INIIO.saveLogInf("重型车按【发动机型号】匹配");
+                                isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 1,  out btgxz);
+                                if (isFindXzSuccess)
+                                    ini.INIIO.saveLogInf("重型车按【发动机型号】匹配成功：" + btgxz.ToString());
+                                else
+                                {
+                                    ini.INIIO.saveLogInf("重型车按【发动机型号】匹配失败");
+                                }
                             }
                         }
-                        else//重型车
+                        else//取“烟度限值数据”来匹配
                         {
-                            ini.INIIO.saveLogInf("重型车按【发动机型号】匹配");
-                            isFindXzSuccess = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 1, out btgxz);
-                            if (isFindXzSuccess)
-                                ini.INIIO.saveLogInf("重型车按【发动机型号】匹配成功：" + btgxz.ToString());
-                            else
+                            if (int.Parse(carLogin.modelbj.ZZL) <= 3500)//轻型车
                             {
-                                ini.INIIO.saveLogInf("重型车按【发动机型号】匹配失败");
+                                ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配");
+                                isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 0, 1,carLogin.modelbj.EDGL, out btgxz);
+                                if (isFindXzSuccess)
+                                    ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配成功：" + btgxz.ToString());
+                                else
+                                {
+                                    ini.INIIO.saveLogInf("轻型车按【发动机型号+车辆型号】匹配失败，按【车辆型号】匹配");
+                                    isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2, 1, carLogin.modelbj.EDGL, out btgxz);
+                                    if (isFindXzSuccess)
+                                        ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配成功：" + btgxz.ToString());
+                                    else
+                                        ini.INIIO.saveLogInf("轻型车按【车辆型号】匹配失败");
+                                }
+                            }
+                            else//重型车
+                            {
+                                ini.INIIO.saveLogInf("重型车按【发动机型号】+【额定功率】匹配");
+                                isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 2, 2, carLogin.modelbj.EDGL, out btgxz);
+                                if (isFindXzSuccess)
+                                    ini.INIIO.saveLogInf("轻型车按【发动机型号+额定功率】匹配成功：" + btgxz.ToString());
+                                else
+                                {
+                                    ini.INIIO.saveLogInf("重型车按【发动机型号】匹配");
+                                    isFindXzSuccess = gbdal.Get_BTG_XZGB_JH(carLogin.modelbj.FDJXH, carLogin.modelbj.XH, 1, 2, carLogin.modelbj.EDGL, out btgxz);
+                                    if (isFindXzSuccess)
+                                        ini.INIIO.saveLogInf("重型车按【发动机型号】匹配成功：" + btgxz.ToString());
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("重型车按【发动机型号】匹配失败");
+                                    }
+                                }
                             }
                         }
                     }
                     //BTG_XZGB btg_xz = gbdal.Get_BTG_XZGB(carLogin.modelbj.FDJXH);
                     if (!isFindXzSuccess)
-                    {                        
-                        if (MessageBox.Show("未找到该车辆型号及发动机型号相关限值信息！\r\n按GB3847-2005要求，2005年7月1日起生产的柴油车排放限值为该车型核准批准的自由加速排放烟度限值加上0.5\r\n未找到该信息可能影响检测结果的判定\r\n是否继续检测？", "系统提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                    {
+                        if (zyjs_xzgb.USESDJNXZ)//山东济宁没有匹配到限值的车辆按排放标准匹配表【山东烟度限值】
                         {
-                            enableButton(buttonOK,false);
-                            return;
-                        }
-                        zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
-                        if (carLogin.modelbj.JQFS.Contains("自然") || (mainPanel.logininfcontrol.getComBoBoxItemsNAME("进气方式", carLogin.modelbj.JQFS)).Contains("自然"))
-                        {
-                            ini.INIIO.saveLogInf("进气方式：自然吸气");
-                            btgxz = Convert.ToDouble(zyjs_xzgb.ZRDate20011001btgxz);
-                            ini.INIIO.saveLogInf("光吸收系数:" + btgxz.ToString());
+                            if (mainPanel.logininfcontrol.getSdJnXz(int.Parse(carLogin.modelbj.ZZL) <= 3500 ? "轻型车" : "重型车", carLogin.modelbj.ZXBZ, out btgxz))
+                            {
+                                ini.INIIO.saveLogInf("光吸收系数限值:" + btgxz.ToString());
+                            }
+                            else
+                            {
+                                Msg(label1, panel4, "按山东济宁标准，未匹配到该车型限值，不能进行检测！");
+                                enableButton(buttonOK, false);
+                                return;
+                            }
                         }
                         else
                         {
-                            ini.INIIO.saveLogInf("进气方式：增压");
-                            btgxz = Convert.ToDouble(zyjs_xzgb.WLDate20011001btgxz);
-                            ini.INIIO.saveLogInf("光吸收系数:" + btgxz.ToString());
+                            if (MessageBox.Show("未找到该车辆型号及发动机型号相关限值信息！\r\n按GB3847-2005要求，2005年7月1日起生产的柴油车排放限值为该车型核准批准的自由加速排放烟度限值加上0.5\r\n未找到该信息可能影响检测结果的判定\r\n是否继续检测？", "系统提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                            {
+                                enableButton(buttonOK, false);
+                                return;
+                            }
+                            zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
+                            if (carLogin.modelbj.JQFS.Contains("自然") || (mainPanel.logininfcontrol.getComBoBoxItemsNAME("进气方式", carLogin.modelbj.JQFS)).Contains("自然"))
+                            {
+                                ini.INIIO.saveLogInf("进气方式：自然吸气");
+                                btgxz = Convert.ToDouble(zyjs_xzgb.ZRDate20011001btgxz);
+                                ini.INIIO.saveLogInf("光吸收系数:" + btgxz.ToString());
+                            }
+                            else
+                            {
+                                ini.INIIO.saveLogInf("进气方式：增压");
+                                btgxz = Convert.ToDouble(zyjs_xzgb.WLDate20011001btgxz);
+                                ini.INIIO.saveLogInf("光吸收系数:" + btgxz.ToString());
+                            }
                         }
                     }
                 }
@@ -20909,7 +20998,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            if (carLogin.modelbj.CLLX.StartsWith("M2")|| carLogin.modelbj.CLLX.Contains("两轮"))//二轮摩托车
+                            if (carLogin.modelbj.CLLX.StartsWith("M2")|| carLogin.modelbj.CLLX.Contains("两轮") || carLogin.modelbj.CLLX.Contains("二轮"))//二轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2010-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {
@@ -20970,7 +21059,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            if (carLogin.modelbj.CLLX.StartsWith("M2") || carLogin.modelbj.CLLX.Contains("两轮"))//二轮摩托车
+                            if (carLogin.modelbj.CLLX.StartsWith("M2") || carLogin.modelbj.CLLX.Contains("两轮") || carLogin.modelbj.CLLX.Contains("二轮"))//二轮摩托车
                             {
                                 if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2003-07-01")) >= 0 && DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2010-07-01")) < 0)    //1995年7月1日到2000年7月1日生产的第一类轻型汽车
                                 {
@@ -21218,6 +21307,110 @@ namespace exhaustDetect
                     model.RYPH = modelInf.RYPH;
                     model.CCS = modelInf.CCS;
                     
+
+                }
+
+                else if (carLogin.carbj.SOURCE=="1")
+                {
+                    model.CLID = modelWait.CLID;
+                    if (mainPanel.NetMode == mainPanel.JINGHUANETMODE)
+                    {
+                        if (mainPanel.jhwebinf.checkprint)//如果上传的时候 验证打印了，则CLID设为验证过后的报告编号
+                        {
+                            model.CLID = modelWait.JCBGBH;
+                        }
+                        else                              //如果未验证，则用之前平台返回 的ID号为车辆ID号
+                        {
+                            model.CLID = modelWait.ECRYPT;
+                        }
+                        model.wjy = carLogin.carbjJh.REGAPPEARANCEPERSON;
+                    }
+                    model.STATIONID = mainPanel.stationid;
+                    model.LINEID = mainPanel.lineid;
+                    model.ZXBZ = modelInf.ZXBZ;
+                    if (mainPanel.NetMode == mainPanel.JXNETMODE)
+                    {
+                        model.ZXBZ = mainPanel.jxinterface.JX_EMISSIONSTANDARD.GetValue(carLogin.jxthiscarinf.emissionStandard, "");
+                    }
+                    if (mainPanel.NetMode == mainPanel.NHNETMODE)
+                    {
+                        model.ZXBZ = carLogin.vehicleinfo.EPSign;
+                    }
+                    model.DLSJ = modelWait.DLSJ;
+                    model.JCSJ = jcsj;
+                    model.JCFF = modelWait.JCFF;
+                    model.XSLC = modelWait.XSLC;
+                    model.JCJG = jcjg;
+                    model.JCCS = modelWait.JCCS;
+                    model.LSH = modelWait.JCBGBH;
+                    if (mainPanel.NetMode == mainPanel.DALINETMODE)
+                    {
+                        model.LSH = dalijcbgbh;
+                    }
+                    model.CLHP = modelInf.CLHP;//1
+                    model.CPYS = modelInf.CPYS;
+                    model.CLLX = modelInf.CLLX;
+                    model.CZ = modelInf.CZ;
+                    model.SYXZ = modelInf.SYXZ;
+                    model.PP = modelInf.PP;//5
+                    model.XH = modelInf.XH;
+                    model.CLSBM = modelInf.CLSBM;
+                    model.FDJHM = modelInf.FDJHM;
+                    model.FDJXH = modelInf.FDJXH;
+                    model.SCQY = modelInf.SCQY;//10
+                    model.HDZK = modelInf.HDZK;
+                    model.JSSZK = modelInf.JSSZK;
+                    model.ZZL = modelInf.ZZL;
+                    model.HDZZL = modelInf.HDZZL;
+                    model.ZBZL = modelInf.ZBZL;//15
+                    model.JZZL = modelInf.JZZL;
+                    model.ZCRQ = modelInf.ZCRQ;
+                    model.SCRQ = modelInf.SCRQ;
+                    model.FDJPL = modelInf.FDJPL;
+                    model.RLZL = modelInf.RLZL;
+                    model.EDGL = modelInf.EDGL;
+                    model.EDZS = modelInf.EDZS;
+                    model.BSQXS = modelInf.BSQXS;
+                    model.DWS = modelInf.DWS;
+                    model.GYFS = modelInf.GYFS;
+                    model.DPFS = modelInf.DPFS; //modelInf.DPFS;
+                    model.JQFS = modelInf.JQFS;
+                    model.QGS = modelInf.QGS;
+                    model.QDXS = modelInf.QDXS; //modelInf.QDXS;
+                    model.CHZZ = ""; //modelInf.CHZZ;//30
+                    model.DLSP = modelInf.DLSP;
+                    model.SFSRL = modelInf.SFSRL;
+                    model.JHZZ = modelInf.JHZZ;
+                    model.OBD = modelInf.OBD;
+                    model.DKGYYB = modelInf.DKGYYB;//35
+                    model.LXDH = modelInf.LXDH;
+                    model.CZY = modelWait.CZY;
+                    model.JSY = modelWait.JSY;
+                    model.DLY = modelWait.DLY;//35
+                    if (mainPanel.NetMode == mainPanel.NHNETMODE)
+                    {
+                        model.JCZMC = mainPanel.stationinfmodel.STATIONNAME + "_" + mainPanel.nhwebinf.lineid;
+                    }
+                    else if (mainPanel.NetMode == mainPanel.DALINETMODE)
+                    {
+                        model.JCZMC = mainPanel.stationinfmodel.STATIONNAME + "_" + mainPanel.lineid;
+                    }
+                    else if (mainPanel.NetMode == mainPanel.JINGHUANETMODE)
+                    {
+                        model.JCZMC = mainPanel.stationinfmodel.STATIONNAME + "_" + mainPanel.jhwebinf.lineid;
+                    }
+                    else
+                    {
+                        model.JCZMC = mainPanel.stationinfmodel.STATIONNAME + "_" + mainPanel.lineid;
+                    }
+                    model.JCFY = modelWait.JCFY;
+                    model.SFJF = "N";
+                    model.TEST = modelWait.TEST;
+                    model.HPZL = modelInf.HPZL;
+                    model.QDLTQY = modelInf.QDLTQY;
+                    model.RYPH = modelInf.RYPH;
+                    model.CCS = modelInf.CCS;
+
 
                 }
                 else if (mainPanel.useHyDatabase)

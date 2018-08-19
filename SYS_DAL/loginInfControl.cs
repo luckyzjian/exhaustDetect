@@ -2370,6 +2370,8 @@ namespace SYS_DAL
                         model.ICCARDNO = dt.Rows[0]["ICCARDNO"].ToString();
                         model.DPFS = dt.Rows[0]["DPFS"].ToString();
                     }
+                    if(dt.Columns.Contains("SOURCE"))
+                        model.SOURCE = dt.Rows[0]["SOURCE"].ToString();
                 }
                 else
                     model.CLID = "-2";       //当服务器上没有找到本线时，本线编号置为-2，以免为0
@@ -3062,6 +3064,153 @@ namespace SYS_DAL
             }
         }
         #endregion
+
+
+
+
+        #region 获取所有的山东济宁限值
+        public DataTable getAllSdJnXz()
+        {
+            string sql = "select * from [山东烟度限值]";
+            try
+            {
+                DataTable dt = DBHelperSQL.GetDataTable(sql, CommandType.Text);
+                return dt;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+        #endregion
+        #region 检查山东济宁限值是否存在
+        public bool checkSdJnXzAlive(string cx, string pfbz)
+        {
+            string sql = "select * from [山东烟度限值] where CX='" + cx + "' and PFBZ='" + pfbz + "'";
+            try
+            {
+                DataTable dt = DBHelperSQL.GetDataTable(sql, CommandType.Text);
+                if (dt.Rows.Count > 0)
+                {
+                    return true;
+                }
+                else
+                    return false;       //当服务器上没有找到本线时，本线编号置为-2，以免为0
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+
+        }
+        #endregion
+        #region 查询山东济宁限值
+        public bool getSdJnXz(string cx, string pfbz,out double xz)
+        {
+            xz = 0;
+            string sql = "select * from [山东烟度限值] where CX='" + cx + "' and PFBZ='" + pfbz + "'";
+            try
+            {
+                DataTable dt = DBHelperSQL.GetDataTable(sql, CommandType.Text);
+                if (dt.Rows.Count > 0)
+                {
+                    xz = double.Parse(dt.Rows[0]["XZ"].ToString());
+                    return true;
+                }
+                else
+                    return false;       //当服务器上没有找到本线时，本线编号置为-2，以免为0
+            }
+            catch (Exception er)
+            {
+                ini.INIIO.saveLogInf("查询限值时发生异常：" + er.Message);
+                return false;
+            }
+
+        }
+        #endregion
+        public bool saveSdjnxz(string cx, string pfbz, string xz)
+        {
+            int i = 0;
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into [山东烟度限值] (");
+            strSql.Append("CX,");
+            strSql.Append("PFBZ,");
+            strSql.Append("XZ)");
+            strSql.Append(" values (@CX,@PFBZ,@XZ)");
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@CX", SqlDbType.VarChar,50),
+                 new SqlParameter("@PFBZ", SqlDbType.VarChar,50),
+                new SqlParameter("@XZ", SqlDbType.VarChar,50)
+                };
+            parameters[i++].Value = cx;
+            parameters[i++].Value = pfbz;
+            parameters[i++].Value = xz;
+            try
+            {
+                if (checkSdJnXzAlive(cx, pfbz))
+                {
+                    if (updateSdydxz(cx, pfbz,xz))
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    if (DBHelperSQL.Execute(strSql.ToString(), parameters) > 0)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+        
+        public bool updateSdydxz(string cx,string pfbz,string xz)
+        {
+            int i = 0;
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update [山东烟度限值] set ");
+            strSql.Append("XZ='"+xz+"'");
+            strSql.Append(" where CX='" + cx + "' and PFBZ='" + pfbz + "'");
+            
+            try
+            {
+                if (DBHelperSQL.Execute(strSql.ToString()) > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public bool deleteOneSdjnXz(string cx,string pfbz)
+        {
+            string sql = "delete from [山东烟度限值] where CX='" + cx + "' and PFBZ='"+pfbz+"'";
+            try
+            {
+                if (DBHelperSQL.GetDataTable(sql, CommandType.Text).Rows.Count > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
 

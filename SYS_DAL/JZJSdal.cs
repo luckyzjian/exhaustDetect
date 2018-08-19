@@ -250,8 +250,8 @@ namespace SYS_DAL
         /// <returns>int 0为失败，1为插入成功，2为更新成功</returns>
         public int Save_JZJSseconds(JZJSseconds jzjs)
         {
-            string sqli = "insert into JZJS_DATASECONDS(JYLSH,JYCS,CYDS,MMZS,MMZGL,MMZSGL,MMGLXZXS,MMJSGL,MMBTGD,MMDQYL,MMXDSD,MMHJWD,MMNL,CLID,CLHP,JCSJ,MMTIME,MMSX,MMLB,MMCS,MMGL,MMK,MMNO) values(@JYLSH,@JYCS,@CYDS,@MMZS,@MMZGL,@MMZSGL,@MMGLXZXS,@MMJSGL,@MMBTGD,@MMDQYL,@MMXDSD,@MMHJWD,@MMNL,@CLID,@CLHP,@JCSJ,@MMTIME,@MMSX,@MMLB,@MMCS,@MMGL,@MMK,@MMNO)";
-            string sqlu = "update JZJS_DATASECONDS set JYLSH=@JYLSH,JYCS=@JYCS,CYDS=@CYDS,MMZS=@MMZS,MMZGL=@MMZGL,MMZSGL=@MMZSGL,MMGLXZXS=@MMGLXZXS,MMJSGL=@MMJSGL,MMBTGD=@MMBTGD,MMDQYL=@MMDQYL,MMXDSD=@MMXDSD,MMHJWD=@MMHJWD,MMNL=@MMNL,CLHP=@CLHP,JCSJ=@JCSJ,MMTIME=@MMTIME,MMSX=@MMSX,MMLB=@MMLB,MMCS=@MMCS,MMGL=@MMGL,MMK=@MMK,MMNO=@MMNO where CLID=@CLID";
+            string sqli = "insert into JZJS_DATASECONDS(JYLSH,JYCS,CYDS,MMZS,MMZGL,MMZSGL,MMGLXZXS,MMJSGL,MMBTGD,MMDQYL,MMXDSD,MMHJWD,MMNL,CLID,CLHP,JCSJ,MMTIME,MMSX,MMLB,MMCS,MMGL,MMK,MMYW,MMNO) values(@JYLSH,@JYCS,@CYDS,@MMZS,@MMZGL,@MMZSGL,@MMGLXZXS,@MMJSGL,@MMBTGD,@MMDQYL,@MMXDSD,@MMHJWD,@MMNL,@CLID,@CLHP,@JCSJ,@MMTIME,@MMSX,@MMLB,@MMCS,@MMGL,@MMK,@MMYW,@MMNO)";
+            string sqlu = "update JZJS_DATASECONDS set JYLSH=@JYLSH,JYCS=@JYCS,CYDS=@CYDS,MMZS=@MMZS,MMZGL=@MMZGL,MMZSGL=@MMZSGL,MMGLXZXS=@MMGLXZXS,MMJSGL=@MMJSGL,MMBTGD=@MMBTGD,MMDQYL=@MMDQYL,MMXDSD=@MMXDSD,MMHJWD=@MMHJWD,MMNL=@MMNL,CLHP=@CLHP,JCSJ=@JCSJ,MMTIME=@MMTIME,MMSX=@MMSX,MMLB=@MMLB,MMCS=@MMCS,MMGL=@MMGL,MMK=@MMK,MMYW=@MMYW,MMNO=@MMNO where CLID=@CLID";
             SqlParameter[] spr ={
                                    new SqlParameter("@JYLSH",jzjs.JYLSH), //1
                                    new SqlParameter("@JYCS",jzjs.JYCS), //1
@@ -276,6 +276,7 @@ namespace SYS_DAL
                                    new SqlParameter("@MMCS",jzjs.MMCS),
                                    new SqlParameter("@MMGL",jzjs.MMGL),
                                    new SqlParameter("@MMK",jzjs.MMK),
+                                   new SqlParameter("@MMYW",jzjs.MMYW),
                                    new SqlParameter("@MMNO",jzjs.MMNO)
                                    //47
                                };
