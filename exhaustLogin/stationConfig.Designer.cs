@@ -191,7 +191,6 @@
             this.comboBoxBtg_PFBZ = new System.Windows.Forms.ComboBox();
             this.comboBoxBtg_Cx = new System.Windows.Forms.ComboBox();
             this.dataGridViewBtg_SDJN_XZ = new System.Windows.Forms.DataGridView();
-            this.checkBoxBTG_SDJN = new System.Windows.Forms.CheckBox();
             this.button15 = new System.Windows.Forms.Button();
             this.dataGridViewBTGXZ = new System.Windows.Forms.DataGridView();
             this.comboBoxBTGXZTABLE = new System.Windows.Forms.ComboBox();
@@ -472,6 +471,10 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.label170 = new System.Windows.Forms.Label();
+            this.comboBoxBTG_XZBZ = new System.Windows.Forms.ComboBox();
+            this.label171 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -528,6 +531,7 @@
             this.panel30.SuspendLayout();
             this.panel31.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel18.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2133,9 +2137,10 @@
             // 
             // tabPage11
             // 
+            this.tabPage11.Controls.Add(this.label170);
+            this.tabPage11.Controls.Add(this.panel18);
             this.tabPage11.Controls.Add(this.panel16);
             this.tabPage11.Controls.Add(this.dataGridViewBtg_SDJN_XZ);
-            this.tabPage11.Controls.Add(this.checkBoxBTG_SDJN);
             this.tabPage11.Controls.Add(this.button15);
             this.tabPage11.Controls.Add(this.dataGridViewBTGXZ);
             this.tabPage11.Controls.Add(this.comboBoxBTGXZTABLE);
@@ -2274,20 +2279,10 @@
             this.dataGridViewBtg_SDJN_XZ.TabIndex = 135;
             this.dataGridViewBtg_SDJN_XZ.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBtg_SDJN_XZ_CellContentClick);
             // 
-            // checkBoxBTG_SDJN
-            // 
-            this.checkBoxBTG_SDJN.AutoSize = true;
-            this.checkBoxBTG_SDJN.Location = new System.Drawing.Point(49, 300);
-            this.checkBoxBTG_SDJN.Name = "checkBoxBTG_SDJN";
-            this.checkBoxBTG_SDJN.Size = new System.Drawing.Size(166, 18);
-            this.checkBoxBTG_SDJN.TabIndex = 134;
-            this.checkBoxBTG_SDJN.Text = "山东济宁烟度限值要求";
-            this.checkBoxBTG_SDJN.UseVisualStyleBackColor = true;
-            // 
             // button15
             // 
             this.button15.Font = new System.Drawing.Font("宋体", 11F);
-            this.button15.Location = new System.Drawing.Point(390, 100);
+            this.button15.Location = new System.Drawing.Point(390, 126);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(106, 23);
             this.button15.TabIndex = 133;
@@ -2300,14 +2295,14 @@
             this.dataGridViewBTGXZ.AllowUserToAddRows = false;
             this.dataGridViewBTGXZ.AllowUserToDeleteRows = false;
             this.dataGridViewBTGXZ.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewBTGXZ.Location = new System.Drawing.Point(4, 128);
+            this.dataGridViewBTGXZ.Location = new System.Drawing.Point(4, 155);
             this.dataGridViewBTGXZ.Name = "dataGridViewBTGXZ";
             this.dataGridViewBTGXZ.ReadOnly = true;
             this.dataGridViewBTGXZ.RowHeadersVisible = false;
             this.dataGridViewBTGXZ.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dataGridViewBTGXZ.RowTemplate.Height = 23;
             this.dataGridViewBTGXZ.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewBTGXZ.Size = new System.Drawing.Size(943, 163);
+            this.dataGridViewBTGXZ.Size = new System.Drawing.Size(943, 136);
             this.dataGridViewBTGXZ.TabIndex = 6;
             // 
             // comboBoxBTGXZTABLE
@@ -2317,7 +2312,7 @@
             this.comboBoxBTGXZTABLE.Items.AddRange(new object[] {
             "不透光限值",
             "烟度限值数据"});
-            this.comboBoxBTGXZTABLE.Location = new System.Drawing.Point(134, 100);
+            this.comboBoxBTGXZTABLE.Location = new System.Drawing.Point(134, 126);
             this.comboBoxBTGXZTABLE.Name = "comboBoxBTGXZTABLE";
             this.comboBoxBTGXZTABLE.Size = new System.Drawing.Size(222, 23);
             this.comboBoxBTGXZTABLE.TabIndex = 132;
@@ -2325,7 +2320,7 @@
             // label166
             // 
             this.label166.AutoSize = true;
-            this.label166.Location = new System.Drawing.Point(46, 104);
+            this.label166.Location = new System.Drawing.Point(31, 130);
             this.label166.Name = "label166";
             this.label166.Size = new System.Drawing.Size(49, 14);
             this.label166.TabIndex = 131;
@@ -2384,7 +2379,7 @@
             // 
             this.label68.AutoSize = true;
             this.label68.Font = new System.Drawing.Font("宋体", 11F);
-            this.label68.Location = new System.Drawing.Point(46, 40);
+            this.label68.Location = new System.Drawing.Point(31, 40);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(82, 15);
             this.label68.TabIndex = 125;
@@ -5336,6 +5331,49 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
             // 
+            // panel18
+            // 
+            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel18.Controls.Add(this.label171);
+            this.panel18.Controls.Add(this.comboBoxBTG_XZBZ);
+            this.panel18.Location = new System.Drawing.Point(3, 94);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(941, 28);
+            this.panel18.TabIndex = 137;
+            // 
+            // label170
+            // 
+            this.label170.AutoSize = true;
+            this.label170.Location = new System.Drawing.Point(31, 299);
+            this.label170.Name = "label170";
+            this.label170.Size = new System.Drawing.Size(203, 14);
+            this.label170.TabIndex = 138;
+            this.label170.Text = "山东济宁排放标准—限值对应表";
+            // 
+            // comboBoxBTG_XZBZ
+            // 
+            this.comboBoxBTG_XZBZ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBTG_XZBZ.FormattingEnabled = true;
+            this.comboBoxBTG_XZBZ.Items.AddRange(new object[] {
+            "按限值表匹配",
+            "按山东济宁要求进行匹配",
+            "按山东烟台要求进行匹配",
+            "按内蒙要求进行匹配"});
+            this.comboBoxBTG_XZBZ.Location = new System.Drawing.Point(131, 1);
+            this.comboBoxBTG_XZBZ.Name = "comboBoxBTG_XZBZ";
+            this.comboBoxBTG_XZBZ.Size = new System.Drawing.Size(800, 22);
+            this.comboBoxBTG_XZBZ.TabIndex = 136;
+            // 
+            // label171
+            // 
+            this.label171.AutoSize = true;
+            this.label171.Font = new System.Drawing.Font("宋体", 11F);
+            this.label171.Location = new System.Drawing.Point(28, 4);
+            this.label171.Name = "label171";
+            this.label171.Size = new System.Drawing.Size(97, 15);
+            this.label171.TabIndex = 137;
+            this.label171.Text = "限值匹配方法";
+            // 
             // stationConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -5428,6 +5466,8 @@
             this.panel31.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5867,7 +5907,6 @@
         private System.Windows.Forms.ComboBox comboBoxBTGXZTABLE;
         private System.Windows.Forms.Label label166;
         private System.Windows.Forms.Button button15;
-        private System.Windows.Forms.CheckBox checkBoxBTG_SDJN;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.ComboBox comboBoxBtg_PFBZ;
         private System.Windows.Forms.ComboBox comboBoxBtg_Cx;
@@ -5877,6 +5916,10 @@
         private System.Windows.Forms.Label label168;
         private System.Windows.Forms.Label label167;
         private System.Windows.Forms.TextBox textBoxBtg_xz;
+        private System.Windows.Forms.Panel panel18;
+        private System.Windows.Forms.Label label170;
+        private System.Windows.Forms.Label label171;
+        private System.Windows.Forms.ComboBox comboBoxBTG_XZBZ;
     }
 }
 

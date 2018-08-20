@@ -697,7 +697,7 @@ namespace exhaustDetect
             textBoxBTGWLZY.Text = zyjs_xzgb.WLDate20011001btgxz;
             checkBoxBtgXz.Checked = zyjs_xzgb.onlyUseThis;
             comboBoxBTGXZTABLE.SelectedIndex = zyjs_xzgb.XZTABLE;
-            checkBoxBTG_SDJN.Checked = zyjs_xzgb.USESDJNXZ;
+            comboBoxBTG_XZBZ.SelectedIndex = zyjs_xzgb.BTGXZBZ;
         }
         private bool isdatagridviewinit = true;
         
@@ -1471,7 +1471,7 @@ namespace exhaustDetect
         {
             string listname;
             listname = "车辆信息";
-            string[] addkeyarraycarInf = { "HPZL", "CSYS", "ZXBZ","CCS" };
+            string[] addkeyarraycarInf = { "HPZL", "CSYS", "ZXBZ","CCS","ZDJGL","CYXZ" };
             //keyname = "FOURTHDATA";
             foreach (string keyname in addkeyarraycarInf)
             {
@@ -1541,7 +1541,7 @@ namespace exhaustDetect
                 }
             }
             listname = "ZYJS_XZGB";
-            string[] addkeyarrayBTG = { "ONLYTHIS","XZTABLE", "USESDJNXZ" };
+            string[] addkeyarrayBTG = { "ONLYTHIS","XZTABLE", "USESDJNXZ", "BTGXZBZ" };
             //keyname = "FOURTHDATA";
             foreach (string keyname in addkeyarrayBTG)
             {
@@ -1661,7 +1661,7 @@ namespace exhaustDetect
                 }
             }
             listname = "已检车辆信息";
-            string[] addkeyarray4 = { "QDLTQY", "RYPH", "HPZL", "JCGCSJ", "WJY", "YWLSH", "BGFFYY","CCS" ,"JYLSH"};
+            string[] addkeyarray4 = { "QDLTQY", "RYPH", "HPZL", "JCGCSJ", "WJY", "YWLSH", "BGFFYY","CCS" ,"JYLSH", "ZDJGL", "CYXZ" };
             foreach (string keyname in addkeyarray4)
             {
                 if (basecontrol.testKeyIsExist(listname, keyname))
@@ -3146,7 +3146,7 @@ namespace exhaustDetect
             btgxz.ZRDate20011001btgxz = textBoxBTGZRXQ.Text;
             btgxz.onlyUseThis = checkBoxBtgXz.Checked;
             btgxz.XZTABLE = comboBoxBTGXZTABLE.SelectedIndex;
-            btgxz.USESDJNXZ = checkBoxBTG_SDJN.Checked;
+            btgxz.BTGXZBZ = comboBoxBTG_XZBZ.SelectedIndex;
             if (gbdal.updateZYJS_XZGB(btgxz))
                 MessageBox.Show("保存成功");
             else

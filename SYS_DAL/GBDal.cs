@@ -791,12 +791,17 @@ namespace SYS_DAL
                     }
                     else
                         zyjs_xzgb.XZTABLE = 0;
-                    if (dt.Columns.Contains("USESDJNXZ"))
+                    if (dt.Columns.Contains("BTGXZBZ"))
                     {
-                        zyjs_xzgb.USESDJNXZ = (dt.Rows[0]["USESDJNXZ"].ToString() == "Y");
+                        try
+                        {
+                            zyjs_xzgb.BTGXZBZ = int.Parse(dt.Rows[0]["BTGXZBZ"].ToString());
+                        }
+                        catch
+                        { zyjs_xzgb.BTGXZBZ = 0; }
                     }
                     else
-                        zyjs_xzgb.USESDJNXZ = false;
+                        zyjs_xzgb.BTGXZBZ = 0;
                 }
                 return zyjs_xzgb;
             }
@@ -813,13 +818,13 @@ namespace SYS_DAL
         /// <returns>ZYJS_XZGB</returns>
         public  bool updateZYJS_XZGB(ZYJS_XZGB model)
         {
-            string sql = "update ZYJS_XZGB set ZRDate20011001btgxz=@ZRDate20011001btgxz,WLDate20011001btgxz=@WLDate20011001btgxz,ONLYTHIS=@ONLYTHIS,XZTABLE=@XZTABLE,USESDJNXZ=@USESDJNXZ";
+            string sql = "update ZYJS_XZGB set ZRDate20011001btgxz=@ZRDate20011001btgxz,WLDate20011001btgxz=@WLDate20011001btgxz,ONLYTHIS=@ONLYTHIS,XZTABLE=@XZTABLE,BTGXZBZ=@BTGXZBZ";
             SqlParameter[] spr ={
                                    new SqlParameter("@ZRDate20011001btgxz",model.ZRDate20011001btgxz), //1
                                    new SqlParameter("@WLDate20011001btgxz",model.WLDate20011001btgxz),
                                    new SqlParameter("@ONLYTHIS",model.onlyUseThis?"Y":"N"),
                                    new SqlParameter("@XZTABLE",model.XZTABLE.ToString("0")),
-                                   new SqlParameter("@USESDJNXZ",model.USESDJNXZ?"Y":"N")
+                                   new SqlParameter("@BTGXZBZ",model.BTGXZBZ.ToString("0"))
                                };
             try
             {

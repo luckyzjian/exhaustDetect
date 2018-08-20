@@ -11,6 +11,8 @@ namespace SYS.Model
         {
             CCS = "2";
             JYLSH = "";
+            ZDJGL = "";
+            CYXZ = "";
         }
         #region Model
         private string clid;//车辆ID
@@ -433,6 +435,8 @@ namespace SYS.Model
         public string BGFFYY { set; get; }
         public string CCS { set; get; }
         public string JYLSH { set; get; }
+        public string ZDJGL { set; get; }
+        public string CYXZ { set; get; }
         #endregion Model
     }
 }

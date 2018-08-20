@@ -864,6 +864,14 @@ namespace SYS_DAL
                         model.CCS = dt.Rows[0]["CCS"].ToString();
                     else
                         model.CCS = "2";
+                    if (dt.Columns.Contains("ZDJGL"))
+                        model.ZDJGL = dt.Rows[0]["ZDJGL"].ToString();
+                    else
+                        model.ZDJGL = "";
+                    if (dt.Columns.Contains("CYXZ"))
+                        model.CYXZ = dt.Rows[0]["CYXZ"].ToString();
+                    else
+                        model.CYXZ = "";
                 }
                 else
                     model.CLHP = "-2";       //当服务器上没有找到本线时，本线编号置为-2，以免为0
@@ -1288,8 +1296,10 @@ namespace SYS_DAL
             strSql.Append("BGFFYY,");//=@PZLX,");1
             strSql.Append("CCS,");//=@PZLX,");1
             strSql.Append("JYLSH,");//=@PZLX,");1
+            strSql.Append("ZDJGL,");//=@PZLX,");1
+            strSql.Append("CYXZ,");//=@PZLX,");1
             strSql.Append("JCZMC)");//=@PZLX,");1
-            strSql.Append("values (@CLID,@STATIONID,@LINEID,@ZXBZ,@DLSJ,@JCSJ,@JCFF,@XSLC,@JCJG,@JCCS,@LSH,@CLHP,@CPYS,@CLLX,@CZ,@SYXZ,@PP,@XH,@CLSBM,@FDJHM,@FDJXH,@SCQY,@HDZK,@JSSZK,@ZZL,@HDZZL,@ZBZL,@JZZL,@ZCRQ,@SCRQ,@FDJPL,@RLZL,@EDGL,@EDZS,@BSQXS,@DWS,@GYFS,@DPFS,@JQFS,@QGS,@QDXS,@CHZZ,@DLSP,@SFSRL,@JHZZ,@OBD,@DKGYYB,@LXDH,@CZY,@JSY,@DLY,@JCFY,@SFJF,@TEST,@QDLTQY,@RYPH,@HPZL,@JCGCSJ,@WJY,@BGFFYY,@CCS,@JYLSH,@JCZMC)");
+            strSql.Append("values (@CLID,@STATIONID,@LINEID,@ZXBZ,@DLSJ,@JCSJ,@JCFF,@XSLC,@JCJG,@JCCS,@LSH,@CLHP,@CPYS,@CLLX,@CZ,@SYXZ,@PP,@XH,@CLSBM,@FDJHM,@FDJXH,@SCQY,@HDZK,@JSSZK,@ZZL,@HDZZL,@ZBZL,@JZZL,@ZCRQ,@SCRQ,@FDJPL,@RLZL,@EDGL,@EDZS,@BSQXS,@DWS,@GYFS,@DPFS,@JQFS,@QGS,@QDXS,@CHZZ,@DLSP,@SFSRL,@JHZZ,@OBD,@DKGYYB,@LXDH,@CZY,@JSY,@DLY,@JCFY,@SFJF,@TEST,@QDLTQY,@RYPH,@HPZL,@JCGCSJ,@WJY,@BGFFYY,@CCS,@JYLSH,@ZDJGL,@CYXZ,@JCZMC)");
             SqlParameter[] parameters = {
                                             new SqlParameter("@CLID", SqlDbType.VarChar,50),
                                             new SqlParameter("@STATIONID", SqlDbType.VarChar,50),
@@ -1353,6 +1363,8 @@ namespace SYS_DAL
                                         new SqlParameter("@BGFFYY",SqlDbType.VarChar,50),
                                         new SqlParameter("@CCS",SqlDbType.VarChar,50),
                                         new SqlParameter("@JYLSH",SqlDbType.VarChar,50),
+                                        new SqlParameter("@ZDJGL",SqlDbType.VarChar,50),
+                                        new SqlParameter("@CYXZ",SqlDbType.VarChar,50),
                                         new SqlParameter("@JCZMC",SqlDbType.VarChar,100)};
             parameters[i++].Value = model.CLID;
             parameters[i++].Value = model.STATIONID;
@@ -1416,6 +1428,8 @@ namespace SYS_DAL
             parameters[i++].Value = model.BGFFYY;
             parameters[i++].Value = model.CCS;
             parameters[i++].Value = model.JYLSH;
+            parameters[i++].Value = model.ZDJGL;
+            parameters[i++].Value = model.CYXZ;
             parameters[i++].Value = model.JCZMC;
             try
             {

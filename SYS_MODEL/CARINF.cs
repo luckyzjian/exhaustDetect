@@ -10,6 +10,9 @@ namespace SYS.Model
         public CARINF()
         {
             CCS = "2";
+            ZDJGL = "0";
+            CYXZ = "";
+            
         }
         #region Model
         private string clhp;
@@ -349,6 +352,8 @@ namespace SYS.Model
         public string CSYS { set; get; }
         public string ZXBZ { set; get; }
         public string CCS { set; get; }
+        public string ZDJGL { set; get; }
+        public string CYXZ { set; get; }
         #endregion Model
     }
 }

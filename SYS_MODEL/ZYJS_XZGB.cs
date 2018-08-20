@@ -39,7 +39,7 @@ namespace SYS.Model
 		}
         public bool onlyUseThis { set; get; }
         public int XZTABLE { set; get; }
-        public bool USESDJNXZ { set; get; }
+        public int BTGXZBZ { set; get; }
 		#endregion Model
 
 	}
