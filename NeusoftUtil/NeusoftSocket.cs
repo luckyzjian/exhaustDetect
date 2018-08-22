@@ -340,6 +340,31 @@ namespace NeusoftUtil
                     return null;
             }
         }
+        public static DataTable ReadUsersList(string xmlstring)
+        {
+            DataSet ds = new DataSet();
+            StringReader stream = new StringReader(xmlstring);
+            XmlTextReader reader = new XmlTextReader(stream);
+            ds.ReadXml(reader);
+            DataTable dt1 = null;
+
+            dt1 = ds.Tables[1];
+            string respondName = dt1.Rows[0]["Name"].ToString();
+            if (respondName == "GetUsers")
+            {
+                return null;
+            }
+            else
+            {
+                if (ds.Tables.Contains("User"))
+                {
+                    dt1 = ds.Tables["User"];
+                    return dt1;
+                }
+                else
+                    return null;
+            }
+        }
         //private void Proccess()
         //{
         //    if (socket.Connected)
@@ -473,6 +498,39 @@ namespace NeusoftUtil
             if (RecvData(socket, out receivedString) > 0)
             {
                 dt = ReadVehicleList(receivedString);
+                return dt;
+            }
+            else
+            {
+                return dt;
+            }
+        }
+        public DataTable GetUsers()
+        {
+            //socket.Connect(point);
+            XmlDocument xmldoc, xlmrecivedoc;
+            XmlNode xmlnode;
+            XmlElement xmlelem;
+            DataTable dt = null;
+            xmldoc = new XmlDocument();
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmlelem.SetAttribute("Device", EISID);
+            xmldoc.AppendChild(xmlelem);
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+            XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+            xe1.SetAttribute("Name", "GetUsers");//设置该节点genre属性             
+            root.AppendChild(xe1);
+            //socket.Send(ConvertXmlToString(xmldoc));
+            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+            {
+                return dt;
+            }
+            Thread.Sleep(100);
+            byte[] buffer = new byte[10 * 1024];
+            string receivedString = "";
+            if (RecvData(socket, out receivedString) > 0)
+            {
+                dt = ReadUsersList(receivedString);
                 return dt;
             }
             else

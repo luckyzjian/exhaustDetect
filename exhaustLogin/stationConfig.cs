@@ -692,12 +692,19 @@ namespace exhaustDetect
         }
         private void showbBTGXzInf()
         {
-            ZYJS_XZGB zyjs_xzgb = gbdal.Get_ZYJS_XZGB();            
-            textBoxBTGZRXQ.Text = zyjs_xzgb.ZRDate20011001btgxz;
-            textBoxBTGWLZY.Text = zyjs_xzgb.WLDate20011001btgxz;
-            checkBoxBtgXz.Checked = zyjs_xzgb.onlyUseThis;
-            comboBoxBTGXZTABLE.SelectedIndex = zyjs_xzgb.XZTABLE;
-            comboBoxBTG_XZBZ.SelectedIndex = zyjs_xzgb.BTGXZBZ;
+            try
+            {
+                ZYJS_XZGB zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
+                textBoxBTGZRXQ.Text = zyjs_xzgb.ZRDate20011001btgxz;
+                textBoxBTGWLZY.Text = zyjs_xzgb.WLDate20011001btgxz;
+                checkBoxBtgXz.Checked = zyjs_xzgb.onlyUseThis;
+                comboBoxBTGXZTABLE.SelectedIndex = zyjs_xzgb.XZTABLE;
+                comboBoxBTG_XZBZ.SelectedIndex = zyjs_xzgb.BTGXZBZ;
+            }
+            catch(Exception er)
+            {
+                MessageBox.Show("异常：" + er.Message);
+            }
         }
         private bool isdatagridviewinit = true;
         

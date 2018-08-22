@@ -22241,8 +22241,8 @@ namespace exhaustDetect
                 if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE&&mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
                 {
                     string result, info;
-                    mainPanel.nowUser.ycyuserName =mainPanel.neusoftsocketinf.YCY;
-                    mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
+                    //mainPanel.nowUser.ycyuserName =mainPanel.neusoftsocketinf.YCY;
+                    //mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
                     mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                     if (mainPanel.neusoftsocket.loginUserv301(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "0", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out info))
                     {

@@ -3666,8 +3666,6 @@ namespace exhaustDetect
                     else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
                     {
                         string result, info;
-                        mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
-                        mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
                         mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                         DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationv301(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out info);
                         if (result != "1")

@@ -338,6 +338,7 @@ namespace exhaustDetect
         string appFileDir = @"D:\ExhaustConfigBackup\app";
 
         public static List<string> NeusoftDriverNameList = new List<string>();
+        public static List<string> NeusoftOperatorNameList = new List<string>();
 
         public static Dictionary<string, string> userGroupHy = new Dictionary<string, string>();
         public static Dictionary<string, string> acDicJcff = new Dictionary<string, string>();
@@ -1950,7 +1951,63 @@ namespace exhaustDetect
                     {
                         neusoftsocket.EISID = neusoftsocketinf.EISID;
                         neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
-                        if (neusoftsocketinf.AREA == NEU_YNZT)
+                        if (neusoftsocketinf.AREA == NEU_V301)
+                        {
+                            string drivername = "";
+                            string timestring = neusoftsocket.GetTimeRequest();
+                            if (timestring == "no ACK")
+                            {
+                                isNetUsed = false;
+                                toolStripLabel1NetStatus.Text = "工作状态：连接东软联网服务器失败,将工作在单机模式";
+                                ini.INIIO.saveLogInf("工作状态：连接东软联网服务器失败,将工作在单机模式");
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    string[] datetimearray = timestring.Split(' ');
+                                    string datetimereceive = datetimearray[0] + " " + datetimearray[1];
+                                    SetSystemDateTime.SetLocalTimeByStr(datetimereceive);
+                                    neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
+                                    DataTable dtuser = neusoftsocket.GetUsers();
+                                    if (dtuser != null)
+                                    {
+                                        for (int i = 0; i < dtuser.Rows.Count; i++)
+                                        {
+                                            if (dtuser.Rows[i]["UserType"].ToString() == "0")
+                                            {
+                                                NeusoftDriverNameList.Add(dtuser.Rows[i]["Account"].ToString());
+                                            }
+                                            else
+                                            {
+                                                NeusoftOperatorNameList.Add(dtuser.Rows[i]["Account"].ToString());
+                                            }
+                                        }
+                                    }
+                                    if (NeusoftDriverNameList.Count == 0)
+                                    {
+                                        MessageBox.Show("获取到引车员列表为空，不能进行联网检测");
+                                        isNetUsed = false;
+                                        toolStripLabel1NetStatus.Text = "工作状态：连接联网服务器失败，将工作在单机模式";
+                                    }
+                                    if (NeusoftOperatorNameList.Count == 0)
+                                    {
+                                        MessageBox.Show("获取到检测员列表为空，不能进行联网检测");
+                                        isNetUsed = false;
+                                        toolStripLabel1NetStatus.Text = "工作状态：连接联网服务器失败，将工作在单机模式";
+                                    }
+                                    mainPanel.nowUser.userName = NeusoftOperatorNameList[0];
+                                    mainPanel.nowUser.userPassword = "111111";
+                                    mainPanel.nowUser.ycyuserName = NeusoftDriverNameList[0];
+                                    mainPanel.nowUser.ycyuserPassword = "111111";
+                                }
+                                catch (Exception er)
+                                {
+                                    MessageBox.Show(er.Message);
+                                }
+                            }
+                        }
+                        else if (neusoftsocketinf.AREA == NEU_YNZT)
                         {
                             string drivername = "";
                             string timestring = neusoftsocket.GetTimeRequestV21(out drivername);
@@ -1987,7 +2044,6 @@ namespace exhaustDetect
                                 }
                             }
                         }
-
                         else
                         {
                             string timestring = neusoftsocket.GetTimeRequest();
@@ -2503,14 +2559,12 @@ namespace exhaustDetect
                     toolStripDropDownButtonPzgl.Enabled = (nowUser.postID == "6");
                     if (mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.NEUSOFTNETMODE)
                     {
-                        mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
-                        mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
-
+                        
                         if (mainPanel.neusoftsocketinf.AREA == NEU_V301)
                         {
                             string result, info;
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
-                            if (neusoftsocket.loginUserv301(nowUser.userName, nowUser.userPassword, "0", nowUser.ycyuserName, nowUser.ycyuserPassword, out result, out info))
+                            if (neusoftsocket.loginUserv301(NeusoftOperatorNameList[0], "111111", "0", NeusoftDriverNameList[0],"111111", out result, out info))
                             {
                                 if (result != "1")
                                 {
@@ -2526,6 +2580,9 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.neusoftsocketinf.AREA == NEU_SDRZ)
                         {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
                             string loginresult = neusoftsocket.loginUser(nowUser.userName, nowUser.userPassword, "0", nowUser.ycyuserName, nowUser.ycyuserPassword);
                             if (loginresult != "3")
@@ -2547,6 +2604,9 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.neusoftsocketinf.AREA == NEU_FJS)
                         {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
                             string loginresult = neusoftsocket.loginUserFj(nowUser.userName, nowUser.userPassword, "0", "testjc", "111111");
                             if (loginresult != "3")
@@ -2568,6 +2628,9 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.neusoftsocketinf.AREA == NEU_YNKM || mainPanel.neusoftsocketinf.AREA == NEU_GZCJ)
                         {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
                             string loginresult = neusoftsocket.loginUserFj(nowUser.userName, nowUser.userPassword, "0", "testjc", "111111");
                             if (loginresult != "3")
@@ -2589,6 +2652,9 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.neusoftsocketinf.AREA == NEU_YNZT)
                         {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
                             string loginresult = neusoftsocket.loginUserYn(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "0", NeusoftDriverNameList[0]);
                             if (loginresult != "3")
@@ -2610,6 +2676,9 @@ namespace exhaustDetect
                         }
                         else if (neusoftsocketinf.AREA == NEU_LNAS)
                         {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
                             string result, inf, timestring;
                             if (!sysocket.loginUser(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "0", out result, out inf))
                             {

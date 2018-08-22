@@ -107,7 +107,7 @@ namespace exhaustDetect
                 comboBoxBgff.Visible = false;
                 panel3.Size = new Size(293,410);
             }
-            if ((mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)) && mainPanel.isNetUsed)
+            if ((mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_V301)) && mainPanel.isNetUsed)
             {
                 labelBgff.Visible = false;
                 comboBoxBgff.Visible = false;
@@ -168,14 +168,30 @@ namespace exhaustDetect
         }
         private void init_staff()
         {
-            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT)
+            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
             {
-                for (int i = 0; i <mainPanel.NeusoftDriverNameList.Count; i++)
+                if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT)
                 {
-                    comboBoxJGY.Items.Add(mainPanel.NeusoftDriverNameList[i]);
+                    for (int i = 0; i < mainPanel.NeusoftDriverNameList.Count; i++)
+                    {
+                        comboBoxJGY.Items.Add(mainPanel.NeusoftDriverNameList[i]);
+                    }
+                    comboBoxCzy.Visible = false;
+                    labelCzy.Visible = false;
                 }
-                comboBoxCzy.Visible = false;
-                labelCzy.Visible = false;
+                else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
+                {
+                    for (int i = 0; i < mainPanel.NeusoftDriverNameList.Count; i++)
+                    {
+                        comboBoxJGY.Items.Add(mainPanel.NeusoftDriverNameList[i]);
+                    }
+                    for (int i = 0; i < mainPanel.NeusoftOperatorNameList.Count; i++)
+                    {
+                        comboBoxCzy.Items.Add(mainPanel.NeusoftOperatorNameList[i]);
+                    }
+                    comboBoxCzy.Visible = true;
+                    labelCzy.Visible = true;
+                }
             }
             else if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.AHNETMODE)
             {
@@ -315,10 +331,10 @@ namespace exhaustDetect
                     if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)//v3.0协议要求检完车后必须重新登录才能获取到车辆的详细信息
                     {
                         string result, info;
-                        mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
-                        mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
+                        //mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                        //mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
                         mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                        if (mainPanel.neusoftsocket.loginUserv301(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "0", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out info))
+                        if (mainPanel.neusoftsocket.loginUserv301(mainPanel.NeusoftOperatorNameList[0], "111111", "0", mainPanel.NeusoftDriverNameList[0], "111111", out result, out info))
                         {
                             if (result != "1")
                             {
@@ -3644,8 +3660,10 @@ namespace exhaustDetect
                             else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
                             {
                                 string result, info;
+                                mainPanel.nowUser.userName = comboBoxCzy.Text;
+                                mainPanel.nowUser.userPassword = "111111";
                                 mainPanel.nowUser.ycyuserName = comboBoxJGY.Text;
-                                mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();
+                                mainPanel.nowUser.ycyuserPassword = "111111";
                                 mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                                 if (mainPanel.neusoftsocket.loginUserv301(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "0", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out info))
                                 {
