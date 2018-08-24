@@ -4086,7 +4086,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult?"车辆检测合格":"车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果合格");
-                                                Msg(label1, panel4, "车辆检测合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                 pdjg = "1";
                                                 asmdal.Save_ASM(asmdata);
@@ -4096,7 +4096,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果不合格");
-                                                Msg(label1, panel4, "车辆检测不合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                 pdjg = "0";
                                                 asmdal.Save_ASM(asmdata);
@@ -6108,7 +6108,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：接收到平台判定结果合格");
-                                                Msg(label1, panel4, "车辆检测合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                 pdjg = "1";
                                                 vmasdal.Save_VMAS(vmasdata);
@@ -6120,7 +6120,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：接收到平台判定结果不合格");
-                                                Msg(label1, panel4, "车辆检测不合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                 pdjg = "0";
                                                 vmasdal.Save_VMAS(vmasdata);
@@ -7782,7 +7782,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("红河州联网信息：接收到平台判定结果合格");
-                                                Msg(label1, panel4, "车辆检测合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                 pdjg = "1";
                                                 jzjsdal.Save_JZJS(jzjsdata);
@@ -7794,7 +7794,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("红河州联网信息：接收到平台判定结果不合格");
-                                                Msg(label1, panel4, "车辆检测不合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                 pdjg = "0";
                                                 jzjsdal.Save_JZJS(jzjsdata);
@@ -10297,7 +10297,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果合格");
-                                                Msg(label1, panel4, "车辆检测合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                 ini.INIIO.saveSocketLogInf("保存车辆信息");
                                                 pdjg = "1";
@@ -10310,7 +10310,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果不合格");
-                                                Msg(label1, panel4, "车辆检测不合格" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                 ini.INIIO.saveSocketLogInf("保存车辆信息");
                                                 pdjg = "0";
@@ -11675,7 +11675,7 @@ namespace exhaustDetect
                                             vmasresult.HighIdleRev = gdszs;
                                             vmasresult.Lambda = sds_data.λ_value;
                                             vmasresult.StartTime = sds_data.StartTime;
-                                            vmasresult.IdleReason = carLogin.carbj.BGJCFFYY;
+                                            vmasresult.IdleReason = carLogin.neusoft_idlereason;
                                             vmasresult.StopReason = sds_data.StopReason;
                                             vmasresult.Result = pdjg;
                                             vmasresult.LowRev = fdjdszs;
@@ -11779,6 +11779,9 @@ namespace exhaustDetect
                                                         Msg(label1, panel4, "车辆检测合格" + isCsvAlive);
                                                         saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                         pdjg = "1";
+                                                        sdsdata.HIGHPD = "合格";
+                                                        sdsdata.LOWPD = "合格";
+                                                        sdsdata.ZHPD = "合格";
                                                         sdsdal.Save_SDS(sdsdata);
                                                         //vmasdal.Save_VMAS(vmasdata);
                                                         enableButton(buttonOK, false);
@@ -13107,7 +13110,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果合格");
-                                                Msg(label1, panel4, "车辆检测合格，" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
                                                 ini.INIIO.saveSocketLogInf("保存车辆信息");
                                                 pdjg = "1";
@@ -13120,7 +13123,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果不合格");
-                                                Msg(label1, panel4, "车辆检测不合格，" + isCsvAlive);
+                                                Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测不合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                 ini.INIIO.saveSocketLogInf("保存车辆信息");
                                                 pdjg = "0";
@@ -18262,7 +18265,39 @@ namespace exhaustDetect
             nhlambdapd = sdsdata.LAMDAHIGHPD;
             if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JIANGSHUNETMODE)
             {
-                if (carinfor.DictionaryExtensionMethodClass.GetValue(mainPanel.jsinterface.HAS_PURGE, carLogin.modelbj.JHZZ,"") != "否")
+                if (carinfor.DictionaryExtensionMethodClass.GetValue(mainPanel.jsinterface.HAS_PURGE, carLogin.modelbj.JHZZ, "") != "否")
+                {
+
+                    if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
+                    {
+                        sdsdata.ZHPD = "合格";
+                        return true;
+                    }
+                    else
+                    {
+                        sdsdata.ZHPD = "不合格";
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    sdsdata.LAMDAHIGHPD = "";
+                    if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
+                    {
+                        sdsdata.ZHPD = "合格";
+                        return true;
+                    }
+                    else
+                    {
+                        sdsdata.ZHPD = "不合格";
+                        return false;
+                    }
+                }
+            }
+            else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+            {
+                if (carLogin.modelbj.DPFS == "闭环电喷")
                 {
 
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
@@ -18294,18 +18329,18 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
             {
-                
-                    sdsdata.LAMDAHIGHPD = "";
-                    if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
-                    {
-                        sdsdata.ZHPD = "合格";
-                        return true;
-                    }
-                    else
-                    {
-                        sdsdata.ZHPD = "不合格";
-                        return false;
-                    }
+
+                sdsdata.LAMDAHIGHPD = "";
+                if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
+                {
+                    sdsdata.ZHPD = "合格";
+                    return true;
+                }
+                else
+                {
+                    sdsdata.ZHPD = "不合格";
+                    return false;
+                }
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
             {
@@ -18373,7 +18408,7 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
             {
-                if (mainPanel.jxinterface.JX_FUELSUPPLY.GetValue(carLogin.jxthiscarinf.fuelSupply,"") == "闭环电喷" && mainPanel.jxinterface.JX_FLAGHCL.GetValue(carLogin.jxthiscarinf.flagHcl,"") == "有")
+                if (mainPanel.jxinterface.JX_FUELSUPPLY.GetValue(carLogin.jxthiscarinf.fuelSupply, "") == "闭环电喷" && mainPanel.jxinterface.JX_FLAGHCL.GetValue(carLogin.jxthiscarinf.flagHcl, "") == "有")
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -18404,7 +18439,7 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
             {
-                if (carLogin.modelbj.DPFS== "闭环" && carLogin.modelbj.JHZZ=="有")
+                if (carLogin.modelbj.DPFS == "闭环" && carLogin.modelbj.JHZZ == "有")
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -18435,7 +18470,7 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
             {
-                if (carLogin.modelbj.GYFS == "闭环电喷" && (carLogin.modelbj.JHZZ == "1"|| carLogin.modelbj.JHZZ == "是"))
+                if (carLogin.modelbj.GYFS == "闭环电喷" && (carLogin.modelbj.JHZZ == "1" || carLogin.modelbj.JHZZ == "是"))
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -18497,7 +18532,7 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HHZNNETMODE)
             {
-                if (carLogin.modelbj.GYFS == "闭环电喷" && carLogin.modelbj.JHZZ == "是"&&carLogin.modelbj.SFYQBF=="三元催化")
+                if (carLogin.modelbj.GYFS == "闭环电喷" && carLogin.modelbj.JHZZ == "是" && carLogin.modelbj.SFYQBF == "三元催化")
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -18526,7 +18561,7 @@ namespace exhaustDetect
                     }
                 }
             }
-            else if (carLogin.carbj.SOURCE=="1")
+            else if (carLogin.carbj.SOURCE == "1")
             {
                 if (carLogin.modelbj.GYFS == "闭环电喷" && carLogin.modelbj.JHZZ == "是" && carLogin.modelbj.SFYQBF == "三元催化")
                 {
@@ -18590,7 +18625,7 @@ namespace exhaustDetect
             }
             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
             {
-                if (carLogin.modelbj.JHZZ != "无"&&carLogin.modelbj.GYFS=="闭环电喷")
+                if (carLogin.modelbj.JHZZ != "无" && carLogin.modelbj.GYFS == "闭环电喷")
                 {
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                     {
@@ -18650,9 +18685,9 @@ namespace exhaustDetect
                     }
                 }
             }
-            else if(mainPanel.useHyDatabase)
+            else if (mainPanel.useHyDatabase)
             {
-                if (mainPanel.acDicPqhclzz.GetValue(carLogin.modelbj.JHZZ,"") != "无")
+                if (mainPanel.acDicPqhclzz.GetValue(carLogin.modelbj.JHZZ, "") != "无")
                 {
 
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
@@ -18750,7 +18785,7 @@ namespace exhaustDetect
             }
             else
             {
-                if (mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "无"&& mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "否")
+                if (mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "无" && mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "否")
                 {
 
                     if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")

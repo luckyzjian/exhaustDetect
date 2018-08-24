@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Xml;
 using ini;
 using System.IO;
-//using LineClient;
+using LineClient;
 using SYS.Model;
 using System.Text.RegularExpressions;
 
@@ -307,7 +307,7 @@ namespace carinfor
     }
     public class jsSocketControl
     {
-        //private LineClient.LineConnector lineclient = new LineConnector();
+        private LineClient.LineConnector lineclient = new LineConnector();
         public Dictionary<string, string> STANDARD_ID2 = new Dictionary<string, string>();
         public Dictionary<string, string> USER_TYPE = new Dictionary<string, string>();
         public Dictionary<string, string> USER_SEX = new Dictionary<string, string>();
@@ -436,7 +436,7 @@ namespace carinfor
             status = false;
             errMsg = "";
             string xmlstring = "";
-            //lineclient.ConnectServer(out status, out errMsg);
+            lineclient.ConnectServer(out status, out errMsg);
         }
 
         public string getBaseTypeInfo(out bool status, out string errMsg)
@@ -445,7 +445,7 @@ namespace carinfor
             status = false;
             errMsg = "";
             string xmlstring = "";
-            //lineclient.GetBaseTypeInfo(out xmlstring, out status, out errMsg);
+            lineclient.GetBaseTypeInfo(out xmlstring, out status, out errMsg);
             if (status)
             {
                 ini.INIIO.saveLogInf("GetBaseTypeInfo:\r\nXml:" + xmlstring + "\r\nstatus:" + status + "\r\nerrMsg:" + errMsg);
@@ -458,14 +458,14 @@ namespace carinfor
             status = false;
             errMsg = "";
             string xmlstring = "";
-            //lineclient.LoginServer(userName, password, out status, out errMsg);
+            lineclient.LoginServer(userName, password, out status, out errMsg);
         }
         public void changePassword(string userName, string password, string newpassword, out bool status, out string errMsg)
         {
             status = false;
             errMsg = "";
             string xmlstring = "";
-            //lineclient.ChangePassword(userName, password, newpassword, out status, out errMsg);
+            lineclient.ChangePassword(userName, password, newpassword, out status, out errMsg);
         }
         public string getveicleInfo(string plate, string plateColor, out JsVehicleInfo jsvehicleinfo, out CARINF vehicleinfo, out CARATWAIT waitmodel, out JsCheckLimit checklimit, out bool status, out string errMsg)
         {
@@ -477,7 +477,7 @@ namespace carinfor
             status = false;
             errMsg = "";
             string vehicleinfoxmlstring = "", limitxmlstring = "";
-            //lineclient.GetVehicleInfo(plate, plateColor, out vehicleinfoxmlstring, out limitxmlstring, out status, out errMsg);
+            lineclient.GetVehicleInfo(plate, plateColor, out vehicleinfoxmlstring, out limitxmlstring, out status, out errMsg);
             if (status)
             {
                 ini.INIIO.saveLogInf("getveicleInfo:\r\nstatus:" + status + "\r\nerrMsg:" + errMsg + "\r\nvehicleinfoxmlstring:\r\nXml:" + vehicleinfoxmlstring + "\r\nlimitxmlstring:\r\nXml:" + limitxmlstring);
@@ -493,7 +493,7 @@ namespace carinfor
             status = false;
             errMsg = "";
             string xmlstring = "";
-            //lineclient.GetCheckList(out xmlstring, out status, out errMsg);
+            lineclient.GetCheckList(out xmlstring, out status, out errMsg);
             if (status)
             {
                 ini.INIIO.saveLogInf("getWaitlistInfo:\r\nstatus:" + status + "\r\nerrMsg:" + errMsg);
@@ -510,7 +510,7 @@ namespace carinfor
             errMsg = "";
             string xmlstring = "";
             string stationId, lineId;
-            //lineclient.BeginDemarcate(out stationId, out lineId, out xmlstring, out status, out errMsg);
+            lineclient.BeginDemarcate(out stationId, out lineId, out xmlstring, out status, out errMsg);
             if (status)
             {
                 ini.INIIO.saveLogInf("beginDemarcate:\r\nstatus:" + status + "\r\nerrMsg:" + errMsg);
@@ -573,7 +573,7 @@ namespace carinfor
             setXmlElementAttribute(xe1, "ParasiticPower", model.ParasiticPower);
             root.AppendChild(xe1);
             status = true;errMsg = "";
-            //lineclient.UploadDemarcateResult(ConvertXmlToString(xmldoc), out status, out errMsg);
+            lineclient.UploadDemarcateResult(ConvertXmlToString(xmldoc), out status, out errMsg);
             return "";
         }
         public string beginInspection(string inspType, out string stationId, out string lineId, out string inspectionId, out bool status, out string errMsg)
@@ -583,7 +583,7 @@ namespace carinfor
             lineId = "";
             inspectionId = "";
             status = true; errMsg = "";
-            //lineclient.BeginInspection(inspType, out stationId, out lineId, out inspectionId, out status, out errMsg);
+            lineclient.BeginInspection(inspType, out stationId, out lineId, out inspectionId, out status, out errMsg);
             ini.INIIO.saveLogInf("BeginInspection:\r\nstatus:" + status + "\r\nerrMsg:" + errMsg);
             ini.INIIO.saveLogInf("BeginInspection:\r\ninspType:" + inspType + "\r\nstationId:" + stationId + "\r\nlineId:" + lineId);
             return "";
@@ -592,7 +592,7 @@ namespace carinfor
         {
             string ack = "";
             status = true; errMsg = "";
-            //lineclient.StopInspection(out status, out errMsg);
+            lineclient.StopInspection(out status, out errMsg);
             ini.INIIO.saveLogInf("StopInspection:\r\nstatus:" + status + "\r\nerrMsg:" + errMsg);
             return "";
         }
@@ -781,7 +781,7 @@ namespace carinfor
                 finalResult = "";
                 cardWriteStatus = false;
                 status = true; errMsg = "";
-                //lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
+                lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
                 ini.INIIO.saveLogInf("UploadInspectionResult:\r\nfinalResult:" + finalResult + "\r\nstatus" + status + "\r\ncardWriteStatus" + cardWriteStatus + "\r\nerrMsg:" + errMsg);
                 return "";
             }
@@ -928,7 +928,7 @@ namespace carinfor
                 status = true; errMsg = "";
                 finalResult = "";
                 cardWriteStatus = false;
-                //lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
+                lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
                 ini.INIIO.saveLogInf("UploadInspectionResult:\r\nfinalResult:" + finalResult + "\r\nstatus" + status + "\r\ncardWriteStatus" + cardWriteStatus + "\r\nerrMsg:" + errMsg);
                 return "";
             }
@@ -1020,7 +1020,7 @@ namespace carinfor
                 status = true; errMsg = "";
                 finalResult = "";
                 cardWriteStatus = false;
-                //lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
+                lineclient.UploadInspectionResult(inspectionResultString, out finalResult, out status, out cardWriteStatus, out errMsg);
                 ini.INIIO.saveLogInf("UploadInspectionResult:\r\nfinalResult:" + finalResult + "\r\nstatus" + status + "\r\ncardWriteStatus" + cardWriteStatus + "\r\nerrMsg:" + errMsg);
                 return "";
             }
@@ -1041,7 +1041,7 @@ namespace carinfor
                 status = true; errMsg = "";
                 finalResult = "";
                 cardWriteStatus = false;
-                //lineclient.UploadInspectionResult(inspectionResult, out finalResult, out status, out cardWriteStatus, out errMsg);
+                lineclient.UploadInspectionResult(inspectionResult, out finalResult, out status, out cardWriteStatus, out errMsg);
                 return "";
             }
             catch (Exception er)

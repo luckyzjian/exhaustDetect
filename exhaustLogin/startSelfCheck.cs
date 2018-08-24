@@ -1688,7 +1688,33 @@ namespace exhaustDetect
                     mainPanel.worklogdata.Bzsm = "";
                     mainPanel.demarcatecontrol.saveWordLogByIni(mainPanel.worklogdata);
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
-                    
+                    if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
+                    {
+                        checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
+                        checkdata.ISLLJCHECK = "Y";
+                        checkdata.LLJTX = "Y";
+                        checkdata.LLJLL = cgjdata.Lljll;
+                        try
+                        {
+                            selfcheckcontrol.Save_SelfCheckData(checkdata);
+                        }
+                        catch
+                        { }
+                    }
+                    else
+                    {
+                        //selfcheckdata checkdata = new selfcheckdata();
+                        initSelfData(selfcheckid);
+                        checkdata.ISLLJCHECK = "Y";
+                        checkdata.LLJTX = "Y";
+                        checkdata.LLJLL = cgjdata.Lljll;
+                        try
+                        {
+                            selfcheckcontrol.Save_SelfCheckData(checkdata);
+                        }
+                        catch
+                        { }
+                    }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
                         string optime = "";

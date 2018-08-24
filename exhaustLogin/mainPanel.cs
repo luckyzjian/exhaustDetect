@@ -1976,11 +1976,11 @@ namespace exhaustDetect
                                         {
                                             if (dtuser.Rows[i]["UserType"].ToString() == "0")
                                             {
-                                                NeusoftDriverNameList.Add(dtuser.Rows[i]["Account"].ToString());
+                                                NeusoftOperatorNameList.Add(dtuser.Rows[i]["Account"].ToString());
                                             }
                                             else
                                             {
-                                                NeusoftOperatorNameList.Add(dtuser.Rows[i]["Account"].ToString());
+                                                NeusoftDriverNameList.Add(dtuser.Rows[i]["Account"].ToString());
                                             }
                                         }
                                     }

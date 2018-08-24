@@ -67,6 +67,8 @@ namespace exhaustDetect
         public static  bool isDriverOK = false;
         public static bool isCarOK = false;
         public int tmcount = 0;
+
+        public static string neusoft_idlereason="";
         public struct carAtWaitInf
         {
             public string plate;
@@ -1303,6 +1305,7 @@ namespace exhaustDetect
                                         case "0": modelbj.DPFS = "化油器"; break;
                                         case "1": modelbj.DPFS = "开环电喷"; break;
                                         case "2": modelbj.DPFS = "闭环电喷"; break;
+                                        case "3": modelbj.DPFS = "直喷"; break;
                                     }
                                     modelbj.JQFS = dtinf.Rows[0]["AdmissionMode"].ToString();
                                     modelbj.QGS = dtinf.Rows[0]["Cylinder"].ToString();
@@ -3112,7 +3115,8 @@ namespace exhaustDetect
                 {
                     if (double.Parse(model.ZZL) > 3500)
                     {
-                        jcff = "SDS";
+                        neusoft_idlereason = "2";
+                           jcff = "SDS";
                     }
                     else
                     {
@@ -3124,6 +3128,7 @@ namespace exhaustDetect
                 }
                 else
                 {
+                    neusoft_idlereason = "0";
                     jcff = "SDS";
                 }
             }
@@ -3771,6 +3776,7 @@ namespace exhaustDetect
                             carbj.BGJCFFYY = "1";
                         else
                             carbj.BGJCFFYY = "3";
+                        neusoft_idlereason = carbj.BGJCFFYY;
                     }
                     else if (carbj.JCFF == "JZJS")
                     {
