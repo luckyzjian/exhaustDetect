@@ -871,6 +871,8 @@ namespace exhaustDetect {
             
             private global::System.Data.DataColumn columnNO;
             
+            private global::System.Data.DataColumn column转速;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTable2DataTable() {
@@ -962,6 +964,14 @@ namespace exhaustDetect {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn 转速Column {
+                get {
+                    return this.column转速;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -997,7 +1007,7 @@ namespace exhaustDetect {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable2Row AddDataTable2Row(string 时间序列, string 车速, string 功率, string 光吸收系数, string 采样时序, string 时序类别, string NO) {
+            public DataTable2Row AddDataTable2Row(string 时间序列, string 车速, string 功率, string 光吸收系数, string 采样时序, string 时序类别, string NO, string 转速) {
                 DataTable2Row rowDataTable2Row = ((DataTable2Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         时间序列,
@@ -1006,7 +1016,8 @@ namespace exhaustDetect {
                         光吸收系数,
                         采样时序,
                         时序类别,
-                        NO};
+                        NO,
+                        转速};
                 rowDataTable2Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable2Row);
                 return rowDataTable2Row;
@@ -1036,6 +1047,7 @@ namespace exhaustDetect {
                 this.column采样时序 = base.Columns["采样时序"];
                 this.column时序类别 = base.Columns["时序类别"];
                 this.columnNO = base.Columns["NO"];
+                this.column转速 = base.Columns["转速"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1055,6 +1067,8 @@ namespace exhaustDetect {
                 base.Columns.Add(this.column时序类别);
                 this.columnNO = new global::System.Data.DataColumn("NO", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNO);
+                this.column转速 = new global::System.Data.DataColumn("转速", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.column转速);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2698,6 +2712,22 @@ namespace exhaustDetect {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string 转速 {
+                get {
+                    try {
+                        return ((string)(this[this.tableDataTable2.转速Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("表“DataTable2”中列“转速”的值为 DBNull。", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTable2.转速Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool Is时间序列Null() {
                 return this.IsNull(this.tableDataTable2.时间序列Column);
             }
@@ -2778,6 +2808,18 @@ namespace exhaustDetect {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetNONull() {
                 this[this.tableDataTable2.NOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Is转速Null() {
+                return this.IsNull(this.tableDataTable2.转速Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Set转速Null() {
+                this[this.tableDataTable2.转速Column] = global::System.Convert.DBNull;
             }
         }
         

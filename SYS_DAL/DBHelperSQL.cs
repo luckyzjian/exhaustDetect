@@ -86,13 +86,14 @@ namespace SYS_DAL
             try
             {
                 SqlCommand cmd = conn_test.CreateCommand();
-                cmd.CommandText = "select * from SYSConfig";
+                cmd.CommandText = "select * from stationNormalInf";
                 test_adp = new SqlDataAdapter(cmd);
                 test_adp.Fill(test_dt);
                 return true;
             }
-            catch (Exception)
+            catch (Exception er)
             {
+                ini.INIIO.saveLogInf("连接数据库失败：" + er.Message);
                 return false;
             }
         }

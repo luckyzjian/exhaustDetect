@@ -46,6 +46,7 @@
     <Compile Include="yichangInterface.cs">
       <SubType>code</SubType>
     </Compile>
+    <Compile Include="ynbsInter.cs" />
     <Compile Include="zkytInterface.cs" />
   </ItemGroup>
   <ItemGroup>

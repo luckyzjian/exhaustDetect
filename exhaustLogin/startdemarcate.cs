@@ -1931,7 +1931,7 @@ namespace exhaustDetect
                                         try
                                         {
                                             ini.INIIO.saveLogInf("联网信息：上传五气分析仪校准");
-                                            string ackresult, errormessage;
+                                            string ackresult = "", errormessage = "";
 
                                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                                             {
@@ -1958,7 +1958,7 @@ namespace exhaustDetect
                                                 out ackresult,
                                                 out errormessage);
                                             }
-                                            else
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                             {
                                                 mainPanel.xmlanalysis.ReadACKString(
                                                 mainPanel.yichangInterfaceOther.wqfxyAdjust(
@@ -1983,7 +1983,34 @@ namespace exhaustDetect
                                                 out ackresult,
                                                 out errormessage);
                                             }
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                            {
+                                                mainPanel.xmlanalysis.ReadACKString(
+                                                mainPanel.yichangInterfaceYnbs.wqfxybd(
+                                                    mainPanel.zkytwebinf.regcode,
+                                                    analysismeterdata.Gdjz == "0" ? "1" : "2",
+                                                     analysismeterdata.Co2bz,
+                                                     analysismeterdata.Co2clz,
+                                                     analysismeterdata.Cobz,
+                                                     analysismeterdata.Coclz,
+                                                     analysismeterdata.Nobz,
+                                                      analysismeterdata.Noclz,
+                                                      analysismeterdata.Hcbz,
+                                                      analysismeterdata.Hcclz,
+                                                      0.51,
+                                                      0.50,
+                                                      double.Parse(analysismeterdata.Pef),
+                                                      double.Parse(analysismeterdata.c3h8),
+                                                      analysismeterdata.Bdjg == "合格" ? "1" : "0",
+                                                    DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss"),
+                                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                    ""),
+                                                out ackresult,
+                                                out errormessage);
+                                            }
                                             ini.INIIO.saveLogInf("联网信息：上传五气分析仪校准成功:result=" + ackresult);
+
+                                            //ini.INIIO.saveLogInf("联网信息：上传五气分析仪校准成功:result=" + ackresult);
                                         }
                                         catch (Exception er)
                                         {

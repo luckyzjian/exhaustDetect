@@ -182,6 +182,10 @@
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.dataGridViewSDSXZ = new System.Windows.Forms.DataGridView();
             this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.label170 = new System.Windows.Forms.Label();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.label171 = new System.Windows.Forms.Label();
+            this.comboBoxBTG_XZBZ = new System.Windows.Forms.ComboBox();
             this.panel16 = new System.Windows.Forms.Panel();
             this.button16 = new System.Windows.Forms.Button();
             this.label169 = new System.Windows.Forms.Label();
@@ -471,10 +475,8 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.label170 = new System.Windows.Forms.Label();
-            this.comboBoxBTG_XZBZ = new System.Windows.Forms.ComboBox();
-            this.label171 = new System.Windows.Forms.Label();
+            this.textBoxZkytLineID = new System.Windows.Forms.TextBox();
+            this.label172 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -502,6 +504,7 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSDSXZ)).BeginInit();
             this.tabPage11.SuspendLayout();
+            this.panel18.SuspendLayout();
             this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBtg_SDJN_XZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBTGXZ)).BeginInit();
@@ -531,7 +534,6 @@
             this.panel30.SuspendLayout();
             this.panel31.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel18.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2173,6 +2175,49 @@
             this.tabPage11.Text = "不透光烟度法限值";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
+            // label170
+            // 
+            this.label170.AutoSize = true;
+            this.label170.Location = new System.Drawing.Point(31, 299);
+            this.label170.Name = "label170";
+            this.label170.Size = new System.Drawing.Size(203, 14);
+            this.label170.TabIndex = 138;
+            this.label170.Text = "山东济宁排放标准—限值对应表";
+            // 
+            // panel18
+            // 
+            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel18.Controls.Add(this.label171);
+            this.panel18.Controls.Add(this.comboBoxBTG_XZBZ);
+            this.panel18.Location = new System.Drawing.Point(3, 94);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(941, 28);
+            this.panel18.TabIndex = 137;
+            // 
+            // label171
+            // 
+            this.label171.AutoSize = true;
+            this.label171.Font = new System.Drawing.Font("宋体", 11F);
+            this.label171.Location = new System.Drawing.Point(28, 4);
+            this.label171.Name = "label171";
+            this.label171.Size = new System.Drawing.Size(97, 15);
+            this.label171.TabIndex = 137;
+            this.label171.Text = "限值匹配方法";
+            // 
+            // comboBoxBTG_XZBZ
+            // 
+            this.comboBoxBTG_XZBZ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBTG_XZBZ.FormattingEnabled = true;
+            this.comboBoxBTG_XZBZ.Items.AddRange(new object[] {
+            "按限值表匹配",
+            "按山东济宁要求进行匹配",
+            "按山东烟台要求进行匹配",
+            "按内蒙要求进行匹配"});
+            this.comboBoxBTG_XZBZ.Location = new System.Drawing.Point(131, 1);
+            this.comboBoxBTG_XZBZ.Name = "comboBoxBTG_XZBZ";
+            this.comboBoxBTG_XZBZ.Size = new System.Drawing.Size(800, 22);
+            this.comboBoxBTG_XZBZ.TabIndex = 136;
+            // 
             // panel16
             // 
             this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -2737,6 +2782,8 @@
             this.panelEx1.AutoSize = true;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelEx1.Controls.Add(this.textBoxZkytLineID);
+            this.panelEx1.Controls.Add(this.label172);
             this.panelEx1.Controls.Add(this.comboBoxJHAREA);
             this.panelEx1.Controls.Add(this.label165);
             this.panelEx1.Controls.Add(this.textBoxJHLINEID);
@@ -2911,28 +2958,28 @@
             // 
             this.checkBoxDISPLAYRESULT.AutoSize = true;
             this.checkBoxDISPLAYRESULT.Font = new System.Drawing.Font("微软雅黑", 10.5F);
-            this.checkBoxDISPLAYRESULT.Location = new System.Drawing.Point(727, 456);
+            this.checkBoxDISPLAYRESULT.Location = new System.Drawing.Point(930, 458);
             this.checkBoxDISPLAYRESULT.Name = "checkBoxDISPLAYRESULT";
-            this.checkBoxDISPLAYRESULT.Size = new System.Drawing.Size(182, 24);
+            this.checkBoxDISPLAYRESULT.Size = new System.Drawing.Size(112, 24);
             this.checkBoxDISPLAYRESULT.TabIndex = 154;
-            this.checkBoxDISPLAYRESULT.Text = "上传后是否显示检测结果";
+            this.checkBoxDISPLAYRESULT.Text = "显示检测结果";
             this.checkBoxDISPLAYRESULT.UseVisualStyleBackColor = true;
             // 
             // checkBoxCheckUploadSuccess
             // 
             this.checkBoxCheckUploadSuccess.AutoSize = true;
             this.checkBoxCheckUploadSuccess.Font = new System.Drawing.Font("微软雅黑", 10.5F);
-            this.checkBoxCheckUploadSuccess.Location = new System.Drawing.Point(727, 430);
+            this.checkBoxCheckUploadSuccess.Location = new System.Drawing.Point(727, 457);
             this.checkBoxCheckUploadSuccess.Name = "checkBoxCheckUploadSuccess";
-            this.checkBoxCheckUploadSuccess.Size = new System.Drawing.Size(322, 24);
+            this.checkBoxCheckUploadSuccess.Size = new System.Drawing.Size(196, 24);
             this.checkBoxCheckUploadSuccess.TabIndex = 153;
-            this.checkBoxCheckUploadSuccess.Text = "上传后验证是否上传成功（普洱地区不要勾选）";
+            this.checkBoxCheckUploadSuccess.Text = "验证上传成功（普洱不勾）";
             this.checkBoxCheckUploadSuccess.UseVisualStyleBackColor = true;
             // 
             // numericUpDownWaitUploadTime
             // 
             this.numericUpDownWaitUploadTime.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.numericUpDownWaitUploadTime.Location = new System.Drawing.Point(903, 406);
+            this.numericUpDownWaitUploadTime.Location = new System.Drawing.Point(898, 433);
             this.numericUpDownWaitUploadTime.Maximum = new decimal(new int[] {
             30,
             0,
@@ -2944,7 +2991,7 @@
             0,
             0});
             this.numericUpDownWaitUploadTime.Name = "numericUpDownWaitUploadTime";
-            this.numericUpDownWaitUploadTime.Size = new System.Drawing.Size(106, 23);
+            this.numericUpDownWaitUploadTime.Size = new System.Drawing.Size(144, 23);
             this.numericUpDownWaitUploadTime.TabIndex = 152;
             this.numericUpDownWaitUploadTime.Value = new decimal(new int[] {
             3,
@@ -2956,13 +3003,13 @@
             // 
             this.label163.AutoSize = true;
             this.label163.BackColor = System.Drawing.Color.Transparent;
-            this.label163.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label163.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label163.Location = new System.Drawing.Point(768, 406);
+            this.label163.Font = new System.Drawing.Font("楷体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label163.ForeColor = System.Drawing.Color.Black;
+            this.label163.Location = new System.Drawing.Point(723, 436);
             this.label163.Name = "label163";
-            this.label163.Size = new System.Drawing.Size(137, 20);
+            this.label163.Size = new System.Drawing.Size(140, 14);
             this.label163.TabIndex = 151;
-            this.label163.Text = "上传最长等待时间(s)";
+            this.label163.Text = "上传等待时间（s）：";
             // 
             // comboBoxZkytAdd
             // 
@@ -2970,6 +3017,7 @@
             this.comboBoxZkytAdd.FormattingEnabled = true;
             this.comboBoxZkytAdd.Items.AddRange(new object[] {
             "成都",
+            "云南保山",
             "其他"});
             this.comboBoxZkytAdd.Location = new System.Drawing.Point(945, 378);
             this.comboBoxZkytAdd.Name = "comboBoxZkytAdd";
@@ -5331,48 +5379,22 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
             // 
-            // panel18
+            // textBoxZkytLineID
             // 
-            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel18.Controls.Add(this.label171);
-            this.panel18.Controls.Add(this.comboBoxBTG_XZBZ);
-            this.panel18.Location = new System.Drawing.Point(3, 94);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(941, 28);
-            this.panel18.TabIndex = 137;
+            this.textBoxZkytLineID.Location = new System.Drawing.Point(898, 405);
+            this.textBoxZkytLineID.Name = "textBoxZkytLineID";
+            this.textBoxZkytLineID.Size = new System.Drawing.Size(146, 26);
+            this.textBoxZkytLineID.TabIndex = 158;
             // 
-            // label170
+            // label172
             // 
-            this.label170.AutoSize = true;
-            this.label170.Location = new System.Drawing.Point(31, 299);
-            this.label170.Name = "label170";
-            this.label170.Size = new System.Drawing.Size(203, 14);
-            this.label170.TabIndex = 138;
-            this.label170.Text = "山东济宁排放标准—限值对应表";
-            // 
-            // comboBoxBTG_XZBZ
-            // 
-            this.comboBoxBTG_XZBZ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxBTG_XZBZ.FormattingEnabled = true;
-            this.comboBoxBTG_XZBZ.Items.AddRange(new object[] {
-            "按限值表匹配",
-            "按山东济宁要求进行匹配",
-            "按山东烟台要求进行匹配",
-            "按内蒙要求进行匹配"});
-            this.comboBoxBTG_XZBZ.Location = new System.Drawing.Point(131, 1);
-            this.comboBoxBTG_XZBZ.Name = "comboBoxBTG_XZBZ";
-            this.comboBoxBTG_XZBZ.Size = new System.Drawing.Size(800, 22);
-            this.comboBoxBTG_XZBZ.TabIndex = 136;
-            // 
-            // label171
-            // 
-            this.label171.AutoSize = true;
-            this.label171.Font = new System.Drawing.Font("宋体", 11F);
-            this.label171.Location = new System.Drawing.Point(28, 4);
-            this.label171.Name = "label171";
-            this.label171.Size = new System.Drawing.Size(97, 15);
-            this.label171.TabIndex = 137;
-            this.label171.Text = "限值匹配方法";
+            this.label172.AutoSize = true;
+            this.label172.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label172.Location = new System.Drawing.Point(724, 412);
+            this.label172.Name = "label172";
+            this.label172.Size = new System.Drawing.Size(147, 14);
+            this.label172.TabIndex = 157;
+            this.label172.Text = "检测线编号（保山）：";
             // 
             // stationConfig
             // 
@@ -5419,6 +5441,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSDSXZ)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
+            this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBtg_SDJN_XZ)).EndInit();
@@ -5466,8 +5490,6 @@
             this.panel31.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel18.ResumeLayout(false);
-            this.panel18.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5920,6 +5942,8 @@
         private System.Windows.Forms.Label label170;
         private System.Windows.Forms.Label label171;
         private System.Windows.Forms.ComboBox comboBoxBTG_XZBZ;
+        private System.Windows.Forms.TextBox textBoxZkytLineID;
+        private System.Windows.Forms.Label label172;
     }
 }
 

@@ -116,6 +116,7 @@ namespace exhaustDetect
         public static carinfor.HHZWebInf hhzwebinf = new carinfor.HHZWebInf();
         public static YichangInter.DeviceSwapIfaceImplService yichangInterface = null;
         public static DeviceSwapIfaceImplServiceOther yichangInterfaceOther = null;
+        public static DeviceSwapIfaceImplServiceYnBs yichangInterfaceYnbs = null;
         public static YichangInter.xmlAnalysis xmlanalysis = new YichangInter.xmlAnalysis();
         public static WebThread webthread = null;
         //public static int waitUploadTime = 1000;
@@ -304,6 +305,7 @@ namespace exhaustDetect
 
         public const string ZKYTAREA_CD = "成都";
         public const string ZKYTAREA_OTHER = "其他";
+        public const string ZKYTAREA_YNBS = "云南保山";
         public struct neu_accountV301
         {
             public string account;
@@ -1088,6 +1090,8 @@ namespace exhaustDetect
             {
                 zkytwebinf.waitUploadTime = 10;
             }
+            ini.INIIO.GetPrivateProfileString("中科宇图联网", "LINEID", "01", temp, 2048, @".\appConfig.ini");
+            zkytwebinf.lineID = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("中科宇图联网", "验证上传", "Y", temp, 2048, @".\appConfig.ini");
             zkytwebinf.checkUploadSuccess = (temp.ToString().Trim() == "Y");
             ini.INIIO.GetPrivateProfileString("中科宇图联网", "显示结果", "Y", temp, 2048, @".\appConfig.ini");
@@ -2257,25 +2261,42 @@ namespace exhaustDetect
                     {
                         isNetUsed = true;
                         init_zkytinf();
-                        if (get_zkytRegCode())
+                        if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                         {
-                            if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                            if (get_zkytRegCode())
                             {
-                                MessageBox.Show("启动授权码上次更新非当日，建议重新在网页启动工控软件更新授权码");
+                                if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                                {
+                                    MessageBox.Show("启动授权码上次更新非当日，建议重新在网页启动工控软件更新授权码");
 
+                                }
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码");
+                            else
+                            {
+                                MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码");
+                            }
                         }
                         if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                         {
                             yichangInterface = new YichangInter.DeviceSwapIfaceImplService(zkytwebinf.weburl);
                         }
-                        else
+                        else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                         {
                             yichangInterfaceOther = new DeviceSwapIfaceImplServiceOther(zkytwebinf.weburl);
+                        }
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                        {
+                            string result = "";
+                            string info = "";
+                            string accesstoken = "";
+                            yichangInterfaceYnbs = new DeviceSwapIfaceImplServiceYnBs(zkytwebinf.weburl);
+                            mainPanel.xmlanalysis.ReadAccessTokenString(yichangInterfaceYnbs.getAccessToken(zkytwebinf.lineID),out result,out info,out accesstoken);
+                            if (result == "0")
+                            {
+                                MessageBox.Show("调取访问令牌失败:"+info);
+                            }
+                            else
+                            { zkytwebinf.regcode = accesstoken; }
                         }
                         webthread = new WebThread();
                     }
@@ -3245,29 +3266,36 @@ namespace exhaustDetect
             {
                 try
                 {
-                    if (get_zkytRegCode())
+                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
-                        if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                        if (get_zkytRegCode())
                         {
-                            MessageBox.Show("启动授权码上次更新非当日，重新在网页启动工控软件更新授权码后再进入车辆检测");
+                            if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                            {
+                                MessageBox.Show("启动授权码上次更新非当日，重新在网页启动工控软件更新授权码后再进入车辆检测");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码后再进入车辆检测");
                             return;
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码后再进入车辆检测");
-                        return;
-                    }
-                    string result, info;
+                    string result="", info="";
                     INIIO.saveLogInf("初始化设备：AuthorizedID=" + zkytwebinf.regcode + ";设备型号：" + equipmodel.SBXH);
 
                     if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                     {
                         xmlanalysis.ReadACKString(yichangInterface.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
-                    else
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
                         xmlanalysis.ReadACKString(yichangInterfaceOther.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceYnbs.gkrjbbh(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
                     if (result == "0")
                     {
@@ -3744,29 +3772,36 @@ namespace exhaustDetect
             {
                 try
                 {
-                    if (get_zkytRegCode())
+                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
-                        if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                        if (get_zkytRegCode())
                         {
-                            MessageBox.Show("启动授权码上次更新非当日，重新在网页启动工控软件更新授权码后再进入车辆检测");
+                            if (zkytwebinf.regtime.Day != DateTime.Now.Day)
+                            {
+                                MessageBox.Show("启动授权码上次更新非当日，重新在网页启动工控软件更新授权码后再进入车辆检测");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码后再进入车辆检测");
                             return;
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("读取启动授权码失败，请在网页中启动工控软件更新授权码后再进入车辆检测");
-                        return;
-                    }
-                    string result, info;
+                    string result="", info="";
                     INIIO.saveLogInf("初始化设备：AuthorizedID=" + zkytwebinf.regcode + ";设备型号：" + equipmodel.SBXH);
 
                     if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                     {
                         xmlanalysis.ReadACKString(yichangInterface.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
-                    else
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
                         xmlanalysis.ReadACKString(yichangInterfaceOther.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
+                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceYnbs.gkrjbbh(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
                     if (result == "0")
                     {

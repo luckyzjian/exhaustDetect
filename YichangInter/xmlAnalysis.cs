@@ -32,6 +32,37 @@ namespace YichangInter
             }
             
         }
+        public void ReadAccessTokenString(string xmlstring, out string result, out string info,out string accessToken)
+        {
+            INIIO.saveLogInf("[返回消息]:" + xmlstring);
+            if (xmlstring != "")
+            {
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(xmlstring);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                DataTable dt1 = ds.Tables[0];
+                result = dt1.Rows[0]["result"].ToString();
+                if (result == "0")
+                {
+                    info = dt1.Rows[0]["info"].ToString();
+                    accessToken = "";
+                }
+                else
+                {
+                    dt1 = ds.Tables["info"];
+                    info = "";
+                    accessToken = dt1.Rows[0]["accessToken"].ToString();
+                }
+            }
+            else
+            {
+                result = "0";
+                info = "上传过程中有异常发生，请查看日志";
+                accessToken = "";
+            }
+
+        }
         public void ReadStateString(string xmlstring, out string result,out string info, out string state, out string businessId,out string methodID)
         {
             info = "";
@@ -54,6 +85,31 @@ namespace YichangInter
                 state = dt1.Rows[0]["state"].ToString();
                 businessId = dt1.Rows[0]["businessId"].ToString();
                 methodID = dt1.Rows[0]["methodId"].ToString();
+            }
+
+        }
+        public void ReadDjztString(string xmlstring, out string result, out string info, out string state, out string businessId, out string methodID)
+        {
+            info = "";
+            result = "";
+            state = "";
+            businessId = "";
+            methodID = "";
+            INIIO.saveLogInf("[读取状态]：" + xmlstring);
+            DataSet ds = new DataSet();
+            StringReader stream = new StringReader(xmlstring);
+            XmlTextReader reader = new XmlTextReader(stream);
+            ds.ReadXml(reader);
+            DataTable dt1 = ds.Tables[0];
+            result = dt1.Rows[0]["result"].ToString();
+            if (result == "0")
+                info = dt1.Rows[0]["info"].ToString();
+            else
+            {
+                dt1 = ds.Tables[1];
+                state = dt1.Rows[0]["zt"].ToString();
+                businessId = dt1.Rows[0]["lsh"].ToString();
+                methodID = dt1.Rows[0]["jcff"].ToString();
             }
 
         }
@@ -91,6 +147,50 @@ namespace YichangInter
             airInflow = dt1.Rows[0]["airInflow"].ToString();
             oilSupply = dt1.Rows[0]["oilSupply"].ToString();
             isSYJHQ = dt1.Rows[0]["isSYJHQ"].ToString();
+
+
+        }
+        public void ReadDjclxxString(string xmlstring, out string result, out string info, out string carCardNumber, out string maxWeight, out string standardWeight, out string motorPower, out string motorRate, out string speedChanger, out string fuelType, out string airInflow, out string oilSupply, out string isSYJHQ,out string ccdjrq,out string clzl)
+        {
+            info = "";
+            result = "";
+            carCardNumber = "";
+            maxWeight = "";
+            standardWeight = "";
+            motorRate = "";
+            motorPower = "";
+            speedChanger = "";
+            fuelType = "";
+            airInflow = "";
+            oilSupply = "";
+            isSYJHQ = "";
+            ccdjrq = "";
+            clzl = "";
+            INIIO.saveLogInf("[读取车辆信息]：" + xmlstring);
+            DataSet ds = new DataSet();
+            StringReader stream = new StringReader(xmlstring);
+            XmlTextReader reader = new XmlTextReader(stream);
+            ds.ReadXml(reader);
+            DataTable dt1 = ds.Tables[0];
+            result = dt1.Rows[0]["result"].ToString();
+            if (result == "0")
+                info = dt1.Rows[0]["info"].ToString();
+            else
+            {
+                dt1 = ds.Tables[1];
+                carCardNumber = dt1.Rows[0]["cphm"].ToString();
+                maxWeight = dt1.Rows[0]["zdzzl"].ToString();
+                standardWeight = dt1.Rows[0]["jzzl"].ToString();
+                motorPower = dt1.Rows[0]["edgl"].ToString();
+                motorRate = dt1.Rows[0]["edzs"].ToString();
+                speedChanger = dt1.Rows[0]["bsqxs"].ToString();
+                fuelType = dt1.Rows[0]["rlzl"].ToString();
+                airInflow = dt1.Rows[0]["jqfs"].ToString();
+                oilSupply = dt1.Rows[0]["gyfs"].ToString();
+                isSYJHQ = dt1.Rows[0]["syjhq"].ToString();
+                ccdjrq = dt1.Rows[0]["ccdjrq"].ToString();
+                clzl = dt1.Rows[0]["clzl"].ToString();
+            }
 
 
         }

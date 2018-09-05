@@ -1379,12 +1379,14 @@ namespace exhaustDetect
             dt.Columns.Add("功率", typeof(string));
             dt.Columns.Add("光吸收系数", typeof(string));
             dt.Columns.Add("时序类别", typeof(string));
+            dt.Columns.Add("转速", typeof(string));
             string[] mmsj = dataseconds.MMTIME.Split(',');
             string[] mmsx = dataseconds.MMSX.Split(',');
             string[] mmcs = dataseconds.MMCS.Split(',');
             string[] mmgl = dataseconds.MMGL.Split(',');
             string[] mmk = dataseconds.MMK.Split(',');
             string[] mmlb = dataseconds.MMLB.Split(',');
+            string[] mmzs = dataseconds.MMZS.Split(',');
             int count = mmsx.Count();
             for (int i = 0; i < count - 1; i++)
             {
@@ -1398,7 +1400,7 @@ namespace exhaustDetect
                     case "4": lb = "80%velMaxHp测试中"; break;
                     default: break;
                 }
-                dt.Rows.Add(mmsj[i], mmsx[i], double.Parse(mmcs[i]).ToString("0.0"), double.Parse(mmgl[i]).ToString("0.0"), mmk[i], lb);
+                dt.Rows.Add(mmsj[i], mmsx[i], double.Parse(mmcs[i]).ToString("0.0"), double.Parse(mmgl[i]).ToString("0.0"), mmk[i], lb,mmzs[i]);
 
             }return dt;
         }

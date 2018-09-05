@@ -188,6 +188,8 @@ namespace exhaustDetect
             zkytwebinf.weburl = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("中科宇图联网", "ADD", "其他", temp, 2048, @".\appConfig.ini");
             zkytwebinf.add = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("中科宇图联网", "LINEID", "01", temp, 2048, @".\appConfig.ini");
+            zkytwebinf.lineID = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("中科宇图联网", "上传超时时间", "10", temp, 2048,  @".\appConfig.ini");
             try
             {
@@ -280,6 +282,7 @@ namespace exhaustDetect
             numericUpDownWaitUploadTime.Value = zkytwebinf.waitUploadTime;
             checkBoxCheckUploadSuccess.Checked = zkytwebinf.checkUploadSuccess;
             checkBoxDISPLAYRESULT.Checked = zkytwebinf.displayCheckResult;
+            textBoxZkytLineID.Text = zkytwebinf.lineID;
 
             comboBoxTYNETTYPE.Text = tynettype;
 
@@ -1453,6 +1456,7 @@ namespace exhaustDetect
             ini.INIIO.WritePrivateProfileString("桂林联网", "PASSWORD", textBoxGLPASSWORD.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "WEBURL", textBoxZKYTWEB.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "ADD", comboBoxZkytAdd.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("中科宇图联网", "LINEID", textBoxZkytLineID.Text, @".\appConfig.ini");
 
             mainPanel.zkytwebinf.waitUploadTime = (int)numericUpDownWaitUploadTime.Value;
             mainPanel.zkytwebinf.checkUploadSuccess = checkBoxCheckUploadSuccess.Checked;

@@ -371,6 +371,7 @@ namespace SYS_DAL
                     asm.MMCS = dt.Rows[0]["MMCS"].ToString();//6
                     asm.MMGL = dt.Rows[0]["MMGL"].ToString();
                     asm.MMK = dt.Rows[0]["MMK"].ToString();
+                    asm.MMZS = dt.Rows[0]["MMZS"].ToString();
                     asm.MMNO =dt.Columns.Contains("MMNO")? dt.Rows[0]["MMNO"].ToString():"";
 
                 }

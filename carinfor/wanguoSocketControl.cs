@@ -98,6 +98,7 @@ namespace carinfor
         public int waitUploadTime;
         public bool checkUploadSuccess;
         public bool displayCheckResult;
+        public string lineID;
     }
     public class DALIWebInf
     {

@@ -1102,7 +1102,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传测功机标定");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
 
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
@@ -1127,10 +1127,28 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.cgjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    cgjdata.Hvitualtime,
+                                    cgjdata.Hrealtime,
+                                    cgjdata.Lvitualtime,
+                                    cgjdata.Lrealtime,
+                                    cgjdata.Hpower,
+                                    cgjdata.Lpower,
+                                   (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceYnbs.cgjzj(
                                     mainPanel.zkytwebinf.regcode,
                                     cgjdata.Hvitualtime,
                                     cgjdata.Hrealtime,
@@ -1364,7 +1382,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传烟度计自检");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -1384,10 +1402,29 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.ydjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    "1",
+                                    cgjdata.LabelValueN50,
+                                    cgjdata.LabelValueN70,
+                                    cgjdata.N501,
+                                    cgjdata.N701,
+                                    cgjdata.Error501,
+                                    cgjdata.Error701,
+                                   cgjdata.Zjjg == "通过" ? "1" : "0",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceYnbs.ydjzj(
                                     mainPanel.zkytwebinf.regcode,
                                     "1",
                                     cgjdata.LabelValueN50,
@@ -1769,7 +1806,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传流量计自检");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -1790,7 +1827,7 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                   mainPanel.yichangInterfaceOther.lljSelfcheck(
@@ -2055,7 +2092,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传环境参数自检");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -2073,7 +2110,7 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                     mainPanel.yichangInterfaceOther.hjcsgyqSelfcheck(
@@ -2090,7 +2127,24 @@ namespace exhaustDetect
                                     out ackresult,
                                     out errormessage);
                             }
-                                ini.INIIO.saveLogInf("联网信息：上传环境参数自检成功:result=" + ackresult);
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                    mainPanel.yichangInterfaceYnbs.hjcsyzj(
+                                        mainPanel.zkytwebinf.regcode,
+                                         cgjdata.ActualTemperature,
+                                         cgjdata.Temperature,
+                                         cgjdata.ActualHumidity,
+                                         cgjdata.Humidity,
+                                         cgjdata.ActualAirPressure,
+                                         cgjdata.AirPressure,
+                                        DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        ""),
+                                    out ackresult,
+                                    out errormessage);
+                            }
+                            ini.INIIO.saveLogInf("联网信息：上传环境参数自检成功:result=" + ackresult);
                         }
                         catch (Exception er)
                         {
@@ -2513,7 +2567,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传五气分析仪自检");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -2529,10 +2583,22 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.wqfxySelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceYnbs.wqfxyzj(
                                     mainPanel.zkytwebinf.regcode,
                                      cgjdata.TightnessResult,
                                     DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
@@ -3145,7 +3211,7 @@ namespace exhaustDetect
                             try
                             {
                                 ini.INIIO.saveLogInf("联网信息：上传测功机寄生功率自检");
-                                string ackresult, errormessage;
+                                string ackresult="", errormessage="";
                                 if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(
@@ -3174,10 +3240,35 @@ namespace exhaustDetect
                                     out ackresult,
                                     out errormessage);
                                 }
-                                else
+                                else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_OTHER)
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(
                                       mainPanel.yichangInterfaceOther.cgjPLHPSelfcheck(
+                                          mainPanel.zkytwebinf.regcode,
+                                          cgjdata.SpeedQJ1,
+                                          cgjdata.NameSpeed1,
+                                          cgjdata.Plhp1,
+                                          cgjdata.SpeedQJ2,
+                                          cgjdata.NameSpeed2,
+                                          cgjdata.Plhp2,
+                                          cgjdata.SpeedQJ3,
+                                          cgjdata.NameSpeed3,
+                                          cgjdata.Plhp3,
+                                          cgjdata.SpeedQJ4,
+                                          cgjdata.NameSpeed4,
+                                          cgjdata.Plhp4,
+                                          cgjdata.MaxSpeed,
+                                           (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                          DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          ""),
+                                      out ackresult,
+                                      out errormessage);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(
+                                      mainPanel.yichangInterfaceYnbs.cgjbd(
                                           mainPanel.zkytwebinf.regcode,
                                           cgjdata.SpeedQJ1,
                                           cgjdata.NameSpeed1,
@@ -3557,7 +3648,7 @@ namespace exhaustDetect
                         try
                         {
                             ini.INIIO.saveLogInf("联网信息：上传双怠速五气分析仪自检");
-                            string ackresult, errormessage;
+                            string ackresult="", errormessage="";
                             if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -3573,7 +3664,7 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
-                            else
+                            else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_OTHER)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.sdsqtfxySelfcheck(
@@ -3582,6 +3673,18 @@ namespace exhaustDetect
                                      "1",
                                      cgjdata.CanliuHC,
                                      cgjdata.CheckResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceYnbs.wqfxyzj(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
                                     DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
                                     DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
                                     ""),

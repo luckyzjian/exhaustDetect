@@ -623,7 +623,7 @@ namespace exhaustDetect
                 case "VMAS": jcff = "VMAS"; thisjcffmc = "简易瞬态工况法"; break;
                 case "ASM": jcff = "VASM"; thisjcffmc = "稳态工况法"; break;
                 case "SDS": jcff = "VTIE"; thisjcffmc = "双怠速法"; break;
-                case "SDSM": jcff = "VTIE"; thisjcffmc = "双怠速法"; break;
+                case "SDSM": jcff = "MDIS"; thisjcffmc = "双怠速法"; break;//2018-08-31根据宝辉王小路转述安车的口头协议，摩托车双怠速传MDIS
                 case "JZJS": jcff = "VLUG"; thisjcffmc = "加载减速法"; break;
                 case "ZYJS": jcff = "VFLM"; thisjcffmc = "不透光烟度"; break;
                 case "LZ": jcff = "VFTM"; thisjcffmc = "滤纸烟度法"; break;
@@ -2548,9 +2548,13 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else
+                                            else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_OTHER)
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
+                                            }
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                            {
+                                                mainPanel.yichangInterfaceYnbs.xxtz(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
                                             try
                                             {
@@ -3743,73 +3747,76 @@ namespace exhaustDetect
                                                 }
                                                 #endregion
                                             }
-                                            if(!uploadHCSuccess)
+                                            if (!uploadHCSuccess)
                                             {
                                                 #region 上传HC
-                                                mainPanel.webthread.businessId = carLogin.carbj.JYLSH;
-                                                mainPanel.webthread.registCode = mainPanel.zkytwebinf.regcode;
-                                                mainPanel.webthread.bgCO = double.Parse(asm_data.BackgroundCO);
-                                                mainPanel.webthread.bgNO = double.Parse(asm_data.BackgroundNO);
-                                                mainPanel.webthread.bgHC = double.Parse(asm_data.BackgroundHC);
 
-                                                mainPanel.webthread.canliuHC = double.Parse(asm_data.ResidualHC);
-                                                mainPanel.webthread.IFlowResult = "1";
-                                                mainPanel.webthread.O2Avg = 20.8;
-                                                mainPanel.webthread.checkResult = "1";
-                                                mainPanel.webthread.checkTimeStart = jcsj.ToString("yyyy-MM-dd HH:mm:ss");
-                                                mainPanel.webthread.checkTimeEnd = jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss");
-                                                mainPanel.webthread.remark = "";
-                                                ThreadStart threadstart = new ThreadStart(mainPanel.webthread.sendAirHC);
-                                                Thread thread = new Thread(threadstart);
-                                                ini.INIIO.saveLogInf("开始上传HC残留，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH + "," 
-                                                    + mainPanel.zkytwebinf.regcode + ","
-                                                    + double.Parse(asm_data.BackgroundCO) + "," 
-                                                    + double.Parse(asm_data.BackgroundNO) + ","
-                                                    + double.Parse(asm_data.BackgroundHC) + ","
-                                                    + double.Parse(asm_data.ResidualHC) + "," 
-                                                    + "1" + "," 
-                                                    + "20.8" + "," 
-                                                    + "1" + "," 
-                                                    + jcsj.ToString("yyyy-MM-dd HH:mm:ss") + "," 
-                                                    + jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss") + "," 
-                                                    + "" + ");");
-                                                int alivetimecount = 0;
-                                                int reSend = 0;
-                                                thread.Start();
-                                                string result, info;
-                                                bool isExcedTimeToUpload = false;
-                                                while (thread.IsAlive)
+                                                if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                 {
-                                                    Thread.Sleep(10);
-                                                    alivetimecount++;
-                                                    if (alivetimecount > mainPanel.zkytwebinf.waitUploadTime * 100)
+                                                    mainPanel.webthread.businessId = carLogin.carbj.JYLSH;
+                                                    mainPanel.webthread.registCode = mainPanel.zkytwebinf.regcode;
+                                                    mainPanel.webthread.bgCO = double.Parse(asm_data.BackgroundCO);
+                                                    mainPanel.webthread.bgNO = double.Parse(asm_data.BackgroundNO);
+                                                    mainPanel.webthread.bgHC = double.Parse(asm_data.BackgroundHC);
+
+                                                    mainPanel.webthread.canliuHC = double.Parse(asm_data.ResidualHC);
+                                                    mainPanel.webthread.IFlowResult = "1";
+                                                    mainPanel.webthread.O2Avg = 20.8;
+                                                    mainPanel.webthread.checkResult = "1";
+                                                    mainPanel.webthread.checkTimeStart = jcsj.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    mainPanel.webthread.checkTimeEnd = jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss");
+                                                    mainPanel.webthread.remark = "";
+                                                    ThreadStart threadstart = new ThreadStart(mainPanel.webthread.sendAirHC);
+                                                    Thread thread = new Thread(threadstart);
+                                                    ini.INIIO.saveLogInf("开始上传HC残留，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                                                    ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH + ","
+                                                        + mainPanel.zkytwebinf.regcode + ","
+                                                        + double.Parse(asm_data.BackgroundCO) + ","
+                                                        + double.Parse(asm_data.BackgroundNO) + ","
+                                                        + double.Parse(asm_data.BackgroundHC) + ","
+                                                        + double.Parse(asm_data.ResidualHC) + ","
+                                                        + "1" + ","
+                                                        + "20.8" + ","
+                                                        + "1" + ","
+                                                        + jcsj.ToString("yyyy-MM-dd HH:mm:ss") + ","
+                                                        + jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss") + ","
+                                                        + "" + ");");
+                                                    int alivetimecount = 0;
+                                                    int reSend = 0;
+                                                    thread.Start();
+                                                    string result, info;
+                                                    bool isExcedTimeToUpload = false;
+                                                    while (thread.IsAlive)
                                                     {
-                                                        isExcedTimeToUpload = true;
-                                                        try
+                                                        Thread.Sleep(10);
+                                                        alivetimecount++;
+                                                        if (alivetimecount > mainPanel.zkytwebinf.waitUploadTime * 100)
                                                         {
-                                                            thread.Abort();
+                                                            isExcedTimeToUpload = true;
+                                                            try
+                                                            {
+                                                                thread.Abort();
+                                                            }
+                                                            catch
+                                                            { }
+                                                            ini.INIIO.saveLogInf("上传HC残留失败，超过规定时间未完成上传，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+
+                                                            MessageBox.Show("分析仪背景气体及HC残留上传失败", "错误提示");
+                                                            return;
                                                         }
-                                                        catch
-                                                        { }
-                                                        ini.INIIO.saveLogInf("上传HC残留失败，超过规定时间未完成上传，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 
-                                                        MessageBox.Show("分析仪背景气体及HC残留上传失败", "错误提示");
-                                                        return;
                                                     }
+                                                    if (!isExcedTimeToUpload)
+                                                    {
+                                                        uploadHCSuccess = true;
+                                                        ini.INIIO.saveLogInf("上传背景信息成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                                                        mainPanel.xmlanalysis.ReadACKString(mainPanel.webthread.answerString, out result, out info);
+                                                        ini.INIIO.saveLogInf("读取平台返回状态：result:" + result + "  info:" + info);
 
-                                                }
-                                                if (!isExcedTimeToUpload)
-                                                {
-                                                    uploadHCSuccess = true;
-                                                    ini.INIIO.saveLogInf("上传背景信息成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                    mainPanel.xmlanalysis.ReadACKString(mainPanel.webthread.answerString, out result, out info);
-                                                    ini.INIIO.saveLogInf("读取平台返回状态：result:" + result + "  info:" + info);
-
+                                                    }
                                                 }
                                                 #endregion
                                             }
-
                                             #region 上传过程数据
                                             if (dataseconds.Rows.Count>0)
                                             {
@@ -3840,7 +3847,7 @@ namespace exhaustDetect
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["相对湿度"].ToString()), 1),
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 1));
                                                         }
-                                                        else
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                         {
                                                             mainPanel.yichangInterfaceOther.vasmLog(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
                                                               i,
@@ -3851,6 +3858,30 @@ namespace exhaustDetect
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["转速"].ToString()), 0),
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["O2实时值"].ToString()), 2),
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["CO2实时值"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["稀释修正系数"].ToString()), 3),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["湿度修正系数"].ToString()), 3),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["加载功率"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["寄生功率"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["指示功率"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["环境温度"].ToString()), 1),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["大气压力"].ToString()), 1),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["相对湿度"].ToString()), 1),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 1));
+                                                        }
+
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                        {
+                                                            mainPanel.yichangInterfaceYnbs.wtGcsj(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
+                                                              DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss"),
+                                                              dataseconds.Rows[i]["时序类别"].ToString(),
+                                                              i,
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["HC实时值"].ToString()), 0),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["CO实时值"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["NO实时值"].ToString()), 0),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["O2实时值"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["CO2实时值"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["实时车速"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["转速"].ToString()), 0),
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["稀释修正系数"].ToString()), 3),
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["湿度修正系数"].ToString()), 3),
                                                               Math.Round(double.Parse(dataseconds.Rows[i]["加载功率"].ToString()), 2),
@@ -4022,7 +4053,7 @@ namespace exhaustDetect
                                             if(mainPanel.zkytwebinf.displayCheckResult)
                                             try
                                             {
-                                                string result, info;
+                                                string result="", info="";
                                                 string co5025el = ""; string hc5025el = ""; string no5025el = ""; string co2540el = ""; string hc2540el = ""; string no2540el = "";
                                                 string co5025ed = ""; string hc5025ed = ""; string no5025ed = ""; string co2540ed = ""; string hc2540ed = ""; string no2540ed = "";
                                                 string co5025str = ""; string hc5025str = ""; string no5025str = ""; string co2540str = ""; string hc2540str = ""; string no2540str = "";
@@ -4035,7 +4066,7 @@ namespace exhaustDetect
                                                     out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
                                                     out result5);
                                                 }
-                                                else
+                                                else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                 {
                                                     mainPanel.xmlanalysis.ReadAsmCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
                                                     out co5025el, out hc5025el, out no5025el, out co2540el, out hc2540el, out no2540el,
@@ -4043,6 +4074,11 @@ namespace exhaustDetect
                                                     out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
                                                     out result5);
                                                 }
+                                                else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_YNBS)
+                                                    {
+                                                        result = "";
+                                                        info = "该地区不支持该接口";
+                                                    }
                                                 if (result == "1")
                                                 {
                                                     asmdata.CO25CLZ = co5025str;
@@ -5302,7 +5338,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else
+                                            else 
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
@@ -6470,9 +6506,13 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else
+                                            else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
+                                            }
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                            {
+                                                mainPanel.yichangInterfaceYnbs.xxtz(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
                                             try
                                             {
@@ -7543,7 +7583,7 @@ namespace exhaustDetect
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["DCF"].ToString()), 3).ToString() + "," +
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["功率"].ToString()), 2).ToString() + ")");
                                                         }
-                                                        else
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                         {
                                                             mainPanel.yichangInterfaceOther.loadDownLog(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
                                                                i,
@@ -7584,6 +7624,39 @@ namespace exhaustDetect
                                                                Math.Round(double.Parse(dataseconds.Rows[i]["车速"].ToString()), 2).ToString() + "," +
                                                                Math.Round(double.Parse(dataseconds.Rows[i]["车速"].ToString()), 2).ToString() + "," +
                                                                Math.Round(double.Parse(dataseconds.Rows[i]["车速"].ToString()), 2).ToString() + ")" );
+                                                        }
+
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                        {
+                                                            mainPanel.yichangInterfaceYnbs.jzjsGcsj(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
+                                                               DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss"),
+                                                              dataseconds.Rows[i]["时序类别"].ToString(),
+                                                              i,
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["光吸收系数K"].ToString()), 2),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["车速"].ToString()), 2),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["转速"].ToString()), 0),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["扭力"].ToString()), 2),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["功率"].ToString()), 2),
+                                                              Math.Round(double.Parse(dataseconds.Rows[i]["DCF"].ToString()), 3),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["功率"].ToString()), 2),
+                                                             Math.Round(double.Parse(dataseconds.Rows[i]["环境温度"].ToString()), 1),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["相对湿度"].ToString()), 1),
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["大气压力"].ToString()), 1));
+                                                            ini.INIIO.saveLogInf("[过程数据" + i + "]:" + "jzjsGcsj(" + carLogin.carbj.JYLSH + "," +
+                                                                mainPanel.zkytwebinf.regcode + "," +
+                                                                DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss") + "," +
+                                                              dataseconds.Rows[i]["时序类别"].ToString() + "," +
+                                                              i.ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["光吸收系数K"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["车速"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["转速"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["扭力"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["功率"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["DCF"].ToString()), 0).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["功率"].ToString()), 0).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["环境温度"].ToString()), 1).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["相对湿度"].ToString()), 1).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["大气压力"].ToString()), 1).ToString() + ")");
                                                         }
                                                         Thread.Sleep(10);
                                                     }
@@ -7726,7 +7799,7 @@ namespace exhaustDetect
                                             if (mainPanel.zkytwebinf.displayCheckResult)
                                                 try
                                             {
-                                                string result, info;
+                                                string result="", info="";
 
                                                 string smokeK100 = ""; string smokeK90 = ""; string smokeK80 = ""; string power = ""; string mortorSpeed = ""; string smokeK100Limit = ""; string smokeK90Limit = "";
                                                 string smokeK80Limit = ""; string powerLimit = ""; string mortorSpeedLimit = ""; string smokeK100Result = ""; string smokeK90Result = ""; string smokeK80Result = "";
@@ -7739,14 +7812,19 @@ namespace exhaustDetect
                                                     out smokeK80Limit, out powerLimit, out mortorSpeedLimit, out smokeK100Result, out smokeK90Result, out smokeK80Result,
                                                     out powerResult, out mortorSpeedResult, out result2);
                                                 }
-                                                else
-                                                {
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                                                    {
                                                     mainPanel.xmlanalysis.ReadLudownCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
                                                     out smokeK100, out smokeK90, out smokeK80, out power, out mortorSpeed, out smokeK100Limit, out smokeK90Limit,
                                                     out smokeK80Limit, out powerLimit, out mortorSpeedLimit, out smokeK100Result, out smokeK90Result, out smokeK80Result,
                                                     out powerResult, out mortorSpeedResult, out result2);
-                                                }
-                                                if (result == "1")
+                                                    }
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                    {
+                                                        result = "";
+                                                        info = "该地区不支持该接口";
+                                                    }
+                                                    if (result == "1")
                                                 {
                                                     jzjsdata.HK = smokeK100;
                                                     jzjsdata.NK = smokeK90;
@@ -8917,9 +8995,13 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
+                                            }
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                            {
+                                                mainPanel.yichangInterfaceYnbs.xxtz(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
                                             try
                                             {
@@ -10101,7 +10183,7 @@ namespace exhaustDetect
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["烟度值读数"].ToString()), 2),
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["发动机转速"].ToString()), 0));
                                                         }
-                                                        else
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                         {//其他地方协议里未要求上传自由加速过程数据
                                                             /*mainPanel.yichangInterfaceOther.lightproofSmokeLog(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
                                                             DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss"),
@@ -10109,6 +10191,15 @@ namespace exhaustDetect
                                                             i,
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["烟度值读数"].ToString()), 2),
                                                             Math.Round(double.Parse(dataseconds.Rows[i]["发动机转速"].ToString()), 0));*/
+                                                        }
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                        {
+                                                            mainPanel.yichangInterfaceYnbs.btgGcsj(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
+                                                            DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss"),
+                                                            dataseconds.Rows[i]["时序类别"].ToString(),
+                                                            i,
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["烟度值读数"].ToString()), 2),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["发动机转速"].ToString()), 0));
                                                         }
                                                         ini.INIIO.saveLogInf("[过程数据" + i + "]:" + "lightproofSmokeLog(" + carLogin.carbj.JYLSH + "," +
                                                             mainPanel.zkytwebinf.regcode + "," +
@@ -10250,7 +10341,7 @@ namespace exhaustDetect
                                             if (mainPanel.zkytwebinf.displayCheckResult)
                                                 try
                                             {
-                                                string result, info;
+                                                string result="", info="";
 
 
                                                 string smokeValue1 = ""; string smokeValue2 = ""; string smokeValue3 = ""; string avgSmoke = ""; string smokeLimit = ""; string result4 = "";
@@ -10260,12 +10351,17 @@ namespace exhaustDetect
                                                     mainPanel.xmlanalysis.ReadBtgCheckResultString(mainPanel.yichangInterface.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
                                                     out smokeValue1, out smokeValue2, out smokeValue3, out avgSmoke, out smokeLimit, out result4);
                                                 }
-                                                else
-                                                {
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                                                    {
                                                     mainPanel.xmlanalysis.ReadBtgCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
                                                       out smokeValue1, out smokeValue2, out smokeValue3, out avgSmoke, out smokeLimit, out result4);
-                                                }
-                                                if (result == "1")
+                                                    }
+                                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                    {
+                                                        result = "";
+                                                        info = "该地区不支持该接口";
+                                                    }
+                                                    if (result == "1")
                                                 {
                                                     zyjsdata.FIRSTDATA = smokeValue1;
                                                     zyjsdata.SECONDDATA = smokeValue2;
@@ -11488,9 +11584,13 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
+                                            }
+                                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                            {
+                                                mainPanel.yichangInterfaceYnbs.xxtz(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
                                             try
                                             {
@@ -12791,66 +12891,69 @@ namespace exhaustDetect
                                             if (!uploadHCSuccess)
                                             {
                                                 #region 上传HC
-                                                mainPanel.webthread.businessId = carLogin.carbj.JYLSH;
-                                                mainPanel.webthread.registCode = mainPanel.zkytwebinf.regcode;
-                                                mainPanel.webthread.bgCO = 0.0;
-                                                mainPanel.webthread.bgNO = 0;
-                                                mainPanel.webthread.bgHC = 0;
-
-                                                mainPanel.webthread.canliuHC = 1;
-                                                mainPanel.webthread.IFlowResult = "1";
-                                                mainPanel.webthread.O2Avg = 20.8;
-                                                mainPanel.webthread.checkResult = "1";
-                                                mainPanel.webthread.checkTimeStart = jcsj.ToString("yyyy-MM-dd HH:mm:ss");
-                                                mainPanel.webthread.checkTimeEnd = jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss");
-                                                mainPanel.webthread.remark = "";
-                                                ThreadStart threadstart = new ThreadStart(mainPanel.webthread.sendAirHC);
-                                                Thread thread = new Thread(threadstart);
-                                                ini.INIIO.saveLogInf("开始上传HC残留，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH + ","
-                                                    + mainPanel.zkytwebinf.regcode + ","
-                                                    + 0.0 + ","
-                                                    + 0 + ","
-                                                    + 0 + ","
-                                                    + 1 + ","
-                                                    + "1" + ","
-                                                    + "20.8" + ","
-                                                    + "1" + ","
-                                                    + jcsj.ToString("yyyy-MM-dd HH:mm:ss") + ","
-                                                    + jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss") + ","
-                                                    + "" + ");");
-                                                int alivetimecount = 0;
-                                                int reSend = 0;
-                                                thread.Start();
-                                                string result, info;
-                                                bool isExcedTimeToUpload = false;
-                                                while (thread.IsAlive)
+                                                if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                 {
-                                                    Thread.Sleep(10);
-                                                    alivetimecount++;
-                                                    if (alivetimecount > mainPanel.zkytwebinf.waitUploadTime * 100)
+                                                    mainPanel.webthread.businessId = carLogin.carbj.JYLSH;
+                                                    mainPanel.webthread.registCode = mainPanel.zkytwebinf.regcode;
+                                                    mainPanel.webthread.bgCO = 0.0;
+                                                    mainPanel.webthread.bgNO = 0;
+                                                    mainPanel.webthread.bgHC = 0;
+
+                                                    mainPanel.webthread.canliuHC = 1;
+                                                    mainPanel.webthread.IFlowResult = "1";
+                                                    mainPanel.webthread.O2Avg = 20.8;
+                                                    mainPanel.webthread.checkResult = "1";
+                                                    mainPanel.webthread.checkTimeStart = jcsj.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    mainPanel.webthread.checkTimeEnd = jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss");
+                                                    mainPanel.webthread.remark = "";
+                                                    ThreadStart threadstart = new ThreadStart(mainPanel.webthread.sendAirHC);
+                                                    Thread thread = new Thread(threadstart);
+                                                    ini.INIIO.saveLogInf("开始上传HC残留，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                                                    ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH + ","
+                                                        + mainPanel.zkytwebinf.regcode + ","
+                                                        + 0.0 + ","
+                                                        + 0 + ","
+                                                        + 0 + ","
+                                                        + 1 + ","
+                                                        + "1" + ","
+                                                        + "20.8" + ","
+                                                        + "1" + ","
+                                                        + jcsj.ToString("yyyy-MM-dd HH:mm:ss") + ","
+                                                        + jcsj.AddMinutes(1).ToString("yyyy-MM-dd HH:mm:ss") + ","
+                                                        + "" + ");");
+                                                    int alivetimecount = 0;
+                                                    int reSend = 0;
+                                                    thread.Start();
+                                                    string result, info;
+                                                    bool isExcedTimeToUpload = false;
+                                                    while (thread.IsAlive)
                                                     {
-                                                        isExcedTimeToUpload = true;
-                                                        try
+                                                        Thread.Sleep(10);
+                                                        alivetimecount++;
+                                                        if (alivetimecount > mainPanel.zkytwebinf.waitUploadTime * 100)
                                                         {
-                                                            thread.Abort();
+                                                            isExcedTimeToUpload = true;
+                                                            try
+                                                            {
+                                                                thread.Abort();
+                                                            }
+                                                            catch
+                                                            { }
+                                                            ini.INIIO.saveLogInf("上传HC残留失败，超过规定时间未完成上传，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+
+                                                            MessageBox.Show("分析仪背景气体及HC残留上传失败", "错误提示");
+                                                            return;
                                                         }
-                                                        catch
-                                                        { }
-                                                        ini.INIIO.saveLogInf("上传HC残留失败，超过规定时间未完成上传，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 
-                                                        MessageBox.Show("分析仪背景气体及HC残留上传失败", "错误提示");
-                                                        return;
                                                     }
+                                                    if (!isExcedTimeToUpload)
+                                                    {
+                                                        uploadHCSuccess = true;
+                                                        ini.INIIO.saveLogInf("上传背景信息成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                                                        mainPanel.xmlanalysis.ReadACKString(mainPanel.webthread.answerString, out result, out info);
+                                                        ini.INIIO.saveLogInf("读取平台返回状态：result:" + result + "  info:" + info);
 
-                                                }
-                                                if (!isExcedTimeToUpload)
-                                                {
-                                                    uploadHCSuccess = true;
-                                                    ini.INIIO.saveLogInf("上传背景信息成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                    mainPanel.xmlanalysis.ReadACKString(mainPanel.webthread.answerString, out result, out info);
-                                                    ini.INIIO.saveLogInf("读取平台返回状态：result:" + result + "  info:" + info);
-
+                                                    }
                                                 }
                                                 #endregion
                                             }
@@ -12890,7 +12993,7 @@ namespace exhaustDetect
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 2).ToString() + "," +
                                                                 dataseconds.Rows[i]["转速"].ToString() + ")");
                                                         }
-                                                        else
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                                         {
                                                             mainPanel.yichangInterfaceOther.doubleIdleLog(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
                                                             i,
@@ -12908,6 +13011,32 @@ namespace exhaustDetect
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["CO2"].ToString()), 2).ToString() + "," +
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["O2"].ToString()), 2).ToString() + "," +
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 2).ToString() + "," +
+                                                                dataseconds.Rows[i]["转速"].ToString() + ")");
+                                                        }
+                                                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                        {
+                                                            mainPanel.yichangInterfaceYnbs.sdsGcsj(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode,
+                                                             DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss"),
+                                                              dataseconds.Rows[i]["时序类别"].ToString(),
+                                                              i,
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["HC"].ToString()), 0),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["CO"].ToString()), 2),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["CO2"].ToString()), 2),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["O2"].ToString()), 2),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["过量空气系数"].ToString()), 2),
+                                                            Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 2),
+                                                            dataseconds.Rows[i]["转速"].ToString());
+                                                            ini.INIIO.saveLogInf("[过程数据" + i + "]:" + "doubleIdleLog(" + carLogin.carbj.JYLSH + "," +
+                                                                mainPanel.zkytwebinf.regcode + "," +
+                                                                 DateTime.Parse(dataseconds.Rows[i]["全程时序"].ToString()).ToString("yyyyMMddHHmmss") + "," +
+                                                              dataseconds.Rows[i]["时序类别"].ToString() + "," +
+                                                             i.ToString() + "," +
+                                                                Math.Round(double.Parse(dataseconds.Rows[i]["HC"].ToString()), 0).ToString() + "," +
+                                                                Math.Round(double.Parse(dataseconds.Rows[i]["CO"].ToString()), 2).ToString() + "," +
+                                                                Math.Round(double.Parse(dataseconds.Rows[i]["CO2"].ToString()), 2).ToString() + "," +
+                                                                Math.Round(double.Parse(dataseconds.Rows[i]["O2"].ToString()), 2).ToString() + "," +
+                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["过量空气系数"].ToString()), 2).ToString() + "," +
+                                                               Math.Round(double.Parse(dataseconds.Rows[i]["油温"].ToString()), 2).ToString() + "," +
                                                                 dataseconds.Rows[i]["转速"].ToString() + ")");
                                                         }
                                                         Thread.Sleep(10);
@@ -13051,7 +13180,7 @@ namespace exhaustDetect
                                             if (mainPanel.zkytwebinf.displayCheckResult)
                                                 try
                                             {
-                                                string result, info;
+                                                string result="", info="";
 
 
                                                 string coLowValue = ""; string hcLowValue = ""; string coHighValue = ""; string hcHighValue = ""; string lambdaValue = "";
@@ -13067,15 +13196,20 @@ namespace exhaustDetect
                                                     out coLowValueResult, out hcLowValueResult, out coHighValueResult,
                                                     out hcHighValueResult, out lambdaValueResult, out result3);
                                                 }
-                                                else
-                                                {
+                                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                                                    {
                                                     mainPanel.xmlanalysis.ReadSdsCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
                                                     out coLowValue, out hcLowValue, out coHighValue, out hcHighValue, out lambdaValue,
                                                     out coLowValueLimit, out hcLowValueLimit, out coHighValueLimit, out hcHighValueLimit,
                                                     out coLowValueResult, out hcLowValueResult, out coHighValueResult,
                                                     out hcHighValueResult, out lambdaValueResult, out result3);
-                                                }
-                                                if (result == "1")
+                                                    }
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                                    {
+                                                        result = "";
+                                                        info = "该地区不支持该接口";
+                                                    }
+                                                    if (result == "1")
                                                 {
                                                     sdsdata.COLOWXZ = coLowValueLimit;
                                                     sdsdata.HCLOWXZ = hcLowValueLimit;
@@ -19131,28 +19265,194 @@ namespace exhaustDetect
                         if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                         {
                             mainPanel.xmlanalysis.ReadAsmLimitString(mainPanel.yichangInterface.getAsmLimit(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info, out co5025s, out hc5025s, out no5025s, out co2540s, out hc2540s, out no2540s);
+
+                            if (result == "1")
+                            {
+                                hc5025 = double.Parse(hc5025s);
+                                co5025 = double.Parse(co5025s);
+                                no5025 = double.Parse(no5025s);
+                                hc2540 = double.Parse(hc2540s);
+                                co2540 = double.Parse(co2540s);
+                                no2540 = double.Parse(no2540s);
+                                ini.INIIO.saveLogInf("(中科宇图联网)取限值成功");
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                return;
+                            }
+                            else
+                            {
+                                Msg(label1, panel4, "获取限值失败:" + info + "！");
+                                buttonOK.Enabled = false;
+                                return;
+                            }
                         }
-                        else
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                         {
                             mainPanel.xmlanalysis.ReadAsmLimitString(mainPanel.yichangInterfaceOther.getAsmLimit(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info, out co5025s, out hc5025s, out no5025s, out co2540s, out hc2540s, out no2540s);
+
+                            if (result == "1")
+                            {
+                                hc5025 = double.Parse(hc5025s);
+                                co5025 = double.Parse(co5025s);
+                                no5025 = double.Parse(no5025s);
+                                hc2540 = double.Parse(hc2540s);
+                                co2540 = double.Parse(co2540s);
+                                no2540 = double.Parse(no2540s);
+                                ini.INIIO.saveLogInf("(中科宇图联网)取限值成功");
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                return;
+                            }
+                            else
+                            {
+                                Msg(label1, panel4, "获取限值失败:" + info + "！");
+                                buttonOK.Enabled = false;
+                                return;
+                            }
                         }
-                        if (result == "1")
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                         {
-                            hc5025 = double.Parse(hc5025s);
-                            co5025 = double.Parse(co5025s);
-                            no5025 = double.Parse(no5025s);
-                            hc2540 = double.Parse(hc2540s);
-                            co2540 = double.Parse(co2540s);
-                            no2540 = double.Parse(no2540s);
-                            ini.INIIO.saveLogInf("(中科宇图联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
-                            return;
-                        }
-                        else
+                            switch (carLogin.modelbj.CLZL)
+                            {
+                                case "11":
+                                    #region 一类车
+                                    if (int.Parse(carLogin.modelbj.JZZL) <= 1020)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("1");
+                                    }
+                                    else if (1020 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1250)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("2");
+                                    }
+                                    else if (1250 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1470)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("3");
+                                    }
+                                    else if (1470 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1700)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("4");
+                                    }
+                                    else if (1700 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1930)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("5");
+                                    }
+                                    else if (1930 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 2150)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("6");
+                                    }
+                                    else
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("7");
+                                    }
+                                    if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2000-07-01")) < 0)    //2000年7月1日前生产的第一类轻型汽车
+                                    {
+                                        zxbz = "国Ⅰ前";
+                                        hc5025 = asm_xzdb.HC5025;
+                                        co5025 = asm_xzdb.CO5025;
+                                        no5025 = asm_xzdb.NO5025;
+                                        hc2540 = asm_xzdb.HC2540;
+                                        co2540 = asm_xzdb.CO2540;
+                                        no2540 = asm_xzdb.NO2540;
+
+                                    }/*
+                        else if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2008-07-01")) < 0)
                         {
-                            Msg(label1, panel4,"获取限值失败:"+info+"！");
-                            buttonOK.Enabled = false;
-                            return;
+                            zxbz = "国Ⅱ";
+                            hc5025 = asm_xzdb.HC5025H;
+                            co5025 = asm_xzdb.CO5025H;
+                            no5025 = asm_xzdb.NO5025H;
+                            hc2540 = asm_xzdb.HC2540H;
+                            co2540 = asm_xzdb.CO2540H;
+                            no2540 = asm_xzdb.NO2540H;
+                        }*/
+                                    else
+                                    {
+                                        zxbz = "国Ⅲ";
+                                        hc5025 = asm_xzdb.HC5025H;
+                                        co5025 = asm_xzdb.CO5025H;
+                                        no5025 = asm_xzdb.NO5025H;
+                                        hc2540 = asm_xzdb.HC2540H;
+                                        co2540 = asm_xzdb.CO2540H;
+                                        no2540 = asm_xzdb.NO2540H;
+                                    }
+                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                    ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                    break;
+                                #endregion
+                                case "12":
+                                    #region 二类车
+                                    if (int.Parse(carLogin.modelbj.JZZL) <= 1020)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("1");
+                                    }
+                                    else if (1020 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1250)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("2");
+                                    }
+                                    else if (1250 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1470)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("3");
+                                    }
+                                    else if (1470 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1700)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("4");
+                                    }
+                                    else if (1700 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 1930)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("5");
+                                    }
+                                    else if (1930 < int.Parse(carLogin.modelbj.JZZL) && int.Parse(carLogin.modelbj.JZZL) <= 2150)
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("6");
+                                    }
+                                    else
+                                    {
+                                        asm_xzdb = gbdal.Get_ASM_XZDB("7");
+                                    }
+                                    if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2001-10-01")) < 0)    //2000年7月1日前生产的第一类轻型汽车
+                                    {
+                                        zxbz = "国Ⅰ前";
+                                        hc5025 = asm_xzdb.HC5025;
+                                        co5025 = asm_xzdb.CO5025;
+                                        no5025 = asm_xzdb.NO5025;
+                                        hc2540 = asm_xzdb.HC2540;
+                                        co2540 = asm_xzdb.CO2540;
+                                        no2540 = asm_xzdb.NO2540;
+
+                                    }/*
+                        else if (DateTime.Compare(carLogin.modelbj.SCRQ, Convert.ToDateTime("2008-07-01")) < 0)
+                        {
+                            zxbz = "国Ⅱ";
+                            hc5025 = asm_xzdb.HC5025H;
+                            co5025 = asm_xzdb.CO5025H;
+                            no5025 = asm_xzdb.NO5025H;
+                            hc2540 = asm_xzdb.HC2540H;
+                            co2540 = asm_xzdb.CO2540H;
+                            no2540 = asm_xzdb.NO2540H;
+                        }*/
+                                    else
+                                    {
+                                        zxbz = "国Ⅲ";
+                                        hc5025 = asm_xzdb.HC5025H;
+                                        co5025 = asm_xzdb.CO5025H;
+                                        no5025 = asm_xzdb.NO5025H;
+                                        hc2540 = asm_xzdb.HC2540H;
+                                        co2540 = asm_xzdb.CO2540H;
+                                        no2540 = asm_xzdb.NO2540H;
+                                    }
+                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                    ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+
+                                    break;
+                                #endregion
+                                case "20":
+                                    ini.INIIO.saveLogInf("车辆限值：重型车无法获取限值");
+                                    Msg(label1, panel4, "重型车无法获取限值");
+                                    break;
+                                default:
+                                    ini.INIIO.saveLogInf("车辆限值：没有该车辆种类（"+carLogin.modelbj.CLZL+"）无法获取限值");
+                                    Msg(label1, panel4, "该车辆种类（" + carLogin.modelbj.CLZL + "）无法获取限值");
+                                    break;
+
+                            }
                         }
                     }
                     catch (Exception er)

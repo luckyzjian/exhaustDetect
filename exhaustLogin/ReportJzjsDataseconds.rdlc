@@ -336,13 +336,13 @@
               <Width>1.34804in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.90016in</Width>
+              <Width>0.75433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.94153in</Width>
+              <Width>0.74001in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.84837in</Width>
+              <Width>0.70419in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.90245in</Width>
@@ -351,7 +351,10 @@
               <Width>1.28299in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.71875in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.76042in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -555,6 +558,36 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>转速</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -783,12 +816,43 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="转速">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!转速.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>转速</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -812,7 +876,7 @@
         <Top>1.35292in</Top>
         <Left>0.1276in</Left>
         <Height>0.60417in</Height>
-        <Width>7.22354in</Width>
+        <Width>7.21118in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -880,10 +944,14 @@
           <DataField>NO</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="转速">
+          <DataField>转速</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DataSetASMDATASECONDS</rd:DataSetName>
-        <rd:SchemaPath>E:\VCPRO\环保内蒙联网\v122(通辽等地)\exhaustDetect(v1.0)(单机联网统一v170513)\exhaustDetect(广西昭平)\exhaustLogin\DataSetASMDATASECONDS.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\GITHUB\Repos\exhaustDetect\exhaustLogin\DataSetASMDATASECONDS.xsd</rd:SchemaPath>
         <rd:TableName>DataTable2</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

@@ -170,7 +170,7 @@ namespace exhaustDetect
         }
         private void init_staff()
         {
-            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
+            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NEUSOFTNETMODE&&(mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301) )
             {
                 if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT)
                 {
@@ -4010,9 +4010,13 @@ namespace exhaustDetect
                         {
                             mainPanel.xmlanalysis.ReadStateString(mainPanel.yichangInterface.getSatate(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
                         }
-                        else
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                         {
                             mainPanel.xmlanalysis.ReadStateString(mainPanel.yichangInterfaceOther.getSatate(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
+                        }
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                        {
+                            mainPanel.xmlanalysis.ReadDjztString(mainPanel.yichangInterfaceYnbs.getDjzt(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
                         }
                         if (result == "1")
                         {
@@ -4037,13 +4041,19 @@ namespace exhaustDetect
                                 string airInflow = "";
                                 string oilSupply = "";
                                 string isSYJHQ = "";
+                                string ccdjrq = "";
+                                string clzl = "";
                                 if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                                 {
                                     mainPanel.xmlanalysis.ReadCarInfoString(mainPanel.yichangInterface.getCarInfo(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ);
                                 }
-                                else
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                 {
                                     mainPanel.xmlanalysis.ReadCarInfoString(mainPanel.yichangInterfaceOther.getCarInfo(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                {
+                                    mainPanel.xmlanalysis.ReadDjclxxString(mainPanel.yichangInterfaceYnbs.getDjclxx(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ,out ccdjrq,out clzl);
                                 }
                                 if (result == "1")
                                 {
@@ -4094,7 +4104,25 @@ namespace exhaustDetect
                                     carbj.ECRYPT = "";
                                     carbj.JYLSH = bussnessId;
                                     modelbj.CLHP = carCardNumber;
-                                    modelbj.ZCRQ = DateTime.Now;
+                                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                    {
+                                        DateTime tempdate = DateTime.Now;
+                                        if (DateTime.TryParse(ccdjrq, out tempdate))
+                                        {
+                                            modelbj.ZCRQ = tempdate;
+                                            modelbj.SCRQ = tempdate;
+                                        }
+                                        else
+                                        {
+                                            modelbj.ZCRQ = DateTime.Now;
+                                            modelbj.SCRQ = DateTime.Now;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        modelbj.ZCRQ = DateTime.Now;
+                                        modelbj.SCRQ = DateTime.Now;
+                                    }
                                     modelbj.CLSBM = "";
                                     modelbj.CPYS = "";
                                     modelbj.HPZL = "";
@@ -4180,7 +4208,7 @@ namespace exhaustDetect
                                     modelbj.CZDZ = "";
                                     modelbj.JCFS = "";
                                     modelbj.JCLB = "";
-                                    modelbj.CLZL = "";
+                                    modelbj.CLZL = clzl;
                                     modelbj.SSXQ = "";
                                     modelbj.SFWDZR = "";
                                     modelbj.SFYQBF = "";
@@ -4218,9 +4246,13 @@ namespace exhaustDetect
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterface.sendMessage("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
                                 }
-                                else
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceYnbs.xxtz("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
                                 }
                                 if (result == "1")
                                 {
@@ -4676,14 +4708,18 @@ namespace exhaustDetect
                 if (!mainPanel.isStartTimerInCarlogin)
                 {
                     clear_carinf();
-                    string result, info;
+                    string result="", info="";
                     if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterface.sendMessage("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
                     }
-                    else
+                    else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_OTHER)
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceYnbs.xxtz("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
                     }
                     if (result == "1")
                     {
@@ -4940,14 +4976,18 @@ namespace exhaustDetect
             {
                 if (mainPanel.isStartTimerInCarlogin)
                 {
-                    string result, info;
+                    string result="", info="";
                     if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterface.sendMessage("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
                     }
-                    else
+                    else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceYnbs.xxtz("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
                     }
                     if (result == "1")
                     {
