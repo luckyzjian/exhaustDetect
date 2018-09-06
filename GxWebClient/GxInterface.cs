@@ -644,6 +644,192 @@ namespace GxWebClient
                 return false;
             }
         }
+        public bool chaGuanFinish(Hashtable ht, out string result, out string errMsg)
+        {
+            result = "1";
+            errMsg = "";
+            bool ack;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement queryroot = xmldoc.CreateElement("signal");
+                IDictionaryEnumerator et = ht.GetEnumerator();
+                while (et.MoveNext()) // 作哈希表循环
+                {
+                    XmlElement xe1 = xmldoc.CreateElement((string)et.Key);
+                    xe1.InnerText = (string)et.Value;
+                    queryroot.AppendChild(xe1);
+                }
+                root.AppendChild(queryroot);
+                string xmlstring = ConvertXmlToString(xmldoc);
+                INIIO.saveSocketLogInf("【执行chaGuanFinish】");
+                INIIO.saveSocketLogInf("【发送】:\r\n" + xmlstring);
+                string mm = "";
+                if (xmlstring.Length >= 96)
+                    mm = xmlstring.Substring(62, 34);
+                mm = ini.INIIO.md5low(mm + jmmm, 32);
+                string revXml = service.WriteObject(xtlb, "ST701", xmlstring, yhdh, mm);
+                INIIO.saveSocketLogInf("【接收】:\r\n" + revXml);
+                revXml = ini.INIIO.decodeUTF8(revXml);
+                INIIO.saveSocketLogInf("【接收解码后】:\r\n" + revXml);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(revXml);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                DataTable dt1 = ds.Tables["head"];
+                result = dt1.Rows[0]["code"].ToString();
+                errMsg = dt1.Rows[0]["message"].ToString();
+                INIIO.saveSocketLogInf("【result】" + result);
+                INIIO.saveSocketLogInf("【errMsg】" + errMsg);
+                if (result == "1")
+                {
+                    INIIO.saveSocketLogInf("【成功】");
+                    return true;
+                }
+                else
+                {
+                    INIIO.saveSocketLogInf("【失败】");
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                errMsg = er.Message;
+                INIIO.saveSocketLogInf("【异常】:\r\n" + er.Message);
+                return false;
+            }
+        }
+        public bool startDataSample(Hashtable ht, out string result, out string errMsg)
+        {
+            result = "1";
+            errMsg = "";
+            bool ack;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement queryroot = xmldoc.CreateElement("signal");
+                IDictionaryEnumerator et = ht.GetEnumerator();
+                while (et.MoveNext()) // 作哈希表循环
+                {
+                    XmlElement xe1 = xmldoc.CreateElement((string)et.Key);
+                    xe1.InnerText = (string)et.Value;
+                    queryroot.AppendChild(xe1);
+                }
+                root.AppendChild(queryroot);
+                string xmlstring = ConvertXmlToString(xmldoc);
+                INIIO.saveSocketLogInf("【执行startDataSample】");
+                INIIO.saveSocketLogInf("【发送】:\r\n" + xmlstring);
+                string mm = "";
+                if (xmlstring.Length >= 96)
+                    mm = xmlstring.Substring(62, 34);
+                mm = ini.INIIO.md5low(mm + jmmm, 32);
+                string revXml = service.WriteObject(xtlb, "ST701", xmlstring, yhdh, mm);
+                INIIO.saveSocketLogInf("【接收】:\r\n" + revXml);
+                revXml = ini.INIIO.decodeUTF8(revXml);
+                INIIO.saveSocketLogInf("【接收解码后】:\r\n" + revXml);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(revXml);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                DataTable dt1 = ds.Tables["head"];
+                result = dt1.Rows[0]["code"].ToString();
+                errMsg = dt1.Rows[0]["message"].ToString();
+                INIIO.saveSocketLogInf("【result】" + result);
+                INIIO.saveSocketLogInf("【errMsg】" + errMsg);
+                if (result == "1")
+                {
+                    INIIO.saveSocketLogInf("【成功】");
+                    return true;
+                }
+                else
+                {
+                    INIIO.saveSocketLogInf("【失败】");
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                errMsg = er.Message;
+                INIIO.saveSocketLogInf("【异常】:\r\n" + er.Message);
+                return false;
+            }
+        }
+        public bool stopDataSample(Hashtable ht, out string result, out string errMsg)
+        {
+            result = "1";
+            errMsg = "";
+            bool ack;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement queryroot = xmldoc.CreateElement("signal");
+                IDictionaryEnumerator et = ht.GetEnumerator();
+                while (et.MoveNext()) // 作哈希表循环
+                {
+                    XmlElement xe1 = xmldoc.CreateElement((string)et.Key);
+                    xe1.InnerText = (string)et.Value;
+                    queryroot.AppendChild(xe1);
+                }
+                root.AppendChild(queryroot);
+                string xmlstring = ConvertXmlToString(xmldoc);
+                INIIO.saveSocketLogInf("【执行stopDataSample】");
+                INIIO.saveSocketLogInf("【发送】:\r\n" + xmlstring);
+                string mm = "";
+                if (xmlstring.Length >= 96)
+                    mm = xmlstring.Substring(62, 34);
+                mm = ini.INIIO.md5low(mm + jmmm, 32);
+                string revXml = service.WriteObject(xtlb, "ST702", xmlstring, yhdh, mm);
+                INIIO.saveSocketLogInf("【接收】:\r\n" + revXml);
+                revXml = ini.INIIO.decodeUTF8(revXml);
+                INIIO.saveSocketLogInf("【接收解码后】:\r\n" + revXml);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(revXml);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                DataTable dt1 = ds.Tables["head"];
+                result = dt1.Rows[0]["code"].ToString();
+                errMsg = dt1.Rows[0]["message"].ToString();
+                INIIO.saveSocketLogInf("【result】" + result);
+                INIIO.saveSocketLogInf("【errMsg】" + errMsg);
+                if (result == "1")
+                {
+                    INIIO.saveSocketLogInf("【成功】");
+                    return true;
+                }
+                else
+                {
+                    INIIO.saveSocketLogInf("【失败】");
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                errMsg = er.Message;
+                INIIO.saveSocketLogInf("【异常】:\r\n" + er.Message);
+                return false;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -27,6 +27,22 @@ namespace carinfor
     }
     public class statusconfigIni
     {
+        /// <summary>
+        /// 获取桂林检测状态
+        /// </summary>
+        /// <returns></returns>
+        public statusconfigInfdata getGlConfigIni()
+        {
+            int b = 0;
+            statusconfigInfdata configinidata = new statusconfigInfdata();
+            StringBuilder temp = new StringBuilder();
+            temp.Length = 2048;
+            ini.INIIO.GetPrivateProfileString("检测设备", "设备状态", "", temp, 2048, "C://jcdatatxt/glstatusConfig.ini");
+            configinidata.nType = temp.ToString();
+            ini.INIIO.GetPrivateProfileString("检测设备", "时间序列", "", temp, 2048, "C://jcdatatxt/glstatusConfig.ini");
+            configinidata.SJXL = temp.ToString();
+            return configinidata;
+        }
         public statusconfigInfdata getConfigIni()
         {
             int b = 0;

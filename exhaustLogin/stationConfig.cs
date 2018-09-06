@@ -38,6 +38,7 @@ namespace exhaustDetect
         public static carinfor.DALIWebInf daliwebinf = new carinfor.DALIWebInf();
         public static carinfor.OrtSocketInf ortwebinf = new carinfor.OrtSocketInf();
         public static carinfor.NeusoftSocketInf neusoftsocketinf = new carinfor.NeusoftSocketInf();
+        public static carinfor.XBWebInf xbwebinf = new carinfor.XBWebInf();
         public static baseControl basecontrol = new baseControl();
 
 
@@ -214,6 +215,26 @@ namespace exhaustDetect
             netmode = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("通用联网模式", "联网模式", "其他", temp, 2048, @".\appConfig.ini");
             tynettype = temp.ToString().Trim();
+
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "ip", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.ip = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "port", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.port = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "certificateNo", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.certificateNo = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "version", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.version = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "diskNo", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.diskNo = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "lineid", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.lineid = temp.ToString().Trim();
+
+            textBoxXB_IP.Text = xbwebinf.ip;
+            textBoxXB_PORT.Text = xbwebinf.port;
+            textBoxXB_RZBH.Text = xbwebinf.certificateNo;
+            textBoxXB_VERSION.Text = xbwebinf.version;
+            textBoxXB_DISKNO.Text = xbwebinf.diskNo;
+            textBoxXB_LINEID.Text = xbwebinf.lineid;
 
             wgsocketinf.SBRZBH = temp.ToString().Trim();
             textBoxWGFWQIP.Text = wgsocketinf.IP;
@@ -1464,6 +1485,13 @@ namespace exhaustDetect
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "上传超时时间", mainPanel.zkytwebinf.waitUploadTime.ToString(),  @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "验证上传", mainPanel.zkytwebinf.checkUploadSuccess ? "Y" : "N",  @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "显示结果", mainPanel.zkytwebinf.displayCheckResult ? "Y" : "N",  @".\appConfig.ini");
+
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "ip", textBoxXB_IP.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "port", textBoxXB_PORT.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "certificateNo", textBoxXB_RZBH.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "version", textBoxXB_VERSION.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "diskNo", textBoxXB_DISKNO.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("喜邦联网", "lineid", textBoxXB_LINEID.Text, @".\appConfig.ini");
 
             ini.INIIO.WritePrivateProfileString("工作模式", "使用华燕数据库", checkBoxUseHyDb.Checked ? "Y" : "N", @".\appConfig.ini");
             MessageBox.Show("success to update!");
@@ -3249,6 +3277,11 @@ namespace exhaustDetect
             }
             catch
             { }
+        }
+
+        private void label74_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void button8_Click(object sender, EventArgs e)

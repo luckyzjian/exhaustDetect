@@ -239,6 +239,8 @@
             this.button9 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.textBoxZkytLineID = new System.Windows.Forms.TextBox();
+            this.label172 = new System.Windows.Forms.Label();
             this.comboBoxJHAREA = new System.Windows.Forms.ComboBox();
             this.label165 = new System.Windows.Forms.Label();
             this.textBoxJHLINEID = new System.Windows.Forms.TextBox();
@@ -475,8 +477,23 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBoxZkytLineID = new System.Windows.Forms.TextBox();
-            this.label172 = new System.Windows.Forms.Label();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.tabPage19 = new System.Windows.Forms.TabPage();
+            this.label173 = new System.Windows.Forms.Label();
+            this.textBoxXB_VERSION = new System.Windows.Forms.TextBox();
+            this.label174 = new System.Windows.Forms.Label();
+            this.textBoxXB_RZBH = new System.Windows.Forms.TextBox();
+            this.label175 = new System.Windows.Forms.Label();
+            this.label176 = new System.Windows.Forms.Label();
+            this.textBoxXB_LINEID = new System.Windows.Forms.TextBox();
+            this.label177 = new System.Windows.Forms.Label();
+            this.textBoxXB_DISKNO = new System.Windows.Forms.TextBox();
+            this.label178 = new System.Windows.Forms.Label();
+            this.textBoxXB_IP = new System.Windows.Forms.TextBox();
+            this.label179 = new System.Windows.Forms.Label();
+            this.textBoxXB_PORT = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -534,6 +551,9 @@
             this.panel30.SuspendLayout();
             this.panel31.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage17.SuspendLayout();
+            this.tabPage18.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2782,129 +2802,8 @@
             this.panelEx1.AutoSize = true;
             this.panelEx1.CanvasColor = System.Drawing.SystemColors.Control;
             this.panelEx1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.panelEx1.Controls.Add(this.textBoxZkytLineID);
-            this.panelEx1.Controls.Add(this.label172);
-            this.panelEx1.Controls.Add(this.comboBoxJHAREA);
-            this.panelEx1.Controls.Add(this.label165);
-            this.panelEx1.Controls.Add(this.textBoxJHLINEID);
-            this.panelEx1.Controls.Add(this.textBoxJHSTATIONID);
-            this.panelEx1.Controls.Add(this.checkBoxDISPLAYRESULT);
-            this.panelEx1.Controls.Add(this.checkBoxCheckUploadSuccess);
-            this.panelEx1.Controls.Add(this.numericUpDownWaitUploadTime);
-            this.panelEx1.Controls.Add(this.label163);
-            this.panelEx1.Controls.Add(this.comboBoxZkytAdd);
-            this.panelEx1.Controls.Add(this.textBoxZKYTWEB);
-            this.panelEx1.Controls.Add(this.label160);
-            this.panelEx1.Controls.Add(this.label162);
-            this.panelEx1.Controls.Add(this.textBoxHhzUrl);
-            this.panelEx1.Controls.Add(this.label113);
-            this.panelEx1.Controls.Add(this.label114);
-            this.panelEx1.Controls.Add(this.label142);
+            this.panelEx1.Controls.Add(this.tabControl2);
             this.panelEx1.Controls.Add(this.panelEx2);
-            this.panelEx1.Controls.Add(this.textBoxGLPASSWORD);
-            this.panelEx1.Controls.Add(this.label137);
-            this.panelEx1.Controls.Add(this.textBoxGLUSER);
-            this.panelEx1.Controls.Add(this.label138);
-            this.panelEx1.Controls.Add(this.textBoxGlWeb);
-            this.panelEx1.Controls.Add(this.label72);
-            this.panelEx1.Controls.Add(this.label139);
-            this.panelEx1.Controls.Add(this.label15);
-            this.panelEx1.Controls.Add(this.label140);
-            this.panelEx1.Controls.Add(this.textBoxWGJCZJC);
-            this.panelEx1.Controls.Add(this.label117);
-            this.panelEx1.Controls.Add(this.label14);
-            this.panelEx1.Controls.Add(this.comboBoxAcArea);
-            this.panelEx1.Controls.Add(this.textBoxWGJCZBH);
-            this.panelEx1.Controls.Add(this.label13);
-            this.panelEx1.Controls.Add(this.label10);
-            this.panelEx1.Controls.Add(this.textBoxWGFWQIP);
-            this.panelEx1.Controls.Add(this.label11);
-            this.panelEx1.Controls.Add(this.textBoxEzUrl);
-            this.panelEx1.Controls.Add(this.textBoxWGFWQPORT);
-            this.panelEx1.Controls.Add(this.label115);
-            this.panelEx1.Controls.Add(this.label116);
-            this.panelEx1.Controls.Add(this.checkBoxJHCHECKPRINT);
-            this.panelEx1.Controls.Add(this.label12);
-            this.panelEx1.Controls.Add(this.textBoxDALISERVERPORT);
-            this.panelEx1.Controls.Add(this.textBoxWGSBRZBH);
-            this.panelEx1.Controls.Add(this.label103);
-            this.panelEx1.Controls.Add(this.label16);
-            this.panelEx1.Controls.Add(this.textBoxDALISERVERIP);
-            this.panelEx1.Controls.Add(this.label18);
-            this.panelEx1.Controls.Add(this.label104);
-            this.panelEx1.Controls.Add(this.textBoxCCFWQIP);
-            this.panelEx1.Controls.Add(this.textBoxDALIJCXBH);
-            this.panelEx1.Controls.Add(this.label17);
-            this.panelEx1.Controls.Add(this.label105);
-            this.panelEx1.Controls.Add(this.textBoxCCFWQPORT);
-            this.panelEx1.Controls.Add(this.label106);
-            this.panelEx1.Controls.Add(this.label22);
-            this.panelEx1.Controls.Add(this.textBoxHNHYJCXBH);
-            this.panelEx1.Controls.Add(this.label21);
-            this.panelEx1.Controls.Add(this.label102);
-            this.panelEx1.Controls.Add(this.textBoxOrtIp);
-            this.panelEx1.Controls.Add(this.textBoxHNHYJCZBH);
-            this.panelEx1.Controls.Add(this.label20);
-            this.panelEx1.Controls.Add(this.label99);
-            this.panelEx1.Controls.Add(this.textBoxOrtPort);
-            this.panelEx1.Controls.Add(this.textBoxHNHYURL);
-            this.panelEx1.Controls.Add(this.label25);
-            this.panelEx1.Controls.Add(this.label100);
-            this.panelEx1.Controls.Add(this.label24);
-            this.panelEx1.Controls.Add(this.label101);
-            this.panelEx1.Controls.Add(this.textBoxAcIP);
-            this.panelEx1.Controls.Add(this.textBoxJXSOCKETPORT);
-            this.panelEx1.Controls.Add(this.label7);
-            this.panelEx1.Controls.Add(this.label98);
-            this.panelEx1.Controls.Add(this.textBoxAcPort);
-            this.panelEx1.Controls.Add(this.textBoxJXSOCKETIP);
-            this.panelEx1.Controls.Add(this.label27);
-            this.panelEx1.Controls.Add(this.label97);
-            this.panelEx1.Controls.Add(this.textBoxNeusoftIP);
-            this.panelEx1.Controls.Add(this.textBoxJXurl);
-            this.panelEx1.Controls.Add(this.label26);
-            this.panelEx1.Controls.Add(this.label96);
-            this.panelEx1.Controls.Add(this.textBoxNeusoftPort);
-            this.panelEx1.Controls.Add(this.textBoxJXLINEID);
-            this.panelEx1.Controls.Add(this.label29);
-            this.panelEx1.Controls.Add(this.label95);
-            this.panelEx1.Controls.Add(this.textBoxEISID);
-            this.panelEx1.Controls.Add(this.textBoxJXPASSWORD);
-            this.panelEx1.Controls.Add(this.comboBoxNeusoftArea);
-            this.panelEx1.Controls.Add(this.label92);
-            this.panelEx1.Controls.Add(this.label30);
-            this.panelEx1.Controls.Add(this.textBoxJXUSER);
-            this.panelEx1.Controls.Add(this.comboBoxNeuYcy);
-            this.panelEx1.Controls.Add(this.label93);
-            this.panelEx1.Controls.Add(this.label31);
-            this.panelEx1.Controls.Add(this.label94);
-            this.panelEx1.Controls.Add(this.label34);
-            this.panelEx1.Controls.Add(this.textBoxJHWEBADD);
-            this.panelEx1.Controls.Add(this.label33);
-            this.panelEx1.Controls.Add(this.label91);
-            this.panelEx1.Controls.Add(this.textBoxJHWEBURL);
-            this.panelEx1.Controls.Add(this.textBoxNhLineID);
-            this.panelEx1.Controls.Add(this.label32);
-            this.panelEx1.Controls.Add(this.label86);
-            this.panelEx1.Controls.Add(this.textBoxJHSAFEPWD);
-            this.panelEx1.Controls.Add(this.label77);
-            this.panelEx1.Controls.Add(this.label35);
-            this.panelEx1.Controls.Add(this.textBoxNhWsdl);
-            this.panelEx1.Controls.Add(this.label78);
-            this.panelEx1.Controls.Add(this.label36);
-            this.panelEx1.Controls.Add(this.label79);
-            this.panelEx1.Controls.Add(this.textBoxAHLINEID);
-            this.panelEx1.Controls.Add(this.label37);
-            this.panelEx1.Controls.Add(this.label76);
-            this.panelEx1.Controls.Add(this.label71);
-            this.panelEx1.Controls.Add(this.textBoxJHDBCODE);
-            this.panelEx1.Controls.Add(this.textBoxAhUrl);
-            this.panelEx1.Controls.Add(this.label73);
-            this.panelEx1.Controls.Add(this.label70);
-            this.panelEx1.Controls.Add(this.textBoxJHDBUSER);
-            this.panelEx1.Controls.Add(this.label75);
-            this.panelEx1.Controls.Add(this.label74);
-            this.panelEx1.Controls.Add(this.textBoxJHDBIP);
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx1.Font = new System.Drawing.Font("宋体", 12F);
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
@@ -2919,13 +2818,30 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 142;
             // 
+            // textBoxZkytLineID
+            // 
+            this.textBoxZkytLineID.Location = new System.Drawing.Point(532, 330);
+            this.textBoxZkytLineID.Name = "textBoxZkytLineID";
+            this.textBoxZkytLineID.Size = new System.Drawing.Size(146, 26);
+            this.textBoxZkytLineID.TabIndex = 158;
+            // 
+            // label172
+            // 
+            this.label172.AutoSize = true;
+            this.label172.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label172.Location = new System.Drawing.Point(359, 335);
+            this.label172.Name = "label172";
+            this.label172.Size = new System.Drawing.Size(147, 14);
+            this.label172.TabIndex = 157;
+            this.label172.Text = "检测线编号（保山）：";
+            // 
             // comboBoxJHAREA
             // 
             this.comboBoxJHAREA.FormattingEnabled = true;
             this.comboBoxJHAREA.Items.AddRange(new object[] {
             "金华",
             "衢州"});
-            this.comboBoxJHAREA.Location = new System.Drawing.Point(469, 281);
+            this.comboBoxJHAREA.Location = new System.Drawing.Point(469, 213);
             this.comboBoxJHAREA.Name = "comboBoxJHAREA";
             this.comboBoxJHAREA.Size = new System.Drawing.Size(244, 24);
             this.comboBoxJHAREA.TabIndex = 155;
@@ -2934,7 +2850,7 @@
             // 
             this.label165.AutoSize = true;
             this.label165.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label165.Location = new System.Drawing.Point(369, 288);
+            this.label165.Location = new System.Drawing.Point(372, 219);
             this.label165.Name = "label165";
             this.label165.Size = new System.Drawing.Size(35, 14);
             this.label165.TabIndex = 156;
@@ -2942,23 +2858,23 @@
             // 
             // textBoxJHLINEID
             // 
-            this.textBoxJHLINEID.Location = new System.Drawing.Point(642, 255);
+            this.textBoxJHLINEID.Location = new System.Drawing.Point(642, 186);
             this.textBoxJHLINEID.Name = "textBoxJHLINEID";
             this.textBoxJHLINEID.Size = new System.Drawing.Size(70, 26);
             this.textBoxJHLINEID.TabIndex = 68;
             // 
             // textBoxJHSTATIONID
             // 
-            this.textBoxJHSTATIONID.Location = new System.Drawing.Point(453, 255);
+            this.textBoxJHSTATIONID.Location = new System.Drawing.Point(469, 186);
             this.textBoxJHSTATIONID.Name = "textBoxJHSTATIONID";
-            this.textBoxJHSTATIONID.Size = new System.Drawing.Size(103, 26);
+            this.textBoxJHSTATIONID.Size = new System.Drawing.Size(87, 26);
             this.textBoxJHSTATIONID.TabIndex = 66;
             // 
             // checkBoxDISPLAYRESULT
             // 
             this.checkBoxDISPLAYRESULT.AutoSize = true;
             this.checkBoxDISPLAYRESULT.Font = new System.Drawing.Font("微软雅黑", 10.5F);
-            this.checkBoxDISPLAYRESULT.Location = new System.Drawing.Point(930, 458);
+            this.checkBoxDISPLAYRESULT.Location = new System.Drawing.Point(566, 393);
             this.checkBoxDISPLAYRESULT.Name = "checkBoxDISPLAYRESULT";
             this.checkBoxDISPLAYRESULT.Size = new System.Drawing.Size(112, 24);
             this.checkBoxDISPLAYRESULT.TabIndex = 154;
@@ -2969,7 +2885,7 @@
             // 
             this.checkBoxCheckUploadSuccess.AutoSize = true;
             this.checkBoxCheckUploadSuccess.Font = new System.Drawing.Font("微软雅黑", 10.5F);
-            this.checkBoxCheckUploadSuccess.Location = new System.Drawing.Point(727, 457);
+            this.checkBoxCheckUploadSuccess.Location = new System.Drawing.Point(359, 393);
             this.checkBoxCheckUploadSuccess.Name = "checkBoxCheckUploadSuccess";
             this.checkBoxCheckUploadSuccess.Size = new System.Drawing.Size(196, 24);
             this.checkBoxCheckUploadSuccess.TabIndex = 153;
@@ -2979,7 +2895,7 @@
             // numericUpDownWaitUploadTime
             // 
             this.numericUpDownWaitUploadTime.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.numericUpDownWaitUploadTime.Location = new System.Drawing.Point(898, 433);
+            this.numericUpDownWaitUploadTime.Location = new System.Drawing.Point(534, 362);
             this.numericUpDownWaitUploadTime.Maximum = new decimal(new int[] {
             30,
             0,
@@ -3005,7 +2921,7 @@
             this.label163.BackColor = System.Drawing.Color.Transparent;
             this.label163.Font = new System.Drawing.Font("楷体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label163.ForeColor = System.Drawing.Color.Black;
-            this.label163.Location = new System.Drawing.Point(723, 436);
+            this.label163.Location = new System.Drawing.Point(359, 364);
             this.label163.Name = "label163";
             this.label163.Size = new System.Drawing.Size(140, 14);
             this.label163.TabIndex = 151;
@@ -3019,14 +2935,14 @@
             "成都",
             "云南保山",
             "其他"});
-            this.comboBoxZkytAdd.Location = new System.Drawing.Point(945, 378);
+            this.comboBoxZkytAdd.Location = new System.Drawing.Point(580, 301);
             this.comboBoxZkytAdd.Name = "comboBoxZkytAdd";
             this.comboBoxZkytAdd.Size = new System.Drawing.Size(98, 24);
             this.comboBoxZkytAdd.TabIndex = 150;
             // 
             // textBoxZKYTWEB
             // 
-            this.textBoxZKYTWEB.Location = new System.Drawing.Point(763, 378);
+            this.textBoxZKYTWEB.Location = new System.Drawing.Point(395, 301);
             this.textBoxZKYTWEB.Name = "textBoxZKYTWEB";
             this.textBoxZKYTWEB.Size = new System.Drawing.Size(179, 26);
             this.textBoxZKYTWEB.TabIndex = 149;
@@ -3035,7 +2951,7 @@
             // 
             this.label160.AutoSize = true;
             this.label160.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label160.Location = new System.Drawing.Point(724, 384);
+            this.label160.Location = new System.Drawing.Point(359, 306);
             this.label160.Name = "label160";
             this.label160.Size = new System.Drawing.Size(42, 14);
             this.label160.TabIndex = 148;
@@ -3046,7 +2962,7 @@
             this.label162.AutoSize = true;
             this.label162.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label162.ForeColor = System.Drawing.Color.Blue;
-            this.label162.Location = new System.Drawing.Point(836, 360);
+            this.label162.Location = new System.Drawing.Point(359, 275);
             this.label162.Name = "label162";
             this.label162.Size = new System.Drawing.Size(144, 16);
             this.label162.TabIndex = 147;
@@ -3054,7 +2970,7 @@
             // 
             // textBoxHhzUrl
             // 
-            this.textBoxHhzUrl.Location = new System.Drawing.Point(453, 454);
+            this.textBoxHhzUrl.Location = new System.Drawing.Point(457, 397);
             this.textBoxHhzUrl.Name = "textBoxHhzUrl";
             this.textBoxHhzUrl.Size = new System.Drawing.Size(260, 26);
             this.textBoxHhzUrl.TabIndex = 146;
@@ -3063,7 +2979,7 @@
             // 
             this.label113.AutoSize = true;
             this.label113.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label113.Location = new System.Drawing.Point(368, 459);
+            this.label113.Location = new System.Drawing.Point(372, 402);
             this.label113.Name = "label113";
             this.label113.Size = new System.Drawing.Size(77, 14);
             this.label113.TabIndex = 145;
@@ -3074,7 +2990,7 @@
             this.label114.AutoSize = true;
             this.label114.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label114.ForeColor = System.Drawing.Color.Blue;
-            this.label114.Location = new System.Drawing.Point(517, 433);
+            this.label114.Location = new System.Drawing.Point(372, 378);
             this.label114.Name = "label114";
             this.label114.Size = new System.Drawing.Size(110, 16);
             this.label114.TabIndex = 144;
@@ -3085,7 +3001,7 @@
             this.label142.AutoSize = true;
             this.label142.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label142.ForeColor = System.Drawing.Color.Blue;
-            this.label142.Location = new System.Drawing.Point(839, 34);
+            this.label142.Location = new System.Drawing.Point(23, 217);
             this.label142.Name = "label142";
             this.label142.Size = new System.Drawing.Size(110, 16);
             this.label142.TabIndex = 143;
@@ -3211,7 +3127,7 @@
             // 
             // textBoxGLPASSWORD
             // 
-            this.textBoxGLPASSWORD.Location = new System.Drawing.Point(249, 459);
+            this.textBoxGLPASSWORD.Location = new System.Drawing.Point(612, 52);
             this.textBoxGLPASSWORD.Name = "textBoxGLPASSWORD";
             this.textBoxGLPASSWORD.Size = new System.Drawing.Size(99, 26);
             this.textBoxGLPASSWORD.TabIndex = 139;
@@ -3220,7 +3136,7 @@
             // 
             this.label137.AutoSize = true;
             this.label137.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label137.Location = new System.Drawing.Point(178, 463);
+            this.label137.Location = new System.Drawing.Point(541, 56);
             this.label137.Name = "label137";
             this.label137.Size = new System.Drawing.Size(49, 14);
             this.label137.TabIndex = 138;
@@ -3228,7 +3144,7 @@
             // 
             // textBoxGLUSER
             // 
-            this.textBoxGLUSER.Location = new System.Drawing.Point(88, 457);
+            this.textBoxGLUSER.Location = new System.Drawing.Point(451, 52);
             this.textBoxGLUSER.Name = "textBoxGLUSER";
             this.textBoxGLUSER.Size = new System.Drawing.Size(86, 26);
             this.textBoxGLUSER.TabIndex = 137;
@@ -3237,7 +3153,7 @@
             // 
             this.label138.AutoSize = true;
             this.label138.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label138.Location = new System.Drawing.Point(4, 464);
+            this.label138.Location = new System.Drawing.Point(372, 58);
             this.label138.Name = "label138";
             this.label138.Size = new System.Drawing.Size(49, 14);
             this.label138.TabIndex = 136;
@@ -3245,7 +3161,7 @@
             // 
             // textBoxGlWeb
             // 
-            this.textBoxGlWeb.Location = new System.Drawing.Point(163, 432);
+            this.textBoxGlWeb.Location = new System.Drawing.Point(526, 25);
             this.textBoxGlWeb.Name = "textBoxGlWeb";
             this.textBoxGlWeb.Size = new System.Drawing.Size(185, 26);
             this.textBoxGlWeb.TabIndex = 135;
@@ -3255,7 +3171,7 @@
             this.label72.AutoSize = true;
             this.label72.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label72.ForeColor = System.Drawing.Color.Blue;
-            this.label72.Location = new System.Drawing.Point(84, 34);
+            this.label72.Location = new System.Drawing.Point(4, 6);
             this.label72.Name = "label72";
             this.label72.Size = new System.Drawing.Size(110, 16);
             this.label72.TabIndex = 70;
@@ -3265,7 +3181,7 @@
             // 
             this.label139.AutoSize = true;
             this.label139.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label139.Location = new System.Drawing.Point(7, 438);
+            this.label139.Location = new System.Drawing.Point(372, 31);
             this.label139.Name = "label139";
             this.label139.Size = new System.Drawing.Size(119, 14);
             this.label139.TabIndex = 134;
@@ -3275,7 +3191,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label15.Location = new System.Drawing.Point(734, 156);
+            this.label15.Location = new System.Drawing.Point(359, 41);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(77, 14);
             this.label15.TabIndex = 14;
@@ -3286,7 +3202,7 @@
             this.label140.AutoSize = true;
             this.label140.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label140.ForeColor = System.Drawing.Color.Blue;
-            this.label140.Location = new System.Drawing.Point(108, 414);
+            this.label140.Location = new System.Drawing.Point(372, 6);
             this.label140.Name = "label140";
             this.label140.Size = new System.Drawing.Size(110, 16);
             this.label140.TabIndex = 133;
@@ -3294,7 +3210,7 @@
             // 
             // textBoxWGJCZJC
             // 
-            this.textBoxWGJCZJC.Location = new System.Drawing.Point(838, 151);
+            this.textBoxWGJCZJC.Location = new System.Drawing.Point(473, 38);
             this.textBoxWGJCZJC.Name = "textBoxWGJCZJC";
             this.textBoxWGJCZJC.Size = new System.Drawing.Size(205, 26);
             this.textBoxWGJCZJC.TabIndex = 15;
@@ -3303,7 +3219,7 @@
             // 
             this.label117.AutoSize = true;
             this.label117.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label117.Location = new System.Drawing.Point(531, 136);
+            this.label117.Location = new System.Drawing.Point(23, 188);
             this.label117.Name = "label117";
             this.label117.Size = new System.Drawing.Size(77, 14);
             this.label117.TabIndex = 132;
@@ -3313,7 +3229,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label14.Location = new System.Drawing.Point(734, 184);
+            this.label14.Location = new System.Drawing.Point(359, 70);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(77, 14);
             this.label14.TabIndex = 16;
@@ -3327,14 +3243,14 @@
             "辽宁",
             "其他",
             "v1.3.2"});
-            this.comboBoxAcArea.Location = new System.Drawing.Point(614, 131);
+            this.comboBoxAcArea.Location = new System.Drawing.Point(135, 184);
             this.comboBoxAcArea.Name = "comboBoxAcArea";
-            this.comboBoxAcArea.Size = new System.Drawing.Size(98, 24);
+            this.comboBoxAcArea.Size = new System.Drawing.Size(211, 24);
             this.comboBoxAcArea.TabIndex = 131;
             // 
             // textBoxWGJCZBH
             // 
-            this.textBoxWGJCZBH.Location = new System.Drawing.Point(838, 177);
+            this.textBoxWGJCZBH.Location = new System.Drawing.Point(473, 65);
             this.textBoxWGJCZBH.Name = "textBoxWGJCZBH";
             this.textBoxWGJCZBH.Size = new System.Drawing.Size(205, 26);
             this.textBoxWGJCZBH.TabIndex = 17;
@@ -3344,7 +3260,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label13.ForeColor = System.Drawing.Color.Blue;
-            this.label13.Location = new System.Drawing.Point(834, 133);
+            this.label13.Location = new System.Drawing.Point(359, 9);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(110, 16);
             this.label13.TabIndex = 18;
@@ -3354,7 +3270,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label10.Location = new System.Drawing.Point(734, 211);
+            this.label10.Location = new System.Drawing.Point(359, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 14);
             this.label10.TabIndex = 19;
@@ -3362,7 +3278,7 @@
             // 
             // textBoxWGFWQIP
             // 
-            this.textBoxWGFWQIP.Location = new System.Drawing.Point(838, 203);
+            this.textBoxWGFWQIP.Location = new System.Drawing.Point(473, 94);
             this.textBoxWGFWQIP.Name = "textBoxWGFWQIP";
             this.textBoxWGFWQIP.Size = new System.Drawing.Size(205, 26);
             this.textBoxWGFWQIP.TabIndex = 20;
@@ -3371,7 +3287,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label11.Location = new System.Drawing.Point(734, 238);
+            this.label11.Location = new System.Drawing.Point(359, 128);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(49, 14);
             this.label11.TabIndex = 21;
@@ -3379,14 +3295,14 @@
             // 
             // textBoxEzUrl
             // 
-            this.textBoxEzUrl.Location = new System.Drawing.Point(453, 403);
+            this.textBoxEzUrl.Location = new System.Drawing.Point(455, 346);
             this.textBoxEzUrl.Name = "textBoxEzUrl";
             this.textBoxEzUrl.Size = new System.Drawing.Size(260, 26);
             this.textBoxEzUrl.TabIndex = 125;
             // 
             // textBoxWGFWQPORT
             // 
-            this.textBoxWGFWQPORT.Location = new System.Drawing.Point(838, 228);
+            this.textBoxWGFWQPORT.Location = new System.Drawing.Point(473, 122);
             this.textBoxWGFWQPORT.Name = "textBoxWGFWQPORT";
             this.textBoxWGFWQPORT.Size = new System.Drawing.Size(205, 26);
             this.textBoxWGFWQPORT.TabIndex = 22;
@@ -3395,7 +3311,7 @@
             // 
             this.label115.AutoSize = true;
             this.label115.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label115.Location = new System.Drawing.Point(368, 408);
+            this.label115.Location = new System.Drawing.Point(372, 351);
             this.label115.Name = "label115";
             this.label115.Size = new System.Drawing.Size(77, 14);
             this.label115.TabIndex = 124;
@@ -3406,7 +3322,7 @@
             this.label116.AutoSize = true;
             this.label116.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label116.ForeColor = System.Drawing.Color.Blue;
-            this.label116.Location = new System.Drawing.Point(517, 378);
+            this.label116.Location = new System.Drawing.Point(372, 324);
             this.label116.Name = "label116";
             this.label116.Size = new System.Drawing.Size(110, 16);
             this.label116.TabIndex = 123;
@@ -3416,7 +3332,7 @@
             // 
             this.checkBoxJHCHECKPRINT.AutoSize = true;
             this.checkBoxJHCHECKPRINT.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.checkBoxJHCHECKPRINT.Location = new System.Drawing.Point(504, 358);
+            this.checkBoxJHCHECKPRINT.Location = new System.Drawing.Point(499, 300);
             this.checkBoxJHCHECKPRINT.Name = "checkBoxJHCHECKPRINT";
             this.checkBoxJHCHECKPRINT.Size = new System.Drawing.Size(180, 18);
             this.checkBoxJHCHECKPRINT.TabIndex = 122;
@@ -3427,7 +3343,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label12.Location = new System.Drawing.Point(734, 259);
+            this.label12.Location = new System.Drawing.Point(359, 157);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(91, 14);
             this.label12.TabIndex = 26;
@@ -3436,14 +3352,14 @@
             // textBoxDALISERVERPORT
             // 
             this.textBoxDALISERVERPORT.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.textBoxDALISERVERPORT.Location = new System.Drawing.Point(273, 314);
+            this.textBoxDALISERVERPORT.Location = new System.Drawing.Point(274, 320);
             this.textBoxDALISERVERPORT.Name = "textBoxDALISERVERPORT";
             this.textBoxDALISERVERPORT.Size = new System.Drawing.Size(73, 23);
             this.textBoxDALISERVERPORT.TabIndex = 121;
             // 
             // textBoxWGSBRZBH
             // 
-            this.textBoxWGSBRZBH.Location = new System.Drawing.Point(838, 255);
+            this.textBoxWGSBRZBH.Location = new System.Drawing.Point(473, 153);
             this.textBoxWGSBRZBH.Name = "textBoxWGSBRZBH";
             this.textBoxWGSBRZBH.Size = new System.Drawing.Size(205, 26);
             this.textBoxWGSBRZBH.TabIndex = 27;
@@ -3452,7 +3368,7 @@
             // 
             this.label103.AutoSize = true;
             this.label103.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label103.Location = new System.Drawing.Point(220, 319);
+            this.label103.Location = new System.Drawing.Point(221, 325);
             this.label103.Name = "label103";
             this.label103.Size = new System.Drawing.Size(49, 14);
             this.label103.TabIndex = 120;
@@ -3463,7 +3379,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label16.ForeColor = System.Drawing.Color.Blue;
-            this.label16.Location = new System.Drawing.Point(109, 106);
+            this.label16.Location = new System.Drawing.Point(4, 86);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(110, 16);
             this.label16.TabIndex = 32;
@@ -3472,7 +3388,7 @@
             // textBoxDALISERVERIP
             // 
             this.textBoxDALISERVERIP.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.textBoxDALISERVERIP.Location = new System.Drawing.Point(86, 314);
+            this.textBoxDALISERVERIP.Location = new System.Drawing.Point(87, 320);
             this.textBoxDALISERVERIP.Name = "textBoxDALISERVERIP";
             this.textBoxDALISERVERIP.Size = new System.Drawing.Size(128, 23);
             this.textBoxDALISERVERIP.TabIndex = 119;
@@ -3481,7 +3397,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label18.Location = new System.Drawing.Point(7, 125);
+            this.label18.Location = new System.Drawing.Point(4, 108);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(63, 14);
             this.label18.TabIndex = 33;
@@ -3491,7 +3407,7 @@
             // 
             this.label104.AutoSize = true;
             this.label104.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label104.Location = new System.Drawing.Point(5, 319);
+            this.label104.Location = new System.Drawing.Point(4, 325);
             this.label104.Name = "label104";
             this.label104.Size = new System.Drawing.Size(63, 14);
             this.label104.TabIndex = 118;
@@ -3499,14 +3415,14 @@
             // 
             // textBoxCCFWQIP
             // 
-            this.textBoxCCFWQIP.Location = new System.Drawing.Point(71, 124);
+            this.textBoxCCFWQIP.Location = new System.Drawing.Point(72, 107);
             this.textBoxCCFWQIP.Name = "textBoxCCFWQIP";
             this.textBoxCCFWQIP.Size = new System.Drawing.Size(132, 26);
             this.textBoxCCFWQIP.TabIndex = 34;
             // 
             // textBoxDALIJCXBH
             // 
-            this.textBoxDALIJCXBH.Location = new System.Drawing.Point(102, 287);
+            this.textBoxDALIJCXBH.Location = new System.Drawing.Point(103, 291);
             this.textBoxDALIJCXBH.Name = "textBoxDALIJCXBH";
             this.textBoxDALIJCXBH.Size = new System.Drawing.Size(244, 26);
             this.textBoxDALIJCXBH.TabIndex = 117;
@@ -3515,7 +3431,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label17.Location = new System.Drawing.Point(206, 129);
+            this.label17.Location = new System.Drawing.Point(207, 112);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(49, 14);
             this.label17.TabIndex = 35;
@@ -3525,7 +3441,7 @@
             // 
             this.label105.AutoSize = true;
             this.label105.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label105.Location = new System.Drawing.Point(5, 293);
+            this.label105.Location = new System.Drawing.Point(4, 297);
             this.label105.Name = "label105";
             this.label105.Size = new System.Drawing.Size(91, 14);
             this.label105.TabIndex = 116;
@@ -3533,7 +3449,7 @@
             // 
             // textBoxCCFWQPORT
             // 
-            this.textBoxCCFWQPORT.Location = new System.Drawing.Point(261, 124);
+            this.textBoxCCFWQPORT.Location = new System.Drawing.Point(262, 107);
             this.textBoxCCFWQPORT.Name = "textBoxCCFWQPORT";
             this.textBoxCCFWQPORT.Size = new System.Drawing.Size(87, 26);
             this.textBoxCCFWQPORT.TabIndex = 36;
@@ -3543,7 +3459,7 @@
             this.label106.AutoSize = true;
             this.label106.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label106.ForeColor = System.Drawing.Color.Blue;
-            this.label106.Location = new System.Drawing.Point(107, 270);
+            this.label106.Location = new System.Drawing.Point(4, 271);
             this.label106.Name = "label106";
             this.label106.Size = new System.Drawing.Size(110, 16);
             this.label106.TabIndex = 115;
@@ -3554,7 +3470,7 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label22.ForeColor = System.Drawing.Color.Blue;
-            this.label22.Location = new System.Drawing.Point(501, 34);
+            this.label22.Location = new System.Drawing.Point(23, 10);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(127, 16);
             this.label22.TabIndex = 39;
@@ -3562,7 +3478,7 @@
             // 
             // textBoxHNHYJCXBH
             // 
-            this.textBoxHNHYJCXBH.Location = new System.Drawing.Point(249, 385);
+            this.textBoxHNHYJCXBH.Location = new System.Drawing.Point(250, 396);
             this.textBoxHNHYJCXBH.Name = "textBoxHNHYJCXBH";
             this.textBoxHNHYJCXBH.Size = new System.Drawing.Size(99, 26);
             this.textBoxHNHYJCXBH.TabIndex = 114;
@@ -3571,7 +3487,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label21.Location = new System.Drawing.Point(369, 60);
+            this.label21.Location = new System.Drawing.Point(23, 41);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(63, 14);
             this.label21.TabIndex = 40;
@@ -3581,7 +3497,7 @@
             // 
             this.label102.AutoSize = true;
             this.label102.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label102.Location = new System.Drawing.Point(178, 390);
+            this.label102.Location = new System.Drawing.Point(179, 404);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(77, 14);
             this.label102.TabIndex = 113;
@@ -3589,14 +3505,14 @@
             // 
             // textBoxOrtIp
             // 
-            this.textBoxOrtIp.Location = new System.Drawing.Point(453, 53);
+            this.textBoxOrtIp.Location = new System.Drawing.Point(135, 39);
             this.textBoxOrtIp.Name = "textBoxOrtIp";
-            this.textBoxOrtIp.Size = new System.Drawing.Size(119, 26);
+            this.textBoxOrtIp.Size = new System.Drawing.Size(211, 26);
             this.textBoxOrtIp.TabIndex = 41;
             // 
             // textBoxHNHYJCZBH
             // 
-            this.textBoxHNHYJCZBH.Location = new System.Drawing.Point(88, 385);
+            this.textBoxHNHYJCZBH.Location = new System.Drawing.Point(89, 396);
             this.textBoxHNHYJCZBH.Name = "textBoxHNHYJCZBH";
             this.textBoxHNHYJCZBH.Size = new System.Drawing.Size(86, 26);
             this.textBoxHNHYJCZBH.TabIndex = 112;
@@ -3605,7 +3521,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label20.Location = new System.Drawing.Point(578, 60);
+            this.label20.Location = new System.Drawing.Point(23, 70);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(49, 14);
             this.label20.TabIndex = 42;
@@ -3615,7 +3531,7 @@
             // 
             this.label99.AutoSize = true;
             this.label99.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label99.Location = new System.Drawing.Point(3, 390);
+            this.label99.Location = new System.Drawing.Point(4, 404);
             this.label99.Name = "label99";
             this.label99.Size = new System.Drawing.Size(77, 14);
             this.label99.TabIndex = 111;
@@ -3623,14 +3539,14 @@
             // 
             // textBoxOrtPort
             // 
-            this.textBoxOrtPort.Location = new System.Drawing.Point(628, 53);
+            this.textBoxOrtPort.Location = new System.Drawing.Point(135, 68);
             this.textBoxOrtPort.Name = "textBoxOrtPort";
-            this.textBoxOrtPort.Size = new System.Drawing.Size(84, 26);
+            this.textBoxOrtPort.Size = new System.Drawing.Size(211, 26);
             this.textBoxOrtPort.TabIndex = 43;
             // 
             // textBoxHNHYURL
             // 
-            this.textBoxHNHYURL.Location = new System.Drawing.Point(130, 358);
+            this.textBoxHNHYURL.Location = new System.Drawing.Point(131, 369);
             this.textBoxHNHYURL.Name = "textBoxHNHYURL";
             this.textBoxHNHYURL.Size = new System.Drawing.Size(218, 26);
             this.textBoxHNHYURL.TabIndex = 110;
@@ -3640,7 +3556,7 @@
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label25.ForeColor = System.Drawing.Color.Blue;
-            this.label25.Location = new System.Drawing.Point(510, 85);
+            this.label25.Location = new System.Drawing.Point(23, 99);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(110, 16);
             this.label25.TabIndex = 44;
@@ -3650,7 +3566,7 @@
             // 
             this.label100.AutoSize = true;
             this.label100.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label100.Location = new System.Drawing.Point(6, 363);
+            this.label100.Location = new System.Drawing.Point(4, 374);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(119, 14);
             this.label100.TabIndex = 109;
@@ -3660,7 +3576,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label24.Location = new System.Drawing.Point(369, 108);
+            this.label24.Location = new System.Drawing.Point(23, 130);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(63, 14);
             this.label24.TabIndex = 45;
@@ -3671,7 +3587,7 @@
             this.label101.AutoSize = true;
             this.label101.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label101.ForeColor = System.Drawing.Color.Blue;
-            this.label101.Location = new System.Drawing.Point(98, 341);
+            this.label101.Location = new System.Drawing.Point(4, 349);
             this.label101.Name = "label101";
             this.label101.Size = new System.Drawing.Size(144, 16);
             this.label101.TabIndex = 108;
@@ -3679,15 +3595,15 @@
             // 
             // textBoxAcIP
             // 
-            this.textBoxAcIP.Location = new System.Drawing.Point(453, 104);
+            this.textBoxAcIP.Location = new System.Drawing.Point(135, 122);
             this.textBoxAcIP.Name = "textBoxAcIP";
-            this.textBoxAcIP.Size = new System.Drawing.Size(259, 26);
+            this.textBoxAcIP.Size = new System.Drawing.Size(211, 26);
             this.textBoxAcIP.TabIndex = 46;
             // 
             // textBoxJXSOCKETPORT
             // 
             this.textBoxJXSOCKETPORT.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.textBoxJXSOCKETPORT.Location = new System.Drawing.Point(273, 244);
+            this.textBoxJXSOCKETPORT.Location = new System.Drawing.Point(274, 241);
             this.textBoxJXSOCKETPORT.Name = "textBoxJXSOCKETPORT";
             this.textBoxJXSOCKETPORT.Size = new System.Drawing.Size(73, 23);
             this.textBoxJXSOCKETPORT.TabIndex = 107;
@@ -3696,7 +3612,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label7.Location = new System.Drawing.Point(369, 137);
+            this.label7.Location = new System.Drawing.Point(23, 159);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 14);
             this.label7.TabIndex = 47;
@@ -3706,7 +3622,7 @@
             // 
             this.label98.AutoSize = true;
             this.label98.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label98.Location = new System.Drawing.Point(218, 249);
+            this.label98.Location = new System.Drawing.Point(219, 246);
             this.label98.Name = "label98";
             this.label98.Size = new System.Drawing.Size(49, 14);
             this.label98.TabIndex = 106;
@@ -3714,15 +3630,15 @@
             // 
             // textBoxAcPort
             // 
-            this.textBoxAcPort.Location = new System.Drawing.Point(453, 131);
+            this.textBoxAcPort.Location = new System.Drawing.Point(135, 153);
             this.textBoxAcPort.Name = "textBoxAcPort";
-            this.textBoxAcPort.Size = new System.Drawing.Size(72, 26);
+            this.textBoxAcPort.Size = new System.Drawing.Size(211, 26);
             this.textBoxAcPort.TabIndex = 48;
             // 
             // textBoxJXSOCKETIP
             // 
             this.textBoxJXSOCKETIP.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.textBoxJXSOCKETIP.Location = new System.Drawing.Point(86, 244);
+            this.textBoxJXSOCKETIP.Location = new System.Drawing.Point(87, 241);
             this.textBoxJXSOCKETIP.Name = "textBoxJXSOCKETIP";
             this.textBoxJXSOCKETIP.Size = new System.Drawing.Size(114, 23);
             this.textBoxJXSOCKETIP.TabIndex = 105;
@@ -3731,7 +3647,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label27.Location = new System.Drawing.Point(735, 54);
+            this.label27.Location = new System.Drawing.Point(23, 248);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(63, 14);
             this.label27.TabIndex = 50;
@@ -3741,7 +3657,7 @@
             // 
             this.label97.AutoSize = true;
             this.label97.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label97.Location = new System.Drawing.Point(7, 249);
+            this.label97.Location = new System.Drawing.Point(4, 246);
             this.label97.Name = "label97";
             this.label97.Size = new System.Drawing.Size(63, 14);
             this.label97.TabIndex = 104;
@@ -3749,15 +3665,15 @@
             // 
             // textBoxNeusoftIP
             // 
-            this.textBoxNeusoftIP.Location = new System.Drawing.Point(810, 53);
+            this.textBoxNeusoftIP.Location = new System.Drawing.Point(135, 242);
             this.textBoxNeusoftIP.Name = "textBoxNeusoftIP";
-            this.textBoxNeusoftIP.Size = new System.Drawing.Size(112, 26);
+            this.textBoxNeusoftIP.Size = new System.Drawing.Size(211, 26);
             this.textBoxNeusoftIP.TabIndex = 51;
             // 
             // textBoxJXurl
             // 
             this.textBoxJXurl.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.textBoxJXurl.Location = new System.Drawing.Point(86, 221);
+            this.textBoxJXurl.Location = new System.Drawing.Point(87, 215);
             this.textBoxJXurl.Name = "textBoxJXurl";
             this.textBoxJXurl.Size = new System.Drawing.Size(260, 23);
             this.textBoxJXurl.TabIndex = 103;
@@ -3766,7 +3682,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label26.Location = new System.Drawing.Point(927, 58);
+            this.label26.Location = new System.Drawing.Point(23, 277);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(49, 14);
             this.label26.TabIndex = 52;
@@ -3776,7 +3692,7 @@
             // 
             this.label96.AutoSize = true;
             this.label96.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label96.Location = new System.Drawing.Point(7, 226);
+            this.label96.Location = new System.Drawing.Point(4, 219);
             this.label96.Name = "label96";
             this.label96.Size = new System.Drawing.Size(42, 14);
             this.label96.TabIndex = 102;
@@ -3784,14 +3700,14 @@
             // 
             // textBoxNeusoftPort
             // 
-            this.textBoxNeusoftPort.Location = new System.Drawing.Point(977, 52);
+            this.textBoxNeusoftPort.Location = new System.Drawing.Point(135, 272);
             this.textBoxNeusoftPort.Name = "textBoxNeusoftPort";
-            this.textBoxNeusoftPort.Size = new System.Drawing.Size(66, 26);
+            this.textBoxNeusoftPort.Size = new System.Drawing.Size(211, 26);
             this.textBoxNeusoftPort.TabIndex = 53;
             // 
             // textBoxJXLINEID
             // 
-            this.textBoxJXLINEID.Location = new System.Drawing.Point(71, 195);
+            this.textBoxJXLINEID.Location = new System.Drawing.Point(72, 187);
             this.textBoxJXLINEID.Name = "textBoxJXLINEID";
             this.textBoxJXLINEID.Size = new System.Drawing.Size(275, 26);
             this.textBoxJXLINEID.TabIndex = 101;
@@ -3800,7 +3716,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label29.Location = new System.Drawing.Point(735, 84);
+            this.label29.Location = new System.Drawing.Point(23, 306);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(42, 14);
             this.label29.TabIndex = 54;
@@ -3810,7 +3726,7 @@
             // 
             this.label95.AutoSize = true;
             this.label95.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label95.Location = new System.Drawing.Point(5, 201);
+            this.label95.Location = new System.Drawing.Point(4, 193);
             this.label95.Name = "label95";
             this.label95.Size = new System.Drawing.Size(63, 14);
             this.label95.TabIndex = 100;
@@ -3818,14 +3734,14 @@
             // 
             // textBoxEISID
             // 
-            this.textBoxEISID.Location = new System.Drawing.Point(810, 78);
+            this.textBoxEISID.Location = new System.Drawing.Point(135, 301);
             this.textBoxEISID.Name = "textBoxEISID";
-            this.textBoxEISID.Size = new System.Drawing.Size(233, 26);
+            this.textBoxEISID.Size = new System.Drawing.Size(211, 26);
             this.textBoxEISID.TabIndex = 55;
             // 
             // textBoxJXPASSWORD
             // 
-            this.textBoxJXPASSWORD.Location = new System.Drawing.Point(261, 169);
+            this.textBoxJXPASSWORD.Location = new System.Drawing.Point(262, 159);
             this.textBoxJXPASSWORD.Name = "textBoxJXPASSWORD";
             this.textBoxJXPASSWORD.Size = new System.Drawing.Size(85, 26);
             this.textBoxJXPASSWORD.TabIndex = 99;
@@ -3842,16 +3758,16 @@
             "辽宁鞍山",
             "贵州从江",
             "V3.01"});
-            this.comboBoxNeusoftArea.Location = new System.Drawing.Point(810, 104);
+            this.comboBoxNeusoftArea.Location = new System.Drawing.Point(135, 332);
             this.comboBoxNeusoftArea.Name = "comboBoxNeusoftArea";
-            this.comboBoxNeusoftArea.Size = new System.Drawing.Size(77, 24);
+            this.comboBoxNeusoftArea.Size = new System.Drawing.Size(211, 24);
             this.comboBoxNeusoftArea.TabIndex = 56;
             // 
             // label92
             // 
             this.label92.AutoSize = true;
             this.label92.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label92.Location = new System.Drawing.Point(206, 176);
+            this.label92.Location = new System.Drawing.Point(207, 166);
             this.label92.Name = "label92";
             this.label92.Size = new System.Drawing.Size(35, 14);
             this.label92.TabIndex = 98;
@@ -3861,7 +3777,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label30.Location = new System.Drawing.Point(735, 111);
+            this.label30.Location = new System.Drawing.Point(23, 335);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(35, 14);
             this.label30.TabIndex = 57;
@@ -3869,7 +3785,7 @@
             // 
             // textBoxJXUSER
             // 
-            this.textBoxJXUSER.Location = new System.Drawing.Point(71, 170);
+            this.textBoxJXUSER.Location = new System.Drawing.Point(72, 160);
             this.textBoxJXUSER.Name = "textBoxJXUSER";
             this.textBoxJXUSER.Size = new System.Drawing.Size(132, 26);
             this.textBoxJXUSER.TabIndex = 97;
@@ -3878,16 +3794,16 @@
             // 
             this.comboBoxNeuYcy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxNeuYcy.FormattingEnabled = true;
-            this.comboBoxNeuYcy.Location = new System.Drawing.Point(977, 105);
+            this.comboBoxNeuYcy.Location = new System.Drawing.Point(135, 361);
             this.comboBoxNeuYcy.Name = "comboBoxNeuYcy";
-            this.comboBoxNeuYcy.Size = new System.Drawing.Size(66, 24);
+            this.comboBoxNeuYcy.Size = new System.Drawing.Size(211, 24);
             this.comboBoxNeuYcy.TabIndex = 58;
             // 
             // label93
             // 
             this.label93.AutoSize = true;
             this.label93.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label93.Location = new System.Drawing.Point(5, 175);
+            this.label93.Location = new System.Drawing.Point(4, 165);
             this.label93.Name = "label93";
             this.label93.Size = new System.Drawing.Size(35, 14);
             this.label93.TabIndex = 96;
@@ -3897,7 +3813,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label31.Location = new System.Drawing.Point(887, 108);
+            this.label31.Location = new System.Drawing.Point(23, 364);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(91, 14);
             this.label31.TabIndex = 59;
@@ -3908,7 +3824,7 @@
             this.label94.AutoSize = true;
             this.label94.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label94.ForeColor = System.Drawing.Color.Blue;
-            this.label94.Location = new System.Drawing.Point(107, 152);
+            this.label94.Location = new System.Drawing.Point(4, 136);
             this.label94.Name = "label94";
             this.label94.Size = new System.Drawing.Size(110, 16);
             this.label94.TabIndex = 95;
@@ -3919,7 +3835,7 @@
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label34.ForeColor = System.Drawing.Color.Blue;
-            this.label34.Location = new System.Drawing.Point(453, 158);
+            this.label34.Location = new System.Drawing.Point(372, 83);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(110, 16);
             this.label34.TabIndex = 60;
@@ -3927,7 +3843,7 @@
             // 
             // textBoxJHWEBADD
             // 
-            this.textBoxJHWEBADD.Location = new System.Drawing.Point(469, 205);
+            this.textBoxJHWEBADD.Location = new System.Drawing.Point(469, 132);
             this.textBoxJHWEBADD.Name = "textBoxJHWEBADD";
             this.textBoxJHWEBADD.Size = new System.Drawing.Size(244, 26);
             this.textBoxJHWEBADD.TabIndex = 94;
@@ -3936,7 +3852,7 @@
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label33.Location = new System.Drawing.Point(368, 179);
+            this.label33.Location = new System.Drawing.Point(372, 110);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(91, 14);
             this.label33.TabIndex = 61;
@@ -3946,7 +3862,7 @@
             // 
             this.label91.AutoSize = true;
             this.label91.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label91.Location = new System.Drawing.Point(368, 209);
+            this.label91.Location = new System.Drawing.Point(372, 136);
             this.label91.Name = "label91";
             this.label91.Size = new System.Drawing.Size(91, 14);
             this.label91.TabIndex = 93;
@@ -3954,14 +3870,14 @@
             // 
             // textBoxJHWEBURL
             // 
-            this.textBoxJHWEBURL.Location = new System.Drawing.Point(469, 179);
+            this.textBoxJHWEBURL.Location = new System.Drawing.Point(469, 105);
             this.textBoxJHWEBURL.Name = "textBoxJHWEBURL";
             this.textBoxJHWEBURL.Size = new System.Drawing.Size(244, 26);
             this.textBoxJHWEBURL.TabIndex = 62;
             // 
             // textBoxNhLineID
             // 
-            this.textBoxNhLineID.Location = new System.Drawing.Point(838, 331);
+            this.textBoxNhLineID.Location = new System.Drawing.Point(473, 243);
             this.textBoxNhLineID.Name = "textBoxNhLineID";
             this.textBoxNhLineID.Size = new System.Drawing.Size(205, 26);
             this.textBoxNhLineID.TabIndex = 92;
@@ -3970,7 +3886,7 @@
             // 
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label32.Location = new System.Drawing.Point(368, 237);
+            this.label32.Location = new System.Drawing.Point(372, 165);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(63, 14);
             this.label32.TabIndex = 63;
@@ -3980,7 +3896,7 @@
             // 
             this.label86.AutoSize = true;
             this.label86.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label86.Location = new System.Drawing.Point(735, 337);
+            this.label86.Location = new System.Drawing.Point(359, 246);
             this.label86.Name = "label86";
             this.label86.Size = new System.Drawing.Size(77, 14);
             this.label86.TabIndex = 91;
@@ -3988,7 +3904,7 @@
             // 
             // textBoxJHSAFEPWD
             // 
-            this.textBoxJHSAFEPWD.Location = new System.Drawing.Point(469, 229);
+            this.textBoxJHSAFEPWD.Location = new System.Drawing.Point(469, 159);
             this.textBoxJHSAFEPWD.Name = "textBoxJHSAFEPWD";
             this.textBoxJHSAFEPWD.Size = new System.Drawing.Size(244, 26);
             this.textBoxJHSAFEPWD.TabIndex = 64;
@@ -3997,7 +3913,7 @@
             // 
             this.label77.AutoSize = true;
             this.label77.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label77.Location = new System.Drawing.Point(877, 286);
+            this.label77.Location = new System.Drawing.Point(531, 189);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(147, 14);
             this.label77.TabIndex = 90;
@@ -4007,7 +3923,7 @@
             // 
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label35.Location = new System.Drawing.Point(368, 263);
+            this.label35.Location = new System.Drawing.Point(372, 194);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(91, 14);
             this.label35.TabIndex = 65;
@@ -4015,7 +3931,7 @@
             // 
             // textBoxNhWsdl
             // 
-            this.textBoxNhWsdl.Location = new System.Drawing.Point(858, 305);
+            this.textBoxNhWsdl.Location = new System.Drawing.Point(493, 214);
             this.textBoxNhWsdl.Name = "textBoxNhWsdl";
             this.textBoxNhWsdl.Size = new System.Drawing.Size(185, 26);
             this.textBoxNhWsdl.TabIndex = 89;
@@ -4024,7 +3940,7 @@
             // 
             this.label78.AutoSize = true;
             this.label78.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label78.Location = new System.Drawing.Point(735, 309);
+            this.label78.Location = new System.Drawing.Point(359, 217);
             this.label78.Name = "label78";
             this.label78.Size = new System.Drawing.Size(119, 14);
             this.label78.TabIndex = 88;
@@ -4034,7 +3950,7 @@
             // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label36.Location = new System.Drawing.Point(557, 263);
+            this.label36.Location = new System.Drawing.Point(557, 194);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(91, 14);
             this.label36.TabIndex = 67;
@@ -4045,7 +3961,7 @@
             this.label79.AutoSize = true;
             this.label79.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label79.ForeColor = System.Drawing.Color.Blue;
-            this.label79.Location = new System.Drawing.Point(776, 285);
+            this.label79.Location = new System.Drawing.Point(359, 186);
             this.label79.Name = "label79";
             this.label79.Size = new System.Drawing.Size(110, 16);
             this.label79.TabIndex = 87;
@@ -4053,7 +3969,7 @@
             // 
             // textBoxAHLINEID
             // 
-            this.textBoxAHLINEID.Location = new System.Drawing.Point(173, 76);
+            this.textBoxAHLINEID.Location = new System.Drawing.Point(174, 56);
             this.textBoxAHLINEID.Name = "textBoxAHLINEID";
             this.textBoxAHLINEID.Size = new System.Drawing.Size(175, 26);
             this.textBoxAHLINEID.TabIndex = 85;
@@ -4062,7 +3978,7 @@
             // 
             this.label37.AutoSize = true;
             this.label37.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label37.Location = new System.Drawing.Point(555, 160);
+            this.label37.Location = new System.Drawing.Point(486, 85);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(147, 14);
             this.label37.TabIndex = 69;
@@ -4072,7 +3988,7 @@
             // 
             this.label76.AutoSize = true;
             this.label76.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label76.Location = new System.Drawing.Point(3, 83);
+            this.label76.Location = new System.Drawing.Point(4, 62);
             this.label76.Name = "label76";
             this.label76.Size = new System.Drawing.Size(161, 14);
             this.label76.TabIndex = 80;
@@ -4082,7 +3998,7 @@
             // 
             this.label71.AutoSize = true;
             this.label71.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label71.Location = new System.Drawing.Point(3, 53);
+            this.label71.Location = new System.Drawing.Point(4, 31);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(119, 14);
             this.label71.TabIndex = 71;
@@ -4090,14 +4006,14 @@
             // 
             // textBoxJHDBCODE
             // 
-            this.textBoxJHDBCODE.Location = new System.Drawing.Point(603, 332);
+            this.textBoxJHDBCODE.Location = new System.Drawing.Point(603, 268);
             this.textBoxJHDBCODE.Name = "textBoxJHDBCODE";
             this.textBoxJHDBCODE.Size = new System.Drawing.Size(110, 26);
             this.textBoxJHDBCODE.TabIndex = 79;
             // 
             // textBoxAhUrl
             // 
-            this.textBoxAhUrl.Location = new System.Drawing.Point(126, 51);
+            this.textBoxAhUrl.Location = new System.Drawing.Point(127, 29);
             this.textBoxAhUrl.Name = "textBoxAhUrl";
             this.textBoxAhUrl.Size = new System.Drawing.Size(222, 26);
             this.textBoxAhUrl.TabIndex = 72;
@@ -4106,7 +4022,7 @@
             // 
             this.label73.AutoSize = true;
             this.label73.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label73.Location = new System.Drawing.Point(557, 337);
+            this.label73.Location = new System.Drawing.Point(557, 273);
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(49, 14);
             this.label73.TabIndex = 78;
@@ -4116,7 +4032,7 @@
             // 
             this.label70.AutoSize = true;
             this.label70.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label70.Location = new System.Drawing.Point(194, 36);
+            this.label70.Location = new System.Drawing.Point(120, 8);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(147, 14);
             this.label70.TabIndex = 73;
@@ -4124,7 +4040,7 @@
             // 
             // textBoxJHDBUSER
             // 
-            this.textBoxJHDBUSER.Location = new System.Drawing.Point(469, 331);
+            this.textBoxJHDBUSER.Location = new System.Drawing.Point(469, 267);
             this.textBoxJHDBUSER.Name = "textBoxJHDBUSER";
             this.textBoxJHDBUSER.Size = new System.Drawing.Size(87, 26);
             this.textBoxJHDBUSER.TabIndex = 77;
@@ -4133,7 +4049,7 @@
             // 
             this.label75.AutoSize = true;
             this.label75.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label75.Location = new System.Drawing.Point(368, 314);
+            this.label75.Location = new System.Drawing.Point(372, 244);
             this.label75.Name = "label75";
             this.label75.Size = new System.Drawing.Size(63, 14);
             this.label75.TabIndex = 74;
@@ -4143,15 +4059,16 @@
             // 
             this.label74.AutoSize = true;
             this.label74.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label74.Location = new System.Drawing.Point(368, 336);
+            this.label74.Location = new System.Drawing.Point(372, 272);
             this.label74.Name = "label74";
             this.label74.Size = new System.Drawing.Size(91, 14);
             this.label74.TabIndex = 76;
             this.label74.Text = "数据库用户：";
+            this.label74.Click += new System.EventHandler(this.label74_Click);
             // 
             // textBoxJHDBIP
             // 
-            this.textBoxJHDBIP.Location = new System.Drawing.Point(469, 305);
+            this.textBoxJHDBIP.Location = new System.Drawing.Point(469, 239);
             this.textBoxJHDBIP.Name = "textBoxJHDBIP";
             this.textBoxJHDBIP.Size = new System.Drawing.Size(244, 26);
             this.textBoxJHDBIP.TabIndex = 75;
@@ -5379,22 +5296,297 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
             // 
-            // textBoxZkytLineID
+            // tabControl2
             // 
-            this.textBoxZkytLineID.Location = new System.Drawing.Point(898, 405);
-            this.textBoxZkytLineID.Name = "textBoxZkytLineID";
-            this.textBoxZkytLineID.Size = new System.Drawing.Size(146, 26);
-            this.textBoxZkytLineID.TabIndex = 158;
+            this.tabControl2.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabControl2.Controls.Add(this.tabPage18);
+            this.tabControl2.Controls.Add(this.tabPage17);
+            this.tabControl2.Controls.Add(this.tabPage19);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(0, 31);
+            this.tabControl2.Multiline = true;
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1052, 455);
+            this.tabControl2.TabIndex = 159;
             // 
-            // label172
+            // tabPage17
             // 
-            this.label172.AutoSize = true;
-            this.label172.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label172.Location = new System.Drawing.Point(724, 412);
-            this.label172.Name = "label172";
-            this.label172.Size = new System.Drawing.Size(147, 14);
-            this.label172.TabIndex = 157;
-            this.label172.Text = "检测线编号（保山）：";
+            this.tabPage17.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage17.Controls.Add(this.textBoxAhUrl);
+            this.tabPage17.Controls.Add(this.textBoxHhzUrl);
+            this.tabPage17.Controls.Add(this.label70);
+            this.tabPage17.Controls.Add(this.label113);
+            this.tabPage17.Controls.Add(this.label71);
+            this.tabPage17.Controls.Add(this.label114);
+            this.tabPage17.Controls.Add(this.comboBoxJHAREA);
+            this.tabPage17.Controls.Add(this.label76);
+            this.tabPage17.Controls.Add(this.textBoxEzUrl);
+            this.tabPage17.Controls.Add(this.label115);
+            this.tabPage17.Controls.Add(this.label165);
+            this.tabPage17.Controls.Add(this.label116);
+            this.tabPage17.Controls.Add(this.textBoxAHLINEID);
+            this.tabPage17.Controls.Add(this.textBoxJHLINEID);
+            this.tabPage17.Controls.Add(this.label94);
+            this.tabPage17.Controls.Add(this.textBoxJHSTATIONID);
+            this.tabPage17.Controls.Add(this.label93);
+            this.tabPage17.Controls.Add(this.textBoxJXUSER);
+            this.tabPage17.Controls.Add(this.label92);
+            this.tabPage17.Controls.Add(this.textBoxJXPASSWORD);
+            this.tabPage17.Controls.Add(this.label95);
+            this.tabPage17.Controls.Add(this.textBoxJXLINEID);
+            this.tabPage17.Controls.Add(this.label96);
+            this.tabPage17.Controls.Add(this.textBoxJXurl);
+            this.tabPage17.Controls.Add(this.label97);
+            this.tabPage17.Controls.Add(this.textBoxJXSOCKETIP);
+            this.tabPage17.Controls.Add(this.label98);
+            this.tabPage17.Controls.Add(this.textBoxJXSOCKETPORT);
+            this.tabPage17.Controls.Add(this.label101);
+            this.tabPage17.Controls.Add(this.label100);
+            this.tabPage17.Controls.Add(this.textBoxGLPASSWORD);
+            this.tabPage17.Controls.Add(this.textBoxHNHYURL);
+            this.tabPage17.Controls.Add(this.label99);
+            this.tabPage17.Controls.Add(this.textBoxHNHYJCZBH);
+            this.tabPage17.Controls.Add(this.label137);
+            this.tabPage17.Controls.Add(this.label102);
+            this.tabPage17.Controls.Add(this.textBoxHNHYJCXBH);
+            this.tabPage17.Controls.Add(this.label72);
+            this.tabPage17.Controls.Add(this.textBoxGLUSER);
+            this.tabPage17.Controls.Add(this.label106);
+            this.tabPage17.Controls.Add(this.textBoxCCFWQPORT);
+            this.tabPage17.Controls.Add(this.label105);
+            this.tabPage17.Controls.Add(this.checkBoxJHCHECKPRINT);
+            this.tabPage17.Controls.Add(this.label138);
+            this.tabPage17.Controls.Add(this.label17);
+            this.tabPage17.Controls.Add(this.textBoxDALIJCXBH);
+            this.tabPage17.Controls.Add(this.textBoxCCFWQIP);
+            this.tabPage17.Controls.Add(this.textBoxGlWeb);
+            this.tabPage17.Controls.Add(this.label104);
+            this.tabPage17.Controls.Add(this.label18);
+            this.tabPage17.Controls.Add(this.textBoxDALISERVERIP);
+            this.tabPage17.Controls.Add(this.label139);
+            this.tabPage17.Controls.Add(this.label16);
+            this.tabPage17.Controls.Add(this.label103);
+            this.tabPage17.Controls.Add(this.textBoxDALISERVERPORT);
+            this.tabPage17.Controls.Add(this.label140);
+            this.tabPage17.Controls.Add(this.label34);
+            this.tabPage17.Controls.Add(this.textBoxJHWEBURL);
+            this.tabPage17.Controls.Add(this.textBoxJHWEBADD);
+            this.tabPage17.Controls.Add(this.textBoxJHDBIP);
+            this.tabPage17.Controls.Add(this.label33);
+            this.tabPage17.Controls.Add(this.label74);
+            this.tabPage17.Controls.Add(this.label91);
+            this.tabPage17.Controls.Add(this.label75);
+            this.tabPage17.Controls.Add(this.textBoxJHDBUSER);
+            this.tabPage17.Controls.Add(this.label73);
+            this.tabPage17.Controls.Add(this.label32);
+            this.tabPage17.Controls.Add(this.textBoxJHDBCODE);
+            this.tabPage17.Controls.Add(this.label37);
+            this.tabPage17.Controls.Add(this.textBoxJHSAFEPWD);
+            this.tabPage17.Controls.Add(this.label36);
+            this.tabPage17.Controls.Add(this.label35);
+            this.tabPage17.Location = new System.Drawing.Point(26, 4);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage17.Size = new System.Drawing.Size(1022, 447);
+            this.tabPage17.TabIndex = 0;
+            this.tabPage17.Text = "联网地区";
+            // 
+            // tabPage18
+            // 
+            this.tabPage18.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage18.Controls.Add(this.label178);
+            this.tabPage18.Controls.Add(this.textBoxXB_IP);
+            this.tabPage18.Controls.Add(this.label179);
+            this.tabPage18.Controls.Add(this.textBoxXB_PORT);
+            this.tabPage18.Controls.Add(this.label173);
+            this.tabPage18.Controls.Add(this.textBoxXB_VERSION);
+            this.tabPage18.Controls.Add(this.label174);
+            this.tabPage18.Controls.Add(this.textBoxXB_RZBH);
+            this.tabPage18.Controls.Add(this.label175);
+            this.tabPage18.Controls.Add(this.label176);
+            this.tabPage18.Controls.Add(this.textBoxXB_LINEID);
+            this.tabPage18.Controls.Add(this.label177);
+            this.tabPage18.Controls.Add(this.textBoxXB_DISKNO);
+            this.tabPage18.Controls.Add(this.textBoxOrtIp);
+            this.tabPage18.Controls.Add(this.textBoxZkytLineID);
+            this.tabPage18.Controls.Add(this.textBoxOrtPort);
+            this.tabPage18.Controls.Add(this.label172);
+            this.tabPage18.Controls.Add(this.label20);
+            this.tabPage18.Controls.Add(this.checkBoxDISPLAYRESULT);
+            this.tabPage18.Controls.Add(this.label21);
+            this.tabPage18.Controls.Add(this.checkBoxCheckUploadSuccess);
+            this.tabPage18.Controls.Add(this.label22);
+            this.tabPage18.Controls.Add(this.numericUpDownWaitUploadTime);
+            this.tabPage18.Controls.Add(this.textBoxAcIP);
+            this.tabPage18.Controls.Add(this.label163);
+            this.tabPage18.Controls.Add(this.textBoxAcPort);
+            this.tabPage18.Controls.Add(this.comboBoxZkytAdd);
+            this.tabPage18.Controls.Add(this.label7);
+            this.tabPage18.Controls.Add(this.textBoxZKYTWEB);
+            this.tabPage18.Controls.Add(this.label24);
+            this.tabPage18.Controls.Add(this.label160);
+            this.tabPage18.Controls.Add(this.label25);
+            this.tabPage18.Controls.Add(this.label162);
+            this.tabPage18.Controls.Add(this.comboBoxAcArea);
+            this.tabPage18.Controls.Add(this.label117);
+            this.tabPage18.Controls.Add(this.textBoxNeusoftIP);
+            this.tabPage18.Controls.Add(this.label31);
+            this.tabPage18.Controls.Add(this.label142);
+            this.tabPage18.Controls.Add(this.label15);
+            this.tabPage18.Controls.Add(this.comboBoxNeuYcy);
+            this.tabPage18.Controls.Add(this.textBoxWGJCZJC);
+            this.tabPage18.Controls.Add(this.label30);
+            this.tabPage18.Controls.Add(this.label14);
+            this.tabPage18.Controls.Add(this.comboBoxNeusoftArea);
+            this.tabPage18.Controls.Add(this.textBoxWGJCZBH);
+            this.tabPage18.Controls.Add(this.textBoxEISID);
+            this.tabPage18.Controls.Add(this.label13);
+            this.tabPage18.Controls.Add(this.label29);
+            this.tabPage18.Controls.Add(this.label10);
+            this.tabPage18.Controls.Add(this.textBoxNeusoftPort);
+            this.tabPage18.Controls.Add(this.textBoxWGFWQIP);
+            this.tabPage18.Controls.Add(this.label11);
+            this.tabPage18.Controls.Add(this.label26);
+            this.tabPage18.Controls.Add(this.label27);
+            this.tabPage18.Controls.Add(this.textBoxWGFWQPORT);
+            this.tabPage18.Controls.Add(this.label79);
+            this.tabPage18.Controls.Add(this.label78);
+            this.tabPage18.Controls.Add(this.textBoxNhWsdl);
+            this.tabPage18.Controls.Add(this.label12);
+            this.tabPage18.Controls.Add(this.label77);
+            this.tabPage18.Controls.Add(this.textBoxWGSBRZBH);
+            this.tabPage18.Controls.Add(this.label86);
+            this.tabPage18.Controls.Add(this.textBoxNhLineID);
+            this.tabPage18.Location = new System.Drawing.Point(26, 4);
+            this.tabPage18.Name = "tabPage18";
+            this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage18.Size = new System.Drawing.Size(1022, 447);
+            this.tabPage18.TabIndex = 1;
+            this.tabPage18.Text = "联网厂家";
+            // 
+            // tabPage19
+            // 
+            this.tabPage19.Location = new System.Drawing.Point(26, 4);
+            this.tabPage19.Name = "tabPage19";
+            this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage19.Size = new System.Drawing.Size(1022, 447);
+            this.tabPage19.TabIndex = 2;
+            this.tabPage19.Text = "其他";
+            this.tabPage19.UseVisualStyleBackColor = true;
+            // 
+            // label173
+            // 
+            this.label173.AutoSize = true;
+            this.label173.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label173.Location = new System.Drawing.Point(696, 41);
+            this.label173.Name = "label173";
+            this.label173.Size = new System.Drawing.Size(77, 14);
+            this.label173.TabIndex = 159;
+            this.label173.Text = "协议版本号";
+            // 
+            // textBoxXB_VERSION
+            // 
+            this.textBoxXB_VERSION.Location = new System.Drawing.Point(810, 38);
+            this.textBoxXB_VERSION.Name = "textBoxXB_VERSION";
+            this.textBoxXB_VERSION.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_VERSION.TabIndex = 160;
+            // 
+            // label174
+            // 
+            this.label174.AutoSize = true;
+            this.label174.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label174.Location = new System.Drawing.Point(696, 70);
+            this.label174.Name = "label174";
+            this.label174.Size = new System.Drawing.Size(91, 14);
+            this.label174.TabIndex = 161;
+            this.label174.Text = "联网认证编号";
+            // 
+            // textBoxXB_RZBH
+            // 
+            this.textBoxXB_RZBH.Location = new System.Drawing.Point(810, 65);
+            this.textBoxXB_RZBH.Name = "textBoxXB_RZBH";
+            this.textBoxXB_RZBH.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_RZBH.TabIndex = 162;
+            // 
+            // label175
+            // 
+            this.label175.AutoSize = true;
+            this.label175.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
+            this.label175.ForeColor = System.Drawing.Color.Blue;
+            this.label175.Location = new System.Drawing.Point(696, 10);
+            this.label175.Name = "label175";
+            this.label175.Size = new System.Drawing.Size(110, 16);
+            this.label175.TabIndex = 163;
+            this.label175.Text = "喜邦联网信息";
+            // 
+            // label176
+            // 
+            this.label176.AutoSize = true;
+            this.label176.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label176.Location = new System.Drawing.Point(696, 99);
+            this.label176.Name = "label176";
+            this.label176.Size = new System.Drawing.Size(77, 14);
+            this.label176.TabIndex = 164;
+            this.label176.Text = "检测线编号";
+            // 
+            // textBoxXB_LINEID
+            // 
+            this.textBoxXB_LINEID.Location = new System.Drawing.Point(810, 94);
+            this.textBoxXB_LINEID.Name = "textBoxXB_LINEID";
+            this.textBoxXB_LINEID.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_LINEID.TabIndex = 165;
+            // 
+            // label177
+            // 
+            this.label177.AutoSize = true;
+            this.label177.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label177.Location = new System.Drawing.Point(696, 128);
+            this.label177.Name = "label177";
+            this.label177.Size = new System.Drawing.Size(77, 14);
+            this.label177.TabIndex = 166;
+            this.label177.Text = "硬盘序列号";
+            // 
+            // textBoxXB_DISKNO
+            // 
+            this.textBoxXB_DISKNO.Location = new System.Drawing.Point(810, 122);
+            this.textBoxXB_DISKNO.Name = "textBoxXB_DISKNO";
+            this.textBoxXB_DISKNO.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_DISKNO.TabIndex = 167;
+            // 
+            // label178
+            // 
+            this.label178.AutoSize = true;
+            this.label178.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label178.Location = new System.Drawing.Point(696, 154);
+            this.label178.Name = "label178";
+            this.label178.Size = new System.Drawing.Size(63, 14);
+            this.label178.TabIndex = 168;
+            this.label178.Text = "服务器IP";
+            // 
+            // textBoxXB_IP
+            // 
+            this.textBoxXB_IP.Location = new System.Drawing.Point(810, 149);
+            this.textBoxXB_IP.Name = "textBoxXB_IP";
+            this.textBoxXB_IP.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_IP.TabIndex = 169;
+            // 
+            // label179
+            // 
+            this.label179.AutoSize = true;
+            this.label179.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label179.Location = new System.Drawing.Point(696, 183);
+            this.label179.Name = "label179";
+            this.label179.Size = new System.Drawing.Size(49, 14);
+            this.label179.TabIndex = 170;
+            this.label179.Text = "端口号";
+            // 
+            // textBoxXB_PORT
+            // 
+            this.textBoxXB_PORT.Location = new System.Drawing.Point(810, 177);
+            this.textBoxXB_PORT.Name = "textBoxXB_PORT";
+            this.textBoxXB_PORT.Size = new System.Drawing.Size(205, 26);
+            this.textBoxXB_PORT.TabIndex = 171;
             // 
             // stationConfig
             // 
@@ -5463,7 +5655,6 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.panelEx1.ResumeLayout(false);
-            this.panelEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWaitUploadTime)).EndInit();
             this.panelEx2.ResumeLayout(false);
             this.panelEx2.PerformLayout();
@@ -5490,6 +5681,11 @@
             this.panel31.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage17.ResumeLayout(false);
+            this.tabPage17.PerformLayout();
+            this.tabPage18.ResumeLayout(false);
+            this.tabPage18.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5944,6 +6140,23 @@
         private System.Windows.Forms.ComboBox comboBoxBTG_XZBZ;
         private System.Windows.Forms.TextBox textBoxZkytLineID;
         private System.Windows.Forms.Label label172;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage18;
+        private System.Windows.Forms.TabPage tabPage17;
+        private System.Windows.Forms.TabPage tabPage19;
+        private System.Windows.Forms.Label label178;
+        private System.Windows.Forms.TextBox textBoxXB_IP;
+        private System.Windows.Forms.Label label179;
+        private System.Windows.Forms.TextBox textBoxXB_PORT;
+        private System.Windows.Forms.Label label173;
+        private System.Windows.Forms.TextBox textBoxXB_VERSION;
+        private System.Windows.Forms.Label label174;
+        private System.Windows.Forms.TextBox textBoxXB_RZBH;
+        private System.Windows.Forms.Label label175;
+        private System.Windows.Forms.Label label176;
+        private System.Windows.Forms.TextBox textBoxXB_LINEID;
+        private System.Windows.Forms.Label label177;
+        private System.Windows.Forms.TextBox textBoxXB_DISKNO;
     }
 }
 

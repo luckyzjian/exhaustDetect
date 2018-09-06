@@ -112,6 +112,7 @@ namespace exhaustDetect
         public static EZWebInf ezwebinf = new EZWebInf();
         public static DALIWebInf daliwebinf = new DALIWebInf();
         public static GLWebInf glwebinf = new GLWebInf();
+        public static XBWebInf xbwebinf = new XBWebInf();
         public static carinfor.ZKYTWebInf zkytwebinf = new carinfor.ZKYTWebInf();
         public static carinfor.HHZWebInf hhzwebinf = new carinfor.HHZWebInf();
         public static YichangInter.DeviceSwapIfaceImplService yichangInterface = null;
@@ -966,6 +967,24 @@ namespace exhaustDetect
             ccsocketinf.IP = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("诚创联网", "服务器PORT", "7803", temp, 2048, @".\appConfig.ini");
             ccsocketinf.PORT = temp.ToString().Trim();
+            return true;
+        }
+        private bool init_xbinf()
+        {
+            StringBuilder temp = new StringBuilder();
+            temp.Length = 2048;
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "ip", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.ip = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "port", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.port = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "certificateNo", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.certificateNo = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "version", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.version = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "diskNo", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.diskNo = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("喜邦联网", "lineid", "", temp, 2048, @".\appConfig.ini");
+            xbwebinf.lineid = temp.ToString().Trim();
             return true;
         }
         private bool init_hnhyinf()

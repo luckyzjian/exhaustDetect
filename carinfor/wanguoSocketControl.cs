@@ -112,6 +112,15 @@ namespace carinfor
         public string user;
         public string password;
     }
+    public class XBWebInf
+    {
+        public string ip;	//webserive url
+        public string port;	//检测站代码
+        public string lineid;	//检测站代码
+        public string version;	//检测站代码
+        public string certificateNo;	//检测站代码
+        public string diskNo;	//检测站代码
+    }
     public class WGcgjSelfDetectInf
     {
         //以下为测功机数据内容	

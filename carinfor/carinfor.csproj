@@ -67,6 +67,7 @@
     <Compile Include="sdsData.cs" />
     <Compile Include="sdsDataSeconds.cs" />
     <Compile Include="wanguoSocketControl.cs" />
+    <Compile Include="xbSocketControl.cs" />
     <Compile Include="xysjData.cs" />
     <Compile Include="zyjsBtgData.cs" />
     <Compile Include="glide.cs" />

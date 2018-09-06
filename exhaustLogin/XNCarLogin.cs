@@ -321,12 +321,19 @@ namespace exhaustDetect
             carinf.cllx = dt.Rows[0]["CLLX"].ToString();
             carinf.syxz = dt.Rows[0]["SYXZ"].ToString();
             carinf.jcxz = dt.Rows[0]["JCXZ"].ToString();
-            if (DateTime.TryParse(dt.Rows[0]["CCRQ"].ToString(), out scrq))
-            { carinf.scrq = scrq; }
+            if (dt.Columns.Contains("CCRQ"))
+            {
+                if (DateTime.TryParse(dt.Rows[0]["CCRQ"].ToString(), out scrq))
+                { carinf.scrq = scrq; }
+                else
+                {
+                    carinf.scrq = DateTime.Now;
+                    ini.INIIO.saveLogInf("解析VEHINFO中CCRQ非有效日期格式：" + dt.Rows[0]["CCRQ"].ToString());
+                }
+            }
             else
             {
                 carinf.scrq = DateTime.Now;
-                ini.INIIO.saveLogInf("解析VEHINFO中CCRQ非有效日期格式：" + dt.Rows[0]["CCRQ"].ToString());
             }
             if (double.TryParse(dt.Rows[0]["ZZL"].ToString(), out a))
             { carinf.zzl = a; }
@@ -378,13 +385,18 @@ namespace exhaustDetect
                 carinf.edyh = 0;
                 ini.INIIO.saveLogInf("解析VEHINFO中EDYH非数字：" + dt.Rows[0]["EDYH"].ToString());
             }
-            if (double.TryParse(dt.Rows[0]["ZKRS"].ToString(), out a))
-            { carinf.zkrs =(int)a; }
-            else
+            if (dt.Columns.Contains("ZKRS"))
             {
-                carinf.zkrs = 5;
-                ini.INIIO.saveLogInf("解析VEHINFO中ZKRS非数字：" + dt.Rows[0]["ZKRS"].ToString());
+                if (double.TryParse(dt.Rows[0]["ZKRS"].ToString(), out a))
+                { carinf.zkrs = (int)a; }
+                else
+                {
+                    carinf.zkrs = 5;
+                    ini.INIIO.saveLogInf("解析VEHINFO中ZKRS非数字：" + dt.Rows[0]["ZKRS"].ToString());
+                }
             }
+            else
+                carinf.zkrs = 5;
             switch (dt.Rows[0]["LTLX"].ToString())
             {
                 case "0":
@@ -452,32 +464,40 @@ namespace exhaustDetect
                 case "6":
                     carinf.hccsxs = "罐式"; break;
             }
-            if (double.TryParse(dt.Rows[0]["QDZKZZL"].ToString(), out a))
-            { carinf.qdzkzzl = a; }
+
+            if (dt.Columns.Contains("ZKRS"))
+            {
+                carinf.isQdzzlAlive = true;
+                if (double.TryParse(dt.Rows[0]["QDZKZZL"].ToString(), out a))
+                { carinf.qdzkzzl = a; }
+                else
+                {
+                    carinf.qdzkzzl = 0;
+                    ini.INIIO.saveLogInf("解析VEHINFO中QDZKZZL非数字：" + dt.Rows[0]["QDZKZZL"].ToString());
+                }
+            }
             else
             {
-                carinf.qdzkzzl = 0;
-                ini.INIIO.saveLogInf("解析VEHINFO中QDZKZZL非数字：" + dt.Rows[0]["QDZKZZL"].ToString());
-            }
-            if (mainPanel.logininfcontrol.checkQDZZLisAlive(carinf.clhp, carinf.hpzl, DateTime.Now))
-            {
-                DataTable qdzzlrecord = mainPanel.logininfcontrol.getQdzzlbyclhp(carinf.clhp, carinf.hpzl);
-                if (qdzzlrecord != null)
+                if (mainPanel.logininfcontrol.checkQDZZLisAlive(carinf.clhp, carinf.hpzl, DateTime.Now))
                 {
-                    ini.INIIO.saveLogInf("在数据库里匹配车辆驱动轴重量成功："+ qdzzlrecord.Rows[0]["QDZKZZL"].ToString());
-                    carinf.qdzkzzl = double.Parse(qdzzlrecord.Rows[0]["QDZKZZL"].ToString());
-                    carinf.isQdzzlAlive = true;
+                    DataTable qdzzlrecord = mainPanel.logininfcontrol.getQdzzlbyclhp(carinf.clhp, carinf.hpzl);
+                    if (qdzzlrecord != null)
+                    {
+                        ini.INIIO.saveLogInf("在数据库里匹配车辆驱动轴重量成功：" + qdzzlrecord.Rows[0]["QDZKZZL"].ToString());
+                        carinf.qdzkzzl = double.Parse(qdzzlrecord.Rows[0]["QDZKZZL"].ToString());
+                        carinf.isQdzzlAlive = true;
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf("在数据库里匹配车辆驱动轴重量失败");
+                        carinf.isQdzzlAlive = false;
+                    }
                 }
                 else
                 {
                     ini.INIIO.saveLogInf("在数据库里匹配车辆驱动轴重量失败");
                     carinf.isQdzzlAlive = false;
                 }
-            }
-            else
-            {
-                ini.INIIO.saveLogInf("在数据库里匹配车辆驱动轴重量失败");
-                carinf.isQdzzlAlive = false;
             }
             if (double.TryParse(dt.Rows[0]["QYCMZZL"].ToString(), out a))
             { carinf.qycmzzl = a; }

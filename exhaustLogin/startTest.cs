@@ -1246,6 +1246,7 @@ namespace exhaustDetect
                 string newCsvPath = "C://jcdatatxt/" + carLogin.carbj.CLID + ".csv";
                 string newStatusPath = "C://jcdatatxt/statusConfig.ini";//安车及其他平台上的状态文件
                 string neuStatusPath = "C://jcdatatxt/neustatusConfig.ini";//东软平台上的状态文件
+                string glStatusPath = "C://jcdatatxt/glstatusConfig.ini";//东软平台上的状态文件
                 string newAhCsvPath = "C://jcdatatxt/" + carLogin.carbj.CLID + "ah.csv";
                 if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.CYNETMODE)
                 {
@@ -1259,6 +1260,106 @@ namespace exhaustDetect
                 while (mainPanel.processalive)
                 {
                     Thread.Sleep(200);
+                    
+                    if (File.Exists(glStatusPath))
+                    {
+                        #region 查询到桂林状态文件
+                        ini.INIIO.saveLogInf("waitTestFinished()进程中查询到\"" + glStatusPath + "\"存在");
+                        carinfor.statusconfigInfdata statusdata = new carinfor.statusconfigInfdata();
+                        statusdata = statusini.getGlConfigIni();
+                        switch (statusdata.nType)
+                        {
+                            case "daowei":
+                                if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.GUILINNETMODE)
+                                {
+                                    string result;
+                                    string errmsg = "";
+                                    DataTable dt = new DataTable();
+                                    Hashtable ht2 = new Hashtable();
+                                    ht2.Add("stationcode", mainPanel.stationid);
+                                    ht2.Add("linecode", mainPanel.lineid);
+                                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                    ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                    if (!mainPanel.gxinterface.startTest(ht2, out result, out errmsg))
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林联网开始检测失败,code=" + result + ",msg=" + errmsg);
+                                    }
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林联网开始检测成功");
+                                    }
+                                }
+                                break;
+                            case "tantou":
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                {
+                                    string result;
+                                    string errmsg = "";
+                                    DataTable dt = new DataTable();
+                                    Hashtable ht2 = new Hashtable();
+                                    ht2.Add("stationcode", mainPanel.stationid);
+                                    ht2.Add("linecode", mainPanel.lineid);
+                                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                    ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                    if (!mainPanel.gxinterface.chaGuanFinish(ht2, out result, out errmsg))
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林安插探头信号失败,code=" + result + ",msg=" + errmsg);
+                                    }
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林安插探头信号成功");
+                                    }
+                                }
+                                break;
+                            case "startsample":
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                {
+                                    string result;
+                                    string errmsg = "";
+                                    DataTable dt = new DataTable();
+                                    Hashtable ht2 = new Hashtable();
+                                    ht2.Add("stationcode", mainPanel.stationid);
+                                    ht2.Add("linecode", mainPanel.lineid);
+                                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                    ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                    if (!mainPanel.gxinterface.startDataSample(ht2, out result, out errmsg))
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林采集数据开始失败,code=" + result + ",msg=" + errmsg);
+                                    }
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林采集数据开始成功");
+                                    }
+                                }
+                                break;
+                            case "endsample":
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                {
+                                    string result;
+                                    string errmsg = "";
+                                    DataTable dt = new DataTable();
+                                    Hashtable ht2 = new Hashtable();
+                                    ht2.Add("stationcode", mainPanel.stationid);
+                                    ht2.Add("linecode", mainPanel.lineid);
+                                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                    ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                    if (!mainPanel.gxinterface.stopDataSample(ht2, out result, out errmsg))
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林采集数据结束失败,code=" + result + ",msg=" + errmsg);
+                                    }
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("发送桂林采集数据结束成功");
+                                    }
+                                }
+                                break;
+                            default: break;
+                        }
+                        ini.INIIO.saveLogInf("检测桂林状态代码：" + statusdata.nType);
+                        File.Delete(glStatusPath);
+                        //ini.INIIO.saveLogInf("删除文件：" + neuStatusPath);
+                        #endregion
+                    }
                     if (File.Exists(neuStatusPath))//东软平台状态字处理
                     {
                         #region 查询到东软状态文件 
@@ -1374,6 +1475,7 @@ namespace exhaustDetect
                                     }
 
                                 }
+                                /*
                                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
                                 {
                                     string result;
@@ -1392,7 +1494,7 @@ namespace exhaustDetect
                                     {
                                         ini.INIIO.saveLogInf("发送桂林联网开始检测成功");
                                     }
-                                }
+                                }*/
                                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                                 {
                                     #region 上传检测开始命令
