@@ -2548,8 +2548,64 @@ namespace exhaustDetect
             }
             catch { }
         }
+        private void testxb()
+        {
+            carinfo.xbSocketControl xbsocket = new carinfo.xbSocketControl();
+            carinfo.XB_SDS_RESULT_DATA sdsdata = new carinfo.XB_SDS_RESULT_DATA();
+            carinfo.XB_RESULT_PUBLIC_DATA publicdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+            publicdata.JCFFBH = "1";
+            publicdata.JCLSH = "2";
+            publicdata.DLY = "3";
+            publicdata.YCY = "4";
+            publicdata.JCY = "5";
+            publicdata.WD = "6";
+            publicdata.DQY = "7";
+            publicdata.SD = "8";
+            sdsdata.SFZSKZ = "0";
+            sdsdata.DSRpm = "0";
+            sdsdata.GDSRpm = "0";
+            sdsdata.DSHC = "0";
+            sdsdata.GDSHC = "0";
+            sdsdata.DSCO = "0";
+            sdsdata.GDSCO = "0";
+            sdsdata.GDSLmd = "0";
+            sdsdata.DSCurveCount0 = "0";
+            sdsdata.DSCurveCount1 = "0";
+            sdsdata.GDSCurveCount0 = "0";
+            sdsdata.GDSCurveCount1 = "0";
+            sdsdata.DSHCCurve0 = "0";
+            sdsdata.DSHCCurve1 = "0";
+            sdsdata.GDSHCCurve0 = "0";
+            sdsdata.GDSHCCurve1 = "0";
+            sdsdata.DSCOCurve0 = "0";
+            sdsdata.DSCOCurve1 = "0";
+            sdsdata.GDSCOCurve0 = "0";
+            sdsdata.GDSCOCurve1 = "0";
+            sdsdata.DSCO2Curve0 = "0";
+            sdsdata.DSCO2Curve1 = "0";
+            sdsdata.GDSCO2Curve0 = "0";
+            sdsdata.GDSCO2Curve1 = "0";
+            sdsdata.DSO2Curve0 = "0";
+            sdsdata.DSO2Curve1 = "0";
+            sdsdata.GDSO2Curve0 = "0";
+            sdsdata.GDSO2Curve1 = "0";
+            sdsdata.GDSLmdCurve0 = "0";
+            sdsdata.GDSLmdCurve1 = "0";
+            sdsdata.DSRpmCurve0 = "0";
+            sdsdata.DSRpmCurve1 = "0";
+            sdsdata.GDSRpmCurve0 = "0";
+            sdsdata.GDSRpmCurve1 = "0";
+            sdsdata.DSJYWDCurve0 = "0";
+            sdsdata.DSJYWDCurve1 = "1";
+            sdsdata.GDSJYWDCurve0 = "0";
+            sdsdata.GDSJYWDCurve1 = "1";
+            string result, msg;
+            //xbsocket.Send_SDS_RESULT_DATA(publicdata, sdsdata, out result, out msg);
+
+        }
         private void mainPanel_Load(object sender, EventArgs e)
         {
+            //testxb();
             INIIO.startpath = Application.StartupPath;
             /*init_ezinf();
             ezinterface = new EzWebClient.Ezclient(ezwebinf.weburl);

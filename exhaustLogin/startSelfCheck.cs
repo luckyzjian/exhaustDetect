@@ -3892,7 +3892,7 @@ namespace exhaustDetect
                             mainPanel.stationcontrol.updateLineLockState(mainPanel.stationid, mainPanel.lineid, "N", "");
                         Msg(label1, panel4, "自检合格");
                         //mainPanel.stationcontrol.setlineYureTime(mainPanel.stationid, mainPanel.lineid, DateTime.Now); 
-                        mainPanel.worklogdata.ProjectID = mainPanel.stationid + mainPanel.lineid + DateTime.Now.ToString("yyMMddHHmmss1");//线号“00”代表为登录机进行的操作
+                        mainPanel.worklogdata.ProjectID = mainPanel.stationid + mainPanel.lineid + DateTime.Now.ToString("yyMMddHHmmss");//线号“00”代表为登录机进行的操作
                         mainPanel.worklogdata.ProjectName = "系统自检";
                         mainPanel.worklogdata.Stationid = mainPanel.stationid;
                         mainPanel.worklogdata.Lineid = mainPanel.lineid;
