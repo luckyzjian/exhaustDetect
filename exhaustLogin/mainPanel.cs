@@ -113,12 +113,15 @@ namespace exhaustDetect
         public static DALIWebInf daliwebinf = new DALIWebInf();
         public static GLWebInf glwebinf = new GLWebInf();
         public static XBWebInf xbwebinf = new XBWebInf();
+        
         public static carinfor.ZKYTWebInf zkytwebinf = new carinfor.ZKYTWebInf();
         public static carinfor.HHZWebInf hhzwebinf = new carinfor.HHZWebInf();
         public static YichangInter.DeviceSwapIfaceImplService yichangInterface = null;
         public static DeviceSwapIfaceImplServiceOther yichangInterfaceOther = null;
         public static DeviceSwapIfaceImplServiceYnBs yichangInterfaceYnbs = null;
         public static YichangInter.xmlAnalysis xmlanalysis = new YichangInter.xmlAnalysis();
+        public static carinfo.xbSocketControl xbsocket =null;
+        public static string xbLoginUserName="";
         public static WebThread webthread = null;
         //public static int waitUploadTime = 1000;
 
@@ -161,6 +164,7 @@ namespace exhaustDetect
         public static JsDemarcateLimit jsdermarcatelimitmodel = new JsDemarcateLimit();
         public static SYS_DAL.ConnForSQL conforsql;
         /***********************************/
+        public static List<carinfo.XB_USER> xb_user_list = new List<carinfo.XB_USER>();
 
 
         public static bool useHyDatabase = false;
@@ -284,6 +288,7 @@ namespace exhaustDetect
         public const string GUILINNETMODE = "桂林联网";
         public const string HHZNNETMODE = "红河州联网";
         public const string ZKYTNETMODE = "中科宇图联网";
+        public const string XBNETMODE = "喜邦联网";
 
         public const string TYNETMODE = "通用联网";
 
@@ -2491,6 +2496,60 @@ namespace exhaustDetect
                         ini.INIIO.saveLogInf("工作状态：连接桂林联网服务器失败,将工作在单机模式");
                     }
                 }
+                else if (NetMode == XBNETMODE)
+                {
+                    ini.INIIO.WritePrivateProfileString("工作模式", "联网运行", "Y", @".\appConfig.ini");
+                    init_xbinf();
+                    xbsocket = new carinfo.xbSocketControl();
+                    if(xbsocket.init_equipment(wgsocketinf.IP, wgsocketinf.PORT))
+                    {
+                        isNetUsed = true;
+                        toolStripLabel1NetStatus.Text = "工作状态：连接喜邦联网服务器成功";
+                        ini.INIIO.saveLogInf("工作状态：连接喜邦联网服务器成功");
+                        string result = "", errmsg = "";
+                        carinfo.XB_AUTHENTCATION xmodel = new carinfo.XB_AUTHENTCATION();
+                        xmodel.version = xbwebinf.version;
+                        xmodel.certificate = xbwebinf.certificateNo;
+                        xmodel.station_id = stationid;
+                        xmodel.detect_line_id = xbwebinf.lineid;
+                        xmodel.hd_seria_number = xbwebinf.diskNo;
+                        if (!xbsocket.Send_AUTHENTCATION(xmodel, out result, out errmsg))
+                        {
+
+                            MessageBox.Show("向检测站中心数据服务认证失败：" + errmsg);
+                            isNetUsed = false;
+                        }
+                        DateTime syndatetime;
+                        if (xbsocket.Send_TIME_SYNC(out syndatetime, out result, out errmsg))
+                        {
+                            SetSystemDateTime.SetLocalTimeByStr(syndatetime.ToString("yyyy-MM-dd HH:mm:ss"));
+                            ini.INIIO.saveLogInf("同步服务器联网时间成功:" + syndatetime.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("同步时间失败：" + errmsg);
+                            isNetUsed = false;
+                        }
+                        if (!xbsocket.Send_GET_USERS(out xb_user_list, out result, out errmsg))
+                        {
+                            MessageBox.Show("获取用户列表失败：" + errmsg);
+                            isNetUsed = false;
+                        }
+
+                    }
+                    if (isNetUsed)
+                    {
+                        xbUserLogin xbuserlogin = new xbUserLogin();
+                        xbuserlogin.ShowDialog();
+                    }
+                    if(!isNetUsed)
+                    {
+                        isNetUsed = false;
+                        toolStripLabel1NetStatus.Text = "工作状态：连接喜邦联网服务器失败,将工作在单机模式";
+                        ini.INIIO.saveLogInf("工作状态：连接喜邦联网服务器失败,将工作在单机模式");
+                    }
+                }
                 else
                 {
                     ini.INIIO.WritePrivateProfileString("工作模式", "联网运行", "N", @".\appConfig.ini");
@@ -2602,7 +2661,7 @@ namespace exhaustDetect
             string result, msg;
             //xbsocket.Send_SDS_RESULT_DATA(publicdata, sdsdata, out result, out msg);
 
-        }
+        }       
         private void mainPanel_Load(object sender, EventArgs e)
         {
             //testxb();
@@ -3370,6 +3429,16 @@ namespace exhaustDetect
                     }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
+                        string accesstoken = "";
+                        mainPanel.xmlanalysis.ReadAccessTokenString(yichangInterfaceYnbs.getAccessToken(zkytwebinf.lineID), out result, out info, out accesstoken);
+                        if (result == "0")
+                        {
+                            MessageBox.Show("调取访问令牌失败:" + info);
+                        }
+                        else
+                        {
+                            mainPanel.zkytwebinf.regcode = accesstoken;
+                        }
                         xmlanalysis.ReadACKString(yichangInterfaceYnbs.gkrjbbh(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
                     if (result == "0")
@@ -3628,6 +3697,18 @@ namespace exhaustDetect
                 {
                     //mainPanel.ortsocket.close_socket();
                 }
+                if(mainPanel.NetMode==mainPanel.XBNETMODE)
+                {
+                    try
+                    {
+                        string result = "", errmsg = "";
+                        mainPanel.xbsocket.Send_USER_EXIT(xbLoginUserName, out result, out errmsg);
+                        mainPanel.xbsocket.close_equipment();
+                    }
+                    catch
+                    { }
+
+                }
             }
             try
             {
@@ -3874,8 +3955,18 @@ namespace exhaustDetect
                     {
                         xmlanalysis.ReadACKString(yichangInterfaceOther.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
-                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
+                        string accesstoken = "";
+                        mainPanel.xmlanalysis.ReadAccessTokenString(yichangInterfaceYnbs.getAccessToken(zkytwebinf.lineID), out result, out info, out accesstoken);
+                        if (result == "0")
+                        {
+                            MessageBox.Show("调取访问令牌失败:" + info);
+                        }
+                        else
+                        {
+                            mainPanel.zkytwebinf.regcode = accesstoken;
+                        }
                         xmlanalysis.ReadACKString(yichangInterfaceYnbs.gkrjbbh(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
                     if (result == "0")

@@ -457,6 +457,7 @@ namespace carinfo
         public string ForceAverageValue { set; get; }
         public string ForceError { set; get; }
         public string AllowError { set; get; }
+        public string ForceEvl { set; get; }
 
     }
     public class XB_PLHP_BD_DATA
@@ -609,6 +610,7 @@ namespace carinfo
             XB_JCFF.Add("Y", "LZ");
             XB_JCFF.Add("B", "ZYJS");
             XB_R_JCFF.Add("SDS", "S");
+            XB_R_JCFF.Add("SDSM", "S");
             XB_R_JCFF.Add("ASM", "A");
             XB_R_JCFF.Add("VMAS", "V");
             XB_R_JCFF.Add("JZJS", "L");
@@ -1514,7 +1516,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_QUERY_CAR_INFO(XB_CARLIST car,out XB_CARINFO model,out XB_SDSXZ sdsxz,out XB_VMASXZ vmasxz,
+        public bool Send_QUERY_CAR_INFO(string tmbh,out XB_CARINFO model,out XB_SDSXZ sdsxz,out XB_VMASXZ vmasxz,
             out XB_LUGDOWNXZ lugdownxz,out XB_BTGXZ btgxz,out XB_LZXZ lzxz,
             out XB_SDSMXZ sdsmxz, out string result, out string info)
         {
@@ -1522,12 +1524,12 @@ namespace carinfo
             result = "0";
             info = "";
             model = new XB_CARINFO();
-            sdsxz = new XB_SDSXZ();
-            vmasxz = new XB_VMASXZ();
-            lugdownxz = new XB_LUGDOWNXZ();
-            btgxz = new XB_BTGXZ();
-            lzxz = new XB_LZXZ();
-            sdsmxz = new XB_SDSMXZ();
+            sdsxz = null;
+            vmasxz = null;
+            lugdownxz = null;
+            btgxz = null;
+            lzxz = null;
+            sdsmxz = null;
             try
             {
                 XmlDocument xmldoc, xlmrecivedoc;
@@ -1546,9 +1548,9 @@ namespace carinfo
                 XmlElement xe201 = xmldoc.CreateElement("JCLSH");
                 XmlElement xe202 = xmldoc.CreateElement("JCCS");
                 XmlElement xe203 = xmldoc.CreateElement("TMBH");
-                xe201.InnerText = car.JCLSH;
-                xe202.InnerText = car.JCCS;
-                xe203.InnerText = car.TMBH;
+                xe201.InnerText = "";
+                xe202.InnerText = "";
+                xe203.InnerText = tmbh;
                 xe2.AppendChild(xe201);
                 xe2.AppendChild(xe202);
                 xe2.AppendChild(xe203);
@@ -1579,6 +1581,10 @@ namespace carinfo
                     model.HPZLBH =dt1.Rows[0]["HPZLBH"].ToString();
                     model.HPZL = dt1.Rows[0]["HPZL"].ToString();
                     model.JCFFBH = XB_JCFF.GetValue(dt1.Rows[0]["JCFFBH"].ToString(),"");
+                    if(model.HPZL.Contains("摩托")&&model.JCFFBH=="SDS")
+                    {
+                        model.JCFFBH = "SDSM";
+                    }
                     model.JCFF = dt1.Rows[0]["JCFF"].ToString();
                     model.CLLBBH = dt1.Rows[0]["CLLBBH"].ToString();
                     model.CLLB = dt1.Rows[0]["CLLB"].ToString();
@@ -1614,6 +1620,7 @@ namespace carinfo
                     switch(model.JCFFBH)
                     {
                         case "SDS"://双怠速
+                            sdsxz = new XB_SDSXZ();
                             dt1 = ds.Tables["double_idle_speed"];
                             sdsxz.CO2Door = double.Parse(dt1.Rows[0]["CO2Door"].ToString());
                             sdsxz.GDSHCStd = double.Parse(dt1.Rows[0]["GDSHCStd"].ToString());
@@ -1628,30 +1635,53 @@ namespace carinfo
                             break;
                         case "ASM": break;
                         case "VMAS"://瞬态
+                            vmasxz = new XB_VMASXZ();
                             vmasxz.CO2Door = double.Parse(dt1.Rows[0]["CO2Door"].ToString());
-                            vmasxz.VmasHCStd = double.Parse(dt1.Rows[0]["VmasHCStd"].ToString());
+                            if (dt1.Rows[0]["VmasHCStd"].ToString() != "")
+                                vmasxz.VmasHCStd = double.Parse(dt1.Rows[0]["VmasHCStd"].ToString());
+                            else
+                                vmasxz.VmasHCStd = 0;
                             vmasxz.VmasCOStd = double.Parse(dt1.Rows[0]["VmasCOStd"].ToString());
-                            vmasxz.VmasNOStd = double.Parse(dt1.Rows[0]["VmasNOStd"].ToString());
-                            vmasxz.VmasHCNOStd = double.Parse(dt1.Rows[0]["VmasHCNOStd"].ToString());
+                            if (dt1.Rows[0]["VmasNOStd"].ToString() != "")
+                                vmasxz.VmasNOStd = double.Parse(dt1.Rows[0]["VmasNOStd"].ToString());
+                            else
+                                vmasxz.VmasNOStd = 0;
+                            if (dt1.Rows[0]["VmasHCNOStd"].ToString() != "")
+                                vmasxz.VmasHCNOStd = double.Parse(dt1.Rows[0]["VmasHCNOStd"].ToString());
+                            else
+                                vmasxz.VmasHCNOStd = 0;
                             vmasxz.VmasPowerStd = double.Parse(dt1.Rows[0]["VmasPowerStd"].ToString());
                             vmasxz.CtrlRPM = dt1.Rows[0]["CtrlRPM"].ToString() == "1";
                             vmasxz.CarRPMMin = double.Parse(dt1.Rows[0]["CarRPMMin"].ToString());
                             vmasxz.CarRPMMax = double.Parse(dt1.Rows[0]["CarRPMMax"].ToString());
                             break;
                         case "LZ"://自由加速滤纸
+                            lzxz = new XB_LZXZ();
                             lzxz.TrayStd = double.Parse(dt1.Rows[0]["TrayStd"].ToString());
                             lzxz.SorbRPM = dt1.Rows[0]["SorbRPM"].ToString() == "1";
                             break;
                         case "ZYJS"://自由加速不透光
+                            btgxz = new XB_BTGXZ();
                             btgxz.SorbStd = double.Parse(dt1.Rows[0]["SorbStd"].ToString());
                             btgxz.SorbRPM = dt1.Rows[0]["SorbRPM"].ToString() == "1";
                             break;
                         case "JZJS"://lugdown
+                            lugdownxz = new XB_LUGDOWNXZ();
                             lugdownxz.LDSorbStd = double.Parse(dt1.Rows[0]["LDSorbStd"].ToString());
                             lugdownxz.LDMinPower = double.Parse(dt1.Rows[0]["LDMinPower"].ToString());
                             lugdownxz.LDLRpmStd = double.Parse(dt1.Rows[0]["LDLRpmStd"].ToString());
                             lugdownxz.LDHRpmStd = double.Parse(dt1.Rows[0]["LDHRpmStd"].ToString());
                             lugdownxz.CtrlRPMLUG = dt1.Rows[0]["CtrlRPMLUG"].ToString() == "1";
+                            break;
+                        case "SDSM":
+                            sdsmxz = new XB_SDSMXZ();
+                            dt1 = ds.Tables["motorcycle_idle_speed"];
+                            sdsmxz.CO2Door = double.Parse(dt1.Rows[0]["CO2Door"].ToString());
+                            sdsmxz.DSHCStd = double.Parse(dt1.Rows[0]["DSHCStd"].ToString());
+                            sdsmxz.DSCOStd = double.Parse(dt1.Rows[0]["DSCOStd"].ToString());
+                            sdsmxz.CtrlRPM = dt1.Rows[0]["CtrlRPM"].ToString() == "1";
+                            sdsmxz.CarRPMMin = double.Parse(dt1.Rows[0]["CarRPMMin"].ToString());
+                            sdsmxz.CarRPMMax = double.Parse(dt1.Rows[0]["CarRPMMax"].ToString());
                             break;
                         default:break;
                     }
@@ -2315,15 +2345,16 @@ namespace carinfo
 
                 }
                 XmlElement xe25 = xmldoc.CreateElement(dataname);
-                if (XmlBuilderHelper.GetPorperty(model, out namelist, out valuelist))
-                {
-                    for (int i = 0; i < namelist.Count; i++)
+                
+                    if (XmlBuilderHelper.GetPorperty(model, out namelist, out valuelist))
                     {
-                        XmlElement el = xmldoc.CreateElement(namelist[i]);
-                        el.InnerText = valuelist[i];
-                        xe25.AppendChild(el);
+                        for (int i = 0; i < namelist.Count; i++)
+                        {
+                            XmlElement el = xmldoc.CreateElement(namelist[i]);
+                            el.InnerText = valuelist[i];
+                            xe25.AppendChild(el);
+                        }
                     }
-                }
                 xe2.AppendChild(xe25);
                 root.AppendChild(xe2);
                 //socket.Send(ConvertXmlToString(xmldoc));
@@ -2361,7 +2392,188 @@ namespace carinfo
                 return false;
             }
         }
+        public bool Send_YDJBD_RESULT_DATA(XB_BD_PUBLIC_DATA pmodel, XB_YDJ_BD_DATA model, out string result, out string info)
+        {
+            //socket.Connect(point);
+            result = "0";
+            info = "";
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("head");//创建一个<Node>节点 
+                XmlElement xe101 = xmldoc.CreateElement("cmd");//创建一个<Node>节点 
+                xe101.InnerText = "DAILY_CHECK_RESULT";
+                xe1.AppendChild(xe101);
+                root.AppendChild(xe1);
+                XmlElement xe2 = xmldoc.CreateElement("body");
 
+                List<string> namelist = new List<string>();
+                List<string> valuelist = new List<string>();
+                if (XmlBuilderHelper.GetPorperty(pmodel, out namelist, out valuelist))
+                {
+                    for (int i = 0; i < namelist.Count; i++)
+                    {
+                        XmlElement el = xmldoc.CreateElement(namelist[i]);
+                        el.InnerText = valuelist[i];
+                        xe2.AppendChild(el);
+                    }
+                }
+                string dataname = "YDJ";               
+                XmlElement xe25 = xmldoc.CreateElement(dataname);
+                XmlElement StdValue = xmldoc.CreateElement("StdValue");
+                StdValue.InnerText = model.StdValue;
+                xe25.AppendChild(StdValue);
+                XmlElement SmokeValue = xmldoc.CreateElement("SmokeValue");
+                XmlElement Item1 = xmldoc.CreateElement("Item1");
+                Item1.InnerText = model.Item1;
+                SmokeValue.AppendChild(Item1);
+                XmlElement Item2 = xmldoc.CreateElement("Item2");
+                Item2.InnerText = model.Item2;
+                SmokeValue.AppendChild(Item2);
+                XmlElement Item3 = xmldoc.CreateElement("Item3");
+                Item3.InnerText = model.Item3;
+                SmokeValue.AppendChild(Item3);
+                xe25.AppendChild(SmokeValue);
+                XmlElement SmokeAvgValue = xmldoc.CreateElement("SmokeAvgValue");
+                SmokeAvgValue.InnerText = model.SmokeAvgValue;
+                xe25.AppendChild(SmokeAvgValue);
+                XmlElement AllowSmokeError = xmldoc.CreateElement("AllowSmokeError");
+                AllowSmokeError.InnerText = model.AllowSmokeError;
+                xe25.AppendChild(AllowSmokeError);
+                XmlElement SmokeError = xmldoc.CreateElement("SmokeError");
+                SmokeError.InnerText = model.SmokeError;
+                xe25.AppendChild(SmokeError);
+                XmlElement SmokeEvl = xmldoc.CreateElement("SmokeEvl");
+                SmokeEvl.InnerText = model.SmokeEvl;
+                xe25.AppendChild(SmokeEvl);
+                xe2.AppendChild(xe25);
+                root.AppendChild(xe2);
+                //socket.Send(ConvertXmlToString(xmldoc));
+                if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+                {
+                    result = "-1";
+                    info = "Send Failure";
+                    return false;
+                }
+                Thread.Sleep(100);
+                byte[] buffer = new byte[10 * 1024];
+                string receivedString = "";
+                if (RecvData(socket, out receivedString) > 0)
+                {
+                    DataSet ds = new DataSet();
+                    StringReader stream = new StringReader(receivedString);
+                    XmlTextReader reader = new XmlTextReader(stream);
+                    ds.ReadXml(reader);
+                    DataTable dt1 = ds.Tables["head"];
+                    result = dt1.Rows[0]["code"].ToString();
+                    info = dt1.Rows[0]["info"].ToString();
+                    return true;
+                }
+                else
+                {
+                    result = "-1";
+                    info = "no answer";
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                info = er.Message;
+                return false;
+            }
+        }
+        public bool Send_PLHPBD_RESULT_DATA(XB_BD_PUBLIC_DATA pmodel, XB_PLHP_BD_DATA model, out string result, out string info)
+        {
+            //socket.Connect(point);
+            result = "0";
+            info = "";
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("head");//创建一个<Node>节点 
+                XmlElement xe101 = xmldoc.CreateElement("cmd");//创建一个<Node>节点 
+                xe101.InnerText = "DAILY_CHECK_RESULT";
+                xe1.AppendChild(xe101);
+                root.AppendChild(xe1);
+                XmlElement xe2 = xmldoc.CreateElement("body");
+
+                List<string> namelist = new List<string>();
+                List<string> valuelist = new List<string>();
+                if (XmlBuilderHelper.GetPorperty(pmodel, out namelist, out valuelist))
+                {
+                    for (int i = 0; i < namelist.Count; i++)
+                    {
+                        XmlElement el = xmldoc.CreateElement(namelist[i]);
+                        el.InnerText = valuelist[i];
+                        xe2.AppendChild(el);
+                    }
+                }
+                string dataname = "PLHP";
+                XmlElement xe25 = xmldoc.CreateElement(dataname);
+                XmlElement LugPLHP = xmldoc.CreateElement("LugPLHP");
+                XmlElement VmasPLHP = xmldoc.CreateElement("VmasPLHP");
+                if (XmlBuilderHelper.GetPorperty(model, out namelist, out valuelist))
+                {
+                    for (int i = 0; i < namelist.Count; i++)
+                    {
+                        XmlElement el = xmldoc.CreateElement(namelist[i]);
+                        el.InnerText = valuelist[i];
+                        LugPLHP.AppendChild(el);
+                        VmasPLHP.AppendChild(el);
+                    }
+                }
+                xe25.AppendChild(LugPLHP);
+                xe25.AppendChild(VmasPLHP);
+                xe2.AppendChild(xe25);
+                root.AppendChild(xe2);
+                //socket.Send(ConvertXmlToString(xmldoc));
+                if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+                {
+                    result = "-1";
+                    info = "Send Failure";
+                    return false;
+                }
+                Thread.Sleep(100);
+                byte[] buffer = new byte[10 * 1024];
+                string receivedString = "";
+                if (RecvData(socket, out receivedString) > 0)
+                {
+                    DataSet ds = new DataSet();
+                    StringReader stream = new StringReader(receivedString);
+                    XmlTextReader reader = new XmlTextReader(stream);
+                    ds.ReadXml(reader);
+                    DataTable dt1 = ds.Tables["head"];
+                    result = dt1.Rows[0]["code"].ToString();
+                    info = dt1.Rows[0]["info"].ToString();
+                    return true;
+                }
+                else
+                {
+                    result = "-1";
+                    info = "no answer";
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                info = er.Message;
+                return false;
+            }
+        }
     }
     public class XmlBuilderHelper
     {

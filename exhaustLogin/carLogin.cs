@@ -86,6 +86,15 @@ namespace exhaustDetect
         public static string ahOperatorID = "";
         public static string hhzDriverID = "";
         public static string hhzOperatorID = "";
+
+
+        public static carinfo.XB_CARINFO xbcarinfo = new carinfo.XB_CARINFO();
+        public static carinfo.XB_SDSXZ xbsdsxz = new carinfo.XB_SDSXZ();
+        public static carinfo.XB_VMASXZ xbvmasxz = new carinfo.XB_VMASXZ();
+        public static carinfo.XB_LUGDOWNXZ xblugdownxz = new carinfo.XB_LUGDOWNXZ();
+        public static carinfo.XB_BTGXZ xbbtgxz = new carinfo.XB_BTGXZ();
+        public static carinfo.XB_LZXZ xblzxz = new carinfo.XB_LZXZ();
+        public static carinfo.XB_SDSMXZ xbsdsmxz = new carinfo.XB_SDSMXZ();
         public carLogin()
         {
             InitializeComponent();
@@ -134,6 +143,12 @@ namespace exhaustDetect
                 comboBoxQdxs.SelectedIndex = 0;
                 comboBoxQdltqy.SelectedIndex = 0;
                 panel3.Size = new Size(293, 307);
+            }
+            if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.XBNETMODE)
+            {
+                labelBgff.Visible = false;
+                comboBoxBgff.Visible = false;
+                panel3.Size = new Size(293, 410);
             }
             if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.ZKYTNETMODE)
             {
@@ -284,6 +299,17 @@ namespace exhaustDetect
                 dt_wait.Columns.Add("检测编号");
                 dt_wait.Columns.Add("车牌号");
                 dt_wait.Columns.Add("车牌颜色");
+                dt_wait.Columns.Add("检测方法");
+                dataGrid_waitcar.DataSource = dt_wait;
+                dataGrid_waitcar.Columns["车牌号"].Width = 120;
+                //dataGrid_waitcar.Columns["登录时间"].Width = 120;
+                dataGrid_waitcar.Columns["检测方法"].Width = 150;
+            }
+            else if (mainPanel.isNetUsed &&  mainPanel.NetMode == mainPanel.XBNETMODE)
+            {
+                dt_wait.Columns.Add("检测编号");
+                dt_wait.Columns.Add("车牌号");
+                dt_wait.Columns.Add("号牌种类");
                 dt_wait.Columns.Add("检测方法");
                 dataGrid_waitcar.DataSource = dt_wait;
                 dataGrid_waitcar.Columns["车牌号"].Width = 120;
@@ -838,6 +864,52 @@ namespace exhaustDetect
                     else
                     {
                         MessageBox.Show("fetchVehicle失败，code:" + code + "\r\nmessage:" + msg);
+                    }
+                    #endregion
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    #region 喜邦
+                    string code, msg;
+                    dt_wait.Rows.Clear();
+                    List<carinfo.XB_CARLIST> xbcarlist = new List<carinfo.XB_CARLIST>();
+                    if (mainPanel.xbsocket.Send_GET_REG_CAR_LIST(1000, out xbcarlist, out code, out msg))
+                    {
+                        DataRow dr = null;
+                        if (jxcarlist.Count >= 0)
+                        {
+                            foreach (carinfo.XB_CARLIST carchild in xbcarlist)
+                            {
+                                dr = dt_wait.NewRow();
+                                dr["检测编号"] = carchild.TMBH;
+                                dr["车牌号"] = carchild.HPHM;
+                                dr["号牌种类"] = carchild.HPZL;
+                                dr["检测方法"] = carchild.JCFF;
+                                dt_wait.Rows.Add(dr);
+                            }
+                        }
+                        //ref_zt = false;
+                        dataGrid_waitcar.DataSource = dt_wait;
+                        dataGrid_waitcar.Columns["检测编号"].Visible = false;
+                        if (dataGrid_waitcar.Rows.Count > 0)
+                            dataGrid_waitcar.FirstDisplayedScrollingRowIndex = Carwait_Scroll;
+                        for (int i = 0; i < this.dataGrid_waitcar.Columns.Count; i++)
+                        {
+
+                            this.dataGrid_waitcar.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                        }
+                        ref_zt = true;
+                        if (dataGrid_waitcar.Rows.Count > 0)
+                        {
+                            dataGrid_waitcar.Rows[0].Selected = true;
+                        }
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取待检列表失败，code:" + code + "\r\nmessage:" + msg);
                     }
                     #endregion
                 }
@@ -1588,6 +1660,107 @@ namespace exhaustDetect
                                     buttonStart.Enabled = true;
 
                                 }
+                            }
+                            #endregion
+                        }
+                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                        {
+                            #region 喜邦
+                            string code, msg;
+                            string tmbh = dataGrid_waitcar.SelectedRows[0].Cells["检测编号"].Value.ToString();
+                            //CARATWAIT carwait = logininfcontrol.getCarInfatWaitList(dataGrid_waitcar.SelectedRows[0].Cells["车牌号"].Value.ToString());
+                            //vehicleinfo = mainPanel.nhinterface.GetVehicleInfo(platenumber, platetype, vin, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+
+                            if (mainPanel.xbsocket.Send_QUERY_CAR_INFO(tmbh,out xbcarinfo,out xbsdsxz,out xbvmasxz,out xblugdownxz,out xbbtgxz,out xblzxz,out xbsdsmxz,out code,out msg ))
+                            {
+                                if (vehicleinfo != null)
+                                {
+                                    DateTime a, b;
+                                    carbj.CLID = tmbh;//联网时，用外观检验号做车辆ID号
+                                    carbj.DLSJ = DateTime.Now;
+                                    carbj.CLHP = xbcarinfo.HPHM;
+                                    carbj.CPYS = xbcarinfo.HPZL;
+                                    carbj.HPZL = xbcarinfo.HPZL;
+                                    carbj.XSLC = "";
+                                    carbj.JCCS = xbcarinfo.JCCS;
+                                    carbj.CZY = "";
+                                    carbj.JSY = "";
+                                    carbj.DLY = "";
+                                    carbj.JCFY = "";
+                                    carbj.TEST = "";
+                                    carbj.JCBGBH =xbcarinfo.JCLSH;
+                                    carbj.JCGWH = "";
+                                    carbj.JCZBH = "";
+                                    carbj.JCRQ = DateTime.Now;
+                                    carbj.BGJCFFYY = "";
+                                    carbj.SFCS = "";
+                                    carbj.ECRYPT = "";
+                                    carbj.JYLSH = xbcarinfo.JCLSH;
+                                    //CARINF model = new CARINF();
+                                    modelbj.CLHP = xbcarinfo.HPHM;
+                                    modelbj.ZCRQ =DateTime.Parse( xbcarinfo.DJDate);
+                                    modelbj.CLSBM = xbcarinfo.Vin;
+
+                                    modelbj.CPYS = xbcarinfo.HPZL;
+                                    modelbj.HPZL = xbcarinfo.HPZL;
+                                    modelbj.CLLX = xbcarinfo.CLLX;
+
+                                    modelbj.CZ = xbcarinfo.DW;
+                                    modelbj.SYXZ = "";
+                                    modelbj.PP = xbcarinfo.ChangPH;//5
+                                    modelbj.XH = xbcarinfo.XingHao;
+                                    modelbj.FDJHM = "";
+                                    modelbj.FDJXH = xbcarinfo.FDJXH;
+                                    modelbj.SCQY = xbcarinfo.MakeFac;
+                                    modelbj.HDZK = xbcarinfo.ZKRS;
+                                    modelbj.JSSZK = "";
+                                    modelbj.ZZL = xbcarinfo.ZZL;
+                                    modelbj.HDZZL = "";
+                                    modelbj.ZBZL = xbcarinfo.ZBZL;//15
+                                    modelbj.JZZL = (int.Parse(modelbj.ZBZL) + 100).ToString();
+
+                                    modelbj.SCRQ = DateTime.Parse(xbcarinfo.MakeDate);
+                                    modelbj.FDJPL = xbcarinfo.PL;
+                                    modelbj.RLZL = xbcarinfo.RLStr;
+                                    modelbj.EDGL = xbcarinfo.EDGL;
+                                    modelbj.EDZS = xbcarinfo.EDGLRPM;
+                                    modelbj.BSQXS = xbcarinfo.BSXLX;
+                                    modelbj.DWS = "";
+                                    modelbj.GYFS = xbcarinfo.GYTypeStr;
+                                    modelbj.DPFS = "";
+                                    modelbj.JQFS = xbcarinfo.ZYTypeStr;
+                                    modelbj.QGS = xbcarinfo.QGS;
+                                    modelbj.QDXS = xbcarinfo.QDXS;
+                                    modelbj.CHZZ = "";
+                                    modelbj.DLSP = "";
+                                    modelbj.SFSRL ="";
+                                    modelbj.JHZZ = (xbcarinfo.CH == "0" ? "无" : "有");
+
+                                    modelbj.OBD = "";
+                                    modelbj.DKGYYB = "";
+                                    modelbj.LXDH = xbcarinfo.DWTelephone;
+                                    modelbj.CZDZ = xbcarinfo.DWAddres;
+                                    modelbj.JCFS = "";
+                                    modelbj.JCLB = "";
+                                    modelbj.CLZL = "";
+                                    modelbj.SSXQ = "";
+                                    modelbj.SFWDZR = "";
+                                    modelbj.SFYQBF = "";
+                                    modelbj.DKGYYB = "";
+                                    modelbj.FDJSCQY = "";
+                                    modelbj.QDLTQY ="";
+                                    modelbj.RYPH ="";
+                                    modelbj.ZXBZ = "";
+                                    modelbj.CSYS = "";
+                                    carbj.JCFF = xbcarinfo.JCFFBH;
+                                    ref_carInf(modelbj, carbj);
+                                    buttonStart.Enabled = true;
+
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("获取车辆信息失败:" + msg);
                             }
                             #endregion
                         }
@@ -4016,6 +4189,7 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                         {
+                            
                             mainPanel.xmlanalysis.ReadDjztString(mainPanel.yichangInterfaceYnbs.getDjzt(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
                         }
                         if (result == "1")
@@ -4719,6 +4893,16 @@ namespace exhaustDetect
                     }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
+                        string accesstoken = "";
+                        mainPanel.xmlanalysis.ReadAccessTokenString(mainPanel.yichangInterfaceYnbs.getAccessToken(mainPanel.zkytwebinf.lineID), out result, out info, out accesstoken);
+                        if (result == "0")
+                        {
+                            MessageBox.Show("调取访问令牌失败:" + info);
+                        }
+                        else
+                        {
+                            mainPanel.zkytwebinf.regcode = accesstoken;
+                        }
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceYnbs.xxtz("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
                     }
                     if (result == "1")

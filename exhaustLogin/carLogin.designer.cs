@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(carLogin));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelwx = new System.Windows.Forms.Panel();
@@ -1328,10 +1328,10 @@
             this.dataGrid_waitcar.ReadOnly = true;
             this.dataGrid_waitcar.RowHeadersVisible = false;
             this.dataGrid_waitcar.RowHeadersWidth = 45;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGrid_waitcar.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGrid_waitcar.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGrid_waitcar.RowTemplate.Height = 23;
             this.dataGrid_waitcar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid_waitcar.Size = new System.Drawing.Size(275, 294);

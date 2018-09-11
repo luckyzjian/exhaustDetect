@@ -169,6 +169,7 @@ namespace exhaustDetect
                 Thread.Sleep(2000);
                 if (File.Exists(zjStatePath))
                 {
+                    #region selfcheck state file
                     Thread.Sleep(100);//等待两秒以确保文件内容写完
                     carinfor.selfCheckState checkstate = new carinfor.selfCheckState();
                     checkstate = selfcheckini.readSelfcheckState();
@@ -242,15 +243,18 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("上传自检结束信息" + selfcheckstart.writeequipmentSelfDetectFinish());
                         }
                     }
+                    #endregion
                 }
                 if (File.Exists(zsjPath))
                 {
+                    #region rotate
                     Thread.Sleep(100);//等待两秒以确保文件内容写完
                     carinfor.fdjzsSelfCheck checkstate = new carinfor.fdjzsSelfCheck();
                     checkstate = selfcheckini.readfdjzsSelfcheck();
                     File.Delete(zsjPath);
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.zsjSelfDetecInf aczsjselfcheckdata = new carinfor.zsjSelfDetecInf();
                         aczsjselfcheckdata.JCGWH = mainPanel.lineid;
                         aczsjselfcheckdata.SBMC = "发动机转速仪";
@@ -262,9 +266,11 @@ namespace exhaustDetect
                         aczsjselfcheckdata.ZJJG = checkstate.Zjjg;
                         aczsjselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传测功机自检信息" + aczsjselfcheckdata.writezsjSelfDetecInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxZsjCheckdata jxdata = new JxWebClient.jxZsjCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -280,10 +286,12 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nanhua
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -297,9 +305,11 @@ namespace exhaustDetect
                         ht.Add("ComChk", "1");
                         ht.Add("IdleRev", checkstate.Dszs);
                         mainPanel.nhinterface.SendSelfCheckData("UploadFloSelfTestData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         { }
                         else if (mainPanel.tynettype == mainPanel.TYNETTYPE_SDYT)
@@ -344,9 +354,11 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存转速计自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         string optime = "";
                         optime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         if (mainPanel.jhzsjinf != null)
@@ -409,9 +421,11 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送转速计自检数据失败,没有获取到该线转速计或废气仪或烟度计信息");
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
+                        #region hunan
                         string code, msg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                         ht.Add("sblxid", "6");
@@ -445,6 +459,7 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送结束自检命令失败,code" + code + ",msg:" + msg);
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
@@ -471,9 +486,11 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    #endregion
                 }
                 if (File.Exists(cgjPath))
                 {
+                    #region loadedcoastdown
                     ini.INIIO.WritePrivateProfileString("测功机上次运转时间", "时间", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), @".\detectConfig.ini");
 
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
@@ -497,6 +514,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISCGJCHECK = "Y";
                         checkdata.CGJTX = "Y";
@@ -548,9 +566,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISCGJCHECK = "Y";
@@ -602,9 +622,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.cgjSelfDetectInf accgjselfcheckdata = new carinfor.cgjSelfDetectInf();
                         accgjselfcheckdata.JCGWH = mainPanel.lineid;
                         accgjselfcheckdata.SBMC = "底盘测功机";
@@ -653,10 +675,12 @@ namespace exhaustDetect
                         accgjselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传测功机自检信息" + accgjselfcheckdata.writecgjSelfDetectInf());
 
-                       
+
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxJxhxdata jxdata = new JxWebClient.jxJxhxdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -698,9 +722,11 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         string optime = "";
                         optime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         if (mainPanel.jhcgjinf != null)
@@ -727,9 +753,11 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送测功机自检数据失败,没有获取到该线测功机自检数据");
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
                             Hashtable hstb = new Hashtable();
@@ -906,9 +934,11 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存加载滑行自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nanhua
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -956,9 +986,11 @@ namespace exhaustDetect
                             ht.Add("Re2", "");
                         }
                         mainPanel.nhinterface.SendSelfCheckData("UploadDynSelfTestData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
+                        #region hunan
                         string code, msg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                         ht.Add("sblxid", "7");
@@ -1004,6 +1036,7 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送结束自检命令失败,code" + code + ",msg:" + msg);
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
@@ -1173,6 +1206,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                     {
+                        #region ez
                         string code, msg;
                         try
                         {
@@ -1211,11 +1245,64 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送加载滑行自检异常:" + er.Message);
                         }
+                        #endregion
                     }
-                    //writeExcel.writeSelfCheckData(cgjdata);
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                    {
+                        #region xibang
+                        string code, msg;
+                        try
+                        {
+                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                            pdata.DevID = mainPanel.equipmodel.CGJBH;
+                            pdata.Items = "04";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.WD = "0";
+                            pdata.SD = "0";
+                            pdata.DQY = "0";
+                            pdata.Operator = mainPanel.nowUser.userName;
+                            carinfo.XB_LOADEDCOASTDOWN_BD_DATA data = new carinfo.XB_LOADEDCOASTDOWN_BD_DATA();
+                            data.Power = cgjdata.Hpower.ToString("0.0");
+                            data.DIW = cgjdata.Gxdl;
+                            data.BeginSpeed = cgjdata.Cs1.Split(',')[0];
+                            data.EndSpeed = cgjdata.Cs1.Split(',')[1];
+                            data.NominalSpeed = ((double.Parse(data.BeginSpeed) + double.Parse(data.EndSpeed)) / 2).ToString("0.0");
+                            data.NominalTime = cgjdata.Hvitualtime.ToString("0.000");
+                            data.SlideTime = cgjdata.Hrealtime.ToString("0.000");
+                            data.AllowError = "7.0";
+                            data.SlideError = cgjdata.Pc1;
+                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "不合格" : "合格";
+                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送加载滑行标定命令失败,code" + code + ",msg:" + msg);
+                            }
+                            data.Power = cgjdata.Lpower.ToString("0.0");
+                            data.DIW = cgjdata.Gxdl;
+                            data.BeginSpeed = cgjdata.Cs2.Split(',')[0];
+                            data.EndSpeed = cgjdata.Cs2.Split(',')[1];
+                            data.NominalSpeed = ((double.Parse(data.BeginSpeed) + double.Parse(data.EndSpeed)) / 2).ToString("0.0");
+                            data.NominalTime = cgjdata.Lvitualtime.ToString("0.000");
+                            data.SlideTime = cgjdata.Lrealtime.ToString("0.000");
+                            data.AllowError = "7.0";
+                            data.SlideError = cgjdata.Pc2;
+                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "不合格" : "合格";
+                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送加载滑行标定命令失败,code" + code + ",msg:" + msg);
+                            }
+                        }
+                        catch (Exception er)
+                        {
+                            ini.INIIO.saveLogInf("发送加载滑行标定命令异常:" + er.Message);
+                        }
+                        #endregion
+                    }
+                    #endregion
                 }
                 if (File.Exists(ydjPath))
                 {
+                    #region smoke
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
                     carinfor.ydjSelfcheck cgjdata = new carinfor.ydjSelfcheck();
                     cgjdata = selfcheckini.readydjSelfcheck();
@@ -1241,6 +1328,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISBTGCHECK = "Y";
                         checkdata.BTGTX = "Y";
@@ -1254,9 +1342,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISBTGCHECK = "Y";
@@ -1271,9 +1361,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.ydjSelfDetectInf acydjselfcheckdata = new carinfor.ydjSelfDetectInf();
                         acydjselfcheckdata.JCGWH = mainPanel.lineid;
                         acydjselfcheckdata.SBMC = "不透光烟度计";
@@ -1294,9 +1386,11 @@ namespace exhaustDetect
                         acydjselfcheckdata.ZJJG = cgjdata.Zjjg;
                         acydjselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传烟度计自检信息" + acydjselfcheckdata.writeydjSelfDetectInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxYdjCheckdata jxdata = new JxWebClient.jxYdjCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -1321,10 +1415,12 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         string optime = "";
                         optime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         if (mainPanel.jhydjinf != null)
@@ -1375,6 +1471,7 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("发送烟度计自检数据失败,没有获取到该线烟度计信息");
 
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
@@ -1475,6 +1572,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {                            
                         }
@@ -1542,9 +1640,11 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存烟度计自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nh
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -1567,9 +1667,11 @@ namespace exhaustDetect
                         ht.Add("OpaActValue2", cgjdata.N701.ToString());
                         ht.Add("OpaDev2", cgjdata.Error701.ToString());
                         mainPanel.nhinterface.SendSelfCheckData("UploadSmoChkLoadData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
+                        #region hn
                         string code, msg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                         ht.Add("sblxid", "3");
@@ -1608,6 +1710,7 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送结束自检命令失败,code" + code + ",msg:" + msg);
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
@@ -1675,6 +1778,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                     {
+                        #region ez
                         string code, msg;
                         try
                         {
@@ -1701,11 +1805,48 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送烟度计自检异常:" + er.Message);
                         }
+                        #endregion
                     }
-                    //writeExcel.writeSelfCheckData(cgjdata);
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                    {
+                        #region xibang
+                        string code, msg;
+                        try
+                        {
+                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                            pdata.DevID = mainPanel.equipmodel.YDJXH;
+                            pdata.Items = "08";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.WD = "0";
+                            pdata.SD = "0";
+                            pdata.DQY = "0";
+                            pdata.Operator = mainPanel.nowUser.userName;
+                            carinfo.XB_YDJ_BD_DATA data = new carinfo.XB_YDJ_BD_DATA();
+                            data.StdValue = cgjdata.LabelValueN50.ToString("0.0");
+                            data.Item1 = cgjdata.N501.ToString("0.0")+","+ cgjdata.N501.ToString("0.0") + "," + cgjdata.N501.ToString("0.0");
+                            data.Item2 = cgjdata.N501.ToString("0.0") + "," + cgjdata.N501.ToString("0.0") + "," + cgjdata.N501.ToString("0.0");
+                            data.Item3 = cgjdata.N501.ToString("0.0") + "," + cgjdata.N501.ToString("0.0") + "," + cgjdata.N501.ToString("0.0");
+                            data.SmokeAvgValue = cgjdata.N501.ToString("0.0");
+                            data.AllowSmokeError = "2.0";
+                            data.SmokeError = cgjdata.Error501.ToString("0.0");
+                            data.SmokeEvl=(Math.Abs(cgjdata.Error501) > 2) ? "不合格" : "合格";
+                            if (!mainPanel.xbsocket.Send_YDJBD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送烟度计标定命令失败,code" + code + ",msg:" + msg);
+                            }
+                        }
+                        catch (Exception er)
+                        {
+                            ini.INIIO.saveLogInf("发送烟度计标定命令异常:" + er.Message);
+                        }
+                        #endregion
+                    }
+                    #endregion
                 }
                 if (File.Exists(lljPath))
                 {
+                    #region flowmeter
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
                     carinfor.lljSelfcheck cgjdata = new carinfor.lljSelfcheck();
                     cgjdata = selfcheckini.readLljSelfcheck();
@@ -1727,6 +1868,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISLLJCHECK = "Y";
                         checkdata.LLJTX = "Y";
@@ -1737,9 +1879,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISLLJCHECK = "Y";
@@ -1751,9 +1895,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         string optime = "";
                         optime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         if (mainPanel.jhlljinf != null)
@@ -1781,9 +1927,11 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("发送流量计自检数据失败,没有获取到该线流量计信息");
 
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.lljSelfDetectInf acydjselfcheckdata = new carinfor.lljSelfDetectInf();
                         acydjselfcheckdata.JCGWH = mainPanel.lineid;
                         acydjselfcheckdata.SBMC = "流量计";
@@ -1799,6 +1947,7 @@ namespace exhaustDetect
                         acydjselfcheckdata.ZJJG = cgjdata.CheckResult;
                         acydjselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传流量计自检信息" + acydjselfcheckdata.writedlljSelfDetectInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
@@ -1891,6 +2040,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
                             Hashtable hstb = new Hashtable();
@@ -1975,11 +2125,49 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存流量计自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
-                    //writeExcel.writeSelfCheckData(cgjdata);
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                    {
+                        #region xibang
+                        string code, msg;
+                        try
+                        {
+                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                            pdata.DevID = mainPanel.equipmodel.LLJBH;
+                            pdata.Items = "09";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.WD = "0";
+                            pdata.SD = "0";
+                            pdata.DQY = "0";
+                            pdata.Operator = mainPanel.nowUser.userName;
+                            carinfo.XB_LLJ_BD_DATA data = new carinfo.XB_LLJ_BD_DATA();
+                            data.NominalLLValue = cgjdata.lljmyll.ToString("0.0");
+                            data.LLValue = cgjdata.lljsjll.ToString("0.0") + "," + cgjdata.lljsjll.ToString("0.0") + "," + cgjdata.lljsjll.ToString("0.0");
+                            data.LLAvgValue = cgjdata.lljsjll.ToString("0.0");
+                            data.LLO2Value = cgjdata.Lljo2 + "," + cgjdata.Lljo2+ "," + cgjdata.Lljo2;
+                            data.LLO2AvgValue = cgjdata.Lljo2;
+                            data.AllowLLError = "10.0";
+                            data.LLError = cgjdata.lljsjllwc.ToString("0.0");
+                            data.LLEvl = (Math.Abs(cgjdata.lljsjllwc) > 10) ? "不合格" : "合格";
+                            data.LLO2Evl = (Math.Abs(double.Parse(cgjdata.Lljo2) - 20.8) > 0.5) ? "不合格" : "合格";
+                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送流量计标定命令失败,code" + code + ",msg:" + msg);
+                            }
+                        }
+                        catch (Exception er)
+                        {
+                            ini.INIIO.saveLogInf("发送流量计标定命令异常:" + er.Message);
+                        }
+                        #endregion
+                    }
+                    #endregion
                 }
                 if (File.Exists(hjcsPath))
                 {
+                    #region t&h&a
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
                     carinfor.hjcsgyqSelfcheck cgjdata = new carinfor.hjcsgyqSelfcheck();
                     cgjdata = selfcheckini.readdzhjSelfcheck();
@@ -2001,6 +2189,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISQXZCHECK = "Y";
                         checkdata.TEMPOK =cgjdata.Tempok ? "Y":"N";
@@ -2018,9 +2207,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISQXZCHECK = "Y";
@@ -2039,9 +2230,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.dzhjSelfDetectInf acdzhjselfcheckdata = new carinfor.dzhjSelfDetectInf();
                         acdzhjselfcheckdata.JCGWH = mainPanel.lineid;
                         acdzhjselfcheckdata.SBMC = "电子环境信息仪";
@@ -2058,9 +2251,11 @@ namespace exhaustDetect
                         acdzhjselfcheckdata.ZJJG = cgjdata.Zjjg;
                         acdzhjselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传电子环境自检信息" + acdzhjselfcheckdata.writedzhjSelfDetectInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxQxzCheckdata jxdata = new JxWebClient.jxQxzCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -2084,7 +2279,7 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
-
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
@@ -2154,6 +2349,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         string optime = "";
                         optime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         if (mainPanel.equipconfig.TempInstrument == "烟度计")
@@ -2213,9 +2409,11 @@ namespace exhaustDetect
                             }
 
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
                         }
@@ -2277,9 +2475,11 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存电子环境自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nanhua
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -2297,9 +2497,11 @@ namespace exhaustDetect
                         ht.Add("EnvironmentPressure", cgjdata.ActualAirPressure.ToString());
                         ht.Add("InstrumentPressure", cgjdata.AirPressure.ToString());
                         mainPanel.nhinterface.SendSelfCheckData("UploadEleEnvData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
+                        #region hunan
                         string code, msg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                         ht.Add("sblxid", "5");
@@ -2341,7 +2543,7 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送结束自检命令失败,code" + code + ",msg:" + msg);
                         }
-
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                     {
@@ -2405,10 +2607,11 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
-                    //writeExcel.writeSelfCheckData(cgjdata);
+                    #endregion
                 }
                 if (File.Exists(fqyPath))
                 {
+                    #region gas
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
                     carinfor.wqfxySelfcheck cgjdata = new carinfor.wqfxySelfcheck();
                     cgjdata = selfcheckini.readwqfxySelfcheck();
@@ -2430,6 +2633,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISFQYCHECK = "Y";
                         checkdata.FQYTX = "Y";
@@ -2450,9 +2654,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISFQYCHECK = "Y";
@@ -2474,9 +2680,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.fqySelfDetectInf acfqyselfcheckdata = new carinfor.fqySelfDetectInf();
                         acfqyselfcheckdata.JCGWH = mainPanel.lineid;
                         acfqyselfcheckdata.SBMC = "废气分析仪";
@@ -2492,9 +2700,11 @@ namespace exhaustDetect
                         acfqyselfcheckdata.ZJJG = cgjdata.Zjjg;
                         acfqyselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传废气仪自检信息" + acfqyselfcheckdata.writefqySelfDetectInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jiangxi
                         JxWebClient.jxFqyLeakCheckdata jxdata = new JxWebClient.jxFqyLeakCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -2508,10 +2718,12 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jiangxi
                         JxWebClient.jxFqyOxygenCheckdata jxdata = new JxWebClient.jxFqyOxygenCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -2528,10 +2740,11 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
-
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         if (mainPanel.jhfqyinf != null)
                         {
 
@@ -2560,6 +2773,7 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("发送废气仪自检数据失败,没有获取到该线废气仪信息");
 
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
@@ -2617,6 +2831,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
                             Hashtable hstb = new Hashtable();
@@ -2720,9 +2935,11 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存电子环境自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nanhua
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -2740,9 +2957,11 @@ namespace exhaustDetect
                         ht.Add("FluxChk", cgjdata.Yqll);
                         ht.Add("InsO2Chk", cgjdata.Yqyq.ToString());
                         mainPanel.nhinterface.SendSelfCheckData("UploadAnaSelfTestData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
+                        #region hunan
                         string code, msg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                         ht.Add("sblxid", "2");
@@ -2780,7 +2999,7 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送结束自检命令失败,code" + code + ",msg:" + msg);
                         }
-
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                     {
@@ -2864,6 +3083,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                     {
+                        #region ezhou
                         string code, msg;
                         try
                         {
@@ -2915,11 +3135,42 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("发送氧量程检查命令异常:" + er.Message);
                         }
+                        #endregion
+                    }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                    {
+                        #region xibang
+                        string code, msg;
+                        try
+                        {
+                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                            pdata.DevID = mainPanel.equipmodel.FXYBH;
+                            pdata.Items = "05";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.WD = "0";
+                            pdata.SD = "0";
+                            pdata.DQY = "0";
+                            pdata.Operator = mainPanel.nowUser.userName;
+                            carinfo.XB_SEALCHECK_BD_DATA data = new carinfo.XB_SEALCHECK_BD_DATA();
+                            data.Evl = cgjdata.TightnessResult=="1"?"合格":"不合格";
+                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送废气仪自检命令失败,code" + code + ",msg:" + msg);
+                            }
+                        }
+                        catch (Exception er)
+                        {
+                            ini.INIIO.saveLogInf("发送废气仪自检命令异常:" + er.Message);
+                        }
+                        #endregion
                     }
                     //writeExcel.writeSelfCheckData(cgjdata);
+                    #endregion
                 }
                 if (File.Exists(plhpPath))
                 {
+                    #region plhp
                     try
                     {
                         Thread.Sleep(200);//等待两秒以确保文件内容写完
@@ -2929,6 +3180,7 @@ namespace exhaustDetect
                         string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                         if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                         {
+                            #region update selfcheck 
                             checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                             checkdata.WattlessMaxSpeed1 = cgjdata.SpeedQJ1.Split('~')[0];
                             checkdata.WattlessMinSpeed1 = cgjdata.SpeedQJ1.Split('~')[1];
@@ -2965,9 +3217,11 @@ namespace exhaustDetect
                             }
                             catch
                             { }
+                            #endregion
                         }
                         else
                         {
+                            #region insert selfcheck
                             //selfcheckdata checkdata = new selfcheckdata();
                             initSelfData(selfcheckid);
                             checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
@@ -3001,9 +3255,11 @@ namespace exhaustDetect
                             }
                             catch
                             { }
+                            #endregion
                         }
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                         {
+                            #region 江西
                             JxWebClient.jxPlhpdata jxdata = new JxWebClient.jxPlhpdata();
                             jxdata.testInstitutionId = mainPanel.stationid;
                             jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -3022,9 +3278,11 @@ namespace exhaustDetect
                                 MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                                 ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                             }
+                            #endregion
                         }
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                         {
+                            #region 通用联网
                             if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                             {
                                 Hashtable hstb = new Hashtable();
@@ -3163,6 +3421,7 @@ namespace exhaustDetect
                                     ini.INIIO.saveLogInf("保存寄生功率自检信息语句失败");
                                 }
                             }
+                            #endregion
                         }
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
                         {
@@ -3300,6 +3559,7 @@ namespace exhaustDetect
                         }
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                         {
+                            #region 鄂州
                             string code, msg;
                             try
                             {
@@ -3360,6 +3620,70 @@ namespace exhaustDetect
                             {
                                 ini.INIIO.saveLogInf("发送寄生功率命令异常:" + er.Message);
                             }
+                            #endregion
+                        }
+                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                        {
+                            #region xibang
+                            string code, msg;
+                            try
+                            {
+                                carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                                pdata.DevID = mainPanel.equipmodel.CGJBH;
+                                pdata.Items = "03";
+                                pdata.BeginTime =DateTime.Parse( cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                                pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"); 
+                                pdata.WD = "0";
+                                pdata.SD = "0";
+                                pdata.DQY = "0";
+                                pdata.Operator = mainPanel.nowUser.userName;
+                                carinfo.XB_PLHP_BD_DATA data = new carinfo.XB_PLHP_BD_DATA();
+                                data.BeginSpeed = cgjdata.SpeedQJ1.Split('~')[0];
+                                data.EndSpeed = cgjdata.SpeedQJ1.Split('~')[1];
+                                data.NominalSpeed = cgjdata.NameSpeed1.ToString("0.0");
+                                data.SlideTime = cgjdata.hxsj1;
+                                data.PLHP = cgjdata.Plhp1.ToString("0.00");
+                                data.Force = ((int)(cgjdata.Plhp1 * 1000 * 3.6 / cgjdata.NameSpeed1)).ToString("0");
+                                if (!mainPanel.xbsocket.Send_PLHPBD_RESULT_DATA(pdata,data, out code, out msg))
+                                {
+                                    ini.INIIO.saveLogInf("发送附加功率损失命令失败,code" + code + ",msg:" + msg);
+                                }
+                                data.BeginSpeed = cgjdata.SpeedQJ2.Split('~')[0];
+                                data.EndSpeed = cgjdata.SpeedQJ2.Split('~')[1];
+                                data.NominalSpeed = cgjdata.NameSpeed2.ToString("0.0");
+                                data.SlideTime = cgjdata.hxsj2;
+                                data.PLHP = cgjdata.Plhp2.ToString("0.00");
+                                data.Force = ((int)(cgjdata.Plhp2 * 1000 * 3.6 / cgjdata.NameSpeed2)).ToString("0");
+                                if (!mainPanel.xbsocket.Send_PLHPBD_RESULT_DATA(pdata, data, out code, out msg))
+                                {
+                                    ini.INIIO.saveLogInf("发送附加功率损失命令失败,code" + code + ",msg:" + msg);
+                                }
+                                data.BeginSpeed = cgjdata.SpeedQJ3.Split('~')[0];
+                                data.EndSpeed = cgjdata.SpeedQJ3.Split('~')[1];
+                                data.NominalSpeed = cgjdata.NameSpeed3.ToString("0.0");
+                                data.SlideTime = cgjdata.hxsj3;
+                                data.PLHP = cgjdata.Plhp3.ToString("0.00");
+                                data.Force = ((int)(cgjdata.Plhp3 * 1000 * 3.6 / cgjdata.NameSpeed3)).ToString("0");
+                                if (!mainPanel.xbsocket.Send_PLHPBD_RESULT_DATA(pdata, data, out code, out msg))
+                                {
+                                    ini.INIIO.saveLogInf("发送附加功率损失命令失败,code" + code + ",msg:" + msg);
+                                }
+                                data.BeginSpeed = cgjdata.SpeedQJ4.Split('~')[0];
+                                data.EndSpeed = cgjdata.SpeedQJ4.Split('~')[1];
+                                data.NominalSpeed = cgjdata.NameSpeed4.ToString("0.0");
+                                data.SlideTime = cgjdata.hxsj4;
+                                data.PLHP = cgjdata.Plhp4.ToString("0.00");
+                                data.Force = ((int)(cgjdata.Plhp4 * 1000 * 3.6 / cgjdata.NameSpeed4)).ToString("0");
+                                if (!mainPanel.xbsocket.Send_PLHPBD_RESULT_DATA(pdata, data, out code, out msg))
+                                {
+                                    ini.INIIO.saveLogInf("发送附加功率损失命令失败,code" + code + ",msg:" + msg);
+                                }
+                            }
+                            catch (Exception er)
+                            {
+                                ini.INIIO.saveLogInf("发送附加功率损失命令异常:" + er.Message);
+                            }
+                            #endregion
                         }
                         zjfinishstring += "寄生功率完成|";
 
@@ -3382,9 +3706,11 @@ namespace exhaustDetect
                         ini.INIIO.saveLogInf("处理寄生功率自检数据发生异常:"+er.Message);
                     }
                     //writeExcel.writeSelfCheckData(cgjdata);
+                    #endregion
                 }
                 if (File.Exists(sdsfqyPath))
                 {
+                    #region sds_gas
                     Thread.Sleep(200);//等待两秒以确保文件内容写完
                     carinfor.sdsqtfxySelfcheck cgjdata = new carinfor.sdsqtfxySelfcheck();
                     cgjdata = selfcheckini.readsdsqtfxySelfcheck();
@@ -3405,6 +3731,7 @@ namespace exhaustDetect
                     string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
                     if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
                     {
+                        #region update selfcheck
                         checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
                         checkdata.ISFQYCHECK = "Y";
                         checkdata.FQYTX = "Y";
@@ -3425,9 +3752,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     else
                     {
+                        #region insert selfcheck
                         //selfcheckdata checkdata = new selfcheckdata();
                         initSelfData(selfcheckid);
                         checkdata.ISFQYCHECK = "Y";
@@ -3449,9 +3778,11 @@ namespace exhaustDetect
                         }
                         catch
                         { }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
+                        #region ac
                         carinfor.fqySelfDetectInf acfqyselfcheckdata = new carinfor.fqySelfDetectInf();
                         acfqyselfcheckdata.JCGWH = mainPanel.lineid;
                         acfqyselfcheckdata.SBMC = "废气分析仪";
@@ -3467,9 +3798,11 @@ namespace exhaustDetect
                         acfqyselfcheckdata.ZJJG = cgjdata.Zjjg;
                         acfqyselfcheckdata.SynchDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                         ini.INIIO.saveLogInf("上传废气仪自检信息" + acfqyselfcheckdata.writefqySelfDetectInf());
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxFqyLeakCheckdata jxdata = new JxWebClient.jxFqyLeakCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -3483,10 +3816,12 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
-                        
+                        #endregion
+
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                     {
+                        #region jx
                         JxWebClient.jxFqyOxygenCheckdata jxdata = new JxWebClient.jxFqyOxygenCheckdata();
                         jxdata.testInstitutionId = mainPanel.stationid;
                         jxdata.testLineId = mainPanel.jxwebinf.lineid;
@@ -3503,10 +3838,12 @@ namespace exhaustDetect
                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                         }
+                        #endregion
 
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                     {
+                        #region jinghua
                         if (mainPanel.jhfqyinf != null)
                         {
 
@@ -3535,9 +3872,11 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("发送废气仪自检数据失败,没有获取到该线废气仪信息");
 
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                     {
+                        #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
                             Hashtable hstb = new Hashtable();
@@ -3641,6 +3980,7 @@ namespace exhaustDetect
                                 ini.INIIO.saveLogInf("保存电子环境自检信息语句失败");
                             }
                         }
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
@@ -3701,6 +4041,7 @@ namespace exhaustDetect
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.NHNETMODE)
                     {
+                        #region nanhua
                         int nhcode, nhexpcode;
                         string nhmsg, nhexpmsg;
                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
@@ -3718,6 +4059,7 @@ namespace exhaustDetect
                         ht.Add("FluxChk", cgjdata.Yqll);
                         ht.Add("InsO2Chk", cgjdata.Yqyq.ToString());
                         mainPanel.nhinterface.SendSelfCheckData("UploadAnaSelfTestData", ht, out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+                        #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                     {
@@ -3810,10 +4152,40 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                    {
+                        #region xibang
+                        string code, msg;
+                        try
+                        {
+                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                            pdata.DevID = mainPanel.equipmodel.FXYBH;
+                            pdata.Items = "05";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.WD = "0";
+                            pdata.SD = "0";
+                            pdata.DQY = "0";
+                            pdata.Operator = mainPanel.nowUser.userName;
+                            carinfo.XB_SEALCHECK_BD_DATA data = new carinfo.XB_SEALCHECK_BD_DATA();
+                            data.Evl = cgjdata.TightnessResult == "1" ? "合格" : "不合格";
+                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                            {
+                                ini.INIIO.saveLogInf("发送废气仪自检命令失败,code" + code + ",msg:" + msg);
+                            }
+                        }
+                        catch (Exception er)
+                        {
+                            ini.INIIO.saveLogInf("发送废气仪自检命令异常:" + er.Message);
+                        }
+                        #endregion
+                    }
                     //writeExcel.writeSelfCheckData(cgjdata);
+                    #endregion
                 }
                 if (File.Exists(zjPath))
                 {
+                    #region selfcheck result file
                     Thread.Sleep(200);
                     yuredata = yurecontrol.readYureData(zjPath);
                     //demarcatecontrol.saveGlideDataByIni(glidedata, mainPanel.stationid, mainPanel.lineid, bdrq);
@@ -3907,6 +4279,7 @@ namespace exhaustDetect
                     File.Delete(zjPath);
                     mainPanel.check_linezt();
                     return;
+                    #endregion
 
                 }
                 Msg(labelzjxm, panelzjxm, zjfinishstring);

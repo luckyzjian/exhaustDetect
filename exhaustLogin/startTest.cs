@@ -1145,6 +1145,16 @@ namespace exhaustDetect
                                     return;
                                 }
                             }
+                            else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                            {
+                                string code, msg;
+                                if (!mainPanel.xbsocket.Send_START_TEST(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, out code, out msg))
+                                {
+                                    MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                    ini.INIIO.saveLogInf("车辆检测开始失败,code" + code + ",msg:" + msg);
+                                    return;
+                                }
+                            }
                         }
 
                         
@@ -2664,6 +2674,16 @@ namespace exhaustDetect
                                             }
                                             catch
                                             { }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS,"用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
+                                            }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
@@ -5451,6 +5471,16 @@ namespace exhaustDetect
                                             catch
                                             { }
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
+                                            }
+                                        }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
@@ -6280,7 +6310,7 @@ namespace exhaustDetect
                                             if (vmasResultPd(vmas_data) == true)
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -6293,7 +6323,7 @@ namespace exhaustDetect
                                             else
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：不合格");
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测不合格,正在上传结果数据...");
                                                 }
@@ -6417,6 +6447,210 @@ namespace exhaustDetect
                                                     return;
                                                 }
                                                 Msg(label1, panel4,"车辆检测"+vmasdata.ZHPD+ ",上传完毕");
+                                            }
+                                            else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                            {
+                                                string code, msg;
+                                                string hjo2="";
+                                                List<string> colist = new List<string>();
+                                                List<string> hclist = new List<string>();
+                                                List<string> nolist = new List<string>();
+                                                List<string> co2list = new List<string>();
+                                                List<string> o2list = new List<string>();
+                                                List<string> xso2list = new List<string>();
+                                                List<string> xsblist = new List<string>();
+                                                List<string> sjlllist = new List<string>();
+                                                List<string> bzlllist = new List<string>();
+                                                List<string> cslist = new List<string>();
+                                                List<string> nllist = new List<string>();
+                                                List<string> gllist = new List<string>();
+                                                List<string> jsgllist = new List<string>();
+                                                List<string> ltmclist = new List<string>();
+                                                List<string> mngllist = new List<string>();
+                                                List<string> zslist = new List<string>();
+                                                List<string> wdlist = new List<string>();
+                                                List<string> sdlist = new List<string>();
+                                                List<string> dqylist = new List<string>();
+                                                List<string> dflist = new List<string>();
+                                                List<string> khlist = new List<string>();
+                                                List<string> lljwdlist = new List<string>();
+                                                List<string> lljdqylist = new List<string>();
+                                                List<string> hczllist = new List<string>();
+                                                List<string> cozllist = new List<string>();
+                                                List<string> nozllist = new List<string>();
+
+
+                                                try
+                                                {
+                                                    int startindex = 1;
+                                                    if (dataseconds.Rows.Count > 195) startindex = dataseconds.Rows.Count - 195;
+                                                    for (int i = startindex; i < dataseconds.Rows.Count; i++)
+                                                    {
+                                                        DataRow dr = dataseconds.Rows[i];
+                                                        carinfo.XB_VMAS_PROCESS_DATA data = new carinfo.XB_VMAS_PROCESS_DATA();
+                                                        data.JCFFBH = carLogin.carbj.JCFF;
+                                                        data.JCLSH = carLogin.carbj.JYLSH;
+                                                        data.SJXL = (i - startindex + 1).ToString();
+                                                        if (i - startindex + 1 <= 28) data.State = "1";
+                                                        else if(i - startindex + 1 <= 96) data.State = "2";
+                                                        else data.State = "3";
+                                                        data.HC = dr["HC实时值"].ToString();
+                                                        data.CO = dr["CO实时值"].ToString();
+                                                        data.NO = dr["NO实时值"].ToString();
+                                                        data.O2 = dr["分析仪O2实时值"].ToString();
+                                                        data.CO2 = dr["CO2实时值"].ToString();
+                                                        data.Rpm = dr["发动机转速"].ToString();
+                                                        data.JYWD = dr["流量计温度"].ToString();
+                                                        data.Speed = dr["实时车速"].ToString();
+                                                        data.Force = dr["扭矩"].ToString();
+                                                        data.Power = dr["加载功率"].ToString();
+                                                        data.IHP = dr["指示功率"].ToString();
+                                                        data.PLHP = dr["寄生功率"].ToString();
+                                                        data.LTMCLP = "0";
+                                                        data.WD = dr["环境温度"].ToString();
+                                                        data.SD = dr["相对湿度"].ToString();
+                                                        data.DQY = dr["大气压力"].ToString();
+                                                        data.KH = dr["湿度修正系数"].ToString();
+                                                        data.DF = dr["稀释修正系数"].ToString();
+                                                        data.LLO2 = dr["流量计O2实时值"].ToString();
+                                                        data.BJO2 = dr["环境O2浓度"].ToString();
+                                                        if (i == startindex) hjo2 = data.BJO2;
+                                                        data.XSB = dr["稀释比"].ToString();
+                                                        data.LLJWD = dr["流量计温度"].ToString();
+                                                        data.LLJDQY = dr["流量计压力"].ToString();
+                                                        data.LL = dr["实际体积流量"].ToString();
+                                                        data.BZLL = dr["标准体积流量"].ToString();
+                                                        data.HCZL = dr["HC排放质量"].ToString();
+                                                        data.COZL = dr["CO排放质量"].ToString();
+                                                        data.NOZL = dr["NO排放质量"].ToString();
+                                                        colist.Add(data.CO);
+                                                        hclist.Add(data.HC);
+                                                        nolist.Add(data.NO);
+                                                        co2list.Add(data.CO2);
+                                                        o2list.Add(data.O2);
+                                                        xso2list.Add(data.LLO2);
+                                                        xsblist.Add(data.XSB);
+                                                        sjlllist.Add(data.LL);
+                                                        bzlllist.Add(data.BZLL);
+                                                        cslist.Add(data.Speed);
+                                                        nllist.Add(data.Force);
+                                                        gllist.Add(data.Power);
+                                                        jsgllist.Add(data.PLHP);
+                                                        ltmclist.Add(data.LTMCLP);
+                                                        mngllist.Add(data.IHP);
+                                                        zslist.Add(data.Rpm);
+                                                        wdlist.Add(data.WD);
+                                                        sdlist.Add(data.SD);
+                                                        dqylist.Add(data.DQY);
+                                                        dflist.Add(data.DF);
+                                                        khlist.Add(data.KH);
+                                                        lljwdlist.Add(data.LLJWD);
+                                                        lljdqylist.Add(data.LLJDQY);
+                                                        hczllist.Add(data.HCZL);
+                                                        cozllist.Add(data.COZL);
+                                                        nozllist.Add(data.NOZL);
+
+                                                        if (!mainPanel.xbsocket.Send_VMAS_PROCESS_DATA(data, out code, out msg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                        }
+                                                    }
+                                                }
+                                                catch (Exception er)
+                                                {
+                                                    MessageBox.Show("发送过程数据命令发生异常:" + er.Message);
+                                                    return;
+                                                }
+                                                try
+                                                {
+                                                    carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                    carinfo.XB_VMAS_RESULT_DATA data = new carinfo.XB_VMAS_RESULT_DATA();
+                                                    pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                    pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                    pdata.DLY = carLogin.carbj.DLY;
+                                                    pdata.YCY = carLogin.carbj.JSY;
+                                                    pdata.JCY = carLogin.carbj.CZY;
+                                                    pdata.WD = vmasdata.WD;
+                                                    pdata.SD = vmasdata.SD;
+                                                    pdata.DQY = vmasdata.DQY;
+                                                    data.VmasCO = vmasdata.COZL;
+                                                    data.VmasHC = vmasdata.HCZL;
+                                                    data.VmasNO = vmasdata.NOXZL;
+                                                    data.TestKilomter = vmasdata.XSLC;
+                                                    data.CurveCount = "195";
+                                                    data.BJO2 =hjo2;
+                                                    data.COCurve = string.Join(",", colist);
+                                                    data.HCCurve = string.Join(",", hclist);
+                                                    data.NOCurve = string.Join(",", nolist);
+                                                    data.CO2Curve = string.Join(",", colist);
+                                                    data.YSO2Curve = string.Join(",", o2list);
+                                                    data.XSO2Curve = string.Join(",", xso2list);
+                                                    data.XSBCurve = string.Join(",", xsblist);
+                                                    data.LLCurve = string.Join(",", sjlllist);
+                                                    data.BZLLCurve = string.Join(",", bzlllist);
+                                                    data.SpeedCurve = string.Join(",", cslist);
+                                                    data.ForceCurve = string.Join(",", nllist);
+                                                    data.PowerCurve = string.Join(",", gllist);
+                                                    data.PLHPCurve = string.Join(",", jsgllist);
+                                                    data.LTMCLPCurve = string.Join(",", ltmclist);
+                                                    data.DIWLPCurve = string.Join(",", mngllist);
+                                                    data.RpmCurve = string.Join(",", zslist);
+                                                    data.WDCurve = string.Join(",", wdlist);
+                                                    data.SDCurve = string.Join(",", sdlist);
+                                                    data.DQYCurve = string.Join(",", dqylist);
+                                                    data.DFCCurve = string.Join(",", dflist);
+                                                    data.KHCurve = string.Join(",", khlist);
+                                                    data.LLJWDCurve = string.Join(",", lljwdlist);
+                                                    data.LLJDQYCurve = string.Join(",", lljdqylist);
+                                                    data.HCZLCurve = string.Join(",", hczllist);
+                                                    data.COZLCurve = string.Join(",", cozllist);
+                                                    data.NOZLCurve = string.Join(",", nozllist);
+                                                    
+                                                    if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
+                                                    {
+                                                        ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                        MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                        return;
+                                                    }
+                                                }
+                                                catch (Exception er)
+                                                {
+                                                    MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                    return;
+                                                }
+                                                jxVmasResultData resultdata = new jxVmasResultData(
+                                                    vmasdata.CLID,
+                                                    vmasdata.WD,
+                                                    vmasdata.DQY,
+                                                    vmasdata.SD,
+                                                    vmasdata.BEFORE == "Y" ? vmasdata.HCXZ : "",
+                                                    vmasdata.COXZ,
+                                                    vmasdata.BEFORE == "Y" ? vmasdata.NOXXZ : "",
+                                                    vmasdata.BEFORE == "N" ? vmasdata.HCXZ : "",
+                                                    vmasdata.HCZL,
+                                                    vmasdata.COZL,
+                                                    vmasdata.NOXZL,
+                                                    Math.Round(double.Parse(vmasdata.HCZL) + double.Parse(vmasdata.NOXZL), 2).ToString("0.00"),
+                                                    vmasdata.BEFORE == "Y" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
+                                                    vmasdata.COPD == "不合格" ? "0" : "1",
+                                                    vmasdata.BEFORE == "Y" ? (vmasdata.NOXPD == "不合格" ? "0" : "1") : "",
+                                                    vmasdata.BEFORE == "N" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
+                                                    jcsj.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                    jssj.ToString("yyyy-MM-dd HH:mm:ss")
+                                                    );
+                                                if (!mainPanel.jxinterface.sendSimpleTransientResultData(carLogin.carbj.CLID, resultdata, out code, out msg))
+                                                {
+                                                    MessageBox.Show("sendSimpleTransientResultData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
+                                                    ini.INIIO.saveLogInf("江西联网信息：sendSimpleTransientResultData上传服务器失败");
+                                                    return;
+                                                }
+                                                if (!mainPanel.jxinterface.finish(carLogin.carbj.CLID, out code, out msg))
+                                                {
+                                                    MessageBox.Show("finish上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
+                                                    ini.INIIO.saveLogInf("江西联网信息：finish上传服务器失败");
+                                                    return;
+                                                }
+                                                Msg(label1, panel4, "车辆检测" + vmasdata.ZHPD + ",上传完毕");
                                             }
                                             if (mainPanel.useHyDatabase)
                                             {
@@ -6622,6 +6856,16 @@ namespace exhaustDetect
                                             }
                                             catch
                                             { }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
+                                            }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
@@ -7997,7 +8241,7 @@ namespace exhaustDetect
                                             if (jzjsResultPd(jzjs_data) == true)
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -8009,7 +8253,7 @@ namespace exhaustDetect
                                             else
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：不合格");
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -8882,6 +9126,312 @@ namespace exhaustDetect
                                                     Msg(label1, panel4, "车辆检测" + asmdata.ZHPD + ",上传完毕");
                                                     #endregion
                                                 }
+                                                else if(mainPanel.NetMode==mainPanel.XBNETMODE)
+                                                {
+                                                    #region 喜邦
+                                                    string code, msg;
+                                                    double velmaxhp100xslc = 0, velmaxhp90xslc = 0, velmaxhp80xslc = 0;
+                                                    int glsmds = 0, velmaxhp100ds = 0, velmaxhp90ds = 0, velmaxhp80ds = 0;
+                                                    List<string> klist_glsm = new List<string>();
+                                                    List<string> cslist_glsm = new List<string>();
+                                                    List<string> nllist_glsm = new List<string>();
+                                                    List<string> gllist_glsm = new List<string>();
+                                                    List<string> jsgllist_glsm = new List<string>();
+                                                    List<string> zslist_glsm = new List<string>();
+                                                    List<string> wdlist_glsm = new List<string>();
+                                                    List<string> sdlist_glsm = new List<string>();
+                                                    List<string> dqylist_glsm = new List<string>();
+                                                    List<string> nondlist_glsm = new List<string>();
+                                                    List<string> nozllist_glsm = new List<string>();
+                                                    List<string> dcflist_glsm = new List<string>();
+
+                                                    List<string> klist_100 = new List<string>();
+                                                    List<string> cslist_100 = new List<string>();
+                                                    List<string> nllist_100 = new List<string>();
+                                                    List<string> gllist_100 = new List<string>();
+                                                    List<string> jsgllist_100 = new List<string>();
+                                                    List<string> zslist_100 = new List<string>();
+                                                    List<string> wdlist_100 = new List<string>();
+                                                    List<string> sdlist_100 = new List<string>();
+                                                    List<string> dqylist_100 = new List<string>();
+                                                    List<string> nondlist_100 = new List<string>();
+                                                    List<string> nozllist_100 = new List<string>();
+                                                    List<string> dcflist_100 = new List<string>();
+
+                                                    List<string> klist_90 = new List<string>();
+                                                    List<string> cslist_90 = new List<string>();
+                                                    List<string> nllist_90 = new List<string>();
+                                                    List<string> gllist_90 = new List<string>();
+                                                    List<string> jsgllist_90 = new List<string>();
+                                                    List<string> zslist_90 = new List<string>();
+                                                    List<string> wdlist_90 = new List<string>();
+                                                    List<string> sdlist_90 = new List<string>();
+                                                    List<string> dqylist_90 = new List<string>();
+                                                    List<string> nondlist_90 = new List<string>();
+                                                    List<string> nozllist_90 = new List<string>();
+                                                    List<string> dcflist_90 = new List<string>();
+
+                                                    List<string> klist_80 = new List<string>();
+                                                    List<string> cslist_80 = new List<string>();
+                                                    List<string> nllist_80 = new List<string>();
+                                                    List<string> gllist_80 = new List<string>();
+                                                    List<string> jsgllist_80 = new List<string>();
+                                                    List<string> zslist_80 = new List<string>();
+                                                    List<string> wdlist_80 = new List<string>();
+                                                    List<string> sdlist_80 = new List<string>();
+                                                    List<string> dqylist_80 = new List<string>();
+                                                    List<string> nondlist_80 = new List<string>();
+                                                    List<string> nozllist_80 = new List<string>();
+                                                    List<string> dcflist_80 = new List<string>();
+                                                    try
+                                                    {
+                                                        int index = 0;
+                                                        
+
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            carinfo.XB_LUGDOWN_PROCESS_DATA data = new carinfo.XB_LUGDOWN_PROCESS_DATA();
+                                                            if (dr["时序类别"].ToString() == "0") continue;
+                                                            index++;
+                                                            data.JCFFBH = carLogin.carbj.JCFF;
+                                                            data.JCLSH = carLogin.carbj.JYLSH;
+                                                            data.SJXL = index.ToString();
+                                                            data.State = dr["时序类别"].ToString();
+                                                            data.Sorb = dr["光吸收系数K"].ToString();
+                                                            data.Speed = dr["车速"].ToString();
+                                                            data.Force = dr["扭力"].ToString();
+                                                            data.Power = dr["功率"].ToString();
+                                                            data.IHP = dr["指示功率"].ToString();
+                                                            data.PLHP = dr["寄生功率"].ToString();
+                                                            data.LTMCLP = "0";
+                                                            data.WD = dr["环境温度"].ToString();
+                                                            data.SD = dr["相对湿度"].ToString();
+                                                            data.DQY = dr["大气压力"].ToString();
+                                                            data.PCof = dr["DCF"].ToString();
+                                                            data.Rpm = dr["转速"].ToString();
+                                                            data.JYWD = dr["油温"].ToString();
+                                                            if (data.State=="1")
+                                                            {
+                                                                glsmds++;
+                                                                klist_glsm.Add(data.Sorb);
+                                                                cslist_glsm.Add(data.Speed);
+                                                                nllist_glsm.Add(data.Force);
+                                                                gllist_glsm.Add(data.Power);
+                                                                jsgllist_glsm.Add(data.PLHP);
+                                                                zslist_glsm.Add(data.Rpm);
+                                                                wdlist_glsm.Add(data.WD);
+                                                                sdlist_glsm.Add(data.SD);
+                                                                dqylist_glsm.Add(data.DQY);
+                                                                nondlist_glsm.Add("0");
+                                                                nozllist_glsm.Add("0");
+                                                                dcflist_glsm.Add(data.PCof);
+
+                                                            }
+                                                            else if (data.State == "2")
+                                                            {
+                                                                velmaxhp100ds++;
+                                                                double speed = double.Parse(data.Speed) / 3.6;
+                                                                double xslc = speed * 0.001;
+                                                                velmaxhp100xslc += xslc;
+                                                                klist_100.Add(data.Sorb);
+                                                                cslist_100.Add(data.Speed);
+                                                                nllist_100.Add(data.Force);
+                                                                gllist_100.Add(data.Power);
+                                                                jsgllist_100.Add(data.PLHP);
+                                                                zslist_100.Add(data.Rpm);
+                                                                wdlist_100.Add(data.WD);
+                                                                sdlist_100.Add(data.SD);
+                                                                dqylist_100.Add(data.DQY);
+                                                                nondlist_100.Add("0");
+                                                                nozllist_100.Add("0");
+                                                                dcflist_100.Add(data.PCof);
+                                                            }
+                                                            else if(data.State == "3")
+                                                            {
+                                                                velmaxhp90ds++;
+                                                                double speed = double.Parse(data.Speed) / 3.6;
+                                                                double xslc = speed * 0.001;
+                                                                velmaxhp90xslc += xslc;
+                                                                klist_90.Add(data.Sorb);
+                                                                cslist_90.Add(data.Speed);
+                                                                nllist_90.Add(data.Force);
+                                                                gllist_90.Add(data.Power);
+                                                                jsgllist_90.Add(data.PLHP);
+                                                                zslist_90.Add(data.Rpm);
+                                                                wdlist_90.Add(data.WD);
+                                                                sdlist_90.Add(data.SD);
+                                                                dqylist_90.Add(data.DQY);
+                                                                nondlist_90.Add("0");
+                                                                nozllist_90.Add("0");
+                                                                dcflist_90.Add(data.PCof);
+                                                            }
+                                                            else if (data.State == "4")
+                                                            {
+                                                                velmaxhp80ds++;
+                                                                double speed = double.Parse(data.Speed) / 3.6;
+                                                                double xslc = speed * 0.001;
+                                                                velmaxhp80xslc += xslc;
+                                                                klist_80.Add(data.Sorb);
+                                                                cslist_80.Add(data.Speed);
+                                                                nllist_80.Add(data.Force);
+                                                                gllist_80.Add(data.Power);
+                                                                jsgllist_80.Add(data.PLHP);
+                                                                zslist_80.Add(data.Rpm);
+                                                                wdlist_80.Add(data.WD);
+                                                                sdlist_80.Add(data.SD);
+                                                                dqylist_80.Add(data.DQY);
+                                                                nondlist_80.Add("0");
+                                                                nozllist_80.Add("0");
+                                                                dcflist_80.Add(data.PCof);
+                                                            }
+                                                            if (!mainPanel.xbsocket.Send_LUGDOWN_PROCESS_DATA(data, out code, out msg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送过程数据命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+
+                                                    try
+                                                    {
+                                                        carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                        carinfo.XB_LUGDOWN_RESULT_DATA data = new carinfo.XB_LUGDOWN_RESULT_DATA();
+                                                        pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                        pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                        pdata.DLY = carLogin.carbj.DLY;
+                                                        pdata.YCY = carLogin.carbj.JSY;
+                                                        pdata.JCY = carLogin.carbj.CZY;
+                                                        pdata.WD = sdsdata.WD;
+                                                        pdata.SD = sdsdata.SD;
+                                                        pdata.DQY = sdsdata.DQY;
+                                                        data.SFZSKZ = "0";
+                                                        data.LugTime = glsmds.ToString();
+                                                        data.VelLugTime = (velmaxhp100ds+velmaxhp90ds+velmaxhp80ds).ToString();
+                                                        data.CalcVelMaxHP = jzjsdata.VELMAXHP;
+                                                        data.RealVelMaxHP = jzjsdata.REALVELMAXHP;
+                                                        data.RealMaxPower = jzjsdata.ACTMAXHP;
+                                                        data.CalcMaxPower = jzjsdata.MAXLBGL;
+                                                        data.RealVelFDJRpm = jzjsdata.MAXLBZS;
+                                                        data.DSFDJRpm = (800 + DateTime.Now.Second).ToString();
+                                                        data.Sorb0 = jzjsdata.HK;
+                                                        data.Sorb1 = jzjsdata.NK;
+                                                        data.Sorb2 = jzjsdata.EK;
+                                                        data.NOND0 = "0";
+                                                        data.NOND1 = "0";
+                                                        data.NOND2 = "0";
+                                                        data.NOZL0 = "0";
+                                                        data.NOZL1 = "0";
+                                                        data.NOZL2 = "0";
+                                                        data.Kilometer0 = velmaxhp100xslc.ToString("0.00");
+                                                        data.Kilometer1 = velmaxhp90xslc.ToString("0.00");
+                                                        data.Kilometer2 = velmaxhp80xslc.ToString("0.00");
+                                                        data.CurveCount = glsmds.ToString();
+                                                        data.VelCurveCount0 = velmaxhp100ds.ToString();
+                                                        data.VelCurveCount1 = velmaxhp90ds.ToString();
+                                                        data.VelCurveCount2 = velmaxhp80ds.ToString();
+                                                        data.SorbCurve = string.Join(",", klist_glsm);
+                                                        data.SpeedCurve = string.Join(",", cslist_glsm);
+                                                        data.ForceCurve = string.Join(",", nllist_glsm);
+                                                        data.PowerCurve = string.Join(",", gllist_glsm);
+                                                        data.PLHPCurve = string.Join(",", jsgllist_glsm);
+                                                        data.RpmCurve = string.Join(",", zslist_glsm);
+                                                        data.WDCurve = string.Join(",", wdlist_glsm);
+                                                        data.SDCurve = string.Join(",", sdlist_glsm);
+                                                        data.DQYCurve = string.Join(",", dqylist_glsm);
+                                                        data.NONDCurve = string.Join(",", nondlist_glsm);
+                                                        data.NOZLCurve = string.Join(",", nozllist_glsm);
+                                                        data.PCofCurve = string.Join(",", dcflist_glsm);
+
+                                                        data.VelSorbCurve0 = string.Join(",", klist_100);
+                                                        data.VelSpeedCurve0 = string.Join(",", cslist_100);
+                                                        data.VelForceCurve0 = string.Join(",", nllist_100);
+                                                        data.VelPowerCurve0 = string.Join(",", gllist_100);
+                                                        data.VelPLHPCurve0 = string.Join(",", jsgllist_100);
+                                                        data.VelRpmCurve0 = string.Join(",", zslist_100);
+                                                        data.VelWDCurve0 = string.Join(",", wdlist_100);
+                                                        data.VelSDCurve0 = string.Join(",", sdlist_100);
+                                                        data.VelDQYCurve0 = string.Join(",", dqylist_100);
+                                                        data.VelNONDCurve0 = string.Join(",", nondlist_100);
+                                                        data.VelNOZLCurve0 = string.Join(",", nozllist_100);
+                                                        data.VelPCofCurve0 = string.Join(",", dcflist_100);
+
+                                                        data.VelSorbCurve1 = string.Join(",", klist_90);
+                                                        data.VelSpeedCurve1 = string.Join(",", cslist_90);
+                                                        data.VelForceCurve1 = string.Join(",", nllist_90);
+                                                        data.VelPowerCurve1 = string.Join(",", gllist_90);
+                                                        data.VelPLHPCurve1 = string.Join(",", jsgllist_90);
+                                                        data.VelRpmCurve1 = string.Join(",", zslist_90);
+                                                        data.VelWDCurve1 = string.Join(",", wdlist_90);
+                                                        data.VelSDCurve1 = string.Join(",", sdlist_90);
+                                                        data.VelDQYCurve1 = string.Join(",", dqylist_90);
+                                                        data.VelNONDCurve1 = string.Join(",", nondlist_90);
+                                                        data.VelNOZLCurve1 = string.Join(",", nozllist_90);
+                                                        data.VelPCofCurve1 = string.Join(",", dcflist_90);
+
+                                                        data.VelSorbCurve2 = string.Join(",", klist_80);
+                                                        data.VelSpeedCurve2 = string.Join(",", cslist_80);
+                                                        data.VelForceCurve2 = string.Join(",", nllist_80);
+                                                        data.VelPowerCurve2 = string.Join(",", gllist_80);
+                                                        data.VelPLHPCurve2 = string.Join(",", jsgllist_80);
+                                                        data.VelRpmCurve2 = string.Join(",", zslist_80);
+                                                        data.VelWDCurve2 = string.Join(",", wdlist_80);
+                                                        data.VelSDCurve2 = string.Join(",", sdlist_80);
+                                                        data.VelDQYCurve2 = string.Join(",", dqylist_80);
+                                                        data.VelNONDCurve2 = string.Join(",", nondlist_80);
+                                                        data.VelNOZLCurve2 = string.Join(",", nozllist_80);
+                                                        data.VelPCofCurve2 = string.Join(",", dcflist_80);
+                                                        
+                                                        if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            return;
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+                                                    jxLugdownResultData resultdata = new jxLugdownResultData(
+                                                        jzjsdata.CLID,
+                                                        jzjsdata.WD,
+                                                        jzjsdata.DQY,
+                                                        jzjsdata.SD,
+                                                        jzjsdata.YDXZ,
+                                                        jzjsdata.HK,
+                                                        jzjsdata.NK,
+                                                        jzjsdata.EK,
+                                                        jzjsdata.GLXZ,
+                                                        jzjsdata.MAXLBGL,
+                                                        jzjsdata.RATEREVUP,
+                                                        jzjsdata.RATEREVDOWN,
+                                                        jzjsdata.MAXLBZS,
+                                                        jzjsdata.ZHPD == "不合格" ? "0" : "1",
+                                                        Math.Round(((double.Parse(jzjsdata.MAXLBGL) * 0.5) / double.Parse(jzjsdata.GLXZ)), 3).ToString("0.000"),
+                                                        jcsj.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                        jssj.ToString("yyyy-MM-dd HH:mm:ss")
+                                                        );
+                                                    if (!mainPanel.jxinterface.sendLugDownResultData(carLogin.carbj.CLID, resultdata, out code, out msg))
+                                                    {
+                                                        MessageBox.Show("sendLugDownResultData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
+                                                        ini.INIIO.saveLogInf("江西联网信息：sendLugDownResultData上传服务器失败");
+                                                        return;
+                                                    }
+                                                    if (!mainPanel.jxinterface.finish(carLogin.carbj.CLID, out code, out msg))
+                                                    {
+                                                        MessageBox.Show("finish上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
+                                                        ini.INIIO.saveLogInf("江西联网信息：finish上传服务器失败");
+                                                        return;
+                                                    }
+                                                    Msg(label1, panel4, "车辆检测" + jzjsdata.ZHPD + ",上传完毕");
+                                                    #endregion 
+                                                }
                                             }
                                             if (mainPanel.useHyDatabase)
                                             {
@@ -9111,6 +9661,16 @@ namespace exhaustDetect
                                             }
                                             catch
                                             { }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
+                                            }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
@@ -10533,7 +11093,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -10545,7 +11105,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：不合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测不合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -11372,6 +11932,48 @@ namespace exhaustDetect
                                                     Msg(label1, panel4, "车辆检测" + asmdata.ZHPD + ",上传完毕");
                                                     #endregion
                                                 }
+                                                else if (mainPanel.NetMode == mainPanel.XBNETMODE)
+                                                {
+                                                    #region 喜邦
+                                                    string code, msg;
+                                                   
+                                                    try
+                                                    {
+                                                        carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                        carinfo.XB_BTG_RESULT_DATA data = new carinfo.XB_BTG_RESULT_DATA();
+                                                        pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                        pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                        pdata.DLY = carLogin.carbj.DLY;
+                                                        pdata.YCY = carLogin.carbj.JSY;
+                                                        pdata.JCY = carLogin.carbj.CZY;
+                                                        pdata.WD = zyjsdata.WD;
+                                                        pdata.SD = zyjsdata.SD;
+                                                        pdata.DQY = zyjsdata.DQY;
+                                                        data.JCCS = carLogin.carbj.JCCS;
+                                                        data.AshSorb1 = zyjs_data.prepareData1;
+                                                        data.AshSorb2 = zyjs_data.prepareData2;
+                                                        data.AshSorb3 = zyjs_data.prepareData3;
+                                                        data.AshSorb4 = zyjsdata.FIRSTDATA;
+                                                        data.AshSorb5 = zyjsdata.SECONDDATA;
+                                                        data.AshSorb6 = zyjsdata.THIRDDATA;
+                                                        data.AshSorbAge = zyjsdata.AVERAGEDATA;
+                                                        data.AshSorbRpm = zyjsdata.DSZS;
+                                                        
+                                                        if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            return;
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+                                                    Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
+                                                    #endregion
+                                                }
                                                 ini.INIIO.saveLogInf("联网信息：结果数据上传服务器成功");
                                                 
                                             }
@@ -11413,6 +12015,16 @@ namespace exhaustDetect
                                 {
                                     Msg(label1, panel4, "设备未完成检测退出,无检测结果数据");
                                     Msg(labelStatus, panelStatus, "故障");
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                    {
+                                        string code, msg;
+                                        if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                        {
+                                            //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                            ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                            //return;
+                                        }
+                                    }
                                     mainPanel.worklogdata.ProjectID = mainPanel.stationid + mainPanel.lineid + DateTime.Now.ToString("yyMMddHHmmss");//线号“00”代表为登录机进行的操作
                                     mainPanel.worklogdata.ProjectName = "操作日志";
                                     mainPanel.worklogdata.Stationid = mainPanel.stationid;
@@ -11431,7 +12043,7 @@ namespace exhaustDetect
                                     Msg(labelStatus, panelStatus, "检测完成");
                                     if (lzResultPd(zyjs_data) == true)
                                     {
-                                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
+                                        if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE|| mainPanel.NetMode == mainPanel.XBNETMODE))
                                         {
                                             Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                         }
@@ -11441,7 +12053,7 @@ namespace exhaustDetect
                                     }
                                     else
                                     {
-                                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
+                                        if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE|| mainPanel.NetMode == mainPanel.XBNETMODE))
                                         {
                                             Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                         }
@@ -11495,6 +12107,45 @@ namespace exhaustDetect
                                                 return;
                                             }
                                             Msg(label1, panel4, "车辆检测" + zyjsdata.ZHPD + ",上传完毕");
+                                        }
+                                        else if (mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            #region 喜邦
+                                            string code, msg;
+
+                                            try
+                                            {
+                                                carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                carinfo.XB_LZ_RESULT_DATA data = new carinfo.XB_LZ_RESULT_DATA();
+                                                pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                pdata.DLY = carLogin.carbj.DLY;
+                                                pdata.YCY = carLogin.carbj.JSY;
+                                                pdata.JCY = carLogin.carbj.CZY;
+                                                pdata.WD = zyjsdata.WD;
+                                                pdata.SD = zyjsdata.SD;
+                                                pdata.DQY = zyjsdata.DQY;
+                                                data.AshTray1 = zyjsdata.FIRSTDATA;
+                                                data.AshTray2 = zyjsdata.SECONDDATA;
+                                                data.AshTray3 = zyjsdata.THIRDDATA;
+                                                data.AshTray4 = "";
+                                                data.AshTrayAge = zyjsdata.AVERAGEDATA;
+                                                data.AshSorbRpm = zyjsdata.DSZS;
+
+                                                if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
+                                                {
+                                                    ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                    MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                    return;
+                                                }
+                                            }
+                                            catch (Exception er)
+                                            {
+                                                MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                return;
+                                            }
+                                            Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
+                                            #endregion
                                         }
                                     }
                                     if (mainPanel.useHyDatabase)
@@ -11700,6 +12351,16 @@ namespace exhaustDetect
                                             }
                                             catch
                                             { }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
+                                            }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
@@ -13385,7 +14046,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE||mainPanel.NetMode==mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE||mainPanel.NetMode==mainPanel.HNNETMODE||mainPanel.NetMode==mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -13397,7 +14058,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：不合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测不合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -14313,6 +14974,175 @@ namespace exhaustDetect
                                                     Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
                                                     #endregion
                                                 }
+                                                else if (mainPanel.NetMode == mainPanel.XBNETMODE)
+                                                {
+                                                    #region 喜邦
+                                                    string code, msg;
+                                                    int l_p_count = 0, l_t_count = 0, h_p_count = 0, h_t_count = 0;
+                                                    List<string> l_p_co = new List<string>();
+                                                    List<string> l_t_co = new List<string>();
+                                                    List<string> h_p_co = new List<string>();
+                                                    List<string> h_t_co = new List<string>();
+                                                    List<string> l_p_co2 = new List<string>();
+                                                    List<string> l_t_co2 = new List<string>();
+                                                    List<string> h_p_co2 = new List<string>();
+                                                    List<string> h_t_co2 = new List<string>();
+                                                    List<string> l_p_hc = new List<string>();
+                                                    List<string> l_t_hc = new List<string>();
+                                                    List<string> h_p_hc = new List<string>();
+                                                    List<string> h_t_hc = new List<string>();
+                                                    List<string> l_p_o2 = new List<string>();
+                                                    List<string> l_t_o2 = new List<string>();
+                                                    List<string> h_p_o2 = new List<string>();
+                                                    List<string> h_t_o2 = new List<string>();
+                                                    List<string> h_p_lmd = new List<string>();
+                                                    List<string> h_t_lmd = new List<string>();
+                                                    List<string> l_p_zs = new List<string>();
+                                                    List<string> l_t_zs = new List<string>();
+                                                    List<string> h_p_zs = new List<string>();
+                                                    List<string> h_t_zs = new List<string>();
+                                                    List<string> l_p_yw = new List<string>();
+                                                    List<string> l_t_yw = new List<string>();
+                                                    List<string> h_p_yw = new List<string>();
+                                                    List<string> h_t_yw = new List<string>();
+                                                    try
+                                                    {
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            carinfo.XB_SDS_PROCESS_DATA data = new carinfo.XB_SDS_PROCESS_DATA();
+                                                            data.JCFFBH = carLogin.carbj.JCFF;
+                                                            data.JCLSH = carLogin.carbj.JYLSH;
+                                                            data.SJXL = i.ToString();
+                                                            data.State = dr["时序类别"].ToString();
+                                                            data.HC = dr["HC"].ToString();
+                                                            data.CO = dr["CO"].ToString();
+                                                            data.O2 = dr["O2"].ToString();
+                                                            data.CO2 = dr["CO2"].ToString();
+                                                            data.Lmd = dr["过量空气系数"].ToString();
+                                                            data.Rpm = dr["转速"].ToString();
+                                                            data.JYWD = dr["油温"].ToString();
+                                                            if (data.State == "1")
+                                                            {
+                                                                l_p_co.Add(data.CO);
+                                                                l_p_co2.Add(data.CO2);
+                                                                l_p_hc.Add(data.HC);
+                                                                l_p_o2.Add(data.O2);
+                                                                //h_p_lmd.Add(data.Lmd);
+                                                                l_p_zs.Add(data.Rpm);
+                                                                l_p_yw.Add(data.JYWD);
+                                                                l_p_count = 0;
+                                                            }
+                                                            else if (data.State == "2")
+                                                            {
+                                                                l_t_co.Add(data.CO);
+                                                                l_t_co2.Add(data.CO2);
+                                                                l_t_hc.Add(data.HC);
+                                                                l_t_o2.Add(data.O2);
+                                                                //h_p_lmd.Add(data.Lmd);
+                                                                l_t_zs.Add(data.Rpm);
+                                                                l_t_yw.Add(data.JYWD);
+                                                                l_t_count = 0;
+                                                            }
+                                                            else if (data.State == "3")
+                                                            {
+                                                                h_p_co.Add(data.CO);
+                                                                h_p_co2.Add(data.CO2);
+                                                                h_p_hc.Add(data.HC);
+                                                                h_p_o2.Add(data.O2);
+                                                                h_p_lmd.Add(data.Lmd);
+                                                                h_p_zs.Add(data.Rpm);
+                                                                h_p_yw.Add(data.JYWD);
+                                                                h_p_count = 0;
+                                                            }
+                                                            else if (data.State == "4")
+                                                            {
+                                                                h_t_co.Add(data.CO);
+                                                                h_t_co2.Add(data.CO2);
+                                                                h_t_hc.Add(data.HC);
+                                                                h_t_o2.Add(data.O2);
+                                                                h_t_lmd.Add(data.Lmd);
+                                                                h_t_zs.Add(data.Rpm);
+                                                                h_t_yw.Add(data.JYWD);
+                                                                h_t_count = 0;
+                                                            }                                                       
+                                                            if (!mainPanel.xbsocket.Send_SDS_PROCESS_DATA(data, out code, out msg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送过程数据命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+
+                                                    try
+                                                    {
+                                                        carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                        carinfo.XB_SDS_RESULT_DATA data = new carinfo.XB_SDS_RESULT_DATA();
+                                                        pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                        pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                        pdata.DLY = carLogin.carbj.DLY;
+                                                        pdata.YCY = carLogin.carbj.JSY;
+                                                        pdata.JCY = carLogin.carbj.CZY;
+                                                        pdata.WD = sdsdata.WD;
+                                                        pdata.SD = sdsdata.SD;
+                                                        pdata.DQY = sdsdata.DQY;
+                                                        data.SFZSKZ = "1";
+                                                        data.DSRpm = sdsdata.ZSLOW;
+                                                        data.GDSRpm = sdsdata.ZSHIGH;
+                                                        data.DSHC = sdsdata.HCLOWCLZ;
+                                                        data.GDSHC = sdsdata.HCHIGHCLZ;
+                                                        data.DSCO = sdsdata.COLOWCLZ;
+                                                        data.GDSCO = sdsdata.COHIGHCLZ;
+                                                        data.GDSLmd = sdsdata.LAMDAHIGHCLZ;
+                                                        data.DSCurveCount0 = l_p_count.ToString();
+                                                        data.DSCurveCount1 = l_t_count.ToString();
+                                                        data.GDSCurveCount0 = h_p_count.ToString();
+                                                        data.GDSCurveCount1 = h_t_count.ToString();
+                                                        data.DSHCCurve0 =string.Join(",", l_p_hc);
+                                                        data.DSHCCurve1 = string.Join(",", l_t_hc);
+                                                        data.GDSHCCurve0 = string.Join(",", h_p_hc);
+                                                        data.GDSHCCurve1 = string.Join(",", h_t_hc);
+                                                        data.DSCOCurve0 = string.Join(",", l_p_co);
+                                                        data.DSCOCurve1 = string.Join(",", l_t_co);
+                                                        data.GDSCOCurve0 = string.Join(",", h_p_co);
+                                                        data.GDSCOCurve1 = string.Join(",", h_t_co);
+                                                        data.DSCO2Curve0 = string.Join(",", l_p_co2);
+                                                        data.DSCO2Curve1 = string.Join(",", l_t_co2);
+                                                        data.GDSCO2Curve0 = string.Join(",", h_p_co2);
+                                                        data.GDSCO2Curve1 = string.Join(",", h_t_co2);
+                                                        data.DSO2Curve0 = string.Join(",", l_p_o2);
+                                                        data.DSO2Curve1 = string.Join(",", l_t_o2);
+                                                        data.GDSO2Curve0 = string.Join(",", h_p_o2);
+                                                        data.GDSO2Curve1 = string.Join(",", h_t_lmd);
+                                                        data.GDSLmdCurve1 = string.Join(",", h_p_lmd);
+                                                        data.GDSO2Curve1 = string.Join(",", h_t_o2);
+                                                        data.DSRpmCurve0 = string.Join(",", l_p_zs);
+                                                        data.DSRpmCurve1 = string.Join(",", l_t_zs);
+                                                        data.GDSRpmCurve0 = string.Join(",", h_p_zs);
+                                                        data.GDSRpmCurve1 = string.Join(",", h_t_zs);
+                                                        data.DSJYWDCurve0 = string.Join(",", l_p_yw);
+                                                        data.DSJYWDCurve1 = string.Join(",", l_t_yw);
+                                                        data.GDSJYWDCurve0 = string.Join(",", h_p_yw);
+                                                        data.GDSJYWDCurve1 = string.Join(",", h_t_yw);
+                                                        if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata,data, out code, out msg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            return;
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+                                                    Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
+                                                    #endregion
+                                                }
                                             }
                                             if (mainPanel.useHyDatabase)
                                             {
@@ -14507,6 +15337,16 @@ namespace exhaustDetect
                                                 MessageBox.Show("发送检测结束命令失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                                 ini.INIIO.saveLogInf("发送检测结束命令失败,code" + code + ",msg:" + msg);
                                                 return;
+                                            }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                        {
+                                            string code, msg;
+                                            if (!mainPanel.xbsocket.Send_TEST_STOP(carLogin.carbj.JYLSH, carLogin.carbj.JCCS, "用户主动终止", out code, out msg))
+                                            {
+                                                //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                                ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
+                                                //return;
                                             }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
@@ -15490,7 +16330,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -15502,7 +16342,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：不合格");
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测不合格" : "车辆驶离";
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE || mainPanel.NetMode == mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -16418,6 +17258,176 @@ namespace exhaustDetect
                                                     }
 
                                                     sendPicture(sdsdata.ZHPD);
+                                                    Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
+                                                    #endregion
+                                                }
+                                                else if (mainPanel.NetMode == mainPanel.XBNETMODE)
+                                                {
+                                                    #region 喜邦
+                                                    string code, msg;
+                                                    int l_p_count = 0, l_t_count = 0, h_p_count = 0, h_t_count = 0;
+                                                    List<string> l_p_co = new List<string>();
+                                                    List<string> l_t_co = new List<string>();
+                                                    List<string> h_p_co = new List<string>();
+                                                    List<string> h_t_co = new List<string>();
+                                                    List<string> l_p_co2 = new List<string>();
+                                                    List<string> l_t_co2 = new List<string>();
+                                                    List<string> h_p_co2 = new List<string>();
+                                                    List<string> h_t_co2 = new List<string>();
+                                                    List<string> l_p_hc = new List<string>();
+                                                    List<string> l_t_hc = new List<string>();
+                                                    List<string> h_p_hc = new List<string>();
+                                                    List<string> h_t_hc = new List<string>();
+                                                    List<string> l_p_o2 = new List<string>();
+                                                    List<string> l_t_o2 = new List<string>();
+                                                    List<string> h_p_o2 = new List<string>();
+                                                    List<string> h_t_o2 = new List<string>();
+                                                    List<string> h_p_lmd = new List<string>();
+                                                    List<string> h_t_lmd = new List<string>();
+                                                    List<string> l_p_zs = new List<string>();
+                                                    List<string> l_t_zs = new List<string>();
+                                                    List<string> h_p_zs = new List<string>();
+                                                    List<string> h_t_zs = new List<string>();
+                                                    List<string> l_p_yw = new List<string>();
+                                                    List<string> l_t_yw = new List<string>();
+                                                    List<string> h_p_yw = new List<string>();
+                                                    List<string> h_t_yw = new List<string>();
+                                                    try
+                                                    {
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            carinfo.XB_SDS_PROCESS_DATA data = new carinfo.XB_SDS_PROCESS_DATA();
+                                                            data.JCFFBH = carLogin.carbj.JCFF;
+                                                            data.JCLSH = carLogin.carbj.JYLSH;
+                                                            data.SJXL = i.ToString();
+                                                            data.State = dr["时序类别"].ToString();
+                                                            data.HC = dr["HC"].ToString();
+                                                            data.CO = dr["CO"].ToString();
+                                                            data.O2 = dr["O2"].ToString();
+                                                            data.CO2 = dr["CO2"].ToString();
+                                                            data.Lmd = dr["过量空气系数"].ToString();
+                                                            data.Rpm = dr["转速"].ToString();
+                                                            data.JYWD = dr["油温"].ToString();
+                                                            if (data.State == "1")
+                                                            {
+                                                                l_p_co.Add(data.CO);
+                                                                l_p_co2.Add(data.CO2);
+                                                                l_p_hc.Add(data.HC);
+                                                                l_p_o2.Add(data.O2);
+                                                                //h_p_lmd.Add(data.Lmd);
+                                                                l_p_zs.Add(data.Rpm);
+                                                                l_p_yw.Add(data.JYWD);
+                                                                l_p_count = 0;
+                                                            }
+                                                            else if (data.State == "2")
+                                                            {
+                                                                l_t_co.Add(data.CO);
+                                                                l_t_co2.Add(data.CO2);
+                                                                l_t_hc.Add(data.HC);
+                                                                l_t_o2.Add(data.O2);
+                                                                //h_p_lmd.Add(data.Lmd);
+                                                                l_t_zs.Add(data.Rpm);
+                                                                l_t_yw.Add(data.JYWD);
+                                                                l_t_count = 0;
+                                                            }
+                                                            else if (data.State == "3")
+                                                            {
+                                                                h_p_co.Add(data.CO);
+                                                                h_p_co2.Add(data.CO2);
+                                                                h_p_hc.Add(data.HC);
+                                                                h_p_o2.Add(data.O2);
+                                                                h_p_lmd.Add(data.Lmd);
+                                                                h_p_zs.Add(data.Rpm);
+                                                                h_p_yw.Add(data.JYWD);
+                                                                h_p_count = 0;
+                                                            }
+                                                            else if (data.State == "4")
+                                                            {
+                                                                h_t_co.Add(data.CO);
+                                                                h_t_co2.Add(data.CO2);
+                                                                h_t_hc.Add(data.HC);
+                                                                h_t_o2.Add(data.O2);
+                                                                h_t_lmd.Add(data.Lmd);
+                                                                h_t_zs.Add(data.Rpm);
+                                                                h_t_yw.Add(data.JYWD);
+                                                                h_t_count = 0;
+                                                            }
+                                                            if (!mainPanel.xbsocket.Send_SDS_PROCESS_DATA(data, out code, out msg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送过程数据命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
+
+                                                    try
+                                                    {
+                                                        carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();
+                                                        carinfo.XB_SDS_RESULT_DATA data = new carinfo.XB_SDS_RESULT_DATA();
+                                                        pdata.JCFFBH = carLogin.carbj.JCFF;
+                                                        pdata.JCLSH = carLogin.carbj.JYLSH;
+                                                        pdata.DLY = carLogin.carbj.DLY;
+                                                        pdata.YCY = carLogin.carbj.JSY;
+                                                        pdata.JCY = carLogin.carbj.CZY;
+                                                        pdata.WD = sdsdata.WD;
+                                                        pdata.SD = sdsdata.SD;
+                                                        pdata.DQY = sdsdata.DQY;
+                                                        data.SFZSKZ = "1";
+                                                        data.DSRpm = sdsdata.ZSLOW;
+                                                        data.GDSRpm = sdsdata.ZSHIGH;
+                                                        data.DSHC = sdsdata.HCLOWCLZ;
+                                                        data.GDSHC = sdsdata.HCHIGHCLZ;
+                                                        data.DSCO = sdsdata.COLOWCLZ;
+                                                        data.GDSCO = sdsdata.COHIGHCLZ;
+                                                        data.GDSLmd = sdsdata.LAMDAHIGHCLZ;
+                                                        data.DSCurveCount0 = l_p_count.ToString();
+                                                        data.DSCurveCount1 = l_t_count.ToString();
+                                                        data.GDSCurveCount0 = h_p_count.ToString();
+                                                        data.GDSCurveCount1 = h_t_count.ToString();
+                                                        data.DSHCCurve0 = string.Join(",", l_p_hc);
+                                                        data.DSHCCurve1 = string.Join(",", l_t_hc);
+                                                        data.GDSHCCurve0 = string.Join(",", h_p_hc);
+                                                        data.GDSHCCurve1 = string.Join(",", h_t_hc);
+                                                        data.DSCOCurve0 = string.Join(",", l_p_co);
+                                                        data.DSCOCurve1 = string.Join(",", l_t_co);
+                                                        data.GDSCOCurve0 = string.Join(",", h_p_co);
+                                                        data.GDSCOCurve1 = string.Join(",", h_t_co);
+                                                        data.DSCO2Curve0 = string.Join(",", l_p_co2);
+                                                        data.DSCO2Curve1 = string.Join(",", l_t_co2);
+                                                        data.GDSCO2Curve0 = string.Join(",", h_p_co2);
+                                                        data.GDSCO2Curve1 = string.Join(",", h_t_co2);
+                                                        data.DSO2Curve0 = string.Join(",", l_p_o2);
+                                                        data.DSO2Curve1 = string.Join(",", l_t_o2);
+                                                        data.GDSO2Curve0 = string.Join(",", h_p_o2);
+                                                        data.GDSO2Curve1 = string.Join(",", h_t_lmd);
+                                                        data.GDSLmdCurve1 = string.Join(",", h_p_lmd);
+                                                        data.GDSO2Curve1 = string.Join(",", h_t_o2);
+                                                        data.DSRpmCurve0 = string.Join(",", l_p_zs);
+                                                        data.DSRpmCurve1 = string.Join(",", l_t_zs);
+                                                        data.GDSRpmCurve0 = string.Join(",", h_p_zs);
+                                                        data.GDSRpmCurve1 = string.Join(",", h_t_zs);
+                                                        data.DSJYWDCurve0 = string.Join(",", l_p_yw);
+                                                        data.DSJYWDCurve1 = string.Join(",", l_t_yw);
+                                                        data.GDSJYWDCurve0 = string.Join(",", h_p_yw);
+                                                        data.GDSJYWDCurve1 = string.Join(",", h_t_yw);
+                                                        
+                                                        if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            MessageBox.Show("发送结果数据命令失败,code" + code + ",msg:" + msg);
+                                                            return;
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
                                                     Msg(label1, panel4, "车辆检测" + sdsdata.ZHPD + ",上传完毕");
                                                     #endregion
                                                 }
@@ -20340,6 +21350,43 @@ namespace exhaustDetect
                     Msg(labelXZ, panelXZ, "中科宇图联网检测");
                     return;
                 }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取简易瞬态法限值");
+                    if (carLogin.xbvmasxz != null)
+                    {
+                        if (carLogin.xbvmasxz.VmasHCNOStd != 0)
+                        {
+                            beforedate = false;
+                            Limit_HCNOX_AFTER = carLogin.xbvmasxz.VmasHCNOStd;
+                            Limit_CO_AFTER = carLogin.xbvmasxz.VmasCOStd;
+                        }
+                        else
+                        {
+                            beforedate = true;
+                            Limit_HC_BEBORE = carLogin.xbvmasxz.VmasHCStd;
+                            Limit_CO_BEBORE = carLogin.xbvmasxz.VmasCOStd;
+                            Limit_NO_BEBORE = carLogin.xbvmasxz.VmasNOStd;
+                        }
+                        if (beforedate)
+                        {
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                            ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                        }
+                        else
+                        {
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                            ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                        }
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
+                    return;
+                }
 
                 string plateFrefix = carLogin.modelbj.CLHP.Substring(0, 2);//取号牌前缀
                 vmas_xzdb = gbdal.Get_VMAS_XZBZ(plateFrefix);
@@ -20577,6 +21624,26 @@ namespace exhaustDetect
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                 {
                     Msg(labelXZ, panelXZ, "中科宇图联网检测");
+                    return;
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取加载减速法限值");
+                    if (carLogin.xblugdownxz != null)
+                    {
+                        GLXZ = carLogin.xblugdownxz.LDMinPower;
+                        GXXZ = carLogin.xblugdownxz.LDSorbStd;
+                        ZSXZ_LOW = carLogin.xblugdownxz.LDLRpmStd;
+                        ZSXZ_HIGH = carLogin.xblugdownxz.LDHRpmStd;
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
                     return;
                 }
                 GLXZ = double.Parse(carLogin.modelbj.EDGL) / 2.0f;      //初始化功率限值
@@ -20853,6 +21920,23 @@ namespace exhaustDetect
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                 {
                     Msg(labelXZ, panelXZ, "中科宇图联网检测");
+                    return;
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取自由加速不透光法限值");
+                    if (carLogin.xbbtgxz != null)
+                    {
+                        btgxz = carLogin.xbbtgxz.SorbStd;
+                        btgzsxz =0;      //初始化功率限值
+                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
                     return;
                 }
                 zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
@@ -21149,6 +22233,24 @@ namespace exhaustDetect
         {
             try
             {
+                
+                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取滤纸限值");
+                    if (carLogin.xblzxz != null)
+                    {
+                        lzxz = carLogin.xblzxz.TrayStd;
+                        btgzsxz = 0;      //初始化功率限值
+                        Msg(labelXZ, panelXZ, "车辆限值：滤纸排放:" + btgxz.ToString());
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
+                    return;
+                }
                 //zyjs_xzgb = gbdal.Get_ZYJS_XZGB();
                 if (carLogin.modelbj.CLZL=="4")//如果为低速货车或者拖拉机也为滤纸式烟度法
                 {
@@ -21238,6 +22340,26 @@ namespace exhaustDetect
                     L_CO_XZ = double.Parse(carLogin.limitdatainf.LowIdleCO);
                     λ_XZ = "1.00±0.03";
                     Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                    return;
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取双怠速法限值");
+                    if (carLogin.xbsdsxz != null)
+                    {
+                        H_HC_XZ = carLogin.xbsdsxz.GDSHCStd;
+                        H_CO_XZ =carLogin.xbsdsxz.GDSCOStd;
+                        L_HC_XZ = carLogin.xbsdsxz.DSHCStd;
+                        L_CO_XZ = carLogin.xbsdsxz.DSCOStd;
+                        λ_XZ = "1.00±0.03";
+                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JIANGSHUNETMODE && mainPanel.jschecklimitmodel != null)
@@ -21515,6 +22637,37 @@ namespace exhaustDetect
         {
             try
             {
+                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                {
+                    ini.INIIO.saveLogInf("(喜邦联网)取摩托车双怠速限值");
+                    if (carLogin.xbsdsmxz != null)
+                    {
+                        sdsm_xz_lx = 1;
+                        H_HC_SDSM_XZ = 0;
+                        H_CO_SDSM_XZ = 0;
+                        L_HC_SDSM_XZ = carLogin.xbsdsmxz.DSHCStd;
+                        L_CO_SDSM_XZ = carLogin.xbsdsmxz.DSCOStd;
+                        btgzsxz = 0;      //初始化功率限值
+                        λ_XZ = "1.00±0.03";
+                        if (sdsm_xz_lx == 5)
+                        {
+                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_SDSM_XZ.ToString() + "|高怠速CO:" + H_CO_SDSM_XZ.ToString() + "|怠速HC:" + L_HC_SDSM_XZ.ToString() + "|怠速CO:" + L_CO_SDSM_XZ.ToString());
+                            ini.INIIO.saveLogInf("限值类型:" + sdsm_xz_lx.ToString() + "|车辆限值：HC_HIGH:" + H_HC_SDSM_XZ.ToString() + "|CO_HIGH:" + H_CO_SDSM_XZ.ToString() + "|HC_LOW:" + L_HC_SDSM_XZ.ToString() + "|CO_LOW:" + L_CO_SDSM_XZ.ToString());
+                        }
+                        else
+                        {
+                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:-|高怠速CO:-|怠速HC:" + L_HC_SDSM_XZ.ToString() + "|怠速CO:" + L_CO_SDSM_XZ.ToString());
+                            ini.INIIO.saveLogInf("限值类型:" + sdsm_xz_lx.ToString() + "|车辆限值：HC_HIGH:-|CO_HIGH:-|HC_LOW:" + L_HC_SDSM_XZ.ToString() + "|CO_LOW:" + L_CO_SDSM_XZ.ToString());
+                        }
+                    }
+                    else
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取联网限值失败");
+                        Msg(labelXZ, panelXZ, "车辆限值：获取联网限值失败");
+                        buttonOK.Enabled = false;
+                    }
+                    return;
+                }
                 if (carLogin.modelbj.CCS == "")
                 {
                     carLogin.modelbj.CCS = "4";

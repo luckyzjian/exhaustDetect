@@ -2219,6 +2219,94 @@ namespace exhaustDetect
                                             ini.INIIO.saveLogInf("发送[自检/校准]命令发生异常:" + er.Message);
                                         }
                                     }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                    {
+                                        #region xibang
+                                        string code, msg;
+                                        try
+                                        {
+                                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                                            pdata.DevID = mainPanel.equipmodel.FXYBH;
+                                            pdata.Items = "06";
+                                            pdata.BeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                            pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                            pdata.WD = "0";
+                                            pdata.SD = "0";
+                                            pdata.DQY = "0";
+                                            pdata.Operator = mainPanel.nowUser.userName;
+                                            carinfo.XB_EXHAUSTGAS_BD_DATA data = new carinfo.XB_EXHAUSTGAS_BD_DATA();
+                                            data.CabHCTag = ((int)(double.Parse(analysismeterdata.c3h8))).ToString("0");
+                                            data.CabCOTag = analysismeterdata.Cobz.ToString("0.000");
+                                            data.CabCO2Tag = analysismeterdata.Co2bz.ToString("0.00");
+                                            data.CabNOTag = analysismeterdata.Nobz.ToString("0");
+                                            data.CheckHCTag = ((int)(double.Parse(analysismeterdata.c3h8))).ToString("0");
+                                            data.CheckCOTag = analysismeterdata.Cobz.ToString("0.000");
+                                            data.CheckCO2Tag = analysismeterdata.Co2bz.ToString("0.00");
+                                            data.CheckNOTag = analysismeterdata.Nobz.ToString("0");
+                                            data.HCCabResult = analysismeterdata.Hcclz.ToString("0");
+                                            data.COCabResult = analysismeterdata.Coclz.ToString("0.000");
+                                            data.CO2CabResult = analysismeterdata.Co2clz.ToString("0.00");
+                                            data.NOCabResult = analysismeterdata.Noclz.ToString("0");
+                                            data.PEFCabResult = analysismeterdata.Pef;
+                                            data.HCCheckResult = analysismeterdata.Hcclz.ToString("0");
+                                            data.COCheckResult = analysismeterdata.Coclz.ToString("0.000");
+                                            data.CO2CheckResult = analysismeterdata.Co2clz.ToString("0.00");
+                                            data.NOCheckResult = analysismeterdata.Noclz.ToString("0");
+                                            data.PEFCheckResult = analysismeterdata.Pef;
+                                            if (analysismeterdata.Gdjz == "0")//高
+                                            {
+                                                data.HCCabAllowAbsError = (analysismeterdata.Hcbz*0.05).ToString("0");
+                                                data.COCabAllowAbsError = (analysismeterdata.Cobz * 0.05).ToString("0");
+                                                data.CO2CabAllowAbsError = (analysismeterdata.Co2bz * 0.05).ToString("0");
+                                                data.NOCabAllowAbsError = (analysismeterdata.Nobz * 0.08).ToString("0");
+                                                data.HCCheckAllowAbsError = (analysismeterdata.Hcbz * 0.05).ToString("0");
+                                                data.COCheckAllowAbsError = (analysismeterdata.Cobz * 0.05).ToString("0");
+                                                data.CO2CheckAllowAbsError = (analysismeterdata.Co2bz * 0.05).ToString("0");
+                                                data.NOCheckAllowAbsError = (analysismeterdata.Nobz * 0.08).ToString("0");
+                                            }
+                                            else
+                                            {
+                                                data.HCCabAllowAbsError = "4";
+                                                data.COCabAllowAbsError = "0.02";
+                                                data.CO2CabAllowAbsError = "0.3";
+                                                data.NOCabAllowAbsError = "25";
+                                                data.HCCheckAllowAbsError = "4";
+                                                data.COCheckAllowAbsError = "0.02";
+                                                data.CO2CheckAllowAbsError = "0.3";
+                                                data.NOCheckAllowAbsError = "25";
+                                            }
+                                            data.HCCabAbsError = analysismeterdata.hcabswc;
+                                            data.COCabAbsError = analysismeterdata.coabswc;
+                                            data.CO2CabAbsError = analysismeterdata.co2abswc;
+                                            data.NOCabAbsError = analysismeterdata.noabswc;
+                                            data.HCCheckAbsError = analysismeterdata.hcabswc;
+                                            data.COCheckAbsError = analysismeterdata.coabswc;
+                                            data.CO2CheckAbsError = analysismeterdata.co2abswc;
+                                            data.NOCheckAbsError = analysismeterdata.noabswc;
+                                            data.HCCabEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "不合格" : "合格";
+                                            data.COCabEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "不合格" : "合格";
+                                            data.CO2CabEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "不合格" : "合格";
+                                            data.NOCabEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "不合格" : "合格";
+                                            data.HCCheckEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "不合格" : "合格";
+                                            data.COCheckEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "不合格" : "合格";
+                                            data.CO2CheckEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "不合格" : "合格";
+                                            data.NOCheckEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "不合格" : "合格";
+                                            if (data.HCCabEvl == "合格" && data.COCabEvl == "合格" && data.CO2CabEvl == "合格" && data.NOCabEvl == "合格")
+                                                data.GasCabEvl = "合格";
+                                            else
+                                                data.GasCabEvl = "不合格";
+                                            data.GasCheckEvl = data.GasCabEvl;
+                                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送废气仪量程检查命令失败,code" + code + ",msg:" + msg);
+                                            }
+                                        }
+                                        catch (Exception er)
+                                        {
+                                            ini.INIIO.saveLogInf("发送废气仪量程检查命令异常:" + er.Message);
+                                        }
+                                        #endregion
+                                    }
                                 }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
@@ -3165,6 +3253,40 @@ namespace exhaustDetect
                                                             MessageBox.Show("发送扭力标定信息失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                                             ini.INIIO.saveLogInf("发送扭力标定信息失败,code" + code + ",msg:" + msg);
                                                             return;
+                                                        }
+                                                        #endregion
+                                                    }
+                                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
+                                                    {
+                                                        #region xibang
+                                                        string code, msg;
+                                                        try
+                                                        {
+                                                            carinfo.XB_BD_PUBLIC_DATA pdata = new carinfo.XB_BD_PUBLIC_DATA();
+                                                            pdata.DevID = mainPanel.equipmodel.CGJBH;
+                                                            pdata.Items = "01";
+                                                            pdata.BeginTime = bdrq.ToString("yyyy-MM-dd HH:mm:ss");
+                                                            pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                            pdata.WD = "0";
+                                                            pdata.SD = "0";
+                                                            pdata.DQY = "0";
+                                                            pdata.Operator = mainPanel.nowUser.userName;
+                                                            carinfo.XB_FORCE_BD_DATA data = new carinfo.XB_FORCE_BD_DATA();
+                                                            data.ForceCheckValue = yljdata.Bz1;
+                                                            data.ForceValue =yljdata.Clz1+","+ yljdata.Clz1 + "," + yljdata.Clz1;
+                                                            data.ForceAverageValue = yljdata.Clz1;
+                                                            data.ForceError = yljdata.Wc1;
+                                                            data.AllowError = "1";
+                                                            data.ForceEvl =(Math.Abs(double.Parse(yljdata.Wc1))>1)?"不合格":"合格";
+                                                            
+                                                            if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("发送扭力标定命令失败,code" + code + ",msg:" + msg);
+                                                            }
+                                                        }
+                                                        catch (Exception er)
+                                                        {
+                                                            ini.INIIO.saveLogInf("发送扭力标定命令异常:" + er.Message);
                                                         }
                                                         #endregion
                                                     }

@@ -247,6 +247,12 @@
       <DependentUpon>reportViewSelfCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="WebThread.cs" />
+    <Compile Include="xbUserLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="xbUserLogin.Designer.cs">
+      <DependentUpon>xbUserLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="XNCarLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -388,6 +394,9 @@
       <DependentUpon>reportViewSelfCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportSelfCheckData.rdlc" />
+    <EmbeddedResource Include="xbUserLogin.resx">
+      <DependentUpon>xbUserLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="XNCarLogin.resx">
       <DependentUpon>XNCarLogin.cs</DependentUpon>
     </EmbeddedResource>

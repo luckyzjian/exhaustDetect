@@ -182,6 +182,10 @@ namespace carinfor
         public string Rev1 { set; get; }
         public string Rev2 { set; get; }
         public string Rev3 { set; get; }
+
+        public string prepareData1 { set; get; }
+        public string prepareData2 { set; get; }
+        public string prepareData3 { set; get; }
     }
     public class zyjsBtgdataControl
     {
@@ -263,6 +267,12 @@ namespace carinfor
                     zyjs_data.Rev2 = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("检测结果", "Rev3", "", temp, 2048, filePath);
                     zyjs_data.Rev3 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("检测结果", "prepareData1", "0.0", temp, 2048, filePath);
+                    zyjs_data.prepareData1 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("检测结果", "prepareData2", "0.0", temp, 2048, filePath);
+                    zyjs_data.prepareData2 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("检测结果", "prepareData3", "0.0", temp, 2048, filePath);
+                    zyjs_data.prepareData3 = temp.ToString();
                 }
                 else
                 {
