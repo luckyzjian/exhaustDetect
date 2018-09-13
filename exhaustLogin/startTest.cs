@@ -2449,25 +2449,6 @@ namespace exhaustDetect
                                     }
                                 }
                             }
-                            else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
-                            {
-                                string result;
-                                string errmsg = "";
-                                DataTable dt = new DataTable();
-                                Hashtable ht2 = new Hashtable();
-                                ht2.Add("stationcode", mainPanel.stationid);
-                                ht2.Add("linecode", mainPanel.lineid);
-                                ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                                ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
-                                if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
-                                {
-                                    ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
-                                }
-                                else
-                                {
-                                    ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
-                                }
-                            }
                             #endregion
                         }
                         Thread.Sleep(500);//等待两秒以确保文件内容写完
@@ -2683,6 +2664,25 @@ namespace exhaustDetect
                                                 //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                                 ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
                                                 //return;
+                                            }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                        {
+                                            string result;
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                             }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
@@ -3408,8 +3408,77 @@ namespace exhaustDetect
                                             asmdata.JCJSSJ = jssj.ToString("yyyy-MM-dd HH:mm:ss.fff");
                                             string result;
                                             string errmsg = "";
+
+                                            List<Hashtable> htpro = new List<Hashtable>();
+                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                            {
+                                                Hashtable htchild = new Hashtable();
+                                                DataRow dr = dataseconds.Rows[i];
+                                                htchild.Add("stationcode", mainPanel.stationid);
+                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                htchild.Add("gklx", dr["时序类别"].ToString());
+                                                htchild.Add("second_no", i.ToString());
+                                                htchild.Add("nf", dr["扭力"].ToString());
+                                                htchild.Add("flow_hc", dr["HC实时值"].ToString());
+                                                htchild.Add("flow_co", dr["CO实时值"].ToString());
+                                                htchild.Add("flow_co2", dr["CO2实时值"].ToString());
+                                                htchild.Add("flow_no", dr["NO实时值"].ToString());
+                                                htchild.Add("analyser_o2", dr["O2实时值"].ToString());
+                                                htchild.Add("weight_hc", "0");
+                                                htchild.Add("weight_co", "0");
+                                                htchild.Add("weight_no", "0");
+                                                htchild.Add("linespeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
+                                                htchild.Add("rotatespeed", dr["转速"].ToString());
+                                                htchild.Add("totalpower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
+                                                htchild.Add("cgjhz", "");
+                                                htchild.Add("paraspower", double.Parse(dr["寄生功率"].ToString()).ToString("0.00"));
+                                                htchild.Add("indicpower", double.Parse(dr["加载功率"].ToString()).ToString("0.00"));
+                                                htchild.Add("flowairpressure", "");
+                                                htchild.Add("flowtemperature", "");
+                                                htchild.Add("envirtemperature", dr["环境温度"].ToString());
+                                                htchild.Add("envirairpressure", dr["大气压力"].ToString());
+                                                htchild.Add("envirhumidity", dr["相对湿度"].ToString());
+                                                htchild.Add("dilutecorrect", double.Parse(dr["稀释修正系数"].ToString()).ToString("0.00"));
+                                                htchild.Add("humiditycorrect", double.Parse(dr["湿度修正系数"].ToString()).ToString("0.00"));
+                                                htchild.Add("diluteratio", "");
+                                                htchild.Add("asmtype", asm_data.Has2540Tested == "1" ? "2540" : "5025");
+                                                htchild.Add("istenmcondition", (dr["检测状态"].ToString() == "2" || dr["检测状态"].ToString() == "4") ? "1" : "0");
+                                                htpro.Add(htchild);
+                                            }
+                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+
+                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
+                                            }
+
+                                            isCsvAlive = "逐秒数据上传成功";
+
                                             DataTable dt = new DataTable();
-                                            Hashtable ht2 = new Hashtable();
+                                            Hashtable ht2 = new Hashtable(); 
+
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+
+                                            ht2.Clear();
+
                                             ht2.Add("stationcode", mainPanel.stationid);
                                             ht2.Add("scenecode", mainPanel.lineid);
                                             ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
@@ -3495,57 +3564,6 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("桂林联网信息：上传结果数据成功");
                                             }
-                                            List<Hashtable> htpro = new List<Hashtable>();
-                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
-                                            {
-                                                Hashtable htchild = new Hashtable();
-                                                DataRow dr = dataseconds.Rows[i];
-                                                htchild.Add("stationcode", mainPanel.stationid);
-                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
-                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
-                                                htchild.Add("gklx", dr["时序类别"].ToString());
-                                                htchild.Add("second_no", i.ToString());
-                                                htchild.Add("nf", dr["扭力"].ToString());
-                                                htchild.Add("flow_hc", dr["HC实时值"].ToString());
-                                                htchild.Add("flow_co", dr["CO实时值"].ToString());
-                                                htchild.Add("flow_co2", dr["CO2实时值"].ToString());
-                                                htchild.Add("flow_no", dr["NO实时值"].ToString());
-                                                htchild.Add("analyser_o2", dr["O2实时值"].ToString());
-                                                htchild.Add("weight_hc", "0");
-                                                htchild.Add("weight_co", "0");
-                                                htchild.Add("weight_no", "0");
-                                                htchild.Add("linespeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
-                                                htchild.Add("rotatespeed", dr["转速"].ToString());
-                                                htchild.Add("totalpower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
-                                                htchild.Add("cgjhz", "");
-                                                htchild.Add("paraspower", double.Parse(dr["寄生功率"].ToString()).ToString("0.00"));
-                                                htchild.Add("indicpower", double.Parse(dr["加载功率"].ToString()).ToString("0.00"));
-                                                htchild.Add("flowairpressure", "");
-                                                htchild.Add("flowtemperature", "");
-                                                htchild.Add("envirtemperature", dr["环境温度"].ToString());
-                                                htchild.Add("envirairpressure", dr["大气压力"].ToString());
-                                                htchild.Add("envirhumidity", dr["相对湿度"].ToString());
-                                                htchild.Add("dilutecorrect", double.Parse(dr["稀释修正系数"].ToString()).ToString("0.00"));
-                                                htchild.Add("humiditycorrect", double.Parse(dr["湿度修正系数"].ToString()).ToString("0.00"));
-                                                htchild.Add("diluteratio", "");
-                                                htchild.Add("asmtype", asm_data.Has2540Tested == "1" ? "2540" : "5025");
-                                                htchild.Add("istenmcondition", (dr["检测状态"].ToString() == "2" || dr["检测状态"].ToString() == "4") ? "1" : "0");
-                                                htpro.Add(htchild);
-                                            }
-                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
-                                            {
-                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-
-                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
-                                                return;
-                                            }
-                                            else
-                                            {
-                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
-                                            }
-
-                                            isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
                                                 mainPanel.ts2 = "车辆检测合格";
@@ -6867,6 +6885,25 @@ namespace exhaustDetect
                                                 //return;
                                             }
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                        {
+                                            string result;
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+                                        }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
@@ -7478,8 +7515,65 @@ namespace exhaustDetect
                                             }
                                             string result;
                                             string errmsg = "";
+                                            List<Hashtable> htpro = new List<Hashtable>();
+                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                            {
+                                                Hashtable htchild = new Hashtable();
+                                                DataRow dr = dataseconds.Rows[i];
+                                                htchild.Add("stationcode", mainPanel.stationid);
+                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                htchild.Add("gklx", dr["时序类别"].ToString());
+                                                htchild.Add("second_no", i.ToString());
+                                                htchild.Add("nf", dr["扭力"].ToString());
+                                                htchild.Add("gxsxs", dr["光吸收系数K"].ToString());
+                                                htchild.Add("cgjhz", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("calvelmaxhp", Math.Round(double.Parse(jzjsdata.VELMAXHP), 2).ToString("0.00"));
+                                                htchild.Add("actvelmaxhp", Math.Round(double.Parse(jzjsdata.REALVELMAXHP), 2).ToString("0.00"));
+                                                htchild.Add("powerpersec", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("speedpersec", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("actmaxpower", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("rotatespeed", dr["转速"].ToString());
+                                                htchild.Add("envirtemperature", dr["环境温度"].ToString());
+                                                htchild.Add("envirairpressure", dr["大气压力"].ToString());
+                                                htchild.Add("envirhumidity", dr["相对湿度"].ToString());
+                                                htchild.Add("powercorrect", Math.Round(double.Parse(dr["DCF"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("cormaxpower", Math.Round(double.Parse(dr["功率"].ToString()) * double.Parse(dr["DCF"].ToString())).ToString("0.00"));
+                                                htchild.Add("realspeed", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
+                                                htpro.Add(htchild);
+                                            }
+                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+
+                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
+                                            }
+
+                                            isCsvAlive = "逐秒数据上传成功";
+
                                             DataTable dt = new DataTable();
                                             Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+
+                                            ht2.Clear();
+
                                             ht2.Add("stationcode", mainPanel.stationid);
                                             ht2.Add("scenecode", mainPanel.lineid);
                                             ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
@@ -7533,47 +7627,6 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("桂林联网信息：上传结果数据成功");
                                             }
-                                            List<Hashtable> htpro = new List<Hashtable>();
-                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
-                                            {
-                                                Hashtable htchild = new Hashtable();
-                                                DataRow dr = dataseconds.Rows[i];
-                                                htchild.Add("stationcode", mainPanel.stationid);
-                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
-                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
-                                                htchild.Add("gklx", dr["时序类别"].ToString());
-                                                htchild.Add("second_no", i.ToString());
-                                                htchild.Add("nf", dr["扭力"].ToString());
-                                                htchild.Add("gxsxs", dr["光吸收系数K"].ToString());
-                                                htchild.Add("cgjhz",Math.Round(double.Parse( dr["功率"].ToString()),2).ToString("0.00"));
-                                                htchild.Add("calvelmaxhp", Math.Round(double.Parse(jzjsdata.VELMAXHP), 2).ToString("0.00"));
-                                                htchild.Add("actvelmaxhp", Math.Round(double.Parse(jzjsdata.REALVELMAXHP), 2).ToString("0.00"));
-                                                htchild.Add("powerpersec", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
-                                                htchild.Add("speedpersec", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
-                                                htchild.Add("actmaxpower", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
-                                                htchild.Add("rotatespeed", dr["转速"].ToString());
-                                                htchild.Add("envirtemperature", dr["环境温度"].ToString());
-                                                htchild.Add("envirairpressure", dr["大气压力"].ToString());
-                                                htchild.Add("envirhumidity", dr["相对湿度"].ToString());
-                                                htchild.Add("powercorrect", Math.Round(double.Parse(dr["DCF"].ToString()), 2).ToString("0.00"));
-                                                htchild.Add("cormaxpower",Math.Round(double.Parse( dr["功率"].ToString())*double.Parse(dr["DCF"].ToString())).ToString("0.00"));
-                                                htchild.Add("realspeed", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
-                                                htpro.Add(htchild);
-                                            }
-                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
-                                            {
-                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-
-                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
-                                                return;
-                                            }
-                                            else
-                                            {
-                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
-                                            }
-
-                                            isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
                                                 mainPanel.ts2 = "车辆检测合格";
@@ -9672,6 +9725,25 @@ namespace exhaustDetect
                                                 //return;
                                             }
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                        {
+                                            string result;
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+                                        }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
@@ -10419,8 +10491,51 @@ namespace exhaustDetect
                                             zyjsdata.JCFF = "GB3847-2005";
                                             string result;
                                             string errmsg = "";
+
+                                            List<Hashtable> htpro = new List<Hashtable>();
+                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                            {
+                                                Hashtable htchild = new Hashtable();
+                                                DataRow dr = dataseconds.Rows[i];
+                                                htchild.Add("stationcode", mainPanel.stationid);
+                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                htchild.Add("gklx", dr["时序类别"].ToString());
+                                                htchild.Add("second_no", i.ToString());
+                                                htchild.Add("er", dr["烟度值读数"].ToString());
+                                                htchild.Add("rotatespeed", dr["发动机转速"].ToString());
+                                                htpro.Add(htchild);
+                                            }
+                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+
+                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
+                                            }
+
+                                            isCsvAlive = "逐秒数据上传成功";
+
                                             DataTable dt = new DataTable();
                                             Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+                                            ht2.Clear();
                                             ht2.Add("stationcode", mainPanel.stationid);
                                             ht2.Add("scenecode", mainPanel.lineid);
                                             ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
@@ -10475,34 +10590,6 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("桂林联网信息：上传结果数据成功");
                                             }
-                                            List<Hashtable> htpro = new List<Hashtable>();
-                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
-                                            {
-                                                Hashtable htchild = new Hashtable();
-                                                DataRow dr = dataseconds.Rows[i];
-                                                htchild.Add("stationcode", mainPanel.stationid);
-                                                htchild.Add("inspectionnum", carLogin.carbj.JYLSH);
-                                                htchild.Add("processtime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
-                                                htchild.Add("gklx", dr["时序类别"].ToString());
-                                                htchild.Add("second_no", i.ToString());
-                                                htchild.Add("er", dr["烟度值读数"].ToString());
-                                                htchild.Add("rotatespeed", dr["发动机转速"].ToString());
-                                                htpro.Add(htchild);
-                                            }
-                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
-                                            {
-                                                ini.INIIO.saveLogInf("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-                                                MessageBox.Show("上传过程数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-
-                                                Msg(label1, panel4, "上传过程数据至联网平台失败");
-                                                return;
-                                            }
-                                            else
-                                            {
-                                                ini.INIIO.saveLogInf("桂林联网信息：上传过程数据成功");
-                                            }
-
-                                            isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
                                                 mainPanel.ts2 = "车辆检测合格";
@@ -12025,6 +12112,25 @@ namespace exhaustDetect
                                             //return;
                                         }
                                     }
+                                    else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                    {
+                                        string result;
+                                        string errmsg = "";
+                                        DataTable dt = new DataTable();
+                                        Hashtable ht2 = new Hashtable();
+                                        ht2.Add("stationcode", mainPanel.stationid);
+                                        ht2.Add("linecode", mainPanel.lineid);
+                                        ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                        ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                        if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                        {
+                                            ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                        }
+                                    }
                                     mainPanel.worklogdata.ProjectID = mainPanel.stationid + mainPanel.lineid + DateTime.Now.ToString("yyMMddHHmmss");//线号“00”代表为登录机进行的操作
                                     mainPanel.worklogdata.ProjectName = "操作日志";
                                     mainPanel.worklogdata.Stationid = mainPanel.stationid;
@@ -12360,6 +12466,25 @@ namespace exhaustDetect
                                                 //MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                                 ini.INIIO.saveLogInf("发送车辆检测终止失败,code" + code + ",msg:" + msg);
                                                 //return;
+                                            }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                                        {
+                                            string result;
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            Hashtable ht2 = new Hashtable();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                             }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
@@ -13189,6 +13314,8 @@ namespace exhaustDetect
                                         else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
                                         {
                                             #region 桂林
+                                            
+                                                
                                             ini.INIIO.saveLogInf("桂林联网信息：结果判定");
                                             if (sdsResultPd(sds_data, out nhlambdapd) == true)
                                             {
@@ -13216,69 +13343,7 @@ namespace exhaustDetect
                                             string errmsg = "";
                                             DataTable dt = new DataTable();
                                             Hashtable ht2 = new Hashtable();
-                                            ht2.Add("stationcode", mainPanel.stationid);
-                                            ht2.Add("scenecode", mainPanel.lineid);
-                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
-                                            ht2.Add("vlpn", carLogin.carbj.CLHP);
-                                            ht2.Add("vin", carLogin.modelbj.CLSBM);
-                                            ht2.Add("inspectionoperator", carLogin.carbj.CZY);
-                                            ht2.Add("inspectiondriver", carLogin.carbj.JSY);
-                                            ht2.Add("temperature", sdsdata.WD);
-                                            ht2.Add("pressure", sdsdata.DQY);
-                                            ht2.Add("humidity", sdsdata.SD);
-                                            ht2.Add("iutid", carLogin.carbj.JCBGBH);
-                                            ht2.Add("vdct", pdjg);
-                                            ht2.Add("iuidate",DateTime.Now.ToString("yyyy-MM-dd"));
-                                            ht2.Add("detectstarttime",jcsj.ToString("yyyy-MM-dd HH:mm:ss"));
-                                            ht2.Add("detectendtime", jssj.ToString("yyyy-MM-dd HH:mm:ss"));
-                                            ht2.Add("vinflag", "1");
-                                            ht2.Add("enginenumflag", "1");
-                                            ht2.Add("icheck",carLogin.carbj.CZY);
-                                            ht2.Add("checktime", sdsdata.JCRQ.ToString("yyyy-MM-dd HH:mm:ss"));
-                                            ht2.Add("oiltemperature", sdsdata.YW);
-                                            ht2.Add("eaclu", "1.03");
-                                            ht2.Add("eacld", "0.97");
-                                            ht2.Add("eacr", sdsdata.LAMDAHIGHCLZ);
-                                            ht2.Add("eacd", sdsdata.LAMDAHIGHPD=="合格"?"1":(sdsdata.LAMDAHIGHPD=="不合格"?"0":""));
-                                            ht2.Add("licol", sdsdata.COLOWXZ);
-                                            ht2.Add("licor", sdsdata.COLOWCLZ);
-                                            ht2.Add("licod", sdsdata.COLOWPD=="合格"?"1":"0");
-                                            ht2.Add("lihcl", sdsdata.HCLOWXZ);
-                                            ht2.Add("lihcr", sdsdata.HCLOWCLZ);
-                                            ht2.Add("lihcd", sdsdata.HCLOWPD == "合格" ? "1" : "0");
-                                            ht2.Add("hicol",sdsdata.COHIGHXZ);
-                                            ht2.Add("hicor",sdsdata.COHIGHCLZ);
-                                            ht2.Add("hicod", sdsdata.COHIGHPD == "合格" ? "1" : "0");
-                                            ht2.Add("hihcl", sdsdata.HCHIGHXZ);
-                                            ht2.Add("hihcr", sdsdata.HCHIGHCLZ);
-                                            ht2.Add("hihcd", sdsdata.HCHIGHPD == "合格" ? "1" : "0");
-                                            ht2.Add("rotatespeedlimit","100");
-                                            ht2.Add("rotatespeed", sdsdata.ZSHIGH);
-                                            ht2.Add("gdszs", sdsdata.ZSHIGH);
-                                            ht2.Add("dszs", sdsdata.ZSLOW);
-                                            ht2.Add("analyser",sdsdata.FXYXH);
-                                            ht2.Add("aprovider", sdsdata.FXYZZC);
-                                            ht2.Add("flowmeter", "");
-                                            ht2.Add("fprovider", "");
-                                            ht2.Add("tachometer",sdsdata.ZSJXH);
-                                            ht2.Add("tprovider", sdsdata.ZSJZZC);
-                                            ht2.Add("otsensor","");
-                                            ht2.Add("oprovider","");
-                                            ht2.Add("weatherstationtype", "");
-                                            ht2.Add("weatherstationprovider","");
-                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF,0, ht2,null, out result, out errmsg))
-                                            {
-                                                ini.INIIO.saveLogInf("上传结果数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-                                                MessageBox.Show("上传结果数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
-
-                                                Msg(label1, panel4, "上传结果数据至联网平台失败");
-                                                return;
-                                            }
-                                            else
-                                            {
-                                                ini.INIIO.saveLogInf("桂林联网信息：上传结果数据成功");
-                                            }
+                                            
                                             List<Hashtable> htpro = new List<Hashtable>();
                                             for (int i = 1; i < dataseconds.Rows.Count; i++)
                                             {
@@ -13311,6 +13376,83 @@ namespace exhaustDetect
                                             }
 
                                             isCsvAlive = "逐秒数据上传成功";
+
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("linecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            if (!mainPanel.gxinterface.finishTest(ht2, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测失败,code=" + result + ",msg=" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+                                            ht2.Clear();
+                                            ht2.Add("stationcode", mainPanel.stationid);
+                                            ht2.Add("scenecode", mainPanel.lineid);
+                                            ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                                            ht2.Add("uniquestring", carLogin.carbj.ECRYPT);
+                                            ht2.Add("vlpn", carLogin.carbj.CLHP);
+                                            ht2.Add("vin", carLogin.modelbj.CLSBM);
+                                            ht2.Add("inspectionoperator", carLogin.carbj.CZY);
+                                            ht2.Add("inspectiondriver", carLogin.carbj.JSY);
+                                            ht2.Add("temperature", sdsdata.WD);
+                                            ht2.Add("pressure", sdsdata.DQY);
+                                            ht2.Add("humidity", sdsdata.SD);
+                                            ht2.Add("iutid", carLogin.carbj.JCBGBH);
+                                            ht2.Add("vdct", pdjg);
+                                            ht2.Add("iuidate", DateTime.Now.ToString("yyyy-MM-dd"));
+                                            ht2.Add("detectstarttime", jcsj.ToString("yyyy-MM-dd HH:mm:ss"));
+                                            ht2.Add("detectendtime", jssj.ToString("yyyy-MM-dd HH:mm:ss"));
+                                            ht2.Add("vinflag", "1");
+                                            ht2.Add("enginenumflag", "1");
+                                            ht2.Add("icheck", carLogin.carbj.CZY);
+                                            ht2.Add("checktime", sdsdata.JCRQ.ToString("yyyy-MM-dd HH:mm:ss"));
+                                            ht2.Add("oiltemperature", sdsdata.YW);
+                                            ht2.Add("eaclu", "1.03");
+                                            ht2.Add("eacld", "0.97");
+                                            ht2.Add("eacr", sdsdata.LAMDAHIGHCLZ);
+                                            ht2.Add("eacd", sdsdata.LAMDAHIGHPD == "合格" ? "1" : (sdsdata.LAMDAHIGHPD == "不合格" ? "0" : ""));
+                                            ht2.Add("licol", sdsdata.COLOWXZ);
+                                            ht2.Add("licor", sdsdata.COLOWCLZ);
+                                            ht2.Add("licod", sdsdata.COLOWPD == "合格" ? "1" : "0");
+                                            ht2.Add("lihcl", sdsdata.HCLOWXZ);
+                                            ht2.Add("lihcr", sdsdata.HCLOWCLZ);
+                                            ht2.Add("lihcd", sdsdata.HCLOWPD == "合格" ? "1" : "0");
+                                            ht2.Add("hicol", sdsdata.COHIGHXZ);
+                                            ht2.Add("hicor", sdsdata.COHIGHCLZ);
+                                            ht2.Add("hicod", sdsdata.COHIGHPD == "合格" ? "1" : "0");
+                                            ht2.Add("hihcl", sdsdata.HCHIGHXZ);
+                                            ht2.Add("hihcr", sdsdata.HCHIGHCLZ);
+                                            ht2.Add("hihcd", sdsdata.HCHIGHPD == "合格" ? "1" : "0");
+                                            ht2.Add("rotatespeedlimit", "100");
+                                            ht2.Add("rotatespeed", sdsdata.ZSHIGH);
+                                            ht2.Add("gdszs", sdsdata.ZSHIGH);
+                                            ht2.Add("dszs", sdsdata.ZSLOW);
+                                            ht2.Add("analyser", sdsdata.FXYXH);
+                                            ht2.Add("aprovider", sdsdata.FXYZZC);
+                                            ht2.Add("flowmeter", "");
+                                            ht2.Add("fprovider", "");
+                                            ht2.Add("tachometer", sdsdata.ZSJXH);
+                                            ht2.Add("tprovider", sdsdata.ZSJZZC);
+                                            ht2.Add("otsensor", "");
+                                            ht2.Add("oprovider", "");
+                                            ht2.Add("weatherstationtype", "");
+                                            ht2.Add("weatherstationprovider", "");
+                                            if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 0, ht2, null, out result, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("上传结果数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+                                                MessageBox.Show("上传结果数据失败\r\n" + "错误代码：" + result + "\r\n" + "错误信息：" + errmsg);
+
+                                                Msg(label1, panel4, "上传结果数据至联网平台失败");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("桂林联网信息：上传结果数据成功");
+                                            }
                                             if (pdjg == "1")
                                             {
                                                 mainPanel.ts2 = "车辆检测合格";
@@ -19998,7 +20140,7 @@ namespace exhaustDetect
                 }
                 else
                 {
-                    if (mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "无" && mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", carLogin.modelbj.JHZZ) != "否")
+                    if (carLogin.modelbj.JHZZ=="1")
                     {
 
                         if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
@@ -23221,10 +23363,19 @@ namespace exhaustDetect
                     model.CHZZ = mainPanel.logininfcontrol.getComBoBoxItemsNAME("侧滑装置", modelInf.CHZZ); //modelInf.CHZZ;//30
                     model.DLSP = modelInf.DLSP;
                     model.SFSRL = modelInf.SFSRL;
-                    if (model.RLZL.Contains("柴油"))
-                        model.JHZZ = mainPanel.logininfcontrol.getComBoBoxItemsNAME("排气后处理装置", modelInf.JHZZ); //modelInf.JHZZ;
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
+                    {
+                        if (model.JHZZ == "0") model.JHZZ = "无";
+                        else model.JHZZ = "有";
+                        //labelJHZZ.Text = logininfcontrol.getComBoBoxItemsNAME("催化转化器", modelbj.JHZZ);
+                    }
                     else
-                        model.JHZZ = mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", modelInf.JHZZ); //modelInf.JHZZ;
+                    {
+                        if (model.RLZL.Contains("柴油"))
+                            model.JHZZ = mainPanel.logininfcontrol.getComBoBoxItemsNAME("排气后处理装置", modelInf.JHZZ); //modelInf.JHZZ;
+                        else
+                            model.JHZZ = mainPanel.logininfcontrol.getComBoBoxItemsNAME("催化转化器", modelInf.JHZZ); //modelInf.JHZZ;
+                    }
                     model.OBD = modelInf.OBD;
                     model.DKGYYB = modelInf.DKGYYB;//35
                     model.LXDH = modelInf.LXDH;

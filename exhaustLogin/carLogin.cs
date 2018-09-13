@@ -3203,7 +3203,9 @@ namespace exhaustDetect
                         labelSRL.Text = modelbj.SFSRL;
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                         {
-                            labelJHZZ.Text = logininfcontrol.getComBoBoxItemsNAME("催化转化器", modelbj.JHZZ);
+                            if (modelbj.JHZZ == "0") labelJHZZ.Text = "无";
+                            else labelJHZZ.Text = "有";
+                            //labelJHZZ.Text = logininfcontrol.getComBoBoxItemsNAME("催化转化器", modelbj.JHZZ);
                         }
                         else
                         {
