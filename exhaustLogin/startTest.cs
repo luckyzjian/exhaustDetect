@@ -3431,7 +3431,7 @@ namespace exhaustDetect
                                                 htchild.Add("linespeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
                                                 htchild.Add("rotatespeed", dr["转速"].ToString());
                                                 htchild.Add("totalpower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
-                                                htchild.Add("cgjhz", "");
+                                                htchild.Add("cgjhz", "907");
                                                 htchild.Add("paraspower", double.Parse(dr["寄生功率"].ToString()).ToString("0.00"));
                                                 htchild.Add("indicpower", double.Parse(dr["加载功率"].ToString()).ToString("0.00"));
                                                 htchild.Add("flowairpressure", "");
@@ -3441,9 +3441,11 @@ namespace exhaustDetect
                                                 htchild.Add("envirhumidity", dr["相对湿度"].ToString());
                                                 htchild.Add("dilutecorrect", double.Parse(dr["稀释修正系数"].ToString()).ToString("0.00"));
                                                 htchild.Add("humiditycorrect", double.Parse(dr["湿度修正系数"].ToString()).ToString("0.00"));
-                                                htchild.Add("diluteratio", "");
+                                                htchild.Add("diluteratio", "1");
                                                 htchild.Add("asmtype", asm_data.Has2540Tested == "1" ? "2540" : "5025");
                                                 htchild.Add("istenmcondition", (dr["检测状态"].ToString() == "2" || dr["检测状态"].ToString() == "4") ? "1" : "0");
+                                                htchild.Add("nfjzxs", "1");
+                                                htchild.Add("nfxs", "5000");
                                                 htpro.Add(htchild);
                                             }
                                             if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))
@@ -7540,6 +7542,8 @@ namespace exhaustDetect
                                                 htchild.Add("powercorrect", Math.Round(double.Parse(dr["DCF"].ToString()), 2).ToString("0.00"));
                                                 htchild.Add("cormaxpower", Math.Round(double.Parse(dr["功率"].ToString()) * double.Parse(dr["DCF"].ToString())).ToString("0.00"));
                                                 htchild.Add("realspeed", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
+                                                htchild.Add("nfjzxs", "1");
+                                                htchild.Add("nfxs", "5000");
                                                 htpro.Add(htchild);
                                             }
                                             if (!mainPanel.gxinterface.uploadTestData(carLogin.carbj.JCFF, 1, null, htpro, out result, out errmsg))

@@ -196,9 +196,9 @@ namespace GxWebClient
             sr.Close();
             stream.Close();
             string newstring = xmlString.Replace("xml version=\"1.0\"", "xml version=\"1.0\" encoding=\"UTF-8\"");//.Replace(" ", "%20").Replace("\r\n", "%0d%0a") + "\r\n";
+            newstring = newstring.Replace("\r\n", "");
+            newstring = Regex.Replace(newstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号            
 
-            //newstring = newstring.Replace("\r\n", "");
-            //newstring = Regex.Replace(newstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号            
             return newstring;
         }
         public bool Sync(string stationcode,out string result, out string errMsg)
