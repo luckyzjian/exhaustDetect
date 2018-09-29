@@ -43,11 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnHuiClient.cs" />
     <Compile Include="Ahinterface.cs" />
+    <Compile Include="AnHuiClientV27.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\carinfor\carinfor.csproj">
+      <Project>{82414900-9f68-46fc-b559-d204a1b839f1}</Project>
+      <Name>carinfor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\INIIO\INIIO.csproj">
       <Project>{66ab13fc-ae00-42c8-b107-f375867e6363}</Project>
       <Name>INIIO</Name>

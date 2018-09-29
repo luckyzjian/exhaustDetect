@@ -50,12 +50,12 @@ namespace exhaustDetect
         public static List<JHWebClient.JHvehicleInf> jhvehicleinflistOnthisLine = new List<JHWebClient.JHvehicleInf>();
         public static NhWebClient.VehicleInfo vehicleinfo = new NhWebClient.VehicleInfo();
 
-        public static List<AhWebClient.AhCarInfo> ahvehicleinflist = new List<AhWebClient.AhCarInfo>();
+        //public static List<AhWebClient.AhCarInfo> ahvehicleinflist = new List<AhWebClient.AhCarInfo>();
         public static List<CARATWAIT> ahwaitlist = new List<CARATWAIT>();
         public static List<CARINF> ahcarinflist = new List<CARINF>();
         public static List<CARATWAIT> ahwaitlistOnthisLine = new List<CARATWAIT>();
         public static List<CARINF> ahcarinflistOnthisLine = new List<CARINF>();
-        public static List<AhWebClient.AhCarInfo> ahvehicleinflistOnthisline = new List<AhWebClient.AhCarInfo>();
+        //public static List<AhWebClient.AhCarInfo> ahvehicleinflistOnthisline = new List<AhWebClient.AhCarInfo>();
 
         public static List<CARATWAIT> jswaitlist = new List<CARATWAIT>();
         public static List<CARATWAIT> jswaitlistOnthisLine = new List<CARATWAIT>();
@@ -529,10 +529,10 @@ namespace exhaustDetect
                     #region 安徽
                     ahwaitlistOnthisLine.Clear();
                     ahcarinflistOnthisLine.Clear();
-                    ahvehicleinflistOnthisline.Clear();
+                    //ahvehicleinflistOnthisline.Clear();
                     int ahresult;
                     string ahErrMsg;
-                    if (mainPanel.ahinterface.getInSpectQueueByDate(DateTime.Parse("2000-01-01 00:00:00"), DateTime.Now, out ahresult, out ahErrMsg, out ahvehicleinflist, out ahwaitlist, out ahcarinflist))
+                    if (mainPanel.ahinterface.getInSpectQueueByDate(DateTime.Parse("2000-01-01 00:00:00"), DateTime.Now, out ahresult, out ahErrMsg, out ahwaitlist, out ahcarinflist))
                     {
                         dt_wait.Rows.Clear();
                         DataRow dr = null;
@@ -573,7 +573,7 @@ namespace exhaustDetect
 
                             ahwaitlistOnthisLine.Add(ahwaitlist[i]);
                             ahcarinflistOnthisLine.Add(ahcarinflist[i]);
-                            ahvehicleinflistOnthisline.Add(ahvehicleinflist[i]);
+                            //ahvehicleinflistOnthisline.Add(ahvehicleinflist[i]);
                             dt_wait.Rows.Add(dr);
                         }
                         dataGrid_waitcar.DataSource = dt_wait;
@@ -3251,9 +3251,9 @@ namespace exhaustDetect
             {
                 if (model.QDXS != "全时四驱")//2001年10月1日 起生产的汽车，轻型车额定功率不超过150KW，重型车额定功率不超过350KW
                 {
-                    if (double.Parse(model.ZZL) > 10000 && double.Parse(model.ZZL) <= 26000 && double.Parse(model.EDGL) <= 350)
+                    if (double.Parse(model.ZZL) > 10000 && double.Parse(model.EDGL) <= 350)
                     {
-                        if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YNZT|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)//昆明没有重柴
+                        if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YNZT|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_V301)//昆明没有重柴
                             jcff = "JZJS";
                         else
                             jcff = "ZYJS";
@@ -3261,7 +3261,7 @@ namespace exhaustDetect
                     }
                     else if (double.Parse(model.ZZL) > 3500 && double.Parse(model.ZZL) <= 10000 && double.Parse(model.EDGL) <= 150)
                     {
-                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNKM || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)//昆明没有重柴
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNKM || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)//昆明没有重柴
                             jcff = "JZJS";
                         else
                             jcff = "ZYJS";
@@ -3269,7 +3269,7 @@ namespace exhaustDetect
                     }
                     else if (double.Parse(model.ZZL) <= 3500 && double.Parse(model.EDGL) <= 150)
                     {
-                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNKM || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNKM || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
                             jcff = "JZJS";
                         else
                             jcff = "ZYJS";

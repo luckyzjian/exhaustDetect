@@ -56,6 +56,7 @@ namespace carinfor
     {
         public string weburl;	//webserive url
         public string lineid;
+        public string version;
     }
 
     public class NHWebInf

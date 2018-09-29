@@ -3313,6 +3313,12 @@ namespace exhaustDetect
                                             asmresult.HC2540Limit = asmdata.HC40XZ;
                                             asmresult.CO2540Limit = asmdata.CO40XZ;
                                             asmresult.NO2540Limit = asmdata.NOX40XZ;
+                                            asmresult.HC5025Result = (asmdata.HC25PD == "合格" ? "1" : "2");
+                                            asmresult.CO5025Result = (asmdata.CO25PD == "合格" ? "1" : "2");
+                                            asmresult.NO5025Result = (asmdata.NOX25PD == "合格" ? "1" : "2");
+                                            asmresult.HC2540Result = (asmdata.HC40PD == "" ?"0":(asmdata.HC40PD == "合格" ? "1" : "2"));
+                                            asmresult.CO2540Result = (asmdata.CO40PD == "" ? "0" : (asmdata.CO40PD == "合格" ? "1" : "2"));
+                                            asmresult.NO5025Result = (asmdata.NOX40PD == "" ? "0" : (asmdata.NOX40PD == "合格" ? "1" : "2"));
                                             int ahresult = 0;
                                             string ahErrMsg = "";
                                             if (!mainPanel.ahinterface.UploadAsmRealtimeData(carLogin.carbj.CLID, dataseconds, out ahresult, out ahErrMsg))
@@ -5310,7 +5316,10 @@ namespace exhaustDetect
                             case "VMAS":
                                 #region 瞬态
                                 ini.INIIO.WritePrivateProfileString("测功机上次运转时间", "时间", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), @".\detectConfig.ini");
-
+                                string vmasinifileDir = "D://dataseconds/" + DateTime.Now.ToString("yyMMdd");
+                                if (ini.INIIO.createDir(vmasinifileDir))
+                                    File.Copy(newPath, vmasinifileDir + "/" + carLogin.carbj.CLID + ".ini", true);
+                               // File.Copy(newPath, "D://dataseconds/" + carLogin.carbj.CLID + ".ini", true);
                                 vmas_data = vmasdatacontrol.readVmasData(newPath);
                                 if (vmas_data.Cozl == "-1")
                                 {
@@ -7308,6 +7317,11 @@ namespace exhaustDetect
                                             asmresult.Power = jzjsdata.MAXLBGL;
                                             asmresult.YDLimit = jzjsdata.YDXZ;
                                             asmresult.PowerLimit =jzjsdata.GLXZ;
+                                            asmresult.RateSpeedUp = jzjsdata.RATEREVUP;
+                                            asmresult.RateSpeedDown = jzjsdata.RATEREVDOWN;
+                                            asmresult.RealRateSpeed = jzjsdata.MAXLBZS;
+                                            asmresult.YDResult = (jzjsdata.HKPD == "合格" && jzjsdata.NKPD == "合格" && jzjsdata.EKPD == "合格") ? "1" : "2";
+                                            asmresult.PowerResult=jzjsdata.GLPD == "合格" ? "1" : "2";
                                             int ahresult = 0;
                                             string ahErrMsg = "";
                                             if (!mainPanel.ahinterface.UploadLugdownRealtimeData(carLogin.carbj.CLID, dataseconds, out ahresult, out ahErrMsg))
@@ -10251,6 +10265,7 @@ namespace exhaustDetect
                                             asmresult.YD3 = zyjsdata.THIRDDATA;
                                             asmresult.YDAV = zyjsdata.AVERAGEDATA;
                                             asmresult.YDLimit = zyjsdata.YDXZ;
+                                            asmresult.IdleSpeed = zyjsdata.DSZS;
                                             int ahresult = 0;
                                             string ahErrMsg = "";
                                             DataTable datasecondsah = csvreader.readCsv(newAhCsvPath);
@@ -13077,7 +13092,11 @@ namespace exhaustDetect
                                             asmresult.HiHCLimit = sdsdata.HCHIGHXZ;
                                             asmresult.LMDLimitMin = "0.97";
                                             asmresult.LMDLimitMax = "1.03";
-
+                                            asmresult.HiCOResult = sdsdata.COHIGHPD == "合格" ? "1" : "2";
+                                            asmresult.HiHCResult = sdsdata.HCHIGHPD == "合格" ? "1" : "2";
+                                            asmresult.LowCOResult = sdsdata.COLOWPD == "合格" ? "1" : "2";
+                                            asmresult.LowHCResult = sdsdata.HCLOWPD == "合格" ? "1" : "2";
+                                            asmresult.LMDResult = (sdsdata.LAMDAHIGHPD == "" ? "0" : (sdsdata.LAMDAHIGHPD == "合格" ? "1" : "2"));
                                             
                                             isCsvAlive = "逐秒数据上传成功";
                                             int ahresult = 0;
@@ -16075,6 +16094,12 @@ namespace exhaustDetect
                                             asmresult.HiHCLimit = sdsdata.HCHIGHXZ;
                                             asmresult.LMDLimitMin = "0.97";
                                             asmresult.LMDLimitMax = "1.03";
+                                            asmresult.HiCOResult = sdsdata.COHIGHPD == "合格" ? "1" : "2";
+                                            asmresult.HiHCResult = sdsdata.HCHIGHPD == "合格" ? "1" : "2";
+                                            asmresult.LowCOResult = sdsdata.COLOWPD == "合格" ? "1" : "2";
+                                            asmresult.LowHCResult = sdsdata.HCLOWPD == "合格" ? "1" : "2";
+                                            asmresult.LMDResult = (sdsdata.LAMDAHIGHPD == "" ? "0" : (sdsdata.LAMDAHIGHPD == "合格" ? "1" : "2"));
+
 
 
                                             isCsvAlive = "逐秒数据上传成功";
@@ -20451,7 +20476,7 @@ namespace exhaustDetect
                     Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
                     return;
                 }
-                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE&&mainPanel.ahwebinf.version==mainPanel.AHVERSION_V23)
                 {
                     int ahResult;
                     string ahErrMsg;
@@ -21447,7 +21472,7 @@ namespace exhaustDetect
 
                     return;
                 }
-                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
                 {
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                     {
@@ -21759,7 +21784,7 @@ namespace exhaustDetect
                     else
                     {
                         ini.INIIO.saveLogInf("(东软联网)取lugdown限值成功");
-                        GLXZ = (double)(Math.Round(double.Parse(carLogin.limitdatainf.MaxPower) / 100.0f * double.Parse(carLogin.modelbj.EDGL), 1));
+                        GLXZ = (double)(Math.Round(0.5f * double.Parse(carLogin.modelbj.EDGL), 1));
                         GXXZ = double.Parse(carLogin.limitdatainf.SmokeK);
                         ZSXZ_LOW = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevUp);
                         ZSXZ_HIGH = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevBelow);
@@ -21816,7 +21841,7 @@ namespace exhaustDetect
                         ini.INIIO.saveLogInf("(诚创联网)取限值失败，将使用本地限值，信息:" + message);
                     }
                 }
-                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE )
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
                 {
                     int ahResult;
                     string ahErrMsg;
@@ -22010,7 +22035,7 @@ namespace exhaustDetect
                     Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
                     return;
                 }
-                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
                 {
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                     {
@@ -22519,7 +22544,7 @@ namespace exhaustDetect
                     Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
                     return;
                 }
-                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
                 {
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                     {

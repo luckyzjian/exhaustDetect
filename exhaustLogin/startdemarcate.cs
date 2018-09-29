@@ -187,6 +187,7 @@ namespace exhaustDetect
                         switch (_bdnr)
                         {
                             case "滑行测试":
+                                #region 加载滑行
                                 newCsvPath = "C://jcdatatxt/" + "glidedata.csv";
                                 carinfor.JZHXdemarcate jzhxdmct = new carinfor.JZHXdemarcate();
                                 glidedata = glidecontrol.readGlideData(newPath);
@@ -218,6 +219,7 @@ namespace exhaustDetect
                                 {
                                     if(mainPanel.NetMode==mainPanel.NEUSOFTNETMODE&&mainPanel.neusoftsocketinf.AREA!=mainPanel.NEU_LNAS)
                                     {
+                                        #region neusoft
                                         if ((glidedata.Bdjg == "合格" || glidedata.Bdjg == "不合格")&&glidedata.NeuFinished=="Y")
                                         {
                                             string isCsvAlive = "";
@@ -247,9 +249,11 @@ namespace exhaustDetect
                                                 isCsvAlive = "过程数据不存在";
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         {
                                             Hashtable hstb = new Hashtable();
@@ -397,9 +401,11 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存加载滑行标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "10");
@@ -436,7 +442,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
-
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                     {
@@ -500,6 +506,7 @@ namespace exhaustDetect
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                                     {
+                                        #region ezhou
                                         try
                                         {
                                             string msg, code;
@@ -535,14 +542,61 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送[自检/校准]命令发生异常:" + er.Message);
                                         }
+                                        #endregion
+                                    }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        AhWebClient.ah_jzhx_caldata cdata1 = new AhWebClient.ah_jzhx_caldata();
+                                        AhWebClient.ah_jzhx_caldata cdata2 = new AhWebClient.ah_jzhx_caldata();
+                                        pdata.Type = "1";
+                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.Judge = (glidedata.Bdjg == "不合格" || glidedata.Bdjg == "0") ? "2" : "1";
+                                        jdata.type = "1";
+                                        jdata.InertiaEquivalent = glidedata.Gxdl;
+                                        jdata.CalibrateCount = "2";
+                                        List<AhWebClient.ah_jzhx_caldata> listc = new List<AhWebClient.ah_jzhx_caldata>();
+                                        cdata1.FromSpeed = "48";
+                                        cdata1.ToSpeed = "32";
+                                        cdata1.TheoreticalTime = glidedata.Ccdt40;
+                                        cdata1.ActualTime = glidedata.Acdt40;
+                                        cdata1.Deviation = Math.Round((double.Parse(glidedata.Acdt40) - double.Parse(glidedata.Ccdt40)) * 100.0 / double.Parse(glidedata.Ccdt40), 1).ToString("0.0");
+                                        cdata1.ErrorLimit = "7";
+                                        cdata1.Result = glidedata.Result40 == "1" ? "1" : "2";
+                                        listc.Add(cdata1);
+                                        cdata2.FromSpeed = "32";
+                                        cdata2.ToSpeed = "16";
+                                        cdata2.TheoreticalTime = glidedata.Ccdt24;
+                                        cdata2.ActualTime = glidedata.Acdt24;
+                                        cdata2.Deviation = Math.Round((double.Parse(glidedata.Acdt24) - double.Parse(glidedata.Ccdt24)) * 100.0 / double.Parse(glidedata.Ccdt24), 1).ToString("0.0");
+                                        cdata2.ErrorLimit = "7";
+                                        cdata2.Result = glidedata.Result24 == "1" ? "1" : "2";
+                                        listc.Add(cdata2);
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata,listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传加载滑行标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传加载滑行标定信息]:成功\r\n");
+                                        }
+                                        #endregion
                                     }
                                 }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "寄生功率测试":
+                                #region 寄生功率
                                 newCsvPath = "C://jcdatatxt/" + "parasiticdata.csv";
                                 carinfor.JSGLdemarcate jsgldmct = new carinfor.JSGLdemarcate();
                                 parasiticdata = parasiticcontrol.readParasiticData(newPath);
@@ -573,6 +627,7 @@ namespace exhaustDetect
                                 {
                                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
                                     {
+                                        #region neusoft
                                         if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
                                         {
                                             ini.INIIO.WritePrivateProfileString("测功机上次运转时间", "时间", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), @".\detectConfig.ini");
@@ -776,9 +831,11 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存寄生功率标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "9");
@@ -818,7 +875,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
-
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                     {
@@ -901,12 +958,69 @@ namespace exhaustDetect
                                         #endregion
                                     }*/
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    #region 安徽联网
+                                    AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                    AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                    AhWebClient.ah_plhp_caldata cdata1 = new AhWebClient.ah_plhp_caldata();
+                                    AhWebClient.ah_plhp_caldata cdata2 = new AhWebClient.ah_plhp_caldata();
+                                    AhWebClient.ah_plhp_caldata cdata3 = new AhWebClient.ah_plhp_caldata();
+                                    AhWebClient.ah_plhp_caldata cdata4 = new AhWebClient.ah_plhp_caldata();
+                                    pdata.Type = "1";
+                                    pdata.BeginTime = DateTime.Parse(parasiticdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                    pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    pdata.Judge = (parasiticdata.Bdjg == "不合格" || parasiticdata.Bdjg == "0") ? "2" : "1";
+                                    jdata.type = "3";
+                                    jdata.InertiaEquivalent = parasiticdata.Diw;
+                                    jdata.CalibrateCount = "4";
+                                    int rowscount = parasiticdata.Hxsj.Split(',').Count();
+                                    List<AhWebClient.ah_plhp_caldata> listc = new List<AhWebClient.ah_plhp_caldata>();
+                                    cdata1.FromSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 4].Split('-')[0];
+                                    cdata1.ToSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 4].Split('-')[1];
+                                    cdata1.NominalSpeed = parasiticdata.Mysd.Split(',')[rowscount - 4];
+                                    cdata1.ActualTime = parasiticdata.Hxsj.Split(',')[rowscount - 4];
+                                    cdata1.WattlessOutput = parasiticdata.Jsgl.Split(',')[rowscount - 4];                                    
+                                    listc.Add(cdata1);
+                                    cdata2.FromSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 3].Split('-')[0];
+                                    cdata2.ToSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 3].Split('-')[1];
+                                    cdata2.NominalSpeed = parasiticdata.Mysd.Split(',')[rowscount - 3];
+                                    cdata2.ActualTime = parasiticdata.Hxsj.Split(',')[rowscount - 3];
+                                    cdata2.WattlessOutput = parasiticdata.Jsgl.Split(',')[rowscount - 3];
+                                    listc.Add(cdata2);
+                                    cdata3.FromSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 2].Split('-')[0];
+                                    cdata3.ToSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 2].Split('-')[1];
+                                    cdata3.NominalSpeed = parasiticdata.Mysd.Split(',')[rowscount - 2];
+                                    cdata3.ActualTime = parasiticdata.Hxsj.Split(',')[rowscount - 2];
+                                    cdata3.WattlessOutput = parasiticdata.Jsgl.Split(',')[rowscount - 2];
+                                    listc.Add(cdata3);
+                                    cdata4.FromSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 1].Split('-')[0];
+                                    cdata4.ToSpeed = parasiticdata.Sdqj.Split(',')[rowscount - 1].Split('-')[1];
+                                    cdata4.NominalSpeed = parasiticdata.Mysd.Split(',')[rowscount - 1];
+                                    cdata4.ActualTime = parasiticdata.Hxsj.Split(',')[rowscount - 1];
+                                    cdata4.WattlessOutput = parasiticdata.Jsgl.Split(',')[rowscount - 1];
+                                    listc.Add(cdata4);
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("[上传寄生功率标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                    }
+                                    else
+                                    {
+                                        ini.INIIO.saveLogInf("[上传寄生功率标定信息]:成功\r\n");
+                                    }
+                                    #endregion
+                                }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "惯量测试":
+                                #region
                                 inertnessdata = inertnesscontrol.readInertnessData(newPath);
                                 demarcatecontrol.saveInertnessDataByIni(inertnessdata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (inertnessdata.Bdjg == "不合格")
@@ -919,6 +1033,7 @@ namespace exhaustDetect
                                         mainPanel.stationcontrol.updateLineLockState(mainPanel.stationid, mainPanel.lineid, "Y", "惯量测试未通过");
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         { }
                                         else if (mainPanel.tynettype == mainPanel.TYNETTYPE_SDYT)
@@ -969,6 +1084,7 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存惯量标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                 }
                                 else if (inertnessdata.Bdjg == "合格")
@@ -981,6 +1097,7 @@ namespace exhaustDetect
                                         mainPanel.stationcontrol.updateLineLockState(mainPanel.stationid, mainPanel.lineid, "N", "");
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         {
                                         }
@@ -1032,18 +1149,88 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存惯量标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                 }
                                 else
                                 {
                                     Msg(label1, panel4, "惯量测试未完成退出");
                                 }
+                                if(inertnessdata.Bdjg=="合格"||inertnessdata.Bdjg=="不合格")
+                                {
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        AhWebClient.ah_gl_caldata cdata1 = new AhWebClient.ah_gl_caldata();
+                                        AhWebClient.ah_gl_caldata cdata2 = new AhWebClient.ah_gl_caldata();
+                                        AhWebClient.ah_gl_caldata cdata3 = new AhWebClient.ah_gl_caldata();
+                                        pdata.Type = "1";
+                                        pdata.BeginTime = DateTime.Now.AddMinutes(-10).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.Judge = (inertnessdata.Bdjg == "不合格" || inertnessdata.Bdjg == "0") ? "2" : "1";
+                                        jdata.type = "6";
+                                        jdata.CalibrateCount = "3";
+                                        List<AhWebClient.ah_gl_caldata> listc = new List<AhWebClient.ah_gl_caldata>();
+                                        cdata1.NominalValue = inertnessdata.Diw_bc;
+                                        cdata1.FromSpeed = "48";
+                                        cdata1.ToSpeed = "16";
+                                        cdata1.ForceSettingValue1 = "0";
+                                        cdata1.ActualTime1 = inertnessdata.Acd1_1;
+                                        cdata1.ForceRealTime1 = inertnessdata.force1_1;
+                                        cdata1.ForceSettingValue2 = "1170";
+                                        cdata1.ActualTime2 = inertnessdata.Acd2_1;
+                                        cdata1.ForceRealTime2 = inertnessdata.force2_1;
+                                        cdata1.RealValue = inertnessdata.Diw_1;
+                                        cdata1.Deviation = (double.Parse(inertnessdata.Diw_1) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
+                                        listc.Add(cdata1);
+                                        cdata2.NominalValue = inertnessdata.Diw_bc;
+                                        cdata2.FromSpeed = "48";
+                                        cdata2.ToSpeed = "16";
+                                        cdata2.ForceSettingValue1 = "0";
+                                        cdata2.ActualTime1 = inertnessdata.Acd1_2;
+                                        cdata2.ForceRealTime1 = inertnessdata.force1_2;
+                                        cdata2.ForceSettingValue2 = "1170";
+                                        cdata2.ActualTime2 = inertnessdata.Acd2_2;
+                                        cdata2.ForceRealTime2 = inertnessdata.force2_2;
+                                        cdata2.RealValue = inertnessdata.Diw_2;
+                                        cdata2.Deviation = (double.Parse(inertnessdata.Diw_2) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
+                                        listc.Add(cdata2);
+                                        cdata3.NominalValue = inertnessdata.Diw_bc;
+                                        cdata3.FromSpeed = "48";
+                                        cdata3.ToSpeed = "16";
+                                        cdata3.ForceSettingValue1 = "0";
+                                        cdata3.ActualTime1 = inertnessdata.Acd1_3;
+                                        cdata3.ForceRealTime1 = inertnessdata.force1_3;
+                                        cdata3.ForceSettingValue2 = "1170";
+                                        cdata3.ActualTime2 = inertnessdata.Acd2_3;
+                                        cdata3.ForceRealTime2 = inertnessdata.force2_3;
+                                        cdata3.RealValue = inertnessdata.Diw_3;
+                                        cdata3.Deviation = (double.Parse(inertnessdata.Diw_3) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
+                                        listc.Add(cdata3);
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_GL_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传惯量标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传惯量标定信息]:成功\r\n");
+                                        }
+                                        #endregion
+                                    }
+                                }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "废气仪标定":
+                                #region 废气仪标定
                                 newCsvPath = "C://jcdatatxt/" + "AnalyzerCalCheck.csv";
                                 //carinfor.FQYdemarcate fqydmct = new carinfor.FQYdemarcate();
                                 analysismeterdata = analysismetercontrol.readAnalysisMeterData(newPath);
@@ -1066,6 +1253,7 @@ namespace exhaustDetect
                                 {
                                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
                                     {
+                                        #region neusoft
                                         if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
                                         {
                                             string isCsvAlive = "";
@@ -1147,10 +1335,11 @@ namespace exhaustDetect
                                                 Msg(label1, panel4, "检查失败,没有找到过程数据");
                                             }
                                         }
-                                        
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         {
                                             Hashtable hstb = new Hashtable();
@@ -1328,9 +1517,11 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存废气仪标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "2");
@@ -1381,7 +1572,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
-
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                     {
@@ -1503,6 +1694,7 @@ namespace exhaustDetect
 
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                                     {
+                                        #region ezhou
                                         try
                                         {
                                             string msg, code;
@@ -1540,14 +1732,82 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送[自检/校准]命令发生异常:" + er.Message);
                                         }
+                                        #endregion
+                                    }
+
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        List<AhWebClient.ah_fxy_caldata> listc = new List<AhWebClient.ah_fxy_caldata>();
+                                        AhWebClient.ah_fxy_caldata cdata = new AhWebClient.ah_fxy_caldata();
+                                        pdata.Type = "4";
+                                        
+                                        pdata.BeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        jdata.type = "1";
+                                        jdata.CalibrateCount = "1";
+                                        
+                                        cdata.HCErrorLimit = "5";
+                                        cdata.COErrorLimit = "5";
+                                        cdata.CO2ErrorLimit = "5";
+                                        cdata.NOErrorLimit = "8";
+                                        cdata.ConcentrationType = (analysismeterdata.Gdjz == "0" ? "3" : "1");
+                                        cdata.HCNominalValue = analysismeterdata.Hcbz.ToString("0");
+                                        cdata.HCRealValue = analysismeterdata.Hcclz.ToString("0");
+                                        cdata.HCDeviation = analysismeterdata.hcpc;
+
+                                        cdata.CONominalValue = analysismeterdata.Cobz.ToString("0.00");
+                                        cdata.CORealValue = analysismeterdata.Coclz.ToString("0.00");
+                                        cdata.CODeviation = analysismeterdata.copc;
+
+                                        cdata.CO2NominalValue = analysismeterdata.Co2bz.ToString("0.00");
+                                        cdata.CO2RealValue = analysismeterdata.Co2clz.ToString("0.00");
+                                        cdata.CO2Deviation = analysismeterdata.co2pc;
+
+                                        cdata.NONominalValue = analysismeterdata.Nobz.ToString("0");
+                                        cdata.NORealValue = analysismeterdata.Noclz.ToString("0");
+                                        cdata.NODeviation = analysismeterdata.nopc;
+
+                                        cdata.HCResult = (double.Parse(cdata.HCDeviation) > 5) ? "2" : "1";
+                                        cdata.COResult = (double.Parse(cdata.CODeviation) > 5) ? "2" : "1";
+                                        cdata.CO2Result = (double.Parse(cdata.CO2Deviation) > 5) ? "2" : "1";
+                                        cdata.NOResult = (double.Parse(cdata.NODeviation) > 8) ? "2" : "1";
+
+                                        cdata.O2NominalValue = "0";
+                                        cdata.O2RealValue = "0";
+                                        cdata.O2Deviation = "0";
+                                        cdata.O2Result = "1";
+                                        cdata.O2ErrorLimit = "5";
+                                        cdata.PEF = analysismeterdata.Pef;
+                                        listc.Add(cdata);
+                                        if (cdata.HCResult == "1" && cdata.COResult == "1" && cdata.CO2Result == "1" && cdata.NOResult == "1")
+                                            pdata.Judge = "1";
+                                        else
+                                            pdata.Judge = "2";
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata,jdata, listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪标定信息]:成功\r\n");
+                                        }
+                                        #endregion
                                     }
                                 }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "废气仪检查":
+                                #region 废气仪检查
                                 newCsvPath = "C://jcdatatxt/" + "AnalyzerCalCheck.csv";
                                 //carinfor.FQYdemarcate fqydmct = new carinfor.FQYdemarcate();
                                 analysismeterdata = analysismetercontrol.readAnalysisMeterData(newPath);
@@ -1596,6 +1856,7 @@ namespace exhaustDetect
                                 {
                                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
                                     {
+                                        #region neusoft
                                         if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
                                         {
                                             string isCsvAlive = "";
@@ -1677,9 +1938,11 @@ namespace exhaustDetect
                                                 Msg(label1, panel4, "检查失败,没有找到过程数据");
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         {
                                             Hashtable hstb = new Hashtable();
@@ -1866,9 +2129,11 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存废气仪标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                                     {
+                                        #region jiangxi
                                         if (analysismeterdata.Gdjz == "0")//高
                                         {
                                             JxWebClient.jxFqyBaseCheckdata jxdata = new JxWebClient.jxFqyBaseCheckdata();
@@ -1923,7 +2188,7 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                                             }
                                         }
-
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                                     {
@@ -2020,6 +2285,7 @@ namespace exhaustDetect
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "2");
@@ -2070,7 +2336,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
-
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                     {
@@ -2181,6 +2447,7 @@ namespace exhaustDetect
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                                     {
+                                        #region ezhou
                                         try
                                         {
                                             string msg, code;
@@ -2218,6 +2485,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送[自检/校准]命令发生异常:" + er.Message);
                                         }
+                                        #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
                                     {
@@ -2307,13 +2575,130 @@ namespace exhaustDetect
                                         }
                                         #endregion
                                     }
+
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                                        AhWebClient.ah_fxyjc_selfcheckdata cdata2 = new AhWebClient.ah_fxyjc_selfcheckdata();
+                                        AhWebClient.ah_fxy_selfcheckdata cdata = new AhWebClient.ah_fxy_selfcheckdata();
+                                        pdata.DeviceType = "2";
+                                        pdata.BeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime =DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        cdata.type = "1";
+                                        cdata.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyyMMddHHmmss");
+                                        cdata.CommCheck ="1";
+                                        cdata.PreheatInstrument = "1";
+                                        cdata.Tightness ="1";
+                                        cdata.InstrumentZero = "1";
+                                        cdata.FlowResult = "1";
+                                        cdata.ResidualHC = "0";
+                                            cdata.HCErrorLimit = "5";
+                                            cdata.COErrorLimit = "5";
+                                            cdata.CO2ErrorLimit = "5";
+                                            cdata.NOErrorLimit = "8";
+                                        cdata.ConcentrationType = (analysismeterdata.Gdjz == "0" ? "3" : "1");
+                                        cdata.HCNominalValue = analysismeterdata.Hcbz.ToString("0");
+                                        cdata.HCRealValue = analysismeterdata.Hcclz.ToString("0");
+                                        cdata.HCDeviation = analysismeterdata.hcpc;
+                                        
+                                        cdata.CONominalValue = analysismeterdata.Cobz.ToString("0.00");
+                                        cdata.CORealValue = analysismeterdata.Coclz.ToString("0.00");
+                                        cdata.CODeviation = analysismeterdata.copc;
+                                        
+                                        cdata.CO2NominalValue = analysismeterdata.Co2bz.ToString("0.00");
+                                        cdata.CO2RealValue = analysismeterdata.Co2clz.ToString("0.00");
+                                        cdata.CO2Deviation = analysismeterdata.co2pc;
+                                        
+                                        cdata.NONominalValue = analysismeterdata.Nobz.ToString("0");
+                                        cdata.NORealValue = analysismeterdata.Noclz.ToString("0");
+                                        cdata.NODeviation = analysismeterdata.nopc;
+
+                                        cdata.HCResult = (double.Parse(cdata.HCDeviation) > 5) ? "2" : "1";
+                                        cdata.COResult = (double.Parse(cdata.CODeviation) > 5) ? "2" : "1";
+                                        cdata.CO2Result = (double.Parse(cdata.CO2Deviation) > 5) ? "2" : "1";
+                                        cdata.NOResult = (double.Parse(cdata.NODeviation) > 8) ? "2" : "1";
+
+                                        cdata.O2NominalValue = "0";
+                                        cdata.O2RealValue = "0";
+                                        cdata.O2Deviation = "0";
+                                        cdata.O2Result = "1";
+                                        cdata.O2ErrorLimit = "5";
+                                        cdata.PEF = analysismeterdata.Pef;
+                                        if (cdata.HCResult == "1" && cdata.COResult == "1" && cdata.CO2Result == "1" && cdata.NOResult == "1")
+                                            pdata.Judge = "1";
+                                        else
+                                            pdata.Judge = "2";
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪检查数据自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪检查数据自检信息]:成功\r\n");
+                                        }
+                                        cdata2.type = "2";
+                                        cdata2.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyyMMddHHmmss");
+                                       
+                                        cdata2.HCErrorLimit = "5";
+                                        cdata2.COErrorLimit = "5";
+                                        cdata2.CO2ErrorLimit = "5";
+                                        cdata2.NOErrorLimit = "8";
+                                        cdata2.ConcentrationType = (analysismeterdata.Gdjz == "0" ? "3" : "1");
+                                        cdata2.HCNominalValue = analysismeterdata.Hcbz.ToString("0");
+                                        cdata2.HCRealValue = analysismeterdata.Hcclz.ToString("0");
+                                        cdata2.HCDeviation = analysismeterdata.hcpc;
+
+                                        cdata2.CONominalValue = analysismeterdata.Cobz.ToString("0.00");
+                                        cdata2.CORealValue = analysismeterdata.Coclz.ToString("0.00");
+                                        cdata2.CODeviation = analysismeterdata.copc;
+
+                                        cdata2.CO2NominalValue = analysismeterdata.Co2bz.ToString("0.00");
+                                        cdata2.CO2RealValue = analysismeterdata.Co2clz.ToString("0.00");
+                                        cdata2.CO2Deviation = analysismeterdata.co2pc;
+
+                                        cdata2.NONominalValue = analysismeterdata.Nobz.ToString("0");
+                                        cdata2.NORealValue = analysismeterdata.Noclz.ToString("0");
+                                        cdata2.NODeviation = analysismeterdata.nopc;
+
+                                        cdata2.HCResult = (double.Parse(cdata2.HCDeviation) > 5) ? "2" : "1";
+                                        cdata2.COResult = (double.Parse(cdata2.CODeviation) > 5) ? "2" : "1";
+                                        cdata2.CO2Result = (double.Parse(cdata2.CO2Deviation) > 5) ? "2" : "1";
+                                        cdata2.NOResult = (double.Parse(cdata2.NODeviation) > 8) ? "2" : "1";
+
+                                        cdata2.O2NominalValue = "0";
+                                        cdata2.O2RealValue = "0";
+                                        cdata2.O2Deviation = "0";
+                                        cdata2.O2Result = "1";
+                                        cdata2.O2ErrorLimit = "5";
+                                        cdata2.PEF = analysismeterdata.Pef;
+                                        if (cdata2.HCResult == "1" && cdata2.COResult == "1" && cdata2.CO2Result == "1" && cdata2.NOResult == "1")
+                                            pdata.Judge = "1";
+                                        else
+                                            pdata.Judge = "2";
+                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪低量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传尾气分析仪低量程检查自检信息]:成功\r\n");
+                                        }
+                                        #endregion
+                                    }
                                 }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "流量计检测":
+                                #region 流量计检测 
                                 flowmeterdata = flowmetercontrol.readFlowMeterData(newPath);
                                 demarcatecontrol.saveFlowmeterDataByIni(flowmeterdata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (flowmeterdata.Bdjg == "-1")
@@ -2426,8 +2811,10 @@ namespace exhaustDetect
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "烟度计检查":
+                                #region
                                 smokedata = smokeini.readAnalysisMeterData(newPath);
                                 demarcatecontrol.saveSmokeDataByIni(smokedata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (smokedata.Bdjg == "不合格")
@@ -2507,6 +2894,7 @@ namespace exhaustDetect
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "3");
@@ -2545,7 +2933,42 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
+                                        #endregion
+                                    }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        List<AhWebClient.ah_ydj_caldata> listc = new List<AhWebClient.ah_ydj_caldata>();
+                                        AhWebClient.ah_ydj_caldata cdata = new AhWebClient.ah_ydj_caldata();
+                                        pdata.Type = "5";
 
+                                        pdata.BeginTime = DateTime.Now.AddMinutes(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        jdata.type = "1";
+                                        jdata.CalibrateCount = "1";
+
+                                        cdata.NominalValue = smokedata.Kbz.ToString("0.00");
+                                        cdata.RealValue = smokedata.Kscz.ToString("0.00");
+                                        cdata.Deviation = smokedata.Krelwc.ToString("0.00");
+                                        cdata.ErrorLimit = "2";
+                                        cdata.Result = smokedata.Bdjg == "不合格" ? "2" : "1";
+                                        listc.Add(cdata);
+
+                                        pdata.Judge = (smokedata.Bdjg == "不合格") ? "2" : "1";
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传烟度计标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传烟度计标定信息]:成功\r\n");
+                                        }
+                                        #endregion
                                     }
                                     /*
                                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
@@ -2578,8 +3001,9 @@ namespace exhaustDetect
                                             }
                                         }
                                     }*/
-                                    else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (smokedata.Bdjg == "合格" || smokedata.Bdjg == "不合格")
                                         {
                                             newCsvPath = "C://jcdatatxt/" + "SmokemeterCal.csv";
@@ -2679,7 +3103,8 @@ namespace exhaustDetect
                                                 }
                                             }
                                         }
-                                    }                                    
+                                        #endregion
+                                    }
                                     else
                                     {
                                         Msg(label1, panel4, "烟度计标定完成");
@@ -2693,8 +3118,10 @@ namespace exhaustDetect
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "气象站校准":
+                                #region
                                 tempdata = tempini.readAnalysisMeterData(newPath);
                                 demarcatecontrol.saveTemperatureDataByIni(tempdata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (tempdata.Bdjg == "不合格")
@@ -2705,6 +3132,7 @@ namespace exhaustDetect
                                         mainPanel.stationcontrol.updateLineLockState(mainPanel.stationid, mainPanel.lineid, "Y", "气象站检查未通过");
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "5");
@@ -2746,7 +3174,7 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
-
+                                        #endregion
                                     }
                                 }
                                 else if (tempdata.Bdjg == "-2")
@@ -2763,6 +3191,7 @@ namespace exhaustDetect
 
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                     {
+                                        #region hunan
                                         string code, msg;
                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                         ht.Add("jzxmid", "5");
@@ -2804,7 +3233,53 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                         }
+                                        #endregion
+                                    }
+                                }
+                                if(tempdata.Bdjg=="合格"||tempdata.Bdjg=="不合格")
+                                {
 
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        List<AhWebClient.ah_dzhj_caldata> listc = new List<AhWebClient.ah_dzhj_caldata>();
+                                        AhWebClient.ah_dzhj_caldata cdata = new AhWebClient.ah_dzhj_caldata();
+                                        pdata.Type = "3";
+
+                                        pdata.BeginTime = DateTime.Now.AddMinutes(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        jdata.type = "1";
+                                        jdata.CalibrateCount = "1";
+
+                                        cdata.TemperatureNominalValue = tempdata.Wdbz.ToString("0.0");
+                                        cdata.TemperatureRealValue = tempdata.Wdscz.ToString("0.0");
+                                        cdata.TemperatureResult = tempdata.Bzsm.Split(';')[0] == "×" ? "2" : "1";
+
+                                        cdata.HumidityNominalValue = tempdata.Sdbz.ToString("0.0");
+                                        cdata.HumidityRealValue = tempdata.Sdscz.ToString("0.0");
+                                        cdata.HumidityResult = tempdata.Bzsm.Split(';')[1] == "×" ? "2" : "1";
+
+                                        cdata.BaroNominalValue = tempdata.Dqybz.ToString("0.0");
+                                        cdata.BaroRealValue = tempdata.Dqyscz.ToString("0.0");
+                                        cdata.BaroResult = tempdata.Bzsm.Split(';')[2] == "×" ? "2" : "1";
+                                        
+                                        listc.Add(cdata);
+
+                                        pdata.Judge = (tempdata.Bdjg=="不合格")?"2":"1";
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传气象站标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传气象站标定信息]:成功\r\n");
+                                        }
+                                        #endregion
                                     }
                                 }
                                 File.Delete(newPath);
@@ -2812,8 +3287,10 @@ namespace exhaustDetect
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 //writeExcel.writeSelfCheckData(tempdata);
                                 return;
+                                #endregion
                                 break;
                             case "变载荷滑行测试":
+                                #region
                                 bzglidedata = bzglidecontrol.readAnalysisMeterData(newPath);
                                 demarcatecontrol.saveBzGlideDataByIni(bzglidedata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (bzglidedata.Bdjg == "-1")
@@ -2837,8 +3314,10 @@ namespace exhaustDetect
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "响应时间测试":
+                                #region
                                 xysjdata = xysjcontrol.readAnalysisMeterData(newPath);
                                 demarcatecontrol.saveAnswerTimeByIni(xysjdata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (xysjdata.Bdjg == "不合格")
@@ -2849,6 +3328,7 @@ namespace exhaustDetect
                                     worklogdata.Result = "未通过";
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         { }
                                         else if (mainPanel.tynettype == mainPanel.TYNETTYPE_SDYT)
@@ -2903,6 +3383,7 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存响应时间标定信息语句失败");
                                             }
                                         }
+                                        #endregion
                                     }
                                 }
                                 else if (xysjdata.Bdjg == "-2")
@@ -2916,6 +3397,7 @@ namespace exhaustDetect
                                     Msg(label1, panel4, "响应时间测试结果合格");
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                     {
+                                        #region general
                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                         {
                                         }
@@ -2971,14 +3453,53 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("保存响应时间标定信息语句失败");
                                             }
                                         }
+                                        #endregion
+                                    }
+                                }
+                                if(xysjdata.Bdjg=="合格"||xysjdata.Bdjg=="不合格")
+                                {
+
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽联网
+                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                        AhWebClient.ah_xysj_caldata cdata1 = new AhWebClient.ah_xysj_caldata();
+                                        pdata.Type = "1";
+                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                        jdata.type = "7";
+                                        jdata.CalibrateCount = "1";
+                                        List<AhWebClient.ah_xysj_caldata> listc = new List<AhWebClient.ah_xysj_caldata>();
+                                        cdata1.StartSpeed = "64.4";
+                                        cdata1.MaxSpeed = xysjdata.Sd;
+                                        cdata1.MinSpeed = "40";
+                                        cdata1.ResponseTime = xysjdata.XyTime;
+                                        cdata1.StabilizationTime = xysjdata.WdTime;
+                                        pdata.Judge = (double.Parse(xysjdata.XyTime) > 300 || double.Parse(xysjdata.WdTime) > 600) ? "2" : "1";
+                                        listc.Add(cdata1);
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("[上传响应时间标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("[上传响应时间标定信息]:成功\r\n");
+                                        }
+                                        #endregion
                                     }
                                 }
                                 File.Delete(newPath);
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "预热":
+                                #region
                                 yuredata = yurecontrol.readYureData(newPath);
                                 //demarcatecontrol.saveGlideDataByIni(glidedata, mainPanel.stationid, mainPanel.lineid, bdrq);
                                 if (yuredata == "0")
@@ -2999,8 +3520,10 @@ namespace exhaustDetect
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "扭力标定":
+                                #region 
                                 if (true)
                                 {
                                     if(true)
@@ -3069,6 +3592,7 @@ namespace exhaustDetect
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                                     {
+                                                        #region general
                                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                                         {
                                                             Hashtable hstb = new Hashtable();
@@ -3175,9 +3699,11 @@ namespace exhaustDetect
                                                                 ini.INIIO.saveLogInf("保存扭力标定信息语句失败");
                                                             }
                                                         }
+                                                        #endregion
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                                     {
+                                                        #region hunan
                                                         string code, msg;
                                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                                         ht.Add("jzxmid", "7");
@@ -3218,7 +3744,7 @@ namespace exhaustDetect
                                                         {
                                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                                         }
-
+                                                        #endregion
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                                     {
@@ -3290,6 +3816,48 @@ namespace exhaustDetect
                                                         }
                                                         #endregion
                                                     }
+
+                                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                                    {
+                                                        #region 安徽联网
+                                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                                        pdata.Type = "1";
+                                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        pdata.Judge =  "1";
+                                                        jdata.type = "4";
+                                                        jdata.CalibrateCount = (dataseconds.Rows.Count - 1).ToString();
+                                                        List<AhWebClient.ah_force_caldata> listc = new List<AhWebClient.ah_force_caldata>();
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            AhWebClient.ah_force_caldata cdata = new AhWebClient.ah_force_caldata();
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            double wc = 0;
+                                                            double relwc = 0;
+                                                            wc = Math.Abs(double.Parse(dr["标定点(N)"].ToString()) - double.Parse(dr["实测重量(N)"].ToString()));
+                                                            relwc = Math.Round(wc * 100.0 / double.Parse(dr["标定点(N)"].ToString()), 1);
+                                                            cdata.NominalValue = dr["标定点(N)"].ToString();
+                                                            cdata.RealValue= dr["实测重量(N)"].ToString();
+                                                            cdata.ErrorLimit ="1";
+                                                            cdata.Deviation = relwc.ToString("0.0");
+                                                            cdata.Result = (relwc > 1 ? "2" : "1");
+                                                            if (cdata.Result == "2") pdata.Judge = "2";
+                                                            listc.Add(cdata);
+                                                        }
+                                                        int ahresult = 0;
+                                                        string ahErrMsg = "";
+                                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("[上传扭力标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                                        }
+                                                        else
+                                                        {
+                                                            ini.INIIO.saveLogInf("[上传扭力标定信息]:成功\r\n");
+                                                        }
+                                                        #endregion
+                                                    }
                                                     demarcatecontrol.saveYljDataByIni(yljdata, mainPanel.stationid, mainPanel.lineid, DateTime.Now);
                                                     if (yljdata.Bdjg == "合格")
                                                     {
@@ -3339,10 +3907,11 @@ namespace exhaustDetect
                                 worklogdata.Result = "";
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             case "速度标定":
                                 //mainPanel.stationcontrol.setDemarcateTimebyName(mainPanel.stationid, mainPanel.lineid, "SDDATE", DateTime.Now.ToString());
-
+                                #region 
                                 if (true)
                                 {
                                     if (true)
@@ -3396,6 +3965,7 @@ namespace exhaustDetect
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
                                                     {
+                                                        #region general
                                                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                                                         {
                                                             Hashtable hstb = new Hashtable();
@@ -3493,9 +4063,11 @@ namespace exhaustDetect
                                                                 ini.INIIO.saveLogInf("保存速度标定信息语句失败");
                                                             }
                                                         }
+                                                        #endregion
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                                                     {
+                                                        #region hunan
                                                         string code, msg;
                                                         System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                                         ht.Add("jzxmid", "8");
@@ -3536,7 +4108,7 @@ namespace exhaustDetect
                                                         {
                                                             ini.INIIO.saveLogInf("发送标定数据命令失败,code" + code + ",msg:" + msg);
                                                         }
-
+                                                        #endregion
                                                     }
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                                     {
@@ -3571,6 +4143,47 @@ namespace exhaustDetect
                                                             MessageBox.Show("发送速度标定信息失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                                             ini.INIIO.saveLogInf("发送速度标定信息失败,code" + code + ",msg:" + msg);
                                                             return;
+                                                        }
+                                                        #endregion
+                                                    }
+                                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                                    {
+                                                        #region 安徽联网
+                                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                                        pdata.Type = "1";
+                                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                        pdata.Judge = "1";
+                                                        jdata.type = "5";
+                                                        jdata.CalibrateCount = (dataseconds.Rows.Count - 1).ToString();
+                                                        List<AhWebClient.ah_force_caldata> listc = new List<AhWebClient.ah_force_caldata>();
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            AhWebClient.ah_force_caldata cdata = new AhWebClient.ah_force_caldata();
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            double wc = 0;
+                                                            double relwc = 0;
+                                                            wc = Math.Abs(double.Parse(dr["标准速度(Km/h)"].ToString()) - double.Parse(dr["实测速度(Km/h)"].ToString()));
+                                                            relwc = Math.Round(wc * 100.0 / double.Parse(dr["标准速度(Km/h)"].ToString()), 1);
+                                                            cdata.NominalValue = dr["标准速度(Km/h)"].ToString();
+                                                            cdata.RealValue = dr["实测速度(Km/h)"].ToString();
+                                                            cdata.Deviation= relwc.ToString("0.0");
+                                                            cdata.ErrorLimit = "0.5";
+                                                            cdata.Result = (relwc > 0.5? "2" : "1");
+                                                            if (cdata.Result == "2") pdata.Judge = "2";
+                                                            listc.Add(cdata);
+                                                        }
+                                                        int ahresult = 0;
+                                                        string ahErrMsg = "";
+                                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                                        {
+                                                            ini.INIIO.saveLogInf("[上传速度标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                                                        }
+                                                        else
+                                                        {
+                                                            ini.INIIO.saveLogInf("[上传速度标定信息]:成功\r\n");
                                                         }
                                                         #endregion
                                                     }
@@ -3626,6 +4239,7 @@ namespace exhaustDetect
                                 mainPanel.check_linezt();
                                 demarcatecontrol.saveWordLogByIni(worklogdata);
                                 return;
+                                #endregion
                                 break;
                             default:
                                 Msg(label1, panel4, "标定完成");
@@ -3878,6 +4492,17 @@ namespace exhaustDetect
                 string nhmsg, nhexpmsg;
                 mainPanel.nhinterface.SendUploadEquipmentStatus("4", out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
             }
+            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+            {
+                int ahresult = 0;
+                string ahErrMsg = "";
+                if (!mainPanel.ahinterface.BeginCalibrate(mainPanel.lineid, out ahresult, out ahErrMsg))
+                {
+                    ini.INIIO.saveLogInf("发送标定开始指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                    return;
+                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                }
+            }
             bdrq = DateTime.Now;
             switch (_bdnr)
             {
@@ -3951,6 +4576,17 @@ namespace exhaustDetect
                 int nhcode, nhexpcode;
                 string nhmsg, nhexpmsg;
                 mainPanel.nhinterface.SendUploadEquipmentStatus("1", out nhcode, out nhmsg, out nhexpcode, out nhexpmsg);
+            }
+            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+            {
+                int ahresult = 0;
+                string ahErrMsg = "";
+                if (!mainPanel.ahinterface.EndCalibrate(mainPanel.lineid,"1", out ahresult, out ahErrMsg))
+                {
+                    ini.INIIO.saveLogInf("发送标定结束指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                    //return;
+                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                }
             }
         }
     }

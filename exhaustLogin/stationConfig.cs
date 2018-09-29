@@ -101,6 +101,8 @@ namespace exhaustDetect
             ahwebinf.weburl = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("安徽联网", "LINEID", "36,37,38,39", temp, 2048, @".\appConfig.ini");
             ahwebinf.lineid = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("安徽联网", "VERSION", "v2.7", temp, 2048, @".\appConfig.ini");
+            ahwebinf.version = temp.ToString().Trim();
 
             ini.INIIO.GetPrivateProfileString("金华联网", "WEBURL", "http://10.33.139.24/services/inspService", temp, 2048, @".\appConfig.ini");
             jhwebinf.weburl = temp.ToString().Trim();
@@ -271,6 +273,8 @@ namespace exhaustDetect
 
             textBoxAhUrl.Text = ahwebinf.weburl;
             textBoxAHLINEID.Text = ahwebinf.lineid;
+            comboBoxAHVERSION.Text = ahwebinf.version;
+
             textBoxNhWsdl.Text = nhwebinf.weburl;
             textBoxNhLineID.Text = nhwebinf.lineid;
 
@@ -1452,6 +1456,7 @@ namespace exhaustDetect
             ini.INIIO.WritePrivateProfileString("金华联网", "CHECKPRINT", checkBoxJHCHECKPRINT.Checked ? "Y" : "N", @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("安徽联网", "WEBURL", textBoxAhUrl.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("安徽联网", "LINEID", textBoxAHLINEID.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("安徽联网", "VERSION", comboBoxAHVERSION.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("联网模式", "模式", comboBoxNETMODE.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("通用联网模式", "联网模式", comboBoxTYNETTYPE.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("南华联网", "WEBURL", textBoxNhWsdl.Text, @".\appConfig.ini");

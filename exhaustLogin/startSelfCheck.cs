@@ -486,6 +486,32 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        AhWebClient.ah_zsj_selfcheckdata cdata = new AhWebClient.ah_zsj_selfcheckdata();
+                        pdata.DeviceType = "5";
+                        pdata.BeginTime = DateTime.Now.AddSeconds(-10).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.Judge = (checkstate.Zjjg == "不合格" || checkstate.Zjjg == "0") ? "2" : "1";
+                        cdata.type = "1";
+                        cdata.CommCheck = "1";
+                        cdata.IdleSpeed = checkstate.Dszs;
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata,cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传转速计自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                            
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传转速计自检信息]:成功\r\n");
+                        }
+                        #endregion
+                    }
                     #endregion
                 }
                 if (File.Exists(cgjPath))
@@ -1298,6 +1324,55 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        AhWebClient.ah_cgj_selfcheckdata cdata = new AhWebClient.ah_cgj_selfcheckdata();
+                        pdata.DeviceType = "1";
+                        pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.Judge = (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "2" : "1";
+                        cdata.type = "1";
+                        cdata.CommCheck = "1";
+                        cdata.LifterCheck = "1";
+                        cdata.PreheatBeginTime= DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        cdata.PreheatEndTime= DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        cdata.InertiaEquivalent = cgjdata.Gxdl;
+                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyyMMddHHmmss");
+                        if (cgjdata.Cs1 == "48,32")
+                        {
+                            cdata.QRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
+                            cdata.QRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
+                        }
+                        else
+                        {
+                            cdata.CRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
+                            cdata.CRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
+                        }
+                        cdata.Loss1 = cgjdata.Jsgl1;
+                        cdata.Loss2 = cgjdata.Jsgl2;
+                        cdata.NormalSlideTime1 = cgjdata.Hvitualtime.ToString("0.000");
+                        cdata.NormalSlideTime2 = cgjdata.Lvitualtime.ToString("0.000");
+                        cdata.IndicatedPower1 = cgjdata.Hpower.ToString("0");
+                        cdata.IndicatedPower2 = cgjdata.Lpower.ToString("0");
+                        cdata.CheckResult1 = double.Parse(cgjdata.Pc1) > 7 ? "2" : "1";
+                        cdata.CheckResult2 = double.Parse(cgjdata.Pc2) > 7 ? "2" : "1";
+                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyyMMddHHmmss");
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传测功机自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传测功机自检信息]:成功\r\n");
+                        }
+                        #endregion
+                    }
                     #endregion
                 }
                 if (File.Exists(ydjPath))
@@ -1839,6 +1914,41 @@ namespace exhaustDetect
                         catch (Exception er)
                         {
                             ini.INIIO.saveLogInf("发送烟度计标定命令异常:" + er.Message);
+                        }
+                        #endregion
+                    }
+
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        AhWebClient.ah_ydj_selfcheckdata cdata = new AhWebClient.ah_ydj_selfcheckdata();
+                        pdata.DeviceType = "3";
+                        pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.Judge = (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "2" : "1";
+                        cdata.type = "1";
+                        cdata.CommCheck = "1";
+                        cdata.PreheatInstrument = "1";
+                        cdata.InstrumentZero = cgjdata.ZeroResult == "1" ? "1" : "2";
+                        cdata.RangeCheck = (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "2" : "1";
+                        cdata.CheckCount = "2";
+                        cdata.SettingValue1 = cgjdata.LabelValueN50.ToString("0.00");
+                        cdata.RealValue1 = cgjdata.N501.ToString("0.00");
+                        cdata.Deviation1 = cgjdata.Error501.ToString("0.00");
+                        cdata.SettingValue2 = cgjdata.LabelValueN70.ToString("0.00");
+                        cdata.RealValue2 = cgjdata.N701.ToString("0.00");
+                        cdata.Deviation2 = cgjdata.Error701.ToString("0.00");
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传烟度计自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传烟度计自检信息]:成功\r\n");
                         }
                         #endregion
                     }
@@ -2607,6 +2717,36 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        AhWebClient.ah_dzhj_selfcheckdata cdata = new AhWebClient.ah_dzhj_selfcheckdata();
+                        pdata.DeviceType = "4";
+                        pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.Judge = (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "2" : "1";
+                        cdata.type = "1";
+                        cdata.CommCheck = "1";
+                        cdata.EnvTemperature =cgjdata.ActualTemperature.ToString("0.0");
+                        cdata.InstrumentTemperature = cgjdata.Temperature.ToString("0.0");
+                        cdata.EnvHumidity = cgjdata.ActualHumidity.ToString("0.0");
+                        cdata.InstrumentHumidity = cgjdata.Humidity.ToString("0.0");
+                        cdata.EnvPressure = cgjdata.ActualAirPressure.ToString("0.0");
+                        cdata.InstrumentPressure = cgjdata.AirPressure.ToString("0.0");
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传电子环境自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传电子环境自检信息]:成功\r\n");
+                        }
+                        #endregion
+                    }
                     #endregion
                 }
                 if (File.Exists(fqyPath))
@@ -3165,6 +3305,45 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        //AhWebClient.ah_fxyjc_selfcheckdata cdata1 = new AhWebClient.ah_fxyjc_selfcheckdata();
+                        AhWebClient.ah_fxyo2_selfcheckdata cdata = new AhWebClient.ah_fxyo2_selfcheckdata();
+                        AhWebClient.ah_fxyleak_selfcheckdata cdata2 = new AhWebClient.ah_fxyleak_selfcheckdata();
+                        pdata.DeviceType = "2";
+                        pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        cdata.type = "3";
+                        cdata.NominalValue = "20.8";
+                        cdata.RealValue=cgjdata.Yqyq;
+                        cdata.Deviation = (double.Parse(cgjdata.Yqyq)-20.8).ToString("0.0");
+                        pdata.Judge = (double.Parse(cdata.Deviation)>0.1) ? "2" : "1";
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n");
+                        }
+                        cdata2.type = "4";
+                        cdata2.CheckBeginTime= DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:成功\r\n");
+                        }
+                        #endregion
+                    }
                     //writeExcel.writeSelfCheckData(cgjdata);
                     #endregion
                 }
@@ -3685,6 +3864,36 @@ namespace exhaustDetect
                             }
                             #endregion
                         }
+                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                        {
+                            #region 安徽联网
+                            AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                            AhWebClient.ah_cgj_plhp_selfcheckdata cdata = new AhWebClient.ah_cgj_plhp_selfcheckdata();
+                            pdata.DeviceType = "1";
+                            pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                            pdata.Judge = "1";
+                            cdata.type = "2";
+                            cdata.InertiaEquivalent =cgjdata.Remark;
+                            cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj2).ToString("yyyyMMddHHmmss");
+                            cdata.SlideEndTime = DateTime.Parse(cgjdata.jssj4).ToString("yyyyMMddHHmmss");
+                            cdata.RealSlideTime1 = cgjdata.hxsj2 ;
+                            cdata.RealSlideTime2 = cgjdata.hxsj4;
+                            cdata.Loss1 = cgjdata.Plhp2.ToString("0.00");
+                            cdata.Loss2 = cgjdata.Plhp4.ToString("0.00");
+                            int ahresult = 0;
+                            string ahErrMsg = "";
+                            if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                            {
+                                ini.INIIO.saveLogInf("[上传测功机附加功率损失自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                            }
+                            else
+                            {
+                                ini.INIIO.saveLogInf("[上传测功机附加功率损失自检信息]:成功\r\n");
+                            }
+                            #endregion
+                        }
                         zjfinishstring += "寄生功率完成|";
 
                         //mainPanel.stationcontrol.setlineYureTime(mainPanel.stationid, mainPanel.lineid, DateTime.Now);
@@ -4180,6 +4389,45 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                    {
+                        #region 安徽联网
+                        AhWebClient.ah_selfcheck_public_data pdata = new AhWebClient.ah_selfcheck_public_data();
+                        //AhWebClient.ah_fxyjc_selfcheckdata cdata1 = new AhWebClient.ah_fxyjc_selfcheckdata();
+                        AhWebClient.ah_fxyo2_selfcheckdata cdata = new AhWebClient.ah_fxyo2_selfcheckdata();
+                        AhWebClient.ah_fxyleak_selfcheckdata cdata2 = new AhWebClient.ah_fxyleak_selfcheckdata();
+                        pdata.DeviceType = "2";
+                        pdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        pdata.EndTime = DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
+                        cdata.type = "3";
+                        cdata.NominalValue = "20.8";
+                        cdata.RealValue = cgjdata.Yqyq;
+                        cdata.Deviation = (double.Parse(cgjdata.Yqyq) - 20.8).ToString("0.0");
+                        pdata.Judge = (double.Parse(cdata.Deviation) > 0.1) ? "2" : "1";
+                        int ahresult = 0;
+                        string ahErrMsg = "";
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:成功\r\n");
+                        }
+                        cdata2.type = "4";
+                        cdata2.CheckBeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+
+                        }
+                        else
+                        {
+                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n");
+                        }
+                        #endregion
+                    }
                     //writeExcel.writeSelfCheckData(cgjdata);
                     #endregion
                 }
@@ -4216,6 +4464,19 @@ namespace exhaustDetect
                             { }
                         }
 
+                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                        {
+                            int ahresult = 0;
+                            string ahErrMsg = "";
+                            if (!mainPanel.ahinterface.EndSelfTest(mainPanel.lineid, checkdata, out ahresult, out ahErrMsg))
+                            {
+                                ini.INIIO.saveLogInf("发送自检结束指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                //return;
+                                //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                            }
+                            else
+                                ini.INIIO.saveLogInf("发送自检结束指令成功");
+                        }
                         Msg(label1, panel4, "自检不合格，请车辆不要上线检测");
                         if (mainPanel.linesbbd.Zjenable)
                             mainPanel.stationcontrol.updateLineLockState(mainPanel.stationid, mainPanel.lineid, "Y", "自检未通过");
@@ -4258,6 +4519,20 @@ namespace exhaustDetect
                             }
                             catch
                             { }
+                        }
+
+                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                        {
+                            int ahresult = 0;
+                            string ahErrMsg = "";
+                            if (!mainPanel.ahinterface.EndSelfTest(mainPanel.lineid, checkdata, out ahresult, out ahErrMsg))
+                            {
+                                ini.INIIO.saveLogInf("发送自检结束指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                //return;
+                                //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                            }
+                            else
+                                ini.INIIO.saveLogInf("发送自检结束指令成功");
                         }
                         mainPanel.stationcontrol.setDemarcateTimebyName(mainPanel.stationid, mainPanel.lineid, "ZJDATE", DateTime.Now.ToString());
                         if (mainPanel.linemodel.LOCKREASON == "自检未通过")
@@ -4322,20 +4597,7 @@ namespace exhaustDetect
         private void startdemarcate_Load(object sender, EventArgs e)
         {
             //Msg(label1, panel4, "正在进行" + _bdnr);    
-            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
-            {
-                int ahresult = 0;
-                string ahErrMsg = "";
-                if (!mainPanel.ahinterface.BeginSelfTest(mainPanel.lineid, out ahresult, out ahErrMsg))
-                {
-                    button5.Visible = false;
-                    ini.INIIO.saveLogInf("发送自检开始指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                    return;
-                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                }
-                button5.Visible = true;
-            }
-            else
+            
                 button5.Visible = false;
         }
 
@@ -4364,7 +4626,19 @@ namespace exhaustDetect
                     ini.INIIO.saveLogInf("登录成功");
                 }
             }
-            
+            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+            {
+                int ahresult = 0;
+                string ahErrMsg = "";
+                if (!mainPanel.ahinterface.BeginSelfTest(mainPanel.lineid, out ahresult, out ahErrMsg))
+                {
+                    button5.Visible = false;
+                    ini.INIIO.saveLogInf("发送自检开始指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                    return;
+                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                }
+                button5.Visible = true;
+            }
             if (mainPanel.equipconfig.isTpTempInstrument)
             {
                 double wd = 0, sd = 0, dqy = 0;
@@ -4390,25 +4664,7 @@ namespace exhaustDetect
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string clid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
-            if (selfcheckcontrol.Have_SelfCheckData(clid))
-            {
-                SYS.Model.selfcheckdata checkdata = selfcheckcontrol.Get_SelfCheckData(clid);
-                int ahresult = 0;
-                string ahErrMsg = "";
-                if (!mainPanel.ahinterface.EndSelfTest(mainPanel.lineid, checkdata, out ahresult, out ahErrMsg))
-                {
-                    ini.INIIO.saveLogInf("发送自检结束指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                    return;
-                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                }
-                else
-                    MessageBox.Show("自检记录上传成功");
-            }
-            else
-            {
-                MessageBox.Show("没有检测到该日期的自检记录,不能完成上传", "提示！");
-            }
+            
         }
 
         private void startSelfCheck_FormClosing(object sender, FormClosingEventArgs e)

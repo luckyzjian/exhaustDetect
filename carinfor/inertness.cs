@@ -176,6 +176,13 @@ namespace carinfor
             get { return bdjg; }
             set { bdjg = value; }
         }
+
+        public string force1_1 { set; get; }
+        public string force1_2 { set; get; }
+        public string force1_3 { set; get; }
+        public string force2_1 { set; get; }
+        public string force2_2 { set; get; }
+        public string force2_3 { set; get; }
     }
     public class inertnessControl
     {
@@ -262,6 +269,18 @@ namespace carinfor
                     vmas_data.Diw_3 = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("标定数据", "平均值DIW", "", temp, 2048, filePath);
                     vmas_data.Diw = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force11", "", temp, 2048, filePath);
+                    vmas_data.force1_1 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force12", "", temp, 2048, filePath);
+                    vmas_data.force1_2 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force13", "", temp, 2048, filePath);
+                    vmas_data.force1_3 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force21", "", temp, 2048, filePath);
+                    vmas_data.force2_1 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force22", "", temp, 2048, filePath);
+                    vmas_data.force2_2 = temp.ToString();
+                    ini.INIIO.GetPrivateProfileString("标定数据", "force23", "", temp, 2048, filePath);
+                    vmas_data.force2_3 = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("标定数据", "标称", "", temp, 2048, filePath);
                     vmas_data.Diw_bc = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("标定数据", "实测", "", temp, 2048, filePath);

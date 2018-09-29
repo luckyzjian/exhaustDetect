@@ -378,11 +378,12 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.tabPage19 = new System.Windows.Forms.TabPage();
+            this.label180 = new System.Windows.Forms.Label();
+            this.label141 = new System.Windows.Forms.Label();
+            this.comboBoxTYNETTYPE = new System.Windows.Forms.ComboBox();
             this.panelEx2 = new DevComponents.DotNetBar.PanelEx();
             this.comboBoxNETMODE = new System.Windows.Forms.ComboBox();
             this.checkBoxUseHyDb = new System.Windows.Forms.CheckBox();
-            this.comboBoxTYNETTYPE = new System.Windows.Forms.ComboBox();
-            this.label141 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -494,7 +495,8 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label180 = new System.Windows.Forms.Label();
+            this.comboBoxAHVERSION = new System.Windows.Forms.ComboBox();
+            this.label181 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -3510,6 +3512,8 @@
             // tabPage17
             // 
             this.tabPage17.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage17.Controls.Add(this.comboBoxAHVERSION);
+            this.tabPage17.Controls.Add(this.label181);
             this.tabPage17.Controls.Add(this.textBoxAhUrl);
             this.tabPage17.Controls.Add(this.textBoxHhzUrl);
             this.tabPage17.Controls.Add(this.label70);
@@ -3705,7 +3709,7 @@
             // 
             // textBoxAHLINEID
             // 
-            this.textBoxAHLINEID.Location = new System.Drawing.Point(174, 56);
+            this.textBoxAHLINEID.Location = new System.Drawing.Point(174, 57);
             this.textBoxAHLINEID.Name = "textBoxAHLINEID";
             this.textBoxAHLINEID.Size = new System.Drawing.Size(175, 26);
             this.textBoxAHLINEID.TabIndex = 85;
@@ -3950,9 +3954,9 @@
             // 
             // textBoxCCFWQPORT
             // 
-            this.textBoxCCFWQPORT.Location = new System.Drawing.Point(262, 107);
+            this.textBoxCCFWQPORT.Location = new System.Drawing.Point(798, 52);
             this.textBoxCCFWQPORT.Name = "textBoxCCFWQPORT";
-            this.textBoxCCFWQPORT.Size = new System.Drawing.Size(87, 26);
+            this.textBoxCCFWQPORT.Size = new System.Drawing.Size(132, 26);
             this.textBoxCCFWQPORT.TabIndex = 36;
             // 
             // label105
@@ -3990,7 +3994,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label17.Location = new System.Drawing.Point(207, 112);
+            this.label17.Location = new System.Drawing.Point(730, 56);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(49, 14);
             this.label17.TabIndex = 35;
@@ -4005,7 +4009,7 @@
             // 
             // textBoxCCFWQIP
             // 
-            this.textBoxCCFWQIP.Location = new System.Drawing.Point(72, 107);
+            this.textBoxCCFWQIP.Location = new System.Drawing.Point(798, 25);
             this.textBoxCCFWQIP.Name = "textBoxCCFWQIP";
             this.textBoxCCFWQIP.Size = new System.Drawing.Size(132, 26);
             this.textBoxCCFWQIP.TabIndex = 34;
@@ -4031,7 +4035,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label18.Location = new System.Drawing.Point(4, 108);
+            this.label18.Location = new System.Drawing.Point(730, 30);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(63, 14);
             this.label18.TabIndex = 33;
@@ -4060,7 +4064,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
             this.label16.ForeColor = System.Drawing.Color.Blue;
-            this.label16.Location = new System.Drawing.Point(4, 86);
+            this.label16.Location = new System.Drawing.Point(730, 8);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(110, 16);
             this.label16.TabIndex = 32;
@@ -4252,6 +4256,41 @@
             this.tabPage19.Text = "其他";
             this.tabPage19.UseVisualStyleBackColor = true;
             // 
+            // label180
+            // 
+            this.label180.AutoSize = true;
+            this.label180.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
+            this.label180.ForeColor = System.Drawing.Color.Blue;
+            this.label180.Location = new System.Drawing.Point(16, 10);
+            this.label180.Name = "label180";
+            this.label180.Size = new System.Drawing.Size(76, 16);
+            this.label180.TabIndex = 142;
+            this.label180.Text = "通用联网";
+            // 
+            // label141
+            // 
+            this.label141.AutoSize = true;
+            this.label141.Font = new System.Drawing.Font("楷体", 11F);
+            this.label141.ForeColor = System.Drawing.Color.Black;
+            this.label141.Location = new System.Drawing.Point(19, 42);
+            this.label141.Name = "label141";
+            this.label141.Size = new System.Drawing.Size(71, 15);
+            this.label141.TabIndex = 141;
+            this.label141.Text = "联网地区";
+            // 
+            // comboBoxTYNETTYPE
+            // 
+            this.comboBoxTYNETTYPE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTYNETTYPE.FormattingEnabled = true;
+            this.comboBoxTYNETTYPE.Items.AddRange(new object[] {
+            "安车烟台",
+            "安车大连",
+            "其他"});
+            this.comboBoxTYNETTYPE.Location = new System.Drawing.Point(92, 38);
+            this.comboBoxTYNETTYPE.Name = "comboBoxTYNETTYPE";
+            this.comboBoxTYNETTYPE.Size = new System.Drawing.Size(173, 24);
+            this.comboBoxTYNETTYPE.TabIndex = 140;
+            // 
             // panelEx2
             // 
             this.panelEx2.CanvasColor = System.Drawing.SystemColors.Control;
@@ -4313,30 +4352,6 @@
             this.checkBoxUseHyDb.TabIndex = 130;
             this.checkBoxUseHyDb.Text = "同步华燕数据库";
             this.checkBoxUseHyDb.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxTYNETTYPE
-            // 
-            this.comboBoxTYNETTYPE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxTYNETTYPE.FormattingEnabled = true;
-            this.comboBoxTYNETTYPE.Items.AddRange(new object[] {
-            "安车烟台",
-            "安车大连",
-            "其他"});
-            this.comboBoxTYNETTYPE.Location = new System.Drawing.Point(92, 38);
-            this.comboBoxTYNETTYPE.Name = "comboBoxTYNETTYPE";
-            this.comboBoxTYNETTYPE.Size = new System.Drawing.Size(173, 24);
-            this.comboBoxTYNETTYPE.TabIndex = 140;
-            // 
-            // label141
-            // 
-            this.label141.AutoSize = true;
-            this.label141.Font = new System.Drawing.Font("楷体", 11F);
-            this.label141.ForeColor = System.Drawing.Color.Black;
-            this.label141.Location = new System.Drawing.Point(19, 42);
-            this.label141.Name = "label141";
-            this.label141.Size = new System.Drawing.Size(71, 15);
-            this.label141.TabIndex = 141;
-            this.label141.Text = "联网地区";
             // 
             // label19
             // 
@@ -5592,16 +5607,27 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
             // 
-            // label180
+            // comboBoxAHVERSION
             // 
-            this.label180.AutoSize = true;
-            this.label180.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
-            this.label180.ForeColor = System.Drawing.Color.Blue;
-            this.label180.Location = new System.Drawing.Point(16, 10);
-            this.label180.Name = "label180";
-            this.label180.Size = new System.Drawing.Size(76, 16);
-            this.label180.TabIndex = 142;
-            this.label180.Text = "通用联网";
+            this.comboBoxAHVERSION.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAHVERSION.FormattingEnabled = true;
+            this.comboBoxAHVERSION.Items.AddRange(new object[] {
+            "v2.3",
+            "v2.7"});
+            this.comboBoxAHVERSION.Location = new System.Drawing.Point(127, 85);
+            this.comboBoxAHVERSION.Name = "comboBoxAHVERSION";
+            this.comboBoxAHVERSION.Size = new System.Drawing.Size(222, 24);
+            this.comboBoxAHVERSION.TabIndex = 157;
+            // 
+            // label181
+            // 
+            this.label181.AutoSize = true;
+            this.label181.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label181.Location = new System.Drawing.Point(4, 92);
+            this.label181.Name = "label181";
+            this.label181.Size = new System.Drawing.Size(42, 14);
+            this.label181.TabIndex = 158;
+            this.label181.Text = "版本:";
             // 
             // stationConfig
             // 
@@ -6175,6 +6201,8 @@
         private System.Windows.Forms.Label label177;
         private System.Windows.Forms.TextBox textBoxXB_DISKNO;
         private System.Windows.Forms.Label label180;
+        private System.Windows.Forms.ComboBox comboBoxAHVERSION;
+        private System.Windows.Forms.Label label181;
     }
 }
 

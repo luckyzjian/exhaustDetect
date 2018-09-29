@@ -145,6 +145,7 @@ namespace exhaustDetect
 
 
         public static Ahinterface ahinterface = null;
+        public static Ahinterface ahinterfaceV27 = null;
         public static NhWebControl nhinterface = null;//南华接口
         public static jxWebControl jxinterface = null;
         /*湖南衡阳联网*/
@@ -304,6 +305,9 @@ namespace exhaustDetect
         public const string ACAREA_NN = "辽宁";
         public const string ACAREA_OTHER = "其他";
         public const string ACAREA_v132 = "v1.3.2";
+
+        public const string AHVERSION_V23 = "v2.3";
+        public const string AHVERSION_V27 = "v2.7";
 
         public const string TYNETTYPE_SDYT = "安车烟台";
         public const string TYNETTYPE_NNDL = "安车大连";
@@ -900,6 +904,8 @@ namespace exhaustDetect
             ahwebinf.weburl = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("安徽联网", "LINEID", "36,37,38,39", temp, 2048, @".\appConfig.ini");
             ahwebinf.lineid = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("安徽联网", "VERSION", "v2.7", temp, 2048, @".\appConfig.ini");
+            ahwebinf.version = temp.ToString().Trim();
             return true;
         }
         private bool init_nhinf()
@@ -1777,7 +1783,8 @@ namespace exhaustDetect
                     init_ahinf();
                     try
                     {
-                        ahinterface = new AhWebClient.Ahinterface(ahwebinf.weburl);
+                        
+                        ahinterface = new AhWebClient.Ahinterface(ahwebinf.weburl,ahwebinf.version);
                         ahinterface.initLineId(ahwebinf.lineid);
                         isNetUsed = true;
                         toolStripLabel1NetStatus.Text = "工作状态：连接安徽联网服务器成功";
