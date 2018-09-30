@@ -620,7 +620,7 @@ namespace AhWebClient
     }
     public class Ahinterface
     {
-        ServiceV27 outlineservice = null;
+        Service outlineservice = null;
         public Dictionary<string, string> AHLINEID = new Dictionary<string, string>();
         const string version_V23 = "v2.3";
         const string version_V27 = "v2.7";
@@ -628,7 +628,7 @@ namespace AhWebClient
         public Ahinterface(string url,string version)
         {
             this.version = version;
-            outlineservice = new ServiceV27(url);
+            outlineservice = new Service(url);
         }
         public void initLineId(string lineid)
         {
@@ -2156,7 +2156,7 @@ namespace AhWebClient
             errMsg = "";
             try
             {
-                RetValue retvalue = outlineservice.BeginInspect(long.Parse(AHLINEID[lineID]), InspectID, long.Parse(DirverID), long.Parse(OperatorID), "");
+                RetValue retvalue = outlineservice.BeginInspect(long.Parse(AHLINEID[lineID]), InspectID, long.Parse(DirverID), long.Parse(OperatorID),0, "");
                 result = retvalue.ErrNum;
                 errMsg = retvalue.ErrMsg;
                 ini.INIIO.saveSocketLogInf("BeginInspect\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -2175,13 +2175,13 @@ namespace AhWebClient
                 return false;
             }
         }
-        public bool TakePhoto(string InspectID, out int result, out string errMsg)
+        public bool TakePhoto(string lineID, string InspectID,int PicCode, out int result, out string errMsg)
         {
             result = 0;
             errMsg = "";
             try
             {
-                RetValue retvalue = outlineservice.TakePhoto( InspectID,"");
+                RetValue retvalue = outlineservice.TakePhoto(long.Parse(AHLINEID[lineID]), InspectID, PicCode,"");
                 result = retvalue.ErrNum;
                 errMsg = retvalue.ErrMsg;
                 ini.INIIO.saveSocketLogInf("TakePhoto\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -3800,6 +3800,7 @@ namespace AhWebClient
             ahlimit = new Ahlimit();
             if (version == version_V23)
             {
+                /*
                 try
                 {
                     RetValue retvalue = outlineservice.GetLimit(InspectID, "");
@@ -3830,12 +3831,15 @@ namespace AhWebClient
                     {
                         return false;
                     }
+                    return false;
                 }
                 catch (Exception er)
                 {
                     errMsg = er.Message;
                     return false;
                 }
+                */
+                return false;
             }
             else
                 return false;
@@ -3847,6 +3851,7 @@ namespace AhWebClient
             ahlimit = new Ahlimit();
             if (version == version_V23)
             {
+                /*
                 try
                 {
                     RetValue retvalue = outlineservice.GetLimit(InspectID, "");
@@ -3880,7 +3885,8 @@ namespace AhWebClient
                 {
                     errMsg = er.Message;
                     return false;
-                }
+                }*/
+                return false;
             }
             else
                 return false;
@@ -3892,6 +3898,7 @@ namespace AhWebClient
             ahlimit = new Ahlimit();
             if (version == version_V23)
             {
+                /*
                 try
                 {
                     RetValue retvalue = outlineservice.GetLimit(InspectID, "");
@@ -3923,6 +3930,8 @@ namespace AhWebClient
                     errMsg = er.Message;
                     return false;
                 }
+                */
+                return false;
             }
             else
                 return false;
@@ -3934,6 +3943,7 @@ namespace AhWebClient
             ahlimit = new Ahlimit();
             if (version == version_V23)
             {
+                /*
                 try
                 {
                     RetValue retvalue = outlineservice.GetLimit(InspectID, "");
@@ -3961,7 +3971,8 @@ namespace AhWebClient
                 {
                     errMsg = er.Message;
                     return false;
-                }
+                }*/
+                return false;
             }
             else
                 return false;
@@ -3973,6 +3984,7 @@ namespace AhWebClient
             ahlimit = new Ahlimit();
             if (version == version_V23)
             {
+                /*
                 try
                 {
                     RetValue retvalue = outlineservice.GetLimit(InspectID, "");
@@ -3999,7 +4011,8 @@ namespace AhWebClient
                 {
                     errMsg = er.Message;
                     return false;
-                }
+                }*/
+                return false;
             }
             else
                 return false;
@@ -4066,7 +4079,7 @@ namespace AhWebClient
             errMsg = "";
             try
             {
-                RetValue retvalue = outlineservice.BeginSelfTest(long.Parse(LineID), "");
+                RetValue retvalue = outlineservice.BeginSelfTest(long.Parse(AHLINEID[LineID]), "");
                 result = retvalue.ErrNum;
                 errMsg = retvalue.ErrMsg;
                 ini.INIIO.saveSocketLogInf("BeginSelfTest\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4304,7 +4317,7 @@ namespace AhWebClient
                 xmlstring = xmlstring.Replace("</body>", "");
                 xmlstring = xmlstring.Replace("\r\n", "");
                 xmlstring = Regex.Replace(xmlstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-                RetValue retvalue = outlineservice.EndSelfTest(long.Parse(LineID), xmlstring, "");
+                RetValue retvalue = outlineservice.EndSelfTest(long.Parse(AHLINEID[LineID]), xmlstring, "");
                 result = retvalue.ErrNum;
                 errMsg = retvalue.ErrMsg;
                 ini.INIIO.saveSocketLogInf("EndSelfTest\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4374,7 +4387,7 @@ namespace AhWebClient
                     xmlstring = xmlstring.Replace("</body>", "");
                     xmlstring = xmlstring.Replace("\r\n", "");
                     xmlstring = Regex.Replace(xmlstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-                    RetValue retvalue = outlineservice.UploadSelfTestData(long.Parse(LineID), xmlstring, "");
+                    RetValue retvalue = outlineservice.UploadSelfTestData(long.Parse(AHLINEID[LineID]), xmlstring, "");
                     result = retvalue.ErrNum;
                     errMsg = retvalue.ErrMsg;
                     ini.INIIO.saveSocketLogInf("UploadSelfTestData\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4404,7 +4417,7 @@ namespace AhWebClient
             {
                 try
                 {
-                    RetValue retvalue = outlineservice.BeginCalibrate(long.Parse(LineID), "");
+                    RetValue retvalue = outlineservice.BeginCalibrate(long.Parse(AHLINEID[LineID]), "");
                     result = retvalue.ErrNum;
                     errMsg = retvalue.ErrMsg;
                     ini.INIIO.saveSocketLogInf("BeginCalibrate\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4435,7 +4448,7 @@ namespace AhWebClient
                 try
                 {
 
-                    RetValue retvalue = outlineservice.EndCalibrate(long.Parse(LineID), selfTestResult, "");
+                    RetValue retvalue = outlineservice.EndCalibrate(long.Parse(AHLINEID[LineID]), selfTestResult, "");
                     result = retvalue.ErrNum;
                     errMsg = retvalue.ErrMsg;
                     ini.INIIO.saveSocketLogInf("EndCalibrate\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4527,7 +4540,7 @@ namespace AhWebClient
                     xmlstring = xmlstring.Replace("</body>", "");
                     xmlstring = xmlstring.Replace("\r\n", "");
                     xmlstring = Regex.Replace(xmlstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-                    RetValue retvalue = outlineservice.UploadCalibrateData(long.Parse(LineID), xmlstring, "");
+                    RetValue retvalue = outlineservice.UploadCalibrateData(long.Parse(AHLINEID[LineID]), xmlstring, "");
                     result = retvalue.ErrNum;
                     errMsg = retvalue.ErrMsg;
                     ini.INIIO.saveSocketLogInf("UploadCalibrateData\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);
@@ -4643,7 +4656,7 @@ namespace AhWebClient
                     xmlstring = xmlstring.Replace("</body>", "");
                     xmlstring = xmlstring.Replace("\r\n", "");
                     xmlstring = Regex.Replace(xmlstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-                    RetValue retvalue = outlineservice.UploadCalibrateData(long.Parse(LineID), xmlstring, "");
+                    RetValue retvalue = outlineservice.UploadCalibrateData(long.Parse(AHLINEID[LineID]), xmlstring, "");
                     result = retvalue.ErrNum;
                     errMsg = retvalue.ErrMsg;
                     ini.INIIO.saveSocketLogInf("UploadCalibrateData\r\n" + "ErrNum:" + retvalue.ErrNum + "\r\n" + "ErrMsg:" + retvalue.ErrMsg + "\r\n" + "Value:" + retvalue.Value);

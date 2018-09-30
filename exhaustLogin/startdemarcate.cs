@@ -577,7 +577,7 @@ namespace exhaustDetect
                                         listc.Add(cdata2);
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata,listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata,listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传加载滑行标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -1002,7 +1002,7 @@ namespace exhaustDetect
                                     listc.Add(cdata4);
                                     int ahresult = 0;
                                     string ahErrMsg = "";
-                                    if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                    if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                     {
                                         ini.INIIO.saveLogInf("[上传寄生功率标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -1178,10 +1178,10 @@ namespace exhaustDetect
                                         cdata1.ToSpeed = "16";
                                         cdata1.ForceSettingValue1 = "0";
                                         cdata1.ActualTime1 = inertnessdata.Acd1_1;
-                                        cdata1.ForceRealTime1 = inertnessdata.force1_1;
+                                        cdata1.ForceRealTime1 = inertnessdata.Acd1_1;
                                         cdata1.ForceSettingValue2 = "1170";
                                         cdata1.ActualTime2 = inertnessdata.Acd2_1;
-                                        cdata1.ForceRealTime2 = inertnessdata.force2_1;
+                                        cdata1.ForceRealTime2 = inertnessdata.Acd2_1;
                                         cdata1.RealValue = inertnessdata.Diw_1;
                                         cdata1.Deviation = (double.Parse(inertnessdata.Diw_1) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
                                         listc.Add(cdata1);
@@ -1190,10 +1190,10 @@ namespace exhaustDetect
                                         cdata2.ToSpeed = "16";
                                         cdata2.ForceSettingValue1 = "0";
                                         cdata2.ActualTime1 = inertnessdata.Acd1_2;
-                                        cdata2.ForceRealTime1 = inertnessdata.force1_2;
+                                        cdata2.ForceRealTime1 = inertnessdata.Acd1_2;
                                         cdata2.ForceSettingValue2 = "1170";
                                         cdata2.ActualTime2 = inertnessdata.Acd2_2;
-                                        cdata2.ForceRealTime2 = inertnessdata.force2_2;
+                                        cdata2.ForceRealTime2 = inertnessdata.Acd2_2;
                                         cdata2.RealValue = inertnessdata.Diw_2;
                                         cdata2.Deviation = (double.Parse(inertnessdata.Diw_2) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
                                         listc.Add(cdata2);
@@ -1202,16 +1202,16 @@ namespace exhaustDetect
                                         cdata3.ToSpeed = "16";
                                         cdata3.ForceSettingValue1 = "0";
                                         cdata3.ActualTime1 = inertnessdata.Acd1_3;
-                                        cdata3.ForceRealTime1 = inertnessdata.force1_3;
+                                        cdata3.ForceRealTime1 = inertnessdata.Acd1_3;
                                         cdata3.ForceSettingValue2 = "1170";
                                         cdata3.ActualTime2 = inertnessdata.Acd2_3;
-                                        cdata3.ForceRealTime2 = inertnessdata.force2_3;
+                                        cdata3.ForceRealTime2 = inertnessdata.Acd2_3;
                                         cdata3.RealValue = inertnessdata.Diw_3;
                                         cdata3.Deviation = (double.Parse(inertnessdata.Diw_3) - double.Parse(inertnessdata.Diw_bc)).ToString("0.0");
                                         listc.Add(cdata3);
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_GL_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_GL_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传惯量标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -1788,7 +1788,7 @@ namespace exhaustDetect
                                             pdata.Judge = "2";
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata,jdata, listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata,jdata, listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传尾气分析仪标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -2631,7 +2631,7 @@ namespace exhaustDetect
                                             pdata.Judge = "2";
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传尾气分析仪检查数据自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -2679,7 +2679,7 @@ namespace exhaustDetect
                                             pdata.Judge = "1";
                                         else
                                             pdata.Judge = "2";
-                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传尾气分析仪低量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -2959,7 +2959,7 @@ namespace exhaustDetect
                                         pdata.Judge = (smokedata.Bdjg == "不合格") ? "2" : "1";
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传烟度计标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3270,7 +3270,7 @@ namespace exhaustDetect
                                         pdata.Judge = (tempdata.Bdjg=="不合格")?"2":"1";
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传气象站标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3480,7 +3480,7 @@ namespace exhaustDetect
                                         listc.Add(cdata1);
                                         int ahresult = 0;
                                         string ahErrMsg = "";
-                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                         {
                                             ini.INIIO.saveLogInf("[上传响应时间标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3823,7 +3823,7 @@ namespace exhaustDetect
                                                         AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
                                                         AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
                                                         pdata.Type = "1";
-                                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                                        pdata.BeginTime = DateTime.Now.AddMinutes(-2).ToString("yyyy-MM-dd HH:mm:ss");
                                                         pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                                                         pdata.Judge =  "1";
                                                         jdata.type = "4";
@@ -3847,7 +3847,7 @@ namespace exhaustDetect
                                                         }
                                                         int ahresult = 0;
                                                         string ahErrMsg = "";
-                                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
                                                         {
                                                             ini.INIIO.saveLogInf("[上传扭力标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -4149,41 +4149,49 @@ namespace exhaustDetect
                                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                                                     {
                                                         #region 安徽联网
-                                                        AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
-                                                        AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
-                                                        pdata.Type = "1";
-                                                        pdata.BeginTime = DateTime.Parse(glidedata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
-                                                        pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                                        pdata.Judge = "1";
-                                                        jdata.type = "5";
-                                                        jdata.CalibrateCount = (dataseconds.Rows.Count - 1).ToString();
-                                                        List<AhWebClient.ah_force_caldata> listc = new List<AhWebClient.ah_force_caldata>();
-                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        try
                                                         {
-                                                            AhWebClient.ah_force_caldata cdata = new AhWebClient.ah_force_caldata();
-                                                            DataRow dr = dataseconds.Rows[i];
-                                                            double wc = 0;
-                                                            double relwc = 0;
-                                                            wc = Math.Abs(double.Parse(dr["标准速度(Km/h)"].ToString()) - double.Parse(dr["实测速度(Km/h)"].ToString()));
-                                                            relwc = Math.Round(wc * 100.0 / double.Parse(dr["标准速度(Km/h)"].ToString()), 1);
-                                                            cdata.NominalValue = dr["标准速度(Km/h)"].ToString();
-                                                            cdata.RealValue = dr["实测速度(Km/h)"].ToString();
-                                                            cdata.Deviation= relwc.ToString("0.0");
-                                                            cdata.ErrorLimit = "0.5";
-                                                            cdata.Result = (relwc > 0.5? "2" : "1");
-                                                            if (cdata.Result == "2") pdata.Judge = "2";
-                                                            listc.Add(cdata);
-                                                        }
-                                                        int ahresult = 0;
-                                                        string ahErrMsg = "";
-                                                        if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
-                                                        {
-                                                            ini.INIIO.saveLogInf("[上传速度标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                                            AhWebClient.ah_cal_public_data pdata = new AhWebClient.ah_cal_public_data();
+                                                            AhWebClient.ah_cal_judge_data jdata = new AhWebClient.ah_cal_judge_data();
+                                                            pdata.Type = "1";
+                                                            pdata.BeginTime = DateTime.Now.AddMinutes(-2).ToString("yyyy-MM-dd HH:mm:ss");
+                                                            pdata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                            pdata.Judge = "1";
+                                                            jdata.type = "5";
+                                                            jdata.CalibrateCount = (dataseconds.Rows.Count - 1).ToString();
+                                                            List<AhWebClient.ah_force_caldata> listc = new List<AhWebClient.ah_force_caldata>();
+                                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                            {
+                                                                AhWebClient.ah_force_caldata cdata = new AhWebClient.ah_force_caldata();
+                                                                DataRow dr = dataseconds.Rows[i];
+                                                                double wc = 0;
+                                                                double relwc = 0;
+                                                                wc = Math.Abs(double.Parse(dr["标准速度(Km/h)"].ToString()) - double.Parse(dr["实测速度(Km/h)"].ToString()));
+                                                                relwc = Math.Round(wc * 100.0 / double.Parse(dr["标准速度(Km/h)"].ToString()), 1);
+                                                                cdata.NominalValue = dr["标准速度(Km/h)"].ToString();
+                                                                cdata.RealValue = dr["实测速度(Km/h)"].ToString();
+                                                                cdata.Deviation = relwc.ToString("0.0");
+                                                                cdata.ErrorLimit = "0.5";
+                                                                cdata.Result = (relwc > 0.5 ? "2" : "1");
+                                                                if (cdata.Result == "2") pdata.Judge = "2";
+                                                                listc.Add(cdata);
+                                                            }
+                                                            int ahresult = 0;
+                                                            string ahErrMsg = "";
+                                                            if (!mainPanel.ahinterface.Send_CALIBRATION_RESULT_DATA(mainPanel.lineid, pdata, jdata, listc, out ahresult, out ahErrMsg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("[上传速度标定信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
+                                                            }
+                                                            else
+                                                            {
+                                                                ini.INIIO.saveLogInf("[上传速度标定信息]:成功\r\n");
+                                                            }
                                                         }
-                                                        else
+                                                        catch(Exception er)
                                                         {
-                                                            ini.INIIO.saveLogInf("[上传速度标定信息]:成功\r\n");
+                                                            ini.INIIO.saveLogInf("[上传速度标定信息]:异常：\r\n"+er.Message);
+
                                                         }
                                                         #endregion
                                                     }

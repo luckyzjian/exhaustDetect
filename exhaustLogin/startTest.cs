@@ -1388,7 +1388,7 @@ namespace exhaustDetect
                                 {
                                     int ahresult = 0;
                                     string ahErrMsg = "";
-                                    if (!mainPanel.ahinterface.TakePhoto(carLogin.carbj.CLID, out ahresult, out ahErrMsg))
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid,carLogin.carbj.CLID,0, out ahresult, out ahErrMsg))
                                     {
                                         ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
                                         //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
@@ -1679,6 +1679,16 @@ namespace exhaustDetect
                                             ht.Add("jcffid", "5"); break;
 
                                     }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID,9, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                            //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        }
+                                    }
                                     if (!mainPanel.hninterface.capturePic(ht, out code, out msg))
                                     {
                                         ini.INIIO.saveLogInf("发送capturePic失败,code" + code + ",msg:" + msg);
@@ -1716,9 +1726,19 @@ namespace exhaustDetect
                                 {
                                     mainPanel.jxinterface.takePhotoJx(mainPanel.jxwebinf.socketip, mainPanel.jxwebinf.socketport, carLogin.carbj.CLID, 3);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 10, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_sds_low)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_sds_low)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic3);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic3);
@@ -1889,6 +1909,16 @@ namespace exhaustDetect
                                     }
 
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 5, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_asm_5025)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic2);
@@ -1913,9 +1943,39 @@ namespace exhaustDetect
                                     teststate.JCFF = carLogin.carbj.JCFF;
                                     mainPanel.logininfcontrol.Save_TestState(teststate);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 6, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID,7, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 8, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_asm_2540)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_asm_2540)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic3);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic3);
@@ -2009,6 +2069,16 @@ namespace exhaustDetect
                                     }
 
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 11, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
                                 if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_lugdown_100)
@@ -2040,9 +2110,19 @@ namespace exhaustDetect
                                 {
                                     mainPanel.jxinterface.takePhotoJx(mainPanel.jxwebinf.socketip, mainPanel.jxwebinf.socketport, carLogin.carbj.CLID, 3);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 12, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_lugdown_90)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_lugdown_90)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic3);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic3);
@@ -2071,9 +2151,19 @@ namespace exhaustDetect
                                 {
                                     mainPanel.jxinterface.takePhotoJx(mainPanel.jxwebinf.socketip, mainPanel.jxwebinf.socketport, carLogin.carbj.CLID, 4);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 13, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_lugdown_80)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_lugdown_80)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic4);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic4);
@@ -2167,6 +2257,16 @@ namespace exhaustDetect
                                     }
 
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 14, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
                                 if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_btg_first)
@@ -2198,9 +2298,19 @@ namespace exhaustDetect
                                 {
                                     mainPanel.jxinterface.takePhotoJx(mainPanel.jxwebinf.socketip, mainPanel.jxwebinf.socketport, carLogin.carbj.CLID, 3);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 15, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_btg_second)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_btg_second)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic3);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic3);
@@ -2229,9 +2339,19 @@ namespace exhaustDetect
                                 {
                                     mainPanel.jxinterface.takePhotoJx(mainPanel.jxwebinf.socketip, mainPanel.jxwebinf.socketport, carLogin.carbj.CLID, 4);
                                 }
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 16, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
                                 //else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.DALINETMODE)
                                 //{
-                                    if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_btg_third)
+                                if (mainPanel.iscameraused && mainPanel.capturecontrol != null && mainPanel.capturedata.cap_btg_third)
                                     {
                                         mainPanel.capturecontrol.startFrontCaptureThread(frontpic4);
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic4);
@@ -2447,6 +2567,16 @@ namespace exhaustDetect
                                     {
                                         ini.INIIO.saveLogInf("结束检测成功");
                                     }
+                                }
+                            }
+                            if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                            {
+                                int ahresult = 0;
+                                string ahErrMsg = "";
+                                if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 1, out ahresult, out ahErrMsg))
+                                {
+                                    ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
                                 }
                             }
                             #endregion

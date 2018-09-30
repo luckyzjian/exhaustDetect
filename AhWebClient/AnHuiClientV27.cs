@@ -25,10 +25,8 @@ using System.Xml.Serialization;
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Web.Services.WebServiceBindingAttribute(Name = "ServiceSoap", Namespace = "http://www.gc8848.com/")]
-public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientProtocol
+public partial class Service : System.Web.Services.Protocols.SoapHttpClientProtocol
 {
-
-    private System.Threading.SendOrPostCallback BeginInspectOperationCompleted;
 
     private System.Threading.SendOrPostCallback SyncOperationCompleted;
 
@@ -36,40 +34,47 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
 
     private System.Threading.SendOrPostCallback GetInspectQueueByPlateIDOperationCompleted;
 
-    private System.Threading.SendOrPostCallback GetReportDataOperationCompleted;
-
     private System.Threading.SendOrPostCallback AbortInspectOperationCompleted;
-
-    private System.Threading.SendOrPostCallback StopInspectOperationCompleted;
-
-    private System.Threading.SendOrPostCallback GetLimitOperationCompleted;
-
-    private System.Threading.SendOrPostCallback EndInspectOperationCompleted;
-
-    private System.Threading.SendOrPostCallback UploadRealtimeDataOperationCompleted;
 
     private System.Threading.SendOrPostCallback BeginRecordOperationCompleted;
 
+    private System.Threading.SendOrPostCallback EndRecordOperationCompleted;
+
+    private System.Threading.SendOrPostCallback BeginInspectOperationCompleted;
+
     private System.Threading.SendOrPostCallback TakePhotoOperationCompleted;
 
-    private System.Threading.SendOrPostCallback EndRecordOperationCompleted;
+    private System.Threading.SendOrPostCallback StopInspectOperationCompleted;
+
+    private System.Threading.SendOrPostCallback EndInspectOperationCompleted;
 
     private System.Threading.SendOrPostCallback BeginSelfTestOperationCompleted;
 
     private System.Threading.SendOrPostCallback EndSelfTestOperationCompleted;
 
+    private System.Threading.SendOrPostCallback UploadSelfTestDataOperationCompleted;
+
+    private System.Threading.SendOrPostCallback UploadRealtimeDataOperationCompleted;
+
+    private System.Threading.SendOrPostCallback GetInspectionInfoOperationCompleted;
+
+    private System.Threading.SendOrPostCallback BeginCalibrateOperationCompleted;
+
+    private System.Threading.SendOrPostCallback UploadCalibrateDataOperationCompleted;
+
+    private System.Threading.SendOrPostCallback EndCalibrateOperationCompleted;
+
+    private System.Threading.SendOrPostCallback TestPhotoOperationCompleted;
+
     /// <remarks/>
-    public ServiceV27()
+    public Service()
     {
-        this.Url = "http://192.168.100.2/GCservice/Service.asmx";
+        this.Url = "http://192.168.100.2:9002/GCService/Service.asmx";
     }
-    public ServiceV27(string url)
+    public Service(string url)
     {
         this.Url = url;
     }
-
-    /// <remarks/>
-    public event BeginInspectCompletedEventHandler BeginInspectCompleted;
 
     /// <remarks/>
     public event SyncCompletedEventHandler SyncCompleted;
@@ -81,31 +86,25 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
     public event GetInspectQueueByPlateIDCompletedEventHandler GetInspectQueueByPlateIDCompleted;
 
     /// <remarks/>
-    public event GetReportDataCompletedEventHandler GetReportDataCompleted;
-
-    /// <remarks/>
     public event AbortInspectCompletedEventHandler AbortInspectCompleted;
-
-    /// <remarks/>
-    public event StopInspectCompletedEventHandler StopInspectCompleted;
-
-    /// <remarks/>
-    public event GetLimitCompletedEventHandler GetLimitCompleted;
-
-    /// <remarks/>
-    public event EndInspectCompletedEventHandler EndInspectCompleted;
-
-    /// <remarks/>
-    public event UploadRealtimeDataCompletedEventHandler UploadRealtimeDataCompleted;
 
     /// <remarks/>
     public event BeginRecordCompletedEventHandler BeginRecordCompleted;
 
     /// <remarks/>
+    public event EndRecordCompletedEventHandler EndRecordCompleted;
+
+    /// <remarks/>
+    public event BeginInspectCompletedEventHandler BeginInspectCompleted;
+
+    /// <remarks/>
     public event TakePhotoCompletedEventHandler TakePhotoCompleted;
 
     /// <remarks/>
-    public event EndRecordCompletedEventHandler EndRecordCompleted;
+    public event StopInspectCompletedEventHandler StopInspectCompleted;
+
+    /// <remarks/>
+    public event EndInspectCompletedEventHandler EndInspectCompleted;
 
     /// <remarks/>
     public event BeginSelfTestCompletedEventHandler BeginSelfTestCompleted;
@@ -114,65 +113,25 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
     public event EndSelfTestCompletedEventHandler EndSelfTestCompleted;
 
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/BeginInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue BeginInspect(long LineID, string InspectID, long DriverID, long OperatorID, string Memo)
-    {
-        object[] results = this.Invoke("BeginInspect", new object[] {
-                    LineID,
-                    InspectID,
-                    DriverID,
-                    OperatorID,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
+    public event UploadSelfTestDataCompletedEventHandler UploadSelfTestDataCompleted;
 
     /// <remarks/>
-    public System.IAsyncResult BeginBeginInspect(long LineID, string InspectID, long DriverID, long OperatorID, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("BeginInspect", new object[] {
-                    LineID,
-                    InspectID,
-                    DriverID,
-                    OperatorID,
-                    Memo}, callback, asyncState);
-    }
+    public event UploadRealtimeDataCompletedEventHandler UploadRealtimeDataCompleted;
 
     /// <remarks/>
-    public RetValue EndBeginInspect(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
+    public event GetInspectionInfoCompletedEventHandler GetInspectionInfoCompleted;
 
     /// <remarks/>
-    public void BeginInspectAsync(long LineID, string InspectID, long DriverID, long OperatorID, string Memo)
-    {
-        this.BeginInspectAsync(LineID, InspectID, DriverID, OperatorID, Memo, null);
-    }
+    public event BeginCalibrateCompletedEventHandler BeginCalibrateCompleted;
 
     /// <remarks/>
-    public void BeginInspectAsync(long LineID, string InspectID, long DriverID, long OperatorID, string Memo, object userState)
-    {
-        if ((this.BeginInspectOperationCompleted == null))
-        {
-            this.BeginInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBeginInspectOperationCompleted);
-        }
-        this.InvokeAsync("BeginInspect", new object[] {
-                    LineID,
-                    InspectID,
-                    DriverID,
-                    OperatorID,
-                    Memo}, this.BeginInspectOperationCompleted, userState);
-    }
+    public event UploadCalibrateDataCompletedEventHandler UploadCalibrateDataCompleted;
 
-    private void OnBeginInspectOperationCompleted(object arg)
-    {
-        if ((this.BeginInspectCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.BeginInspectCompleted(this, new BeginInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
+    /// <remarks/>
+    public event EndCalibrateCompletedEventHandler EndCalibrateCompleted;
+
+    /// <remarks/>
+    public event TestPhotoCompletedEventHandler TestPhotoCompleted;
 
     /// <remarks/>
     [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/Sync", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -334,96 +293,47 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
     }
 
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/GetReportData", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue GetReportData(string InspectID)
-    {
-        object[] results = this.Invoke("GetReportData", new object[] {
-                    InspectID});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginGetReportData(string InspectID, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("GetReportData", new object[] {
-                    InspectID}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndGetReportData(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void GetReportDataAsync(string InspectID)
-    {
-        this.GetReportDataAsync(InspectID, null);
-    }
-
-    /// <remarks/>
-    public void GetReportDataAsync(string InspectID, object userState)
-    {
-        if ((this.GetReportDataOperationCompleted == null))
-        {
-            this.GetReportDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetReportDataOperationCompleted);
-        }
-        this.InvokeAsync("GetReportData", new object[] {
-                    InspectID}, this.GetReportDataOperationCompleted, userState);
-    }
-
-    private void OnGetReportDataOperationCompleted(object arg)
-    {
-        if ((this.GetReportDataCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.GetReportDataCompleted(this, new GetReportDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
     [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/AbortInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public object AbortInspect(string InspectID, int Reason, string Memo)
+    public RetValue AbortInspect(string InspectionID, int Reason, string Memo)
     {
         object[] results = this.Invoke("AbortInspect", new object[] {
-                    InspectID,
+                    InspectionID,
                     Reason,
                     Memo});
-        return ((object)(results[0]));
+        return ((RetValue)(results[0]));
     }
 
     /// <remarks/>
-    public System.IAsyncResult BeginAbortInspect(string InspectID, int Reason, string Memo, System.AsyncCallback callback, object asyncState)
+    public System.IAsyncResult BeginAbortInspect(string InspectionID, int Reason, string Memo, System.AsyncCallback callback, object asyncState)
     {
         return this.BeginInvoke("AbortInspect", new object[] {
-                    InspectID,
+                    InspectionID,
                     Reason,
                     Memo}, callback, asyncState);
     }
 
     /// <remarks/>
-    public object EndAbortInspect(System.IAsyncResult asyncResult)
+    public RetValue EndAbortInspect(System.IAsyncResult asyncResult)
     {
         object[] results = this.EndInvoke(asyncResult);
-        return ((object)(results[0]));
+        return ((RetValue)(results[0]));
     }
 
     /// <remarks/>
-    public void AbortInspectAsync(string InspectID, int Reason, string Memo)
+    public void AbortInspectAsync(string InspectionID, int Reason, string Memo)
     {
-        this.AbortInspectAsync(InspectID, Reason, Memo, null);
+        this.AbortInspectAsync(InspectionID, Reason, Memo, null);
     }
 
     /// <remarks/>
-    public void AbortInspectAsync(string InspectID, int Reason, string Memo, object userState)
+    public void AbortInspectAsync(string InspectionID, int Reason, string Memo, object userState)
     {
         if ((this.AbortInspectOperationCompleted == null))
         {
             this.AbortInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAbortInspectOperationCompleted);
         }
         this.InvokeAsync("AbortInspect", new object[] {
-                    InspectID,
+                    InspectionID,
                     Reason,
                     Memo}, this.AbortInspectOperationCompleted, userState);
     }
@@ -434,220 +344,6 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
         {
             System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
             this.AbortInspectCompleted(this, new AbortInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/StopInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue StopInspect(string InspectID, string Memo)
-    {
-        object[] results = this.Invoke("StopInspect", new object[] {
-                    InspectID,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginStopInspect(string InspectID, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("StopInspect", new object[] {
-                    InspectID,
-                    Memo}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndStopInspect(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void StopInspectAsync(string InspectID, string Memo)
-    {
-        this.StopInspectAsync(InspectID, Memo, null);
-    }
-
-    /// <remarks/>
-    public void StopInspectAsync(string InspectID, string Memo, object userState)
-    {
-        if ((this.StopInspectOperationCompleted == null))
-        {
-            this.StopInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStopInspectOperationCompleted);
-        }
-        this.InvokeAsync("StopInspect", new object[] {
-                    InspectID,
-                    Memo}, this.StopInspectOperationCompleted, userState);
-    }
-
-    private void OnStopInspectOperationCompleted(object arg)
-    {
-        if ((this.StopInspectCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.StopInspectCompleted(this, new StopInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/GetLimit", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue GetLimit(string InspectID, string Memo)
-    {
-        object[] results = this.Invoke("GetLimit", new object[] {
-                    InspectID,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginGetLimit(string InspectID, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("GetLimit", new object[] {
-                    InspectID,
-                    Memo}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndGetLimit(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void GetLimitAsync(string InspectID, string Memo)
-    {
-        this.GetLimitAsync(InspectID, Memo, null);
-    }
-
-    /// <remarks/>
-    public void GetLimitAsync(string InspectID, string Memo, object userState)
-    {
-        if ((this.GetLimitOperationCompleted == null))
-        {
-            this.GetLimitOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetLimitOperationCompleted);
-        }
-        this.InvokeAsync("GetLimit", new object[] {
-                    InspectID,
-                    Memo}, this.GetLimitOperationCompleted, userState);
-    }
-
-    private void OnGetLimitOperationCompleted(object arg)
-    {
-        if ((this.GetLimitCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.GetLimitCompleted(this, new GetLimitCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/EndInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue EndInspect(string InspectID, string Result, string Memo)
-    {
-        object[] results = this.Invoke("EndInspect", new object[] {
-                    InspectID,
-                    Result,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginEndInspect(string InspectID, string Result, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("EndInspect", new object[] {
-                    InspectID,
-                    Result,
-                    Memo}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndEndInspect(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void EndInspectAsync(string InspectID, string Result, string Memo)
-    {
-        this.EndInspectAsync(InspectID, Result, Memo, null);
-    }
-
-    /// <remarks/>
-    public void EndInspectAsync(string InspectID, string Result, string Memo, object userState)
-    {
-        if ((this.EndInspectOperationCompleted == null))
-        {
-            this.EndInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnEndInspectOperationCompleted);
-        }
-        this.InvokeAsync("EndInspect", new object[] {
-                    InspectID,
-                    Result,
-                    Memo}, this.EndInspectOperationCompleted, userState);
-    }
-
-    private void OnEndInspectOperationCompleted(object arg)
-    {
-        if ((this.EndInspectCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.EndInspectCompleted(this, new EndInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/UploadRealtimeData", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue UploadRealtimeData(string InspectID, string RealTimeData, string Memo)
-    {
-        object[] results = this.Invoke("UploadRealtimeData", new object[] {
-                    InspectID,
-                    RealTimeData,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginUploadRealtimeData(string InspectID, string RealTimeData, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("UploadRealtimeData", new object[] {
-                    InspectID,
-                    RealTimeData,
-                    Memo}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndUploadRealtimeData(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void UploadRealtimeDataAsync(string InspectID, string RealTimeData, string Memo)
-    {
-        this.UploadRealtimeDataAsync(InspectID, RealTimeData, Memo, null);
-    }
-
-    /// <remarks/>
-    public void UploadRealtimeDataAsync(string InspectID, string RealTimeData, string Memo, object userState)
-    {
-        if ((this.UploadRealtimeDataOperationCompleted == null))
-        {
-            this.UploadRealtimeDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadRealtimeDataOperationCompleted);
-        }
-        this.InvokeAsync("UploadRealtimeData", new object[] {
-                    InspectID,
-                    RealTimeData,
-                    Memo}, this.UploadRealtimeDataOperationCompleted, userState);
-    }
-
-    private void OnUploadRealtimeDataOperationCompleted(object arg)
-    {
-        if ((this.UploadRealtimeDataCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.UploadRealtimeDataCompleted(this, new UploadRealtimeDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
         }
     }
 
@@ -707,58 +403,6 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
     }
 
     /// <remarks/>
-    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/TakePhoto", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-    public RetValue TakePhoto(string InspectID, string Memo)
-    {
-        object[] results = this.Invoke("TakePhoto", new object[] {
-                    InspectID,
-                    Memo});
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public System.IAsyncResult BeginTakePhoto(string InspectID, string Memo, System.AsyncCallback callback, object asyncState)
-    {
-        return this.BeginInvoke("TakePhoto", new object[] {
-                    InspectID,
-                    Memo}, callback, asyncState);
-    }
-
-    /// <remarks/>
-    public RetValue EndTakePhoto(System.IAsyncResult asyncResult)
-    {
-        object[] results = this.EndInvoke(asyncResult);
-        return ((RetValue)(results[0]));
-    }
-
-    /// <remarks/>
-    public void TakePhotoAsync(string InspectID, string Memo)
-    {
-        this.TakePhotoAsync(InspectID, Memo, null);
-    }
-
-    /// <remarks/>
-    public void TakePhotoAsync(string InspectID, string Memo, object userState)
-    {
-        if ((this.TakePhotoOperationCompleted == null))
-        {
-            this.TakePhotoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTakePhotoOperationCompleted);
-        }
-        this.InvokeAsync("TakePhoto", new object[] {
-                    InspectID,
-                    Memo}, this.TakePhotoOperationCompleted, userState);
-    }
-
-    private void OnTakePhotoOperationCompleted(object arg)
-    {
-        if ((this.TakePhotoCompleted != null))
-        {
-            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-            this.TakePhotoCompleted(this, new TakePhotoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-        }
-    }
-
-    /// <remarks/>
     [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/EndRecord", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
     public RetValue EndRecord(string InspectID, string Memo)
     {
@@ -807,6 +451,235 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
         {
             System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
             this.EndRecordCompleted(this, new EndRecordCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/BeginInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue BeginInspect(long LineID, string InspectID, long DriverID, long OperatorID, int IsOutOfSpeed, string Memo)
+    {
+        object[] results = this.Invoke("BeginInspect", new object[] {
+                    LineID,
+                    InspectID,
+                    DriverID,
+                    OperatorID,
+                    IsOutOfSpeed,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginBeginInspect(long LineID, string InspectID, long DriverID, long OperatorID, int IsOutOfSpeed, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("BeginInspect", new object[] {
+                    LineID,
+                    InspectID,
+                    DriverID,
+                    OperatorID,
+                    IsOutOfSpeed,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndBeginInspect(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void BeginInspectAsync(long LineID, string InspectID, long DriverID, long OperatorID, int IsOutOfSpeed, string Memo)
+    {
+        this.BeginInspectAsync(LineID, InspectID, DriverID, OperatorID, IsOutOfSpeed, Memo, null);
+    }
+
+    /// <remarks/>
+    public void BeginInspectAsync(long LineID, string InspectID, long DriverID, long OperatorID, int IsOutOfSpeed, string Memo, object userState)
+    {
+        if ((this.BeginInspectOperationCompleted == null))
+        {
+            this.BeginInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBeginInspectOperationCompleted);
+        }
+        this.InvokeAsync("BeginInspect", new object[] {
+                    LineID,
+                    InspectID,
+                    DriverID,
+                    OperatorID,
+                    IsOutOfSpeed,
+                    Memo}, this.BeginInspectOperationCompleted, userState);
+    }
+
+    private void OnBeginInspectOperationCompleted(object arg)
+    {
+        if ((this.BeginInspectCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.BeginInspectCompleted(this, new BeginInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/TakePhoto", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue TakePhoto(long LineID, string InspectID, int PicCode, string Memo)
+    {
+        object[] results = this.Invoke("TakePhoto", new object[] {
+                    LineID,
+                    InspectID,
+                    PicCode,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginTakePhoto(long LineID, string InspectID, int PicCode, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("TakePhoto", new object[] {
+                    LineID,
+                    InspectID,
+                    PicCode,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndTakePhoto(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void TakePhotoAsync(long LineID, string InspectID, int PicCode, string Memo)
+    {
+        this.TakePhotoAsync(LineID, InspectID, PicCode, Memo, null);
+    }
+
+    /// <remarks/>
+    public void TakePhotoAsync(long LineID, string InspectID, int PicCode, string Memo, object userState)
+    {
+        if ((this.TakePhotoOperationCompleted == null))
+        {
+            this.TakePhotoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTakePhotoOperationCompleted);
+        }
+        this.InvokeAsync("TakePhoto", new object[] {
+                    LineID,
+                    InspectID,
+                    PicCode,
+                    Memo}, this.TakePhotoOperationCompleted, userState);
+    }
+
+    private void OnTakePhotoOperationCompleted(object arg)
+    {
+        if ((this.TakePhotoCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.TakePhotoCompleted(this, new TakePhotoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/StopInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue StopInspect(string InspectID, string Memo)
+    {
+        object[] results = this.Invoke("StopInspect", new object[] {
+                    InspectID,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginStopInspect(string InspectID, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("StopInspect", new object[] {
+                    InspectID,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndStopInspect(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void StopInspectAsync(string InspectID, string Memo)
+    {
+        this.StopInspectAsync(InspectID, Memo, null);
+    }
+
+    /// <remarks/>
+    public void StopInspectAsync(string InspectID, string Memo, object userState)
+    {
+        if ((this.StopInspectOperationCompleted == null))
+        {
+            this.StopInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnStopInspectOperationCompleted);
+        }
+        this.InvokeAsync("StopInspect", new object[] {
+                    InspectID,
+                    Memo}, this.StopInspectOperationCompleted, userState);
+    }
+
+    private void OnStopInspectOperationCompleted(object arg)
+    {
+        if ((this.StopInspectCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.StopInspectCompleted(this, new StopInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/EndInspect", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue EndInspect(string InspectID, string Result, string Memo)
+    {
+        object[] results = this.Invoke("EndInspect", new object[] {
+                    InspectID,
+                    Result,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginEndInspect(string InspectID, string Result, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("EndInspect", new object[] {
+                    InspectID,
+                    Result,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndEndInspect(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void EndInspectAsync(string InspectID, string Result, string Memo)
+    {
+        this.EndInspectAsync(InspectID, Result, Memo, null);
+    }
+
+    /// <remarks/>
+    public void EndInspectAsync(string InspectID, string Result, string Memo, object userState)
+    {
+        if ((this.EndInspectOperationCompleted == null))
+        {
+            this.EndInspectOperationCompleted = new System.Threading.SendOrPostCallback(this.OnEndInspectOperationCompleted);
+        }
+        this.InvokeAsync("EndInspect", new object[] {
+                    InspectID,
+                    Result,
+                    Memo}, this.EndInspectOperationCompleted, userState);
+    }
+
+    private void OnEndInspectOperationCompleted(object arg)
+    {
+        if ((this.EndInspectCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.EndInspectCompleted(this, new EndInspectCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
         }
     }
 
@@ -918,6 +791,376 @@ public partial class ServiceV27 : System.Web.Services.Protocols.SoapHttpClientPr
     }
 
     /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/UploadSelfTestData", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue UploadSelfTestData(long LineID, string ResultData, string Memo)
+    {
+        object[] results = this.Invoke("UploadSelfTestData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginUploadSelfTestData(long LineID, string ResultData, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("UploadSelfTestData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndUploadSelfTestData(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void UploadSelfTestDataAsync(long LineID, string ResultData, string Memo)
+    {
+        this.UploadSelfTestDataAsync(LineID, ResultData, Memo, null);
+    }
+
+    /// <remarks/>
+    public void UploadSelfTestDataAsync(long LineID, string ResultData, string Memo, object userState)
+    {
+        if ((this.UploadSelfTestDataOperationCompleted == null))
+        {
+            this.UploadSelfTestDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadSelfTestDataOperationCompleted);
+        }
+        this.InvokeAsync("UploadSelfTestData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo}, this.UploadSelfTestDataOperationCompleted, userState);
+    }
+
+    private void OnUploadSelfTestDataOperationCompleted(object arg)
+    {
+        if ((this.UploadSelfTestDataCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.UploadSelfTestDataCompleted(this, new UploadSelfTestDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/UploadRealtimeData", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue UploadRealtimeData(string InspectID, string RealtimeData, string Memo)
+    {
+        object[] results = this.Invoke("UploadRealtimeData", new object[] {
+                    InspectID,
+                    RealtimeData,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginUploadRealtimeData(string InspectID, string RealtimeData, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("UploadRealtimeData", new object[] {
+                    InspectID,
+                    RealtimeData,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndUploadRealtimeData(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void UploadRealtimeDataAsync(string InspectID, string RealtimeData, string Memo)
+    {
+        this.UploadRealtimeDataAsync(InspectID, RealtimeData, Memo, null);
+    }
+
+    /// <remarks/>
+    public void UploadRealtimeDataAsync(string InspectID, string RealtimeData, string Memo, object userState)
+    {
+        if ((this.UploadRealtimeDataOperationCompleted == null))
+        {
+            this.UploadRealtimeDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadRealtimeDataOperationCompleted);
+        }
+        this.InvokeAsync("UploadRealtimeData", new object[] {
+                    InspectID,
+                    RealtimeData,
+                    Memo}, this.UploadRealtimeDataOperationCompleted, userState);
+    }
+
+    private void OnUploadRealtimeDataOperationCompleted(object arg)
+    {
+        if ((this.UploadRealtimeDataCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.UploadRealtimeDataCompleted(this, new UploadRealtimeDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/GetInspectionInfo", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue GetInspectionInfo(string Memo)
+    {
+        object[] results = this.Invoke("GetInspectionInfo", new object[] {
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginGetInspectionInfo(string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("GetInspectionInfo", new object[] {
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndGetInspectionInfo(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void GetInspectionInfoAsync(string Memo)
+    {
+        this.GetInspectionInfoAsync(Memo, null);
+    }
+
+    /// <remarks/>
+    public void GetInspectionInfoAsync(string Memo, object userState)
+    {
+        if ((this.GetInspectionInfoOperationCompleted == null))
+        {
+            this.GetInspectionInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetInspectionInfoOperationCompleted);
+        }
+        this.InvokeAsync("GetInspectionInfo", new object[] {
+                    Memo}, this.GetInspectionInfoOperationCompleted, userState);
+    }
+
+    private void OnGetInspectionInfoOperationCompleted(object arg)
+    {
+        if ((this.GetInspectionInfoCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.GetInspectionInfoCompleted(this, new GetInspectionInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/BeginCalibrate", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue BeginCalibrate(long LineID, string Memo)
+    {
+        object[] results = this.Invoke("BeginCalibrate", new object[] {
+                    LineID,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginBeginCalibrate(long LineID, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("BeginCalibrate", new object[] {
+                    LineID,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndBeginCalibrate(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void BeginCalibrateAsync(long LineID, string Memo)
+    {
+        this.BeginCalibrateAsync(LineID, Memo, null);
+    }
+
+    /// <remarks/>
+    public void BeginCalibrateAsync(long LineID, string Memo, object userState)
+    {
+        if ((this.BeginCalibrateOperationCompleted == null))
+        {
+            this.BeginCalibrateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBeginCalibrateOperationCompleted);
+        }
+        this.InvokeAsync("BeginCalibrate", new object[] {
+                    LineID,
+                    Memo}, this.BeginCalibrateOperationCompleted, userState);
+    }
+
+    private void OnBeginCalibrateOperationCompleted(object arg)
+    {
+        if ((this.BeginCalibrateCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.BeginCalibrateCompleted(this, new BeginCalibrateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/UploadCalibrateData", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue UploadCalibrateData(long LineID, string ResultData, string Memo)
+    {
+        object[] results = this.Invoke("UploadCalibrateData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginUploadCalibrateData(long LineID, string ResultData, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("UploadCalibrateData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndUploadCalibrateData(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void UploadCalibrateDataAsync(long LineID, string ResultData, string Memo)
+    {
+        this.UploadCalibrateDataAsync(LineID, ResultData, Memo, null);
+    }
+
+    /// <remarks/>
+    public void UploadCalibrateDataAsync(long LineID, string ResultData, string Memo, object userState)
+    {
+        if ((this.UploadCalibrateDataOperationCompleted == null))
+        {
+            this.UploadCalibrateDataOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUploadCalibrateDataOperationCompleted);
+        }
+        this.InvokeAsync("UploadCalibrateData", new object[] {
+                    LineID,
+                    ResultData,
+                    Memo}, this.UploadCalibrateDataOperationCompleted, userState);
+    }
+
+    private void OnUploadCalibrateDataOperationCompleted(object arg)
+    {
+        if ((this.UploadCalibrateDataCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.UploadCalibrateDataCompleted(this, new UploadCalibrateDataCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/EndCalibrate", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue EndCalibrate(long LineID, string Result, string Memo)
+    {
+        object[] results = this.Invoke("EndCalibrate", new object[] {
+                    LineID,
+                    Result,
+                    Memo});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginEndCalibrate(long LineID, string Result, string Memo, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("EndCalibrate", new object[] {
+                    LineID,
+                    Result,
+                    Memo}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndEndCalibrate(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void EndCalibrateAsync(long LineID, string Result, string Memo)
+    {
+        this.EndCalibrateAsync(LineID, Result, Memo, null);
+    }
+
+    /// <remarks/>
+    public void EndCalibrateAsync(long LineID, string Result, string Memo, object userState)
+    {
+        if ((this.EndCalibrateOperationCompleted == null))
+        {
+            this.EndCalibrateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnEndCalibrateOperationCompleted);
+        }
+        this.InvokeAsync("EndCalibrate", new object[] {
+                    LineID,
+                    Result,
+                    Memo}, this.EndCalibrateOperationCompleted, userState);
+    }
+
+    private void OnEndCalibrateOperationCompleted(object arg)
+    {
+        if ((this.EndCalibrateCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.EndCalibrateCompleted(this, new EndCalibrateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
+    [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.gc8848.com/TestPhoto", RequestNamespace = "http://www.gc8848.com/", ResponseNamespace = "http://www.gc8848.com/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+    public RetValue TestPhoto(long LineID)
+    {
+        object[] results = this.Invoke("TestPhoto", new object[] {
+                    LineID});
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public System.IAsyncResult BeginTestPhoto(long LineID, System.AsyncCallback callback, object asyncState)
+    {
+        return this.BeginInvoke("TestPhoto", new object[] {
+                    LineID}, callback, asyncState);
+    }
+
+    /// <remarks/>
+    public RetValue EndTestPhoto(System.IAsyncResult asyncResult)
+    {
+        object[] results = this.EndInvoke(asyncResult);
+        return ((RetValue)(results[0]));
+    }
+
+    /// <remarks/>
+    public void TestPhotoAsync(long LineID)
+    {
+        this.TestPhotoAsync(LineID, null);
+    }
+
+    /// <remarks/>
+    public void TestPhotoAsync(long LineID, object userState)
+    {
+        if ((this.TestPhotoOperationCompleted == null))
+        {
+            this.TestPhotoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnTestPhotoOperationCompleted);
+        }
+        this.InvokeAsync("TestPhoto", new object[] {
+                    LineID}, this.TestPhotoOperationCompleted, userState);
+    }
+
+    private void OnTestPhotoOperationCompleted(object arg)
+    {
+        if ((this.TestPhotoCompleted != null))
+        {
+            System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+            this.TestPhotoCompleted(this, new TestPhotoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+        }
+    }
+
+    /// <remarks/>
     public new void CancelAsync(object userState)
     {
         base.CancelAsync(userState);
@@ -946,8 +1189,6 @@ public partial class RetValue
     private string tipMessageField;
 
     private string memoField;
-
-    private TipMessage[] _TipsField;
 
     /// <remarks/>
     public int ErrNum
@@ -1037,90 +1278,6 @@ public partial class RetValue
         set
         {
             this.memoField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
-    public TipMessage[] _Tips
-    {
-        get
-        {
-            return this._TipsField;
-        }
-        set
-        {
-            this._TipsField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.gc8848.com/")]
-public partial class TipMessage
-{
-
-    private string uRLField;
-
-    private string msgField;
-
-    /// <remarks/>
-    public string URL
-    {
-        get
-        {
-            return this.uRLField;
-        }
-        set
-        {
-            this.uRLField = value;
-        }
-    }
-
-    /// <remarks/>
-    public string Msg
-    {
-        get
-        {
-            return this.msgField;
-        }
-        set
-        {
-            this.msgField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void BeginInspectCompletedEventHandler(object sender, BeginInspectCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class BeginInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal BeginInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public RetValue Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((RetValue)(this.results[0]));
         }
     }
 }
@@ -1217,36 +1374,6 @@ public partial class GetInspectQueueByPlateIDCompletedEventArgs : System.Compone
 
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void GetReportDataCompletedEventHandler(object sender, GetReportDataCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class GetReportDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal GetReportDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public RetValue Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((RetValue)(this.results[0]));
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
 public delegate void AbortInspectCompletedEventHandler(object sender, AbortInspectCompletedEventArgs e);
 
 /// <remarks/>
@@ -1259,126 +1386,6 @@ public partial class AbortInspectCompletedEventArgs : System.ComponentModel.Asyn
     private object[] results;
 
     internal AbortInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public object Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((object)(this.results[0]));
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void StopInspectCompletedEventHandler(object sender, StopInspectCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class StopInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal StopInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public RetValue Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((RetValue)(this.results[0]));
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void GetLimitCompletedEventHandler(object sender, GetLimitCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class GetLimitCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal GetLimitCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public RetValue Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((RetValue)(this.results[0]));
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void EndInspectCompletedEventHandler(object sender, EndInspectCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class EndInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal EndInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
-            base(exception, cancelled, userState)
-    {
-        this.results = results;
-    }
-
-    /// <remarks/>
-    public RetValue Result
-    {
-        get
-        {
-            this.RaiseExceptionIfNecessary();
-            return ((RetValue)(this.results[0]));
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void UploadRealtimeDataCompletedEventHandler(object sender, UploadRealtimeDataCompletedEventArgs e);
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class UploadRealtimeDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
-{
-
-    private object[] results;
-
-    internal UploadRealtimeDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
             base(exception, cancelled, userState)
     {
         this.results = results;
@@ -1427,6 +1434,66 @@ public partial class BeginRecordCompletedEventArgs : System.ComponentModel.Async
 
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void EndRecordCompletedEventHandler(object sender, EndRecordCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class EndRecordCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal EndRecordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void BeginInspectCompletedEventHandler(object sender, BeginInspectCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class BeginInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal BeginInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
 public delegate void TakePhotoCompletedEventHandler(object sender, TakePhotoCompletedEventArgs e);
 
 /// <remarks/>
@@ -1457,18 +1524,48 @@ public partial class TakePhotoCompletedEventArgs : System.ComponentModel.AsyncCo
 
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-public delegate void EndRecordCompletedEventHandler(object sender, EndRecordCompletedEventArgs e);
+public delegate void StopInspectCompletedEventHandler(object sender, StopInspectCompletedEventArgs e);
 
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class EndRecordCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+public partial class StopInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
 {
 
     private object[] results;
 
-    internal EndRecordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+    internal StopInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void EndInspectCompletedEventHandler(object sender, EndInspectCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class EndInspectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal EndInspectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
             base(exception, cancelled, userState)
     {
         this.results = results;
@@ -1529,6 +1626,216 @@ public partial class EndSelfTestCompletedEventArgs : System.ComponentModel.Async
     private object[] results;
 
     internal EndSelfTestCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void UploadSelfTestDataCompletedEventHandler(object sender, UploadSelfTestDataCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class UploadSelfTestDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal UploadSelfTestDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void UploadRealtimeDataCompletedEventHandler(object sender, UploadRealtimeDataCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class UploadRealtimeDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal UploadRealtimeDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void GetInspectionInfoCompletedEventHandler(object sender, GetInspectionInfoCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class GetInspectionInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal GetInspectionInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void BeginCalibrateCompletedEventHandler(object sender, BeginCalibrateCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class BeginCalibrateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal BeginCalibrateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void UploadCalibrateDataCompletedEventHandler(object sender, UploadCalibrateDataCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class UploadCalibrateDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal UploadCalibrateDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void EndCalibrateCompletedEventHandler(object sender, EndCalibrateCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class EndCalibrateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal EndCalibrateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
+    {
+        this.results = results;
+    }
+
+    /// <remarks/>
+    public RetValue Result
+    {
+        get
+        {
+            this.RaiseExceptionIfNecessary();
+            return ((RetValue)(this.results[0]));
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+public delegate void TestPhotoCompletedEventHandler(object sender, TestPhotoCompletedEventArgs e);
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class TestPhotoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
+{
+
+    private object[] results;
+
+    internal TestPhotoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
             base(exception, cancelled, userState)
     {
         this.results = results;

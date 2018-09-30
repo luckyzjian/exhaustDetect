@@ -501,7 +501,7 @@ namespace exhaustDetect
                         cdata.IdleSpeed = checkstate.Dszs;
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata,cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata,cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传转速计自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
                             
@@ -1362,7 +1362,7 @@ namespace exhaustDetect
                         cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyyMMddHHmmss");
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传测功机自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -1941,7 +1941,7 @@ namespace exhaustDetect
                         cdata.Deviation2 = cgjdata.Error701.ToString("0.00");
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传烟度计自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -2736,7 +2736,7 @@ namespace exhaustDetect
                         cdata.InstrumentPressure = cgjdata.AirPressure.ToString("0.0");
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传电子环境自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3322,7 +3322,7 @@ namespace exhaustDetect
                         pdata.Judge = (double.Parse(cdata.Deviation)>0.1) ? "2" : "1";
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3333,7 +3333,7 @@ namespace exhaustDetect
                         }
                         cdata2.type = "4";
                         cdata2.CheckBeginTime= DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -3883,7 +3883,7 @@ namespace exhaustDetect
                             cdata.Loss2 = cgjdata.Plhp4.ToString("0.00");
                             int ahresult = 0;
                             string ahErrMsg = "";
-                            if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                            if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                             {
                                 ini.INIIO.saveLogInf("[上传测功机附加功率损失自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -4406,7 +4406,7 @@ namespace exhaustDetect
                         pdata.Judge = (double.Parse(cdata.Deviation) > 0.1) ? "2" : "1";
                         int ahresult = 0;
                         string ahErrMsg = "";
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
@@ -4417,7 +4417,7 @@ namespace exhaustDetect
                         }
                         cdata2.type = "4";
                         cdata2.CheckBeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
-                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.ahwebinf.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
+                        if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata2, out ahresult, out ahErrMsg))
                         {
                             ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
 
