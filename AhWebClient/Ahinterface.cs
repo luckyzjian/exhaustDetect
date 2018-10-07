@@ -1225,426 +1225,428 @@ namespace AhWebClient
                         {
                             if (ds.Tables.Contains("Inspect_" + i.ToString()))
                             {
-
-                                AhCarInfo carinfo = new AhCarInfo();
-                                carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
-                                carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
-                                carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
-                                carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
-                                carinfo.BrandName = ds.Tables["CarInfo"].Rows[i - 1]["BrandName"].ToString();
-                                carinfo.ModelName = ds.Tables["CarInfo"].Rows[i - 1]["ModelName"].ToString();
-                                carinfo.CarType = ds.Tables["CarInfo"].Rows[i - 1]["CarType"].ToString();
-                                carinfo.IfGoIntoCity = "";
-                                carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
-                                carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
-                                carinfo.IsClosingEI = ds.Tables["CarInfo"].Rows[i - 1]["IsClosingEI"].ToString();
-                                carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
-                                carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
-                                carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
-                                carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
-                                carinfo.StrokeCycles = "";
-                                carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NominalPower"].ToString();
-                                carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
-                                carinfo.BaseWeight = ds.Tables["CarInfo"].Rows[i - 1]["BaseWeight"].ToString();
-                                carinfo.WholeWeight = ds.Tables["CarInfo"].Rows[i - 1]["WholeWeight"].ToString();
-                                carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
-                                carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
-                                carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
-                                carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
-                                carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
-                                CARINF model = new CARINF();
-                                CARATWAIT waitmodel = new CARATWAIT();
-                                model.CLHP = carinfo.PlateID;
-                                model.HPZL = carinfo.PlateType;
-                                model.CPYS = "";
-                                switch (carinfo.PlateType)
+                                if (version == version_V23)
                                 {
-                                    case "1": model.CPYS = "蓝牌"; break;
-                                    case "2": model.CPYS = "黄牌"; break;
-                                    case "3": model.CPYS = "白牌"; break;
-                                    case "4": model.CPYS = "黑牌"; break;
-                                    case "5": model.CPYS = "绿牌"; break;
-                                    case "6": model.CPYS = "小黄牌"; break;
-                                    default:
-                                        model.CPYS = ""; break;
-                                }
-                                switch (carinfo.CarType)
-                                {
-                                    case "1": model.CLLX = "载客"; break;
-                                    case "2": model.CLLX = "载货或特殊用途车"; break;
-                                    case "3": model.CLLX = "低速货车"; break;
-                                    case "4": model.CLLX = "二轮摩托或二轮轻便摩托"; break;
-                                    case "5": model.CLLX = "三轮摩托或三轮轻便摩托"; break;
-                                    default:
-                                        model.CLLX = ""; break;
-                                }
-                                model.CZ = "";
-                                model.SYXZ = "";
-                                model.PP = "";
-                                model.XH = "";
-                                model.CLSBM = "";
-                                //model.FDJHM = vehicletable.Rows[i]["ENGINENO"].ToString();
-                                model.FDJHM = "";
-
-                                model.FDJXH = "";
-                                model.SCQY = "";
-                                model.HDZK = carinfo.PassengerCount;
-
-                                model.JSSZK = "0";
-                                model.ZZL = carinfo.WholeWeight;
-                                model.HDZZL = "0";
-                                model.ZBZL = (int.Parse(carinfo.BaseWeight) - 100).ToString();
-                                model.JZZL = carinfo.BaseWeight;
-                                model.ZCRQ = DateTime.Parse(carinfo.RegDate);
-                                model.SCRQ = DateTime.Parse(carinfo.FactoryDate);
-
-                                model.FDJPL = carinfo.DeliveryCapacity;
-                                model.RLZL = "";
-                                switch (carinfo.FuelType)
-                                {
-                                    case "1": model.RLZL = "汽油"; break;
-                                    case "2": model.RLZL = "柴油"; break;
-                                    case "3": model.RLZL = "天燃气"; break;
-                                    case "4": model.RLZL = "液化石油气"; break;
-                                    case "5": model.RLZL = "甲醇"; break;
-                                    case "6": model.RLZL = "乙醇"; break;
-                                    default: break;
-                                }
-                                model.EDGL = carinfo.NominalPower;
-                                model.EDZS = "";
-                                model.BSQXS = "";
-                                switch (carinfo.GearType)
-                                {
-                                    case "1": model.BSQXS = "手动档"; break;
-                                    case "2": model.BSQXS = "自动档"; break;
-                                    case "3": model.BSQXS = "手自一体"; break;
-                                    default: break;
-                                }
-                                model.DWS = "5";
-                                //model.GYFS = vehicletable.Rows[i]["FUELWAY"].ToString();
-                                model.GYFS = "";
-                                model.DPFS = (carinfo.IsClosingEI == "true" ? "闭环电喷" : "开环电喷");
-
-                                model.JQFS = (carinfo.IsTurbo == "true" ? "涡轮增压" : "自然进气");
-                                model.QGS = "";
-
-                                model.QDXS = "";
-                                switch (carinfo.DriveType)
-                                {
-                                    case "1": model.QDXS = "前驱"; break;
-                                    case "2": model.QDXS = "后驱"; break;
-                                    case "3": model.QDXS = "分时四驱"; break;
-                                    case "4": model.QDXS = "全时四驱"; break;
-                                    default: break;
-                                }
-                                model.CHZZ = "";
-                                model.DLSP = "";
-                                model.SFSRL = "";
-                                model.JHZZ = (carinfo.Is3WCC == "true" ? "使用" : "未使用");
-                                model.OBD = "";
-                                model.DKGYYB = "";
-                                model.LXDH = "";
-                                model.CLZL = "";
-                                model.CZDZ = "";
-
-                                model.JCFS = "";
-                                model.JCLB = "";
-                                model.SSXQ = "";
-                                model.FDJSCQY = "";
-                                model.QDLTQY = "";
-                                model.RYPH = "";
-                                model.SFWDZR = "";
-                                model.SFYQBF = "";
-
-
-
-                                waitmodel.CLID = carinfo.InspectID;
-                                waitmodel.CLHP = carinfo.PlateID;
-                                waitmodel.DLSJ = DateTime.Now;
-                                waitmodel.CPYS = "";
-                                switch (carinfo.PlateType)
-                                {
-                                    case "1": model.CPYS = "蓝牌"; break;
-                                    case "2": model.CPYS = "黄牌"; break;
-                                    case "3": model.CPYS = "白牌"; break;
-                                    case "4": model.CPYS = "黑牌"; break;
-                                    case "5": model.CPYS = "绿牌"; break;
-                                    case "6": model.CPYS = "小黄牌"; break;
-                                    default:
-                                        model.CPYS = ""; break;
-                                }
-                                switch (carinfo.InspectMethod)
-                                {
-                                    case "4":
-                                        waitmodel.JCFF = "ASM";
-                                        break;
-                                    case "1":
-                                        waitmodel.JCFF = "VMAS";
-                                        break;
-                                    case "5":
-                                        waitmodel.JCFF = "JZJS";
-                                        break;
-                                    case "3":
-                                        waitmodel.JCFF = "ZYJS";
-                                        break;
-                                    case "2":
-                                        waitmodel.JCFF = "SDS";
-                                        break;
-                                    default: waitmodel.JCFF = ""; break;
-                                }
-                                waitmodel.XSLC = "";
-                                waitmodel.JCCS = "1";
-                                waitmodel.CZY = "";
-                                waitmodel.JSY = "";
-                                waitmodel.DLY = "";
-                                waitmodel.JCFY = "";
-                                waitmodel.TEST = "";
-                                //waitmodel.JCBGBH = regtable.Rows[i]["TESTNO"].ToString();
-                                waitmodel.JCBGBH = "";
-                                waitmodel.JCGWH = "";
-                                waitmodel.JCZBH = "";
-                                waitmodel.JCRQ = DateTime.Now;
-                                waitmodel.BGJCFFYY = "";
-                                waitmodel.SFCS = "";
-                                waitmodel.ECRYPT = "";
-                                waitmodel.SFCJ = "初检";
-                                waitmodel.JYLSH = "";
-                                waitmodel.HPZL = carinfo.PlateType;
-                                carinflist.Add(model);
-                                caratwaitlist.Add(waitmodel);
-                            }
-                            else if (version == version_V27)
-                            {
-                                AhCarInfo_V27 carinfo = new AhCarInfo_V27();
-                                carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
-                                carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
-                                carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
-                                carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
-                                carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
-                                carinfo.BrandName = ds.Tables["CarInfo"].Rows[i - 1]["BrandName"].ToString();
-                                carinfo.ModelName = ds.Tables["CarInfo"].Rows[i - 1]["ModelName"].ToString();
-                                carinfo.EngineModel = ds.Tables["CarInfo"].Rows[i - 1]["EngineModel"].ToString();
-                                carinfo.EngineSN = ds.Tables["CarInfo"].Rows[i - 1]["EngineSN"].ToString();
-                                carinfo.CarType = ds.Tables["CarInfo"].Rows[i - 1]["CarType"].ToString();
-                                carinfo.VehicleTypeCode = ds.Tables["CarInfo"].Rows[i - 1]["VehicleTypeCode"].ToString();
-                                carinfo.IfHGL = ds.Tables["CarInfo"].Rows[i - 1]["IfHGL"].ToString();
-                                carinfo.IfGoIntoCity = "";
-                                carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
-                                carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
-                                carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID "].ToString();
-                                carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
-                                carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
-                                carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
-                                carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
-                                carinfo.StrokeCycles = "";
-                                if (ds.Tables["CarInfo"].Columns.Contains("NominalPower"))
+                                    AhCarInfo carinfo = new AhCarInfo();
+                                    carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
+                                    carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
+                                    carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
+                                    carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
+                                    carinfo.BrandName = ds.Tables["CarInfo"].Rows[i - 1]["BrandName"].ToString();
+                                    carinfo.ModelName = ds.Tables["CarInfo"].Rows[i - 1]["ModelName"].ToString();
+                                    carinfo.CarType = ds.Tables["CarInfo"].Rows[i - 1]["CarType"].ToString();
+                                    carinfo.IfGoIntoCity = "";
+                                    carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
+                                    carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
+                                    carinfo.IsClosingEI = ds.Tables["CarInfo"].Rows[i - 1]["IsClosingEI"].ToString();
+                                    carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
+                                    carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
+                                    carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
+                                    carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
+                                    carinfo.StrokeCycles = "";
                                     carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NominalPower"].ToString();
-                                else
-                                    carinfo.NominalPower = "60";
-                                carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
-                                carinfo.BaseWeight = ds.Tables["CarInfo"].Rows[i - 1]["BaseWeight"].ToString();
-                                carinfo.WholeWeight = ds.Tables["CarInfo"].Rows[i - 1]["WholeWeight"].ToString();
-                                carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
-                                carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
-                                carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
-                                carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
-                                carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
-                                carinfo.EPStage = ds.Tables["CarInfo"].Rows[i - 1]["EPStage"].ToString();
-                                CARINF model = new CARINF();
-                                CARATWAIT waitmodel = new CARATWAIT();
-                                model.CLHP = carinfo.PlateID;
-                                model.HPZL = carinfo.PlateType;
-                                model.CPYS = "";
-                                switch (carinfo.PlateType)
-                                {
-                                    case "1": model.CPYS = "蓝牌"; break;
-                                    case "2": model.CPYS = "黄牌"; break;
-                                    case "3": model.CPYS = "白牌"; break;
-                                    case "4": model.CPYS = "黑牌"; break;
-                                    case "5": model.CPYS = "绿牌"; break;
-                                    case "6": model.CPYS = "小黄牌"; break;
-                                    default:
-                                        model.CPYS = ""; break;
-                                }
-                                model.CLLX = carinfo.VehicleTypeCode;
-                                switch (carinfo.CarType)
-                                {
-                                    case "1": model.CLZL = "常规载客"; break;
-                                    case "2": model.CLZL = "常规载货"; break;
-                                    case "3": model.CLZL = "低速货车"; break;
-                                    case "4": model.CLZL = "三轮汽车"; break;
-                                    case "5": model.CLZL = "专项作业车"; break;
-                                    case "6": model.CLZL = "三轮摩托车"; break;
-                                    case "7": model.CLZL = "二轮摩托车"; break;
-                                    case "8": model.CLZL = "校车"; break;
-                                    case "9": model.CLZL = "其他"; break;
-                                    default:
-                                        model.CLZL = ""; break;
-                                }
-                                model.CZ = "";
-                                model.SYXZ = "";
-                                model.PP = carinfo.BrandName;
-                                model.XH = carinfo.ModelName;
-                                model.CLSBM = carinfo.VIN;
-                                //model.FDJHM = vehicletable.Rows[i]["ENGINENO"].ToString();
-                                model.FDJHM = carinfo.EngineSN;
+                                    carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
+                                    carinfo.BaseWeight = ds.Tables["CarInfo"].Rows[i - 1]["BaseWeight"].ToString();
+                                    carinfo.WholeWeight = ds.Tables["CarInfo"].Rows[i - 1]["WholeWeight"].ToString();
+                                    carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
+                                    carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
+                                    carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
+                                    carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
+                                    carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
+                                    CARINF model = new CARINF();
+                                    CARATWAIT waitmodel = new CARATWAIT();
+                                    model.CLHP = carinfo.PlateID;
+                                    model.HPZL = carinfo.PlateType;
+                                    model.CPYS = "";
+                                    switch (carinfo.PlateType)
+                                    {
+                                        case "1": model.CPYS = "蓝牌"; break;
+                                        case "2": model.CPYS = "黄牌"; break;
+                                        case "3": model.CPYS = "白牌"; break;
+                                        case "4": model.CPYS = "黑牌"; break;
+                                        case "5": model.CPYS = "绿牌"; break;
+                                        case "6": model.CPYS = "小黄牌"; break;
+                                        default:
+                                            model.CPYS = ""; break;
+                                    }
+                                    switch (carinfo.CarType)
+                                    {
+                                        case "1": model.CLLX = "载客"; break;
+                                        case "2": model.CLLX = "载货或特殊用途车"; break;
+                                        case "3": model.CLLX = "低速货车"; break;
+                                        case "4": model.CLLX = "二轮摩托或二轮轻便摩托"; break;
+                                        case "5": model.CLLX = "三轮摩托或三轮轻便摩托"; break;
+                                        default:
+                                            model.CLLX = ""; break;
+                                    }
+                                    model.CZ = "";
+                                    model.SYXZ = "";
+                                    model.PP = "";
+                                    model.XH = "";
+                                    model.CLSBM = "";
+                                    //model.FDJHM = vehicletable.Rows[i]["ENGINENO"].ToString();
+                                    model.FDJHM = "";
 
-                                model.FDJXH = carinfo.EngineModel;
-                                model.SCQY = "";
-                                model.HDZK = carinfo.PassengerCount;
+                                    model.FDJXH = "";
+                                    model.SCQY = "";
+                                    model.HDZK = carinfo.PassengerCount;
 
-                                model.JSSZK = "0";
-                                model.ZZL = carinfo.WholeWeight;
-                                model.HDZZL = "0";
-                                model.ZBZL = (int.Parse(carinfo.BaseWeight) - 100).ToString();
-                                model.JZZL = carinfo.BaseWeight;
-                                model.ZCRQ = DateTime.Parse(carinfo.RegDate);
-                                model.SCRQ = DateTime.Parse(carinfo.FactoryDate);
+                                    model.JSSZK = "0";
+                                    model.ZZL = carinfo.WholeWeight;
+                                    model.HDZZL = "0";
+                                    model.ZBZL = (int.Parse(carinfo.BaseWeight) - 100).ToString();
+                                    model.JZZL = carinfo.BaseWeight;
+                                    model.ZCRQ = DateTime.Parse(carinfo.RegDate);
+                                    model.SCRQ = DateTime.Parse(carinfo.FactoryDate);
 
-                                model.FDJPL = carinfo.DeliveryCapacity;
-                                model.RLZL = "";
-                                switch (carinfo.FuelType)
-                                {
-                                    case "1": model.RLZL = "汽油"; break;
-                                    case "2": model.RLZL = "柴油"; break;
-                                    case "3": model.RLZL = "天燃气"; break;
-                                    case "4": model.RLZL = "液化石油气"; break;
-                                    case "5": model.RLZL = "甲醇"; break;
-                                    case "6": model.RLZL = "乙醇"; break;
-                                    default: break;
-                                }
-                                model.EDGL = carinfo.NominalPower;
-                                model.EDZS = "";
-                                model.BSQXS = "";
-                                switch (carinfo.GearType)
-                                {
-                                    case "1": model.BSQXS = "手动档"; break;
-                                    case "2": model.BSQXS = "自动档"; break;
-                                    case "3": model.BSQXS = "手自一体"; break;
-                                    default: break;
-                                }
-                                model.DWS = "5";
-                                //model.GYFS = vehicletable.Rows[i]["FUELWAY"].ToString();
-                                model.GYFS = "";
-                                switch (carinfo.FuelSupplyID)
-                                {
-                                    case "1": model.GYFS = "闭环电喷"; break;
-                                    case "2": model.GYFS = "开环电喷"; break;
-                                    case "3": model.GYFS = "化油器"; break;
-                                    case "4": model.GYFS = "化油器改造"; break;
-                                    case "5": model.GYFS = "高压共轨"; break;
-                                    case "7": model.GYFS = "泵喷嘴"; break;
-                                    case "8": model.GYFS = "单体泵"; break;
-                                    case "9": model.GYFS = "直列泵"; break;
-                                    case "10": model.GYFS = "机械泵"; break;
-                                    case "11": model.GYFS = "其他"; break;
-                                    default: break;
-                                }
-                                model.DPFS = (model.GYFS == "闭环电喷" ? "闭环电喷" : "开环电喷");
+                                    model.FDJPL = carinfo.DeliveryCapacity;
+                                    model.RLZL = "";
+                                    switch (carinfo.FuelType)
+                                    {
+                                        case "1": model.RLZL = "汽油"; break;
+                                        case "2": model.RLZL = "柴油"; break;
+                                        case "3": model.RLZL = "天燃气"; break;
+                                        case "4": model.RLZL = "液化石油气"; break;
+                                        case "5": model.RLZL = "甲醇"; break;
+                                        case "6": model.RLZL = "乙醇"; break;
+                                        default: break;
+                                    }
+                                    model.EDGL = carinfo.NominalPower;
+                                    model.EDZS = "";
+                                    model.BSQXS = "";
+                                    switch (carinfo.GearType)
+                                    {
+                                        case "1": model.BSQXS = "手动档"; break;
+                                        case "2": model.BSQXS = "自动档"; break;
+                                        case "3": model.BSQXS = "手自一体"; break;
+                                        default: break;
+                                    }
+                                    model.DWS = "5";
+                                    //model.GYFS = vehicletable.Rows[i]["FUELWAY"].ToString();
+                                    model.GYFS = "";
+                                    model.DPFS = (carinfo.IsClosingEI == "true" ? "闭环电喷" : "开环电喷");
 
-                                model.JQFS = (carinfo.IsTurbo == "true" ? "涡轮增压" : "自然进气");
-                                model.QGS = carinfo.Cylinders;
+                                    model.JQFS = (carinfo.IsTurbo == "true" ? "涡轮增压" : "自然进气");
+                                    model.QGS = "";
 
-                                model.QDXS = "";
-                                switch (carinfo.DriveType)
-                                {
-                                    case "1": model.QDXS = "前驱"; break;
-                                    case "2": model.QDXS = "后驱"; break;
-                                    case "3": model.QDXS = "分时四驱"; break;
-                                    case "4": model.QDXS = "全时四驱"; break;
-                                    default: break;
-                                }
-                                model.CHZZ = "";
-                                model.DLSP = "";
-                                model.SFSRL = "";
-                                model.JHZZ = (carinfo.Is3WCC == "true" ? "使用" : "未使用");
-                                model.OBD = "";
-                                model.DKGYYB = "";
-                                model.LXDH = "";
-                                //model.CLZL = "";
-                                model.CZDZ = "";
+                                    model.QDXS = "";
+                                    switch (carinfo.DriveType)
+                                    {
+                                        case "1": model.QDXS = "前驱"; break;
+                                        case "2": model.QDXS = "后驱"; break;
+                                        case "3": model.QDXS = "分时四驱"; break;
+                                        case "4": model.QDXS = "全时四驱"; break;
+                                        default: break;
+                                    }
+                                    model.CHZZ = "";
+                                    model.DLSP = "";
+                                    model.SFSRL = "";
+                                    model.JHZZ = (carinfo.Is3WCC == "true" ? "使用" : "未使用");
+                                    model.OBD = "";
+                                    model.DKGYYB = "";
+                                    model.LXDH = "";
+                                    model.CLZL = "";
+                                    model.CZDZ = "";
 
-                                model.JCFS = "";
-                                model.JCLB = "";
-                                model.SSXQ = "";
-                                model.FDJSCQY = "";
-                                model.QDLTQY = "";
-                                model.RYPH = "";
-                                model.SFWDZR = "";
-                                model.SFYQBF = "";
+                                    model.JCFS = "";
+                                    model.JCLB = "";
+                                    model.SSXQ = "";
+                                    model.FDJSCQY = "";
+                                    model.QDLTQY = "";
+                                    model.RYPH = "";
+                                    model.SFWDZR = "";
+                                    model.SFYQBF = "";
 
 
-                                model.CSYS = "";
-                                model.ZXBZ = "";
-                                switch (carinfo.EPStage)
-                                {
-                                    case "1": model.ZXBZ = "国I"; break;
-                                    case "2": model.ZXBZ = "国II"; break;
-                                    case "3": model.ZXBZ = "国III"; break;
-                                    case "4": model.ZXBZ = "国IV"; break;
-                                    case "5": model.ZXBZ = "国V"; break;
-                                    case "6": model.ZXBZ = "国VI"; break;
-                                    case "7": model.ZXBZ = "国VII"; break;
-                                    case "0": model.ZXBZ = "国0"; break;
-                                    default: break;
+
+                                    waitmodel.CLID = carinfo.InspectID;
+                                    waitmodel.CLHP = carinfo.PlateID;
+                                    waitmodel.DLSJ = DateTime.Now;
+                                    waitmodel.CPYS = "";
+                                    switch (carinfo.PlateType)
+                                    {
+                                        case "1": model.CPYS = "蓝牌"; break;
+                                        case "2": model.CPYS = "黄牌"; break;
+                                        case "3": model.CPYS = "白牌"; break;
+                                        case "4": model.CPYS = "黑牌"; break;
+                                        case "5": model.CPYS = "绿牌"; break;
+                                        case "6": model.CPYS = "小黄牌"; break;
+                                        default:
+                                            model.CPYS = ""; break;
+                                    }
+                                    switch (carinfo.InspectMethod)
+                                    {
+                                        case "4":
+                                            waitmodel.JCFF = "ASM";
+                                            break;
+                                        case "1":
+                                            waitmodel.JCFF = "VMAS";
+                                            break;
+                                        case "5":
+                                            waitmodel.JCFF = "JZJS";
+                                            break;
+                                        case "3":
+                                            waitmodel.JCFF = "ZYJS";
+                                            break;
+                                        case "2":
+                                            waitmodel.JCFF = "SDS";
+                                            break;
+                                        default: waitmodel.JCFF = ""; break;
+                                    }
+                                    waitmodel.XSLC = "";
+                                    waitmodel.JCCS = "1";
+                                    waitmodel.CZY = "";
+                                    waitmodel.JSY = "";
+                                    waitmodel.DLY = "";
+                                    waitmodel.JCFY = "";
+                                    waitmodel.TEST = "";
+                                    //waitmodel.JCBGBH = regtable.Rows[i]["TESTNO"].ToString();
+                                    waitmodel.JCBGBH = "";
+                                    waitmodel.JCGWH = "";
+                                    waitmodel.JCZBH = "";
+                                    waitmodel.JCRQ = DateTime.Now;
+                                    waitmodel.BGJCFFYY = "";
+                                    waitmodel.SFCS = "";
+                                    waitmodel.ECRYPT = "";
+                                    waitmodel.SFCJ = "初检";
+                                    waitmodel.JYLSH = "";
+                                    waitmodel.HPZL = carinfo.PlateType;
+                                    carinflist.Add(model);
+                                    caratwaitlist.Add(waitmodel);
                                 }
-                                waitmodel.CLID = carinfo.InspectID;
-                                waitmodel.CLHP = carinfo.PlateID;
-                                waitmodel.DLSJ = DateTime.Now;
-                                waitmodel.CPYS = "";
-                                switch (carinfo.PlateType)
+                                else if (version == version_V27)
                                 {
-                                    case "1": model.CPYS = "蓝牌"; break;
-                                    case "2": model.CPYS = "黄牌"; break;
-                                    case "3": model.CPYS = "白牌"; break;
-                                    case "4": model.CPYS = "黑牌"; break;
-                                    case "5": model.CPYS = "绿牌"; break;
-                                    case "6": model.CPYS = "小黄牌"; break;
-                                    default:
-                                        model.CPYS = ""; break;
+                                    AhCarInfo_V27 carinfo = new AhCarInfo_V27();
+                                    carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
+                                    carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
+                                    carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
+                                    carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
+                                    carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
+                                    carinfo.BrandName = ds.Tables["CarInfo"].Rows[i - 1]["BrandName"].ToString();
+                                    carinfo.ModelName = ds.Tables["CarInfo"].Rows[i - 1]["ModelName"].ToString();
+                                    carinfo.EngineModel = ds.Tables["CarInfo"].Rows[i - 1]["EngineModel"].ToString();
+                                    carinfo.EngineSN = ds.Tables["CarInfo"].Rows[i - 1]["EngineSN"].ToString();
+                                    carinfo.CarType = ds.Tables["CarInfo"].Rows[i - 1]["CarType"].ToString();
+                                    carinfo.VehicleTypeCode = ds.Tables["CarInfo"].Rows[i - 1]["VehicleTypeCode"].ToString();
+                                    carinfo.IfHGL = ds.Tables["CarInfo"].Rows[i - 1]["IfHGL"].ToString();
+                                    carinfo.IfGoIntoCity = "";
+                                    carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
+                                    carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
+                                    carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID "].ToString();
+                                    carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
+                                    carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
+                                    carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
+                                    carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
+                                    carinfo.StrokeCycles = "";
+                                    if (ds.Tables["CarInfo"].Columns.Contains("NominalPower"))
+                                        carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NominalPower"].ToString();
+                                    else
+                                        carinfo.NominalPower = "60";
+                                    carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
+                                    carinfo.BaseWeight = ds.Tables["CarInfo"].Rows[i - 1]["BaseWeight"].ToString();
+                                    carinfo.WholeWeight = ds.Tables["CarInfo"].Rows[i - 1]["WholeWeight"].ToString();
+                                    carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
+                                    carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
+                                    carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
+                                    carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
+                                    carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
+                                    carinfo.EPStage = ds.Tables["CarInfo"].Rows[i - 1]["EPStage"].ToString();
+                                    CARINF model = new CARINF();
+                                    CARATWAIT waitmodel = new CARATWAIT();
+                                    model.CLHP = carinfo.PlateID;
+                                    model.HPZL = carinfo.PlateType;
+                                    model.CPYS = "";
+                                    switch (carinfo.PlateType)
+                                    {
+                                        case "1": model.CPYS = "蓝牌"; break;
+                                        case "2": model.CPYS = "黄牌"; break;
+                                        case "3": model.CPYS = "白牌"; break;
+                                        case "4": model.CPYS = "黑牌"; break;
+                                        case "5": model.CPYS = "绿牌"; break;
+                                        case "6": model.CPYS = "小黄牌"; break;
+                                        default:
+                                            model.CPYS = ""; break;
+                                    }
+                                    model.CLLX = carinfo.VehicleTypeCode;
+                                    switch (carinfo.CarType)
+                                    {
+                                        case "1": model.CLZL = "常规载客"; break;
+                                        case "2": model.CLZL = "常规载货"; break;
+                                        case "3": model.CLZL = "低速货车"; break;
+                                        case "4": model.CLZL = "三轮汽车"; break;
+                                        case "5": model.CLZL = "专项作业车"; break;
+                                        case "6": model.CLZL = "三轮摩托车"; break;
+                                        case "7": model.CLZL = "二轮摩托车"; break;
+                                        case "8": model.CLZL = "校车"; break;
+                                        case "9": model.CLZL = "其他"; break;
+                                        default:
+                                            model.CLZL = ""; break;
+                                    }
+                                    model.CZ = "";
+                                    model.SYXZ = "";
+                                    model.PP = carinfo.BrandName;
+                                    model.XH = carinfo.ModelName;
+                                    model.CLSBM = carinfo.VIN;
+                                    //model.FDJHM = vehicletable.Rows[i]["ENGINENO"].ToString();
+                                    model.FDJHM = carinfo.EngineSN;
+
+                                    model.FDJXH = carinfo.EngineModel;
+                                    model.SCQY = "";
+                                    model.HDZK = carinfo.PassengerCount;
+
+                                    model.JSSZK = "0";
+                                    model.ZZL = carinfo.WholeWeight;
+                                    model.HDZZL = "0";
+                                    model.ZBZL = (int.Parse(carinfo.BaseWeight) - 100).ToString();
+                                    model.JZZL = carinfo.BaseWeight;
+                                    model.ZCRQ = DateTime.Parse(carinfo.RegDate);
+                                    model.SCRQ = DateTime.Parse(carinfo.FactoryDate);
+
+                                    model.FDJPL = carinfo.DeliveryCapacity;
+                                    model.RLZL = "";
+                                    switch (carinfo.FuelType)
+                                    {
+                                        case "1": model.RLZL = "汽油"; break;
+                                        case "2": model.RLZL = "柴油"; break;
+                                        case "3": model.RLZL = "天燃气"; break;
+                                        case "4": model.RLZL = "液化石油气"; break;
+                                        case "5": model.RLZL = "甲醇"; break;
+                                        case "6": model.RLZL = "乙醇"; break;
+                                        default: break;
+                                    }
+                                    model.EDGL = carinfo.NominalPower;
+                                    model.EDZS = "";
+                                    model.BSQXS = "";
+                                    switch (carinfo.GearType)
+                                    {
+                                        case "1": model.BSQXS = "手动档"; break;
+                                        case "2": model.BSQXS = "自动档"; break;
+                                        case "3": model.BSQXS = "手自一体"; break;
+                                        default: break;
+                                    }
+                                    model.DWS = "5";
+                                    //model.GYFS = vehicletable.Rows[i]["FUELWAY"].ToString();
+                                    model.GYFS = "";
+                                    switch (carinfo.FuelSupplyID)
+                                    {
+                                        case "1": model.GYFS = "闭环电喷"; break;
+                                        case "2": model.GYFS = "开环电喷"; break;
+                                        case "3": model.GYFS = "化油器"; break;
+                                        case "4": model.GYFS = "化油器改造"; break;
+                                        case "5": model.GYFS = "高压共轨"; break;
+                                        case "7": model.GYFS = "泵喷嘴"; break;
+                                        case "8": model.GYFS = "单体泵"; break;
+                                        case "9": model.GYFS = "直列泵"; break;
+                                        case "10": model.GYFS = "机械泵"; break;
+                                        case "11": model.GYFS = "其他"; break;
+                                        default: break;
+                                    }
+                                    model.DPFS = (model.GYFS == "闭环电喷" ? "闭环电喷" : "开环电喷");
+
+                                    model.JQFS = (carinfo.IsTurbo == "true" ? "涡轮增压" : "自然进气");
+                                    model.QGS = carinfo.Cylinders;
+
+                                    model.QDXS = "";
+                                    switch (carinfo.DriveType)
+                                    {
+                                        case "1": model.QDXS = "前驱"; break;
+                                        case "2": model.QDXS = "后驱"; break;
+                                        case "3": model.QDXS = "分时四驱"; break;
+                                        case "4": model.QDXS = "全时四驱"; break;
+                                        default: break;
+                                    }
+                                    model.CHZZ = "";
+                                    model.DLSP = "";
+                                    model.SFSRL = "";
+                                    model.JHZZ = (carinfo.Is3WCC == "true" ? "使用" : "未使用");
+                                    model.OBD = "";
+                                    model.DKGYYB = "";
+                                    model.LXDH = "";
+                                    //model.CLZL = "";
+                                    model.CZDZ = "";
+
+                                    model.JCFS = "";
+                                    model.JCLB = "";
+                                    model.SSXQ = "";
+                                    model.FDJSCQY = "";
+                                    model.QDLTQY = "";
+                                    model.RYPH = "";
+                                    model.SFWDZR = "";
+                                    model.SFYQBF = "";
+
+
+                                    model.CSYS = "";
+                                    model.ZXBZ = "";
+                                    switch (carinfo.EPStage)
+                                    {
+                                        case "1": model.ZXBZ = "国I"; break;
+                                        case "2": model.ZXBZ = "国II"; break;
+                                        case "3": model.ZXBZ = "国III"; break;
+                                        case "4": model.ZXBZ = "国IV"; break;
+                                        case "5": model.ZXBZ = "国V"; break;
+                                        case "6": model.ZXBZ = "国VI"; break;
+                                        case "7": model.ZXBZ = "国VII"; break;
+                                        case "0": model.ZXBZ = "国0"; break;
+                                        default: break;
+                                    }
+                                    waitmodel.CLID = carinfo.InspectID;
+                                    waitmodel.CLHP = carinfo.PlateID;
+                                    waitmodel.DLSJ = DateTime.Now;
+                                    waitmodel.CPYS = "";
+                                    switch (carinfo.PlateType)
+                                    {
+                                        case "1": model.CPYS = "蓝牌"; break;
+                                        case "2": model.CPYS = "黄牌"; break;
+                                        case "3": model.CPYS = "白牌"; break;
+                                        case "4": model.CPYS = "黑牌"; break;
+                                        case "5": model.CPYS = "绿牌"; break;
+                                        case "6": model.CPYS = "小黄牌"; break;
+                                        default:
+                                            model.CPYS = ""; break;
+                                    }
+                                    switch (carinfo.InspectMethod)
+                                    {
+                                        case "4":
+                                            waitmodel.JCFF = "ZYJS";
+                                            break;
+                                        case "1":
+                                            waitmodel.JCFF = "VMAS";
+                                            break;
+                                        case "5":
+                                            waitmodel.JCFF = "JZJS";
+                                            break;
+                                        case "3":
+                                            waitmodel.JCFF = "LZ";
+                                            break;
+                                        case "2":
+                                            waitmodel.JCFF = "SDS";
+                                            break;
+                                        case "6":
+                                            waitmodel.JCFF = "ASM";
+                                            break;
+                                        default: waitmodel.JCFF = ""; break;
+                                    }
+                                    waitmodel.XSLC = "";
+                                    waitmodel.JCCS = carinfo.InspectCount;
+                                    waitmodel.CZY = "";
+                                    waitmodel.JSY = "";
+                                    waitmodel.DLY = "";
+                                    waitmodel.JCFY = "";
+                                    waitmodel.TEST = "";
+                                    //waitmodel.JCBGBH = regtable.Rows[i]["TESTNO"].ToString();
+                                    waitmodel.JCBGBH = "";
+                                    waitmodel.JCGWH = "";
+                                    waitmodel.JCZBH = "";
+                                    waitmodel.JCRQ = DateTime.Now;
+                                    waitmodel.BGJCFFYY = "";
+                                    waitmodel.SFCS = "";
+                                    waitmodel.ECRYPT = "";
+                                    waitmodel.SFCJ = "初检";
+                                    waitmodel.JYLSH = "";
+                                    waitmodel.HPZL = carinfo.PlateType;
+                                    carinflist.Add(model);
+                                    caratwaitlist.Add(waitmodel);
                                 }
-                                switch (carinfo.InspectMethod)
-                                {
-                                    case "4":
-                                        waitmodel.JCFF = "ZYJS";
-                                        break;
-                                    case "1":
-                                        waitmodel.JCFF = "VMAS";
-                                        break;
-                                    case "5":
-                                        waitmodel.JCFF = "JZJS";
-                                        break;
-                                    case "3":
-                                        waitmodel.JCFF = "LZ";
-                                        break;
-                                    case "2":
-                                        waitmodel.JCFF = "SDS";
-                                        break;
-                                    case "6":
-                                        waitmodel.JCFF = "ASM";
-                                        break;
-                                    default: waitmodel.JCFF = ""; break;
-                                }
-                                waitmodel.XSLC = "";
-                                waitmodel.JCCS = carinfo.InspectCount;
-                                waitmodel.CZY = "";
-                                waitmodel.JSY = "";
-                                waitmodel.DLY = "";
-                                waitmodel.JCFY = "";
-                                waitmodel.TEST = "";
-                                //waitmodel.JCBGBH = regtable.Rows[i]["TESTNO"].ToString();
-                                waitmodel.JCBGBH = "";
-                                waitmodel.JCGWH = "";
-                                waitmodel.JCZBH = "";
-                                waitmodel.JCRQ = DateTime.Now;
-                                waitmodel.BGJCFFYY = "";
-                                waitmodel.SFCS = "";
-                                waitmodel.ECRYPT = "";
-                                waitmodel.SFCJ = "初检";
-                                waitmodel.JYLSH = "";
-                                waitmodel.HPZL = carinfo.PlateType;
-                                carinflist.Add(model);
-                                caratwaitlist.Add(waitmodel);
                             }
                         }
                     }
