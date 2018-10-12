@@ -587,6 +587,20 @@ namespace exhaustDetect
             BeginInvoke(new wtlsb(Msg_Show), Msgowner, Msgstr);
             BeginInvoke(new wtlp(Msg_Position), Msgowner, Msgfather);
         }
+        public void Msg(Label Msgowner, Panel Msgfather, string Msgstr,bool isDisplay)
+        {
+            if (isDisplay)
+            {
+                BeginInvoke(new wtlsb(Msg_Show), Msgowner, Msgstr);
+                BeginInvoke(new wtlp(Msg_Position), Msgowner, Msgfather);
+            }
+            else
+            {
+                BeginInvoke(new wtlsb(Msg_Show), Msgowner, "—");
+                BeginInvoke(new wtlp(Msg_Position), Msgowner, Msgfather);
+
+            }
+        }
         public void Label_Msg(Label Msgowner, string Msgstr)
         {
             BeginInvoke(new wtlm(Label_Show), Msgowner, Msgstr);
@@ -1002,6 +1016,7 @@ namespace exhaustDetect
                             {
                                 int ahresult = 0;
                                 string ahErrMsg = "";
+                                ini.INIIO.saveLogInf("mainPanel.ahinterface.BeginInspect("+ mainPanel.lineid+","+carLogin.carbj.CLID + "," + carLogin.ahDriverID + "," + carLogin.ahOperatorID + ")");
                                 if (!mainPanel.ahinterface.BeginInspect(mainPanel.lineid, carLogin.carbj.CLID, carLogin.ahDriverID, carLogin.ahOperatorID, out ahresult, out ahErrMsg))
                                 {
                                     MessageBox.Show("错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
@@ -3448,7 +3463,7 @@ namespace exhaustDetect
                                             asmresult.NO5025Result = (asmdata.NOX25PD == "合格" ? "1" : "2");
                                             asmresult.HC2540Result = (asmdata.HC40PD == "" ?"0":(asmdata.HC40PD == "合格" ? "1" : "2"));
                                             asmresult.CO2540Result = (asmdata.CO40PD == "" ? "0" : (asmdata.CO40PD == "合格" ? "1" : "2"));
-                                            asmresult.NO5025Result = (asmdata.NOX40PD == "" ? "0" : (asmdata.NOX40PD == "合格" ? "1" : "2"));
+                                            asmresult.NO2540Result = (asmdata.NOX40PD == "" ? "0" : (asmdata.NOX40PD == "合格" ? "1" : "2"));
                                             int ahresult = 0;
                                             string ahErrMsg = "";
                                             if (!mainPanel.ahinterface.UploadAsmRealtimeData(carLogin.carbj.CLID, dataseconds, out ahresult, out ahErrMsg))
@@ -10401,7 +10416,7 @@ namespace exhaustDetect
                                             DataTable datasecondsah = csvreader.readCsv(newAhCsvPath);
                                             if (datasecondsah != null)
                                             {
-                                                if (!mainPanel.ahinterface.UploadBtgRealtimeData(carLogin.carbj.CLID, datasecondsah, out ahresult, out ahErrMsg))
+                                                if (!mainPanel.ahinterface.UploadBtgRealtimeData(carLogin.carbj.CLID, dataseconds, out ahresult, out ahErrMsg))
                                                 {
                                                     ini.INIIO.saveLogInf("UploadBtgRealtimeData\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
                                                     MessageBox.Show("上传过程数据发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
@@ -20567,7 +20582,7 @@ namespace exhaustDetect
                             co2540 = limitasm.co2540;
                             no2540 = limitasm.no2540;
                             ini.INIIO.saveLogInf("(诚创联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(),!mainPanel.equipconfig.useJHSCREEN);
 
                             return;
                         }
@@ -20590,7 +20605,7 @@ namespace exhaustDetect
                     co2540 = double.Parse(carLogin.limitdatainf.CO2540);
                     no2540 = double.Parse(carLogin.limitdatainf.NO2540);
                     ini.INIIO.saveLogInf("(东软联网)取限值成功");
-                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
 
                 }
@@ -20603,7 +20618,7 @@ namespace exhaustDetect
                     co2540 = double.Parse(mainPanel.jschecklimitmodel.CO2540);
                     no2540 = double.Parse(mainPanel.jschecklimitmodel.NO2540);
                     ini.INIIO.saveLogInf("(江苏联网)取限值成功");
-                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE&&mainPanel.ahwebinf.version==mainPanel.AHVERSION_V23)
@@ -20620,7 +20635,7 @@ namespace exhaustDetect
                         co2540 = double.Parse(ahlimitmodel.CO2540Limit);
                         no2540 = double.Parse(ahlimitmodel.NO2540Limit);
                         ini.INIIO.saveLogInf("(安徽联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
                     }
                     else
@@ -20657,7 +20672,7 @@ namespace exhaustDetect
                         co2540 = double.Parse(dt.Rows[0]["coel2540"].ToString());
                         no2540 = double.Parse(dt.Rows[0]["noel2540"].ToString());
                         ini.INIIO.saveLogInf("(桂林联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
                     }
@@ -20688,7 +20703,7 @@ namespace exhaustDetect
                                 co2540 = double.Parse(co2540s);
                                 no2540 = double.Parse(no2540s);
                                 ini.INIIO.saveLogInf("(中科宇图联网)取限值成功");
-                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 return;
                             }
                             else
@@ -20711,7 +20726,7 @@ namespace exhaustDetect
                                 co2540 = double.Parse(co2540s);
                                 no2540 = double.Parse(no2540s);
                                 ini.INIIO.saveLogInf("(中科宇图联网)取限值成功");
-                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 return;
                             }
                             else
@@ -20786,7 +20801,7 @@ namespace exhaustDetect
                                         co2540 = asm_xzdb.CO2540H;
                                         no2540 = asm_xzdb.NO2540H;
                                     }
-                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                     ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
                                     break;
                                 #endregion
@@ -20851,7 +20866,7 @@ namespace exhaustDetect
                                         co2540 = asm_xzdb.CO2540H;
                                         no2540 = asm_xzdb.NO2540H;
                                     }
-                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                    Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                     ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
 
                                     break;
@@ -21088,7 +21103,7 @@ namespace exhaustDetect
 
                             }
                             ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             break;
                             #endregion
                         case "第二类轻型汽车":
@@ -21285,7 +21300,7 @@ namespace exhaustDetect
                                 }
 
                             }
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
                             break;
                             #endregion
@@ -21342,7 +21357,7 @@ namespace exhaustDetect
                                 hc2540 = double.Parse(vmasxzdt.HC40);
                                 co2540 = double.Parse(vmasxzdt.CO40);
                                 no2540 = double.Parse(vmasxzdt.NO40);
-                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
 
                             }
@@ -21382,7 +21397,7 @@ namespace exhaustDetect
                                 hc2540 = double.Parse(vmasxzdt.HC40);
                                 co2540 = double.Parse(vmasxzdt.CO40);
                                 no2540 = double.Parse(vmasxzdt.NO40);
-                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
 
                             }
@@ -21466,7 +21481,7 @@ namespace exhaustDetect
                                 co2540 = asm_xzdb.CO2540H;
                                 no2540 = asm_xzdb.NO2540H;
                             }
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
                             break;
                         #endregion
@@ -21531,7 +21546,7 @@ namespace exhaustDetect
                                 co2540 = asm_xzdb.CO2540H;
                                 no2540 = asm_xzdb.NO2540H;
                             }
-                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             ini.INIIO.saveLogInf("车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString());
 
                             break;
@@ -21591,12 +21606,12 @@ namespace exhaustDetect
                     }
                     if (beforedate)
                     {
-                        Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
                     }
                     else
                     {
-                        Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
                     }
 
@@ -21627,12 +21642,12 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("(安徽联网)取限值成功");
                             if (beforedate)
                             {
-                                Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
                             }
                             else
                             {
-                                Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                                Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                                 ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
                             }
                             return;
@@ -21671,12 +21686,12 @@ namespace exhaustDetect
                         }
                         if (beforedate)
                         {
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
                         }
                         else
                         {
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
                         }
                     }
@@ -21797,12 +21812,12 @@ namespace exhaustDetect
                         if (beforedate)
                         {
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         }
                         else
                         {
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         }
                         break;
                     case "第二类轻型汽车":
@@ -21864,12 +21879,12 @@ namespace exhaustDetect
                         if (beforedate)
                         {
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_BEBORE.ToString() + "|HC:" + Limit_HC_BEBORE.ToString() + "|NO:" + Limit_NO_BEBORE.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         }
                         else
                         {
                             ini.INIIO.saveLogInf("车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
-                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：CO:" + Limit_CO_AFTER.ToString() + "|HC+NOX:" + Limit_HCNOX_AFTER.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         }
                         break;
                     case "重型汽车":
@@ -21898,7 +21913,7 @@ namespace exhaustDetect
                         GXXZ = double.Parse(carLogin.limitdatainf.SmokeK);
                         ZSXZ_LOW = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevUp);
                         ZSXZ_HIGH = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevBelow);
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
                     }
                     else if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_FJS)
@@ -21908,7 +21923,7 @@ namespace exhaustDetect
                         GXXZ = double.Parse(carLogin.limitdatainf.SmokeK);
                         ZSXZ_LOW = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevUp);
                         ZSXZ_HIGH = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevBelow);
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
                     }
                     else
@@ -21918,7 +21933,7 @@ namespace exhaustDetect
                         GXXZ = double.Parse(carLogin.limitdatainf.SmokeK);
                         ZSXZ_LOW = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevUp);
                         ZSXZ_HIGH = double.Parse(carLogin.modelbj.EDZS) * double.Parse(carLogin.limitdatainf.DieselRevBelow);
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
                     }
                 }
@@ -21936,7 +21951,7 @@ namespace exhaustDetect
                         GXXZ = carLogin.xblugdownxz.LDSorbStd;
                         ZSXZ_LOW = carLogin.xblugdownxz.LDLRpmStd;
                         ZSXZ_HIGH = carLogin.xblugdownxz.LDHRpmStd;
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
 
                     }
                     else
@@ -21958,7 +21973,7 @@ namespace exhaustDetect
                         {
                             GXXZ = limitlugdown.ydxz;
                             ini.INIIO.saveLogInf("(诚创联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             return;
                         }
                         else
@@ -21982,7 +21997,7 @@ namespace exhaustDetect
                         GXXZ = double.Parse(ahlimitmodel.LugdownYDLimit);
                         GLXZ = double.Parse(ahlimitmodel.LugdownPowerLimit);
                         ini.INIIO.saveLogInf("(安徽联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
                     }
                     else
@@ -22016,7 +22031,7 @@ namespace exhaustDetect
                         GXXZ = double.Parse(dt.Rows[0]["inspectionlimits"].ToString());
                         GLXZ = double.Parse(carLogin.modelbj.EDGL) / 2.0f;      //初始化功率限值
                         ini.INIIO.saveLogInf("(桂林联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
                     }
@@ -22113,7 +22128,7 @@ namespace exhaustDetect
                         }
                         break;
                 }
-                Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString());
+                Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
             }
             catch (Exception)
             {
@@ -22136,7 +22151,7 @@ namespace exhaustDetect
                         {
                             btgxz = limitbtg.ydxz;
                             ini.INIIO.saveLogInf("(诚创联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             return;
                         }
                         else
@@ -22154,7 +22169,7 @@ namespace exhaustDetect
                     ini.INIIO.saveLogInf("(东软联网)取自由加速不透光限值成功");
                     btgxz = double.Parse(carLogin.limitdatainf.FASmokeK);
                     btgzsxz = 0;
-                    Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JIANGSHUNETMODE && mainPanel.jschecklimitmodel != null)
@@ -22162,7 +22177,7 @@ namespace exhaustDetect
                     ini.INIIO.saveLogInf("(江苏联网)取限值成功");
                     btgxz = double.Parse(mainPanel.jschecklimitmodel.FASmokeK);
                     btgzsxz = double.Parse(mainPanel.jschecklimitmodel.FARev);
-                    Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
@@ -22178,7 +22193,7 @@ namespace exhaustDetect
                             btgxz = double.Parse(ahlimitmodel.BtgYDLimit);
                             btgzsxz = 0;
                             ini.INIIO.saveLogInf("(安徽联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             return;
                         }
                         else
@@ -22213,7 +22228,7 @@ namespace exhaustDetect
                         btgzsxz = 0;      //初始化功率限值
                         glzyjsxzstring = dt.Rows[0]["inspectionlimits"].ToString();
                         ini.INIIO.saveLogInf("(桂林联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
                     }
@@ -22230,7 +22245,7 @@ namespace exhaustDetect
                     {
                         btgxz = carLogin.xbbtgxz.SorbStd;
                         btgzsxz =0;      //初始化功率限值
-                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     }
                     else
                     {
@@ -22519,7 +22534,7 @@ namespace exhaustDetect
                         }
                     }
                 }
-                Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString());
+                Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
 
             }
             catch (Exception er)
@@ -22619,7 +22634,7 @@ namespace exhaustDetect
                             L_CO_XZ = limitsds.lowCo;
                             λ_XZ = "1.00±0.03";
                             ini.INIIO.saveLogInf("(诚创联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             return;
                         }
                         else
@@ -22640,7 +22655,7 @@ namespace exhaustDetect
                     L_HC_XZ = double.Parse(carLogin.limitdatainf.LowIdleHC);
                     L_CO_XZ = double.Parse(carLogin.limitdatainf.LowIdleCO);
                     λ_XZ = "1.00±0.03";
-                    Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
@@ -22653,7 +22668,7 @@ namespace exhaustDetect
                         L_HC_XZ = carLogin.xbsdsxz.DSHCStd;
                         L_CO_XZ = carLogin.xbsdsxz.DSCOStd;
                         λ_XZ = "1.00±0.03";
-                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     }
                     else
                     {
@@ -22671,7 +22686,7 @@ namespace exhaustDetect
                     L_HC_XZ = double.Parse(mainPanel.jschecklimitmodel.LowIdleHC);
                     L_CO_XZ = double.Parse(mainPanel.jschecklimitmodel.LowIdleCO);
                     λ_XZ = "1.00±0.03";
-                    Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                    Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                     return;
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE && mainPanel.ahwebinf.version == mainPanel.AHVERSION_V23)
@@ -22690,7 +22705,7 @@ namespace exhaustDetect
                             L_CO_XZ = double.Parse(ahlimitmodel.LowCOLimit);
                             λ_XZ = "1.00±0.03";
                             ini.INIIO.saveLogInf("(安徽联网)取限值成功");
-                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                            Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                             return;
                         }
                         else
@@ -22726,7 +22741,7 @@ namespace exhaustDetect
                         L_HC_XZ = double.Parse(dt.Rows[0]["lihcl"].ToString());
                         L_CO_XZ = double.Parse(dt.Rows[0]["licol"].ToString());
                         ini.INIIO.saveLogInf("(桂林联网)取限值成功");
-                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
                     }
@@ -22924,7 +22939,7 @@ namespace exhaustDetect
                 }
                 λ_XZ = "1.00±0.03";
                 ini.INIIO.saveLogInf("车辆限值：HC_HIGH:" + H_HC_XZ.ToString() + "|CO_HIGH:" + H_CO_XZ.ToString() + "|HC_LOW:" + L_HC_XZ.ToString() + "|CO_LOW:" + L_CO_XZ.ToString());
-                Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString());
+                Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
 
             }
             catch (Exception er)

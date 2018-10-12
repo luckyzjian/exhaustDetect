@@ -57,6 +57,8 @@ namespace exhaustDetect
         carinfor.xysjControl xysjcontrol = new carinfor.xysjControl();
         carinfor.workLogData worklogdata = new carinfor.workLogData();
         carinfor.selfCheckIni selfcheckini = new carinfor.selfCheckIni();
+
+        selfcheckdal selfcheckcontrol = new selfcheckdal();
         string yuredata = "";
         carinfor.yureconfigIni yurecontrol = new carinfor.yureconfigIni();
         private string _bdnr;
@@ -1852,7 +1854,7 @@ namespace exhaustDetect
                                 {
                                     Msg(label1, panel4, "废气仪未完成标定退出");
                                 }
-                                if (mainPanel.isNetUsed)
+                                if (mainPanel.isNetUsed&&(analysismeterdata.Bdjg == "合格"|| analysismeterdata.Bdjg == "不合格"))
                                 {
                                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
                                     {
@@ -2575,7 +2577,20 @@ namespace exhaustDetect
                                         }
                                         #endregion
                                     }
-
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽开始
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.BeginSelfTest(mainPanel.lineid, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("发送自检开始指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                            //MessageBox.Show("发送自检开始指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                            //return;
+                                            //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        }
+                                        #endregion
+                                    }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                                     {
                                         #region 安徽联网
@@ -2586,7 +2601,7 @@ namespace exhaustDetect
                                         pdata.BeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
                                         pdata.EndTime =DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                                         cdata.type = "1";
-                                        cdata.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyyMMddHHmmss");
+                                        cdata.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
                                         cdata.CommCheck ="1";
                                         cdata.PreheatInstrument = "1";
                                         cdata.Tightness ="1";
@@ -2641,7 +2656,7 @@ namespace exhaustDetect
                                             ini.INIIO.saveLogInf("[上传尾气分析仪检查数据自检信息]:成功\r\n");
                                         }
                                         cdata2.type = "2";
-                                        cdata2.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyyMMddHHmmss");
+                                        cdata2.CheckBeginTime = DateTime.Parse(analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
                                        
                                         cdata2.HCErrorLimit = "5";
                                         cdata2.COErrorLimit = "5";
@@ -2688,6 +2703,37 @@ namespace exhaustDetect
                                         {
                                             ini.INIIO.saveLogInf("[上传尾气分析仪低量程检查自检信息]:成功\r\n");
                                         }
+                                        #endregion
+                                    }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                    {
+                                        #region 安徽结束
+                                        selfcheckdata checkdata = new selfcheckdata();
+                                        checkdata.TEMP = "0";
+                                        checkdata.HUMI = "0";
+                                        checkdata.AIRP = "0";
+                                        string selfcheckid = mainPanel.stationid + mainPanel.lineid + "_" + DateTime.Now.ToString("yyyyMMdd");
+                                        if (selfcheckcontrol.Have_SelfCheckData(selfcheckid))
+                                        {
+                                            checkdata = selfcheckcontrol.Get_SelfCheckData(selfcheckid);
+                                        }
+                                        else
+                                        {
+                                            checkdata.TEMP = "0";
+                                            checkdata.HUMI = "0";
+                                            checkdata.AIRP = "0";
+                                        }
+                                        checkdata.AllJudge = analysismeterdata.Bdjg == "合格" ? "1" : "2";
+                                        int ahresult = 0;
+                                        string ahErrMsg = "";
+                                        if (!mainPanel.ahinterface.EndSelfTest(mainPanel.lineid, checkdata, out ahresult, out ahErrMsg))
+                                        {
+                                            ini.INIIO.saveLogInf("发送自检结束指令出错\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                            //return;
+                                            //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        }
+                                        else
+                                            ini.INIIO.saveLogInf("发送自检结束指令成功");
                                         #endregion
                                     }
                                 }
@@ -4529,7 +4575,7 @@ namespace exhaustDetect
                 case "惯量测试":
                     Process.Start("D://环保检测子程序/惯量标定.EXE");
                     break;
-                case "废气仪检查":
+                case "废气仪检查":                    
                     Process.Start("D://环保检测子程序/废气仪标定.EXE",fqylx);
                     break;
                 case "废气仪标定":

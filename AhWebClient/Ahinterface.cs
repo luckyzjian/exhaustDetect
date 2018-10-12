@@ -1312,7 +1312,7 @@ namespace AhWebClient
                                         default: break;
                                     }
                                     model.EDGL = carinfo.NominalPower;
-                                    model.EDZS = "";
+                                    model.EDZS = carinfo.RatedSpeed;
                                     model.BSQXS = "";
                                     switch (carinfo.GearType)
                                     {
@@ -1419,6 +1419,7 @@ namespace AhWebClient
                                     AhCarInfo_V27 carinfo = new AhCarInfo_V27();
                                     carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
                                     carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
+                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();
                                     carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
                                     carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
                                     carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
@@ -1432,7 +1433,7 @@ namespace AhWebClient
                                     carinfo.IfGoIntoCity = "";
                                     carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
                                     carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
-                                    carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID "].ToString();
+                                    carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID"].ToString();
                                     carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
                                     carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
                                     carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
@@ -1448,9 +1449,9 @@ namespace AhWebClient
                                     carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
                                     carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
                                     carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
-                                    carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
                                     carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
                                     carinfo.EPStage = ds.Tables["CarInfo"].Rows[i - 1]["EPStage"].ToString();
+                                    //carinfo.EPStage = "";
                                     CARINF model = new CARINF();
                                     CARATWAIT waitmodel = new CARATWAIT();
                                     model.CLHP = carinfo.PlateID;
@@ -1515,7 +1516,7 @@ namespace AhWebClient
                                         default: break;
                                     }
                                     model.EDGL = carinfo.NominalPower;
-                                    model.EDZS = "";
+                                    model.EDZS = carinfo.RatedSpeed;
                                     model.BSQXS = "";
                                     switch (carinfo.GearType)
                                     {
@@ -1776,7 +1777,7 @@ namespace AhWebClient
                                         default: break;
                                     }
                                     model.EDGL = carinfo.NominalPower;
-                                    model.EDZS = "";
+                                    model.EDZS = carinfo.RatedSpeed;
                                     model.BSQXS = "";
                                     switch (carinfo.GearType)
                                     {
@@ -1883,6 +1884,7 @@ namespace AhWebClient
                                     AhCarInfo_V27 carinfo = new AhCarInfo_V27();
                                     carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
                                     carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
+                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();
                                     carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
                                     carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
                                     carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
@@ -1896,7 +1898,7 @@ namespace AhWebClient
                                     carinfo.IfGoIntoCity = "";
                                     carinfo.IsTurbo = ds.Tables["CarInfo"].Rows[i - 1]["IsTurbo"].ToString();
                                     carinfo.FuelType = ds.Tables["CarInfo"].Rows[i - 1]["FuelType"].ToString();
-                                    carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID "].ToString();
+                                    carinfo.FuelSupplyID = ds.Tables["CarInfo"].Rows[i - 1]["FuelSupplyID"].ToString();
                                     carinfo.Is3WCC = ds.Tables["CarInfo"].Rows[i - 1]["Is3WCC"].ToString();
                                     carinfo.RatedSpeed = ds.Tables["CarInfo"].Rows[i - 1]["RatedSpeed"].ToString();
                                     carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
@@ -1912,9 +1914,11 @@ namespace AhWebClient
                                     carinfo.RegDate = ds.Tables["CarInfo"].Rows[i - 1]["RegDate"].ToString();
                                     carinfo.PassengerCount = ds.Tables["CarInfo"].Rows[i - 1]["PassengerCount"].ToString();
                                     carinfo.GearType = ds.Tables["CarInfo"].Rows[i - 1]["GearType"].ToString();
-                                    carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
+                                    //carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();
                                     carinfo.DriveType = ds.Tables["CarInfo"].Rows[i - 1]["DriveType"].ToString();
                                     carinfo.EPStage = ds.Tables["CarInfo"].Rows[i - 1]["EPStage"].ToString();
+
+                                    //carinfo.EPStage = "";
                                     CARINF model = new CARINF();
                                     CARATWAIT waitmodel = new CARATWAIT();
                                     model.CLHP = carinfo.PlateID;
@@ -1979,7 +1983,7 @@ namespace AhWebClient
                                         default: break;
                                     }
                                     model.EDGL = carinfo.NominalPower;
-                                    model.EDZS = "";
+                                    model.EDZS = carinfo.RatedSpeed;
                                     model.BSQXS = "";
                                     switch (carinfo.GearType)
                                     {
@@ -2158,6 +2162,10 @@ namespace AhWebClient
             errMsg = "";
             try
             {
+                ini.INIIO.saveSocketLogInf("BeginInspect\r\n" + "lineID:" + AHLINEID[lineID] + "\r\n" 
+                    + "InspectID:" + InspectID + "\r\n" 
+                    + "DriverID:" + DirverID + "\r\n"
+                    + "OperatorID:" + OperatorID);
                 RetValue retvalue = outlineservice.BeginInspect(long.Parse(AHLINEID[lineID]), InspectID, long.Parse(DirverID), long.Parse(OperatorID),0, "");
                 result = retvalue.ErrNum;
                 errMsg = retvalue.ErrMsg;
@@ -2792,7 +2800,7 @@ namespace AhWebClient
                                     XmlElement Torsion = xmldoc.CreateElement("Torsion");
                                     Torsion.InnerText = dr["扭力"].ToString();//v2.7
                                     XmlElement DymoLoad = xmldoc.CreateElement("DymoLoad");
-                                    DymoLoad.InnerText = dr["加载功率"].ToString();//v2.7
+                                    DymoLoad.InnerText = dr["功率"].ToString();//v2.7
                                     xe33.AppendChild(xe34);
                                     xe33.AppendChild(xe35);
                                     xe33.AppendChild(xe36);
@@ -3072,7 +3080,7 @@ namespace AhWebClient
                                     XmlElement DataType = xmldoc.CreateElement("DataType");
                                     DataType.InnerText = dr["时序类别"].ToString();//v2.7
                                     XmlElement xe35 = xmldoc.CreateElement("Time");
-                                    xe35.InnerText = dr["采样时序"].ToString();
+                                    xe35.InnerText = i.ToString();
                                     XmlElement xe36 = xmldoc.CreateElement("RPM");
                                     xe36.InnerText = dr["发动机转速"].ToString();
                                     XmlElement xe37 = xmldoc.CreateElement("YD");
@@ -3147,7 +3155,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3207,7 +3215,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3218,29 +3226,29 @@ namespace AhWebClient
                         xe6.InnerText = inspectResult.CrucialTime1;
                         XmlElement xe7 = xmldoc.CreateElement("CrucialTime2");
                         xe7.InnerText = inspectResult.CrucialTime2;
-                        XmlElement xe8 = xmldoc.CreateElement("5025HC");
+                        XmlElement xe8 = xmldoc.CreateElement("HC5025");
                         xe8.InnerText = inspectResult.HC5025;
-                        XmlElement xe9 = xmldoc.CreateElement("5025CO");
+                        XmlElement xe9 = xmldoc.CreateElement("CO5025");
                         xe9.InnerText = inspectResult.CO5025;
-                        XmlElement xe10 = xmldoc.CreateElement("5025NO");
+                        XmlElement xe10 = xmldoc.CreateElement("NO5025");
                         xe10.InnerText = inspectResult.NO5025;
-                        XmlElement xe11 = xmldoc.CreateElement("2540HC");
+                        XmlElement xe11 = xmldoc.CreateElement("HC2540");
                         xe11.InnerText = inspectResult.HC2540;
-                        XmlElement xe12 = xmldoc.CreateElement("2540CO");
+                        XmlElement xe12 = xmldoc.CreateElement("CO2540");
                         xe12.InnerText = inspectResult.CO2540;
-                        XmlElement xe13 = xmldoc.CreateElement("2540NO");
+                        XmlElement xe13 = xmldoc.CreateElement("NO2540");
                         xe13.InnerText = inspectResult.NO2540;
-                        XmlElement xe14 = xmldoc.CreateElement("5025HCLimit");
+                        XmlElement xe14 = xmldoc.CreateElement("HC5025Limit");
                         xe14.InnerText = inspectResult.HC5025Limit;
-                        XmlElement xe15 = xmldoc.CreateElement("5025COLimit");
+                        XmlElement xe15 = xmldoc.CreateElement("CO5025Limit");
                         xe15.InnerText = inspectResult.CO5025Limit;
-                        XmlElement xe16 = xmldoc.CreateElement("5025NOLimit");
+                        XmlElement xe16 = xmldoc.CreateElement("NO5025Limit");
                         xe16.InnerText = inspectResult.NO5025Limit;
-                        XmlElement xe17 = xmldoc.CreateElement("2540HCLimit");
+                        XmlElement xe17 = xmldoc.CreateElement("HC2540Limit");
                         xe17.InnerText = inspectResult.HC2540Limit;
-                        XmlElement xe18 = xmldoc.CreateElement("2540COLimit");
+                        XmlElement xe18 = xmldoc.CreateElement("CO2540Limit");
                         xe18.InnerText = inspectResult.CO2540Limit;
-                        XmlElement xe19 = xmldoc.CreateElement("2540NOLimit");
+                        XmlElement xe19 = xmldoc.CreateElement("NO2540Limit");
                         xe19.InnerText = inspectResult.NO2540Limit;
 
                         XmlElement HC5025Result = xmldoc.CreateElement("HC5025Result");
@@ -3251,6 +3259,8 @@ namespace AhWebClient
                         NO5025Result.InnerText = inspectResult.NO5025Result;
                         XmlElement HC2540Result = xmldoc.CreateElement("HC2540Result");
                         HC2540Result.InnerText = inspectResult.HC2540Result;
+                        XmlElement HC25405Result = xmldoc.CreateElement("HC25405Result");
+                        HC25405Result.InnerText = inspectResult.HC2540Result;
                         XmlElement CO2540Result = xmldoc.CreateElement("CO2540Result");
                         CO2540Result.InnerText = inspectResult.CO2540Result;
                         XmlElement NO2540Result = xmldoc.CreateElement("NO2540Result");
@@ -3279,6 +3289,7 @@ namespace AhWebClient
                         root.AppendChild(CO5025Result);
                         root.AppendChild(NO5025Result);
                         root.AppendChild(HC2540Result);
+                        root.AppendChild(HC25405Result);
                         root.AppendChild(CO2540Result);
                         root.AppendChild(NO2540Result);
                     }
@@ -3329,7 +3340,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3398,7 +3409,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3525,7 +3536,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3570,7 +3581,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3675,7 +3686,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");
@@ -3711,7 +3722,7 @@ namespace AhWebClient
                         XmlElement xe1 = xmldoc.CreateElement("Result");
                         xe1.InnerText = inspectResult.Result;
                         XmlElement xe2 = xmldoc.CreateElement("CrucialTime0");
-                        xe2.InnerText = inspectResult.Result;
+                        xe2.InnerText = inspectResult.CrucialTime0;
                         XmlElement xe3 = xmldoc.CreateElement("Temperature");
                         xe3.InnerText = inspectResult.Temperature;
                         XmlElement xe4 = xmldoc.CreateElement("Humidity");

@@ -211,6 +211,7 @@ namespace carinfor
         public bool isTpTempInstrument { set; get; }
         public bool isFdjzsJudge { set; get; }
         public bool displayJudge { set; get; }
+        public bool useJHSCREEN { set; get; }
     }
     public class VmasConfigInfdata
     {
@@ -802,6 +803,12 @@ namespace carinfor
                 configinidata.displayJudge = true;
             else
                 configinidata.displayJudge = false;
+
+            ini.INIIO.GetPrivateProfileString("配置参数", "金华屏蔽显示", "N", temp, 2048, @"D:\环保检测子程序\detectConfig.ini");
+            if (temp.ToString().Trim() == "Y")
+                configinidata.useJHSCREEN = true;
+            else
+                configinidata.useJHSCREEN = false;
             return configinidata;
         }
         public bool writeEquipmentConfig(equipmentConfigInfdata equipconfig)

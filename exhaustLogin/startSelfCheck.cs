@@ -1340,14 +1340,18 @@ namespace exhaustDetect
                         cdata.PreheatBeginTime= DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
                         cdata.PreheatEndTime= DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss");
                         cdata.InertiaEquivalent = cgjdata.Gxdl;
-                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyyMMddHHmmss");
+                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyy-MM-dd HH:mm:ss");
                         if (cgjdata.Cs1 == "48,32")
                         {
                             cdata.QRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
                             cdata.QRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
+                            cdata.CRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
+                            cdata.CRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
                         }
                         else
                         {
+                            cdata.QRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
+                            cdata.QRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
                             cdata.CRealSlideTime1 = cgjdata.Hrealtime.ToString("0.000");
                             cdata.CRealSlideTime2 = cgjdata.Lrealtime.ToString("0.000");
                         }
@@ -1359,7 +1363,7 @@ namespace exhaustDetect
                         cdata.IndicatedPower2 = cgjdata.Lpower.ToString("0");
                         cdata.CheckResult1 = double.Parse(cgjdata.Pc1) > 7 ? "2" : "1";
                         cdata.CheckResult2 = double.Parse(cgjdata.Pc2) > 7 ? "2" : "1";
-                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyyMMddHHmmss");
+                        cdata.SlideBeginTime = DateTime.Parse(cgjdata.kssj1).ToString("yyyy-MM-dd HH:mm:ss");
                         int ahresult = 0;
                         string ahErrMsg = "";
                         if (!mainPanel.ahinterface.Send_SELFCHECK_RESULT_DATA(mainPanel.lineid, pdata, cdata, out ahresult, out ahErrMsg))
@@ -3329,7 +3333,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:失败\r\n");
+                            ini.INIIO.saveLogInf("[上传尾气分析仪量程检查自检信息]:成功\r\n");
                         }
                         cdata2.type = "4";
                         cdata2.CheckBeginTime= DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
@@ -4424,7 +4428,7 @@ namespace exhaustDetect
                         }
                         else
                         {
-                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:失败\r\n");
+                            ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:成功\r\n");
                         }
                         #endregion
                     }

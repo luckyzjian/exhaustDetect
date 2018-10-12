@@ -558,8 +558,8 @@ namespace exhaustDetect
                 dataGridViewLUGDOWNXZ.Columns["d2Date2001100120060630"].HeaderText = "2001年10月1日~2006年6月30日第二类车";
                 dataGridViewLUGDOWNXZ.Columns["d2Date20060701"].HeaderText = "2006年7月1日起第二类车";
                 dataGridViewLUGDOWNXZ.Columns["zxDate20010901b"].HeaderText = "2001年1月以前生产的重型车";
-                dataGridViewLUGDOWNXZ.Columns["zxDate2001090120040831"].HeaderText = "2001年1月~2004年12月生产的重型车";
-                dataGridViewLUGDOWNXZ.Columns["zxDate20040901"].HeaderText = "2004年1月起生产的重型车";
+                dataGridViewLUGDOWNXZ.Columns["zxDate2001090120040831"].HeaderText = "2001年1月~2004年9月生产的重型车";
+                dataGridViewLUGDOWNXZ.Columns["zxDate20040901"].HeaderText = "2004年9月起生产的重型车";
             }
         }
         private void showASMXzInf()
