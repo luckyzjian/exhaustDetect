@@ -4031,12 +4031,34 @@ namespace exhaustDetect
                         }
                         break;
                     case "JZJS":
-                        if (mainPanel.linemodel.JZJS_HEAVY != "Y" && mainPanel.linemodel.JZJS_LIGHT != "Y")
+                        if (mainPanel.NetMode == mainPanel.ACNETMODE && mainPanel.isNetUsed)
                         {
-                            MessageBox.Show("该线不能检测加载减速，请重新选择上线", "警告");
-                            return;
+                            if (int.Parse(modelbj.ZZL) >= 3500)
+                            {
+                                if (mainPanel.linemodel.JZJS_HEAVY != "Y")
+                                {
+                                    MessageBox.Show("该线未配置重柴加载减速，请重新选择上线", "警告");
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if (mainPanel.linemodel.JZJS_LIGHT != "Y")
+                                {
+                                    MessageBox.Show("该线未配置轻柴加载减速，请重新选择上线", "警告");
+                                    return;
+                                }
+                            }
                         }
-                        else if (mainPanel.NetMode == mainPanel.HNNETMODE && mainPanel.isNetUsed)
+                        else
+                        {
+                            if (mainPanel.linemodel.JZJS_HEAVY != "Y"&&mainPanel.linemodel.JZJS_LIGHT != "Y")
+                            {
+                                MessageBox.Show("该线未配置加载减速，请重新选择上线", "警告");
+                                return;
+                            }
+                        }
+                        if (mainPanel.NetMode == mainPanel.HNNETMODE && mainPanel.isNetUsed)
                         {
                             if (!mainPanel.hninterface.enableLUGDOWN)
                             {

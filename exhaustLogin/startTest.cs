@@ -20283,8 +20283,8 @@ namespace exhaustDetect
             {
                 if (mainPanel.acsocketinf.AREA == mainPanel.ACAREA_NN)
                 {
-                    if ((carLogin.modelbj.JHZZ == "有") && (carLogin.modelbj.GYFS.Contains("闭环")))
-                    {
+                    //if ((carLogin.modelbj.JHZZ == "有") && (carLogin.modelbj.GYFS.Contains("闭环")))//2018年10月17日，中祥小杨，大连检查时要求将双怠速的lambda值都进行判定
+                    //{
                         if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格" && sdsdata.LAMDAHIGHPD == "合格")
                         {
                             sdsdata.ZHPD = "合格";
@@ -20295,22 +20295,22 @@ namespace exhaustDetect
                             sdsdata.ZHPD = "不合格";
                             return false;
                         }
-                    }
-                    else
-                    {
-                        sdsdata.LAMDAHIGHPD = "";
-                        if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
-                        {
-                            sdsdata.ZHPD = "合格";
-                            return true;
-                        }
-                        else
-                        {
-                            sdsdata.ZHPD = "不合格";
-                            return false;
-                        }
+                    //}
+                    //else
+                    //{
+                      //  sdsdata.LAMDAHIGHPD = "";
+                      //  if (sdsdata.LOWPD == "合格" && sdsdata.HIGHPD == "合格")
+                      //  {
+                      //      sdsdata.ZHPD = "合格";
+                      //      return true;
+                      //  }
+                       // else
+                        //{
+                         //   sdsdata.ZHPD = "不合格";
+                          //  return false;
+                        //}
 
-                    }
+                    //}
                 }
                 else
                 {
