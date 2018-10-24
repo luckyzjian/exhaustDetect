@@ -1182,7 +1182,7 @@ namespace exhaustDetect
             int linescountToSave = int.Parse(textBoxLinesCount.Text);
             for (int i = 1; i <= linescountToSave; i++)
             {
-                string lineid = "0" + i.ToString();
+                string lineid = i.ToString("00");
                 if (!logininfcontrol.checkLineIsAlive(stationid, lineid))
                 {
                     lineModel linemodel = new lineModel();
@@ -1302,9 +1302,9 @@ namespace exhaustDetect
                     logininfcontrol.saveLineCompensationInf(linemodel);
                 }
             }
-            for (int i = linescountToSave + 1; i < 10; i++)
+            for (int i = linescountToSave + 1; i < 20; i++)
             {
-                string lineid = "0" + i.ToString();
+                string lineid =  i.ToString("00");
                 logininfcontrol.deleteLineInf("stationLine", stationid, lineid);
                 logininfcontrol.deleteLineInf("设备标定", stationid, lineid);
                 logininfcontrol.deleteLineInf("流水号信息", stationid, lineid);
@@ -1354,8 +1354,8 @@ namespace exhaustDetect
                     linemodeltoSave.ISLOCK = (dataGridView1.Rows[i].Cells[14].Value.ToString().ToUpper() == "Y");
                     linemodeltoSave.LOCKREASON = dataGridView1.Rows[i].Cells[15].Value.ToString();
                     logininfcontrol.saveLineInf(linemodeltoSave);
-                    MessageBox.Show("success to update!");
                 }
+                MessageBox.Show("success to update!");
 
             }
             else if (radioButtonLineCalInf.Checked)
@@ -1384,8 +1384,8 @@ namespace exhaustDetect
                     linemodeltoSave.Lljenable = (dataGridView1.Rows[i].Cells["LLJENABLE"].Value.ToString().ToUpper() == "Y");
                     linemodeltoSave.Jlenable = (dataGridView1.Rows[i].Cells["JLENABLE"].Value.ToString().ToUpper() == "Y");
                     logininfcontrol.saveLineCalInf(linemodeltoSave);
-                    MessageBox.Show("success to update!");
                 }
+                MessageBox.Show("success to update!");
 
             }
             else if (radioButtonLineEquipment.Checked)
@@ -1417,8 +1417,8 @@ namespace exhaustDetect
                     linemodeltoSave.ZSJBH = dataGridView1.Rows[i].Cells["ZSJBH"].Value.ToString();
                     linemodeltoSave.ZSJZZC = dataGridView1.Rows[i].Cells["ZSJZZC"].Value.ToString();
                     logininfcontrol.saveLineEquipInf(linemodeltoSave);
-                    MessageBox.Show("success to update!");
                 }
+                MessageBox.Show("success to update!");
 
             }
         }

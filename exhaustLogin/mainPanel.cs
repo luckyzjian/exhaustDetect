@@ -300,6 +300,7 @@ namespace exhaustDetect
         public const string NEU_LNAS = "辽宁鞍山";
         public const string NEU_GZCJ = "贵州从江";
         public const string NEU_V301 = "V3.01";
+        public const string NEU_V202 = "V2.2";
         public const string NEU_GANSU = "甘肃";
 
         public const string ACAREA_NN = "辽宁";
@@ -2771,6 +2772,30 @@ namespace exhaustDetect
 
                             neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
                             string loginresult = neusoftsocket.loginUserFj(nowUser.userName, nowUser.userPassword, "0", "testjc", "111111");
+                            if (loginresult != "3")
+                            {
+                                switch (loginresult)
+                                {
+                                    case "0": MessageBox.Show("该用户不存在", "警告"); disable_function("0"); break;
+                                    case "1": MessageBox.Show("该用户无此操作权限", "警告"); disable_function("0"); break;
+                                    case "2": MessageBox.Show("系统没有查到该车的车辆信息", "警告"); disable_function("0"); break;
+                                    case "8": MessageBox.Show("外观检查不合格，不能检测！", "警告"); disable_function("0"); break;
+                                    case "9": MessageBox.Show("该用户不存在", "警告"); disable_function("0"); break;
+                                    case "10": MessageBox.Show("该车没有交费，不能检测！", "警告"); disable_function("0"); break;
+                                    case "11": MessageBox.Show("该车已检测，不能再次检测！", "警告"); disable_function("0"); break;
+                                    case "-1": MessageBox.Show("服务器故障", "警告"); disable_function("0"); break;
+                                    default: break;
+                                }
+                                disable_function("0");//登录前未获得权限
+                            }
+                        }
+                        else if (mainPanel.neusoftsocketinf.AREA == NEU_V202)
+                        {
+                            mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
+                            mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);
+
+                            neusoftsocket.init_equipment(neusoftsocketinf.IP, neusoftsocketinf.PORT);
+                            string loginresult = neusoftsocket.loginUserFj(nowUser.userName, nowUser.userPassword, "0", nowUser.userName, nowUser.userPassword);
                             if (loginresult != "3")
                             {
                                 switch (loginresult)

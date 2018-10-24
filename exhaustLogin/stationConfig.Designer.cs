@@ -305,6 +305,8 @@
             this.label86 = new System.Windows.Forms.Label();
             this.textBoxNhLineID = new System.Windows.Forms.TextBox();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.comboBoxAHVERSION = new System.Windows.Forms.ComboBox();
+            this.label181 = new System.Windows.Forms.Label();
             this.textBoxAhUrl = new System.Windows.Forms.TextBox();
             this.textBoxHhzUrl = new System.Windows.Forms.TextBox();
             this.label70 = new System.Windows.Forms.Label();
@@ -495,8 +497,6 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBoxAHVERSION = new System.Windows.Forms.ComboBox();
-            this.label181 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -3335,7 +3335,8 @@
             "云南昆明",
             "辽宁鞍山",
             "贵州从江",
-            "V3.01"});
+            "V3.01",
+            "V2.2"});
             this.comboBoxNeusoftArea.Location = new System.Drawing.Point(135, 332);
             this.comboBoxNeusoftArea.Name = "comboBoxNeusoftArea";
             this.comboBoxNeusoftArea.Size = new System.Drawing.Size(211, 24);
@@ -3592,6 +3593,28 @@
             this.tabPage17.Size = new System.Drawing.Size(1022, 447);
             this.tabPage17.TabIndex = 0;
             this.tabPage17.Text = "联网地区";
+            // 
+            // comboBoxAHVERSION
+            // 
+            this.comboBoxAHVERSION.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAHVERSION.FormattingEnabled = true;
+            this.comboBoxAHVERSION.Items.AddRange(new object[] {
+            "v2.3",
+            "v2.7"});
+            this.comboBoxAHVERSION.Location = new System.Drawing.Point(127, 85);
+            this.comboBoxAHVERSION.Name = "comboBoxAHVERSION";
+            this.comboBoxAHVERSION.Size = new System.Drawing.Size(222, 24);
+            this.comboBoxAHVERSION.TabIndex = 157;
+            // 
+            // label181
+            // 
+            this.label181.AutoSize = true;
+            this.label181.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label181.Location = new System.Drawing.Point(4, 92);
+            this.label181.Name = "label181";
+            this.label181.Size = new System.Drawing.Size(42, 14);
+            this.label181.TabIndex = 158;
+            this.label181.Text = "版本:";
             // 
             // textBoxAhUrl
             // 
@@ -5606,28 +5629,6 @@
             this.label8.Size = new System.Drawing.Size(348, 27);
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
-            // 
-            // comboBoxAHVERSION
-            // 
-            this.comboBoxAHVERSION.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAHVERSION.FormattingEnabled = true;
-            this.comboBoxAHVERSION.Items.AddRange(new object[] {
-            "v2.3",
-            "v2.7"});
-            this.comboBoxAHVERSION.Location = new System.Drawing.Point(127, 85);
-            this.comboBoxAHVERSION.Name = "comboBoxAHVERSION";
-            this.comboBoxAHVERSION.Size = new System.Drawing.Size(222, 24);
-            this.comboBoxAHVERSION.TabIndex = 157;
-            // 
-            // label181
-            // 
-            this.label181.AutoSize = true;
-            this.label181.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label181.Location = new System.Drawing.Point(4, 92);
-            this.label181.Name = "label181";
-            this.label181.Size = new System.Drawing.Size(42, 14);
-            this.label181.TabIndex = 158;
-            this.label181.Text = "版本:";
             // 
             // stationConfig
             // 

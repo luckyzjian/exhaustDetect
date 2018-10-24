@@ -1041,6 +1041,61 @@ namespace NeusoftUtil
                 return dt;
             }
         }
+        public DataTable loginUserCalibrationV202(string czyname, string czypassword, string logintype, string ycyname, string ycypassword, out string result, out string inf)
+        {
+            //socket.Connect(point);
+            XmlDocument xmldoc, xlmrecivedoc;
+            XmlNode xmlnode;
+            XmlElement xmlelem;
+            DataTable dt = null;
+            result = "";
+            inf = "";
+            xmldoc = new XmlDocument();
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmlelem.SetAttribute("Device", EISID);
+            xmldoc.AppendChild(xmlelem);
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+            XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+            xe1.SetAttribute("Name", "Verify");//设置该节点genre属性 
+
+            XmlElement xe2 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+            XmlElement xe3 = xmldoc.CreateElement("User");
+            xe3.InnerText = czyname;
+            XmlElement xe4 = xmldoc.CreateElement("Pwd");
+            xe4.InnerText = czypassword;
+            XmlElement xe5 = xmldoc.CreateElement("LoginType");
+            xe5.InnerText = logintype;
+            XmlElement xe6 = xmldoc.CreateElement("User2");
+            xe6.InnerText = ycyname;
+            XmlElement xe7 = xmldoc.CreateElement("Pwd2");
+            xe7.InnerText = ycypassword;
+            xe2.AppendChild(xe3);
+            xe2.AppendChild(xe4);
+            xe2.AppendChild(xe5);
+            xe2.AppendChild(xe6);
+            xe2.AppendChild(xe7);
+            xe1.AppendChild(xe2);
+            root.AppendChild(xe1);
+
+            //socket.Send(ConvertXmlToString(xmldoc));
+            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+            {
+
+                return dt;
+            }
+            Thread.Sleep(100);
+            byte[] buffer = new byte[10 * 1024];
+            string receivedString = "";
+            if (RecvData(socket, out receivedString) > 0)
+            {
+                dt = ReadCalStandard(receivedString, out result, out inf);
+                return dt;
+            }
+            else
+            {
+                return dt;
+            }
+        }
         #endregion
 
         #region V3.0
