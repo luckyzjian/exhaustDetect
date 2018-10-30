@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(carLogin));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelwx = new System.Windows.Forms.Panel();
@@ -152,7 +152,6 @@
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
             this.textBoxPlateAtWait = new System.Windows.Forms.TextBox();
             this.panelTm = new System.Windows.Forms.Panel();
             this.buttonStopListen = new System.Windows.Forms.Button();
@@ -193,6 +192,7 @@
             this.labelX6 = new DevComponents.DotNetBar.LabelX();
             this.labelCzy = new DevComponents.DotNetBar.LabelX();
             this.panelEx1 = new DevComponents.DotNetBar.PanelEx();
+            this.button5 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panelwx.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -1328,10 +1328,10 @@
             this.dataGrid_waitcar.ReadOnly = true;
             this.dataGrid_waitcar.RowHeadersVisible = false;
             this.dataGrid_waitcar.RowHeadersWidth = 45;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
-            this.dataGrid_waitcar.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 11F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dataGrid_waitcar.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGrid_waitcar.RowTemplate.Height = 23;
             this.dataGrid_waitcar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid_waitcar.Size = new System.Drawing.Size(275, 294);
@@ -1749,8 +1749,8 @@
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.label21);
             this.panel1.Controls.Add(this.textBoxPlateAtWait);
             this.panel1.Location = new System.Drawing.Point(2, 336);
             this.panel1.Name = "panel1";
@@ -1765,26 +1765,14 @@
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.ForeColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(168, 4);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(230, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(110, 25);
+            this.button2.Size = new System.Drawing.Size(57, 25);
             this.button2.TabIndex = 86;
-            this.button2.Text = "查 询";
+            this.button2.Text = "查编号";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label21
-            // 
-            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label21.ForeColor = System.Drawing.Color.Black;
-            this.label21.Location = new System.Drawing.Point(5, 10);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(35, 14);
-            this.label21.TabIndex = 87;
-            this.label21.Text = "号牌";
             // 
             // textBoxPlateAtWait
             // 
@@ -1792,9 +1780,9 @@
             this.textBoxPlateAtWait.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxPlateAtWait.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxPlateAtWait.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxPlateAtWait.Location = new System.Drawing.Point(51, 4);
+            this.textBoxPlateAtWait.Location = new System.Drawing.Point(3, 4);
             this.textBoxPlateAtWait.Name = "textBoxPlateAtWait";
-            this.textBoxPlateAtWait.Size = new System.Drawing.Size(111, 25);
+            this.textBoxPlateAtWait.Size = new System.Drawing.Size(166, 25);
             this.textBoxPlateAtWait.TabIndex = 28;
             // 
             // panelTm
@@ -1819,7 +1807,7 @@
             this.buttonStopListen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonStopListen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStopListen.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStopListen.ForeColor = System.Drawing.Color.Red;
+            this.buttonStopListen.ForeColor = System.Drawing.Color.White;
             this.buttonStopListen.Location = new System.Drawing.Point(240, 2);
             this.buttonStopListen.Name = "buttonStopListen";
             this.buttonStopListen.Size = new System.Drawing.Size(47, 25);
@@ -1836,7 +1824,7 @@
             this.buttonStartSm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonStartSm.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStartSm.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonStartSm.ForeColor = System.Drawing.Color.Red;
+            this.buttonStartSm.ForeColor = System.Drawing.Color.White;
             this.buttonStartSm.Location = new System.Drawing.Point(193, 2);
             this.buttonStartSm.Name = "buttonStartSm";
             this.buttonStartSm.Size = new System.Drawing.Size(47, 25);
@@ -2307,6 +2295,23 @@
             this.panelEx1.Style.GradientAngle = 90;
             this.panelEx1.TabIndex = 155;
             // 
+            // button5
+            // 
+            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button5.BackColor = System.Drawing.SystemColors.Control;
+            this.button5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button5.BackgroundImage")));
+            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button5.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Location = new System.Drawing.Point(172, 4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(57, 25);
+            this.button5.TabIndex = 87;
+            this.button5.Text = "查号牌";
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // carLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2405,7 +2410,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label labelJCCS;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label10;
@@ -2525,5 +2529,6 @@
         private System.Windows.Forms.RadioButton radioButtonSDS;
         private DevComponents.DotNetBar.ButtonX buttonX2;
         private System.Windows.Forms.Button buttonStopListen;
+        private System.Windows.Forms.Button button5;
     }
 }

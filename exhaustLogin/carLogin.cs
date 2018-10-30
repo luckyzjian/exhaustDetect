@@ -19,6 +19,7 @@ namespace exhaustDetect
 {
     public partial class carLogin : Form
     {
+        BardCodeHooK BarCode = new BardCodeHooK();
         public bool ref_zt = true;
         public static bool checkTM = true;
         private loginInfModel logininfmodel = new loginInfModel();
@@ -98,8 +99,48 @@ namespace exhaustDetect
         public carLogin()
         {
             InitializeComponent();
+            BarCode.BarCodeEvent += new BardCodeHooK.BardCodeDeletegate(BarCode_BarCodeEvent);
         }
-        
+        private delegate void ShowInfoDelegate(BardCodeHooK.BarCodes barCode);
+        private void ShowInfo(BardCodeHooK.BarCodes barCode)
+        {
+            label1.Focus();
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new ShowInfoDelegate(ShowInfo), new object[] { barCode });
+            }
+            else
+            {
+                //richTextBox1.Focus();
+                //textBox1.Text = barCode.KeyName;
+                //textBox2.Text = barCode.VirtKey.ToString();
+                //textBox3.Text = barCode.ScanCode.ToString();
+                //textBox4.Text = barCode.Ascll.ToString();
+                //textBox5.Text = barCode.Chr.ToString();
+                //textBox6.Text = barCode.IsValid ? barCode.BarCode : "";//是否为扫描枪输入，如果为true则是 否则为键盘输入
+                //textBox7.Text += barCode.KeyName; 
+                if (barCode.IsValid &&mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.TYNETMODE)
+                {
+                    //LogMessage("条码内容：" + barCode.BarCode);
+                    textBoxPlateAtWait.Text = barCode.BarCode;
+                    Application.DoEvents();
+                    if (textBoxPlateAtWait.Text.Trim().Length >=19)
+                    {
+                        searchPlate(1);
+                    }
+                    else
+                    {
+                        MessageBox.Show("JYLSH长度错误，规定长度为19" + ",读取长度为" + textBoxPlateAtWait.Text.Length.ToString());
+                        //("VIN码长度错误，规定长度为" + thisSysConfig.BarCodeLength.ToString() + ",该车VIN长度为" + textBoxCLHP.Text.Length.ToString());
+                    }
+                }
+            }
+        }
+        void BarCode_BarCodeEvent(BardCodeHooK.BarCodes barCode)
+        {
+            ShowInfo(barCode);
+        }
+
         private void carLogin_Load(object sender, EventArgs e)
         {
             init_datagrid();
@@ -181,6 +222,7 @@ namespace exhaustDetect
             init_staff();
             comboBoxBgff.SelectedIndex = 0;
             mainPanel.isStartTimerInCarlogin = true;
+            BarCode.Start();
             timer1.Start();
         }
         private void init_staff()
@@ -1055,6 +1097,71 @@ namespace exhaustDetect
                     }
                     #endregion
                 }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
+                {
+                    #region 通用联网
+                    dt_wait.Rows.Clear();
+                    DataTable dt = null;
+                    dt = logininfcontrol.getAllCarAtWait("Y");
+                    DataRow dr = null;
+                    if (dt != null)
+                    {
+                        foreach (DataRow dR in dt.Rows)
+                        {
+                            dr = dt_wait.NewRow();
+                            dr["检测编号"] = dR["JYLSH"].ToString();
+                            dr["车牌号"] = dR["CLHP"].ToString();
+                            dr["登录时间"] = dR["DLSJ"].ToString();
+                            switch (dR["JCFF"].ToString())
+                            {
+                                case "ASM":
+                                    if (mainPanel.linemodel.ASM == "N") continue;
+                                    dr["检测方法"] = "稳态工况法";
+                                    break;
+                                case "VMAS":
+                                    if (mainPanel.linemodel.VMAS == "N") continue;
+                                    dr["检测方法"] = "简易瞬态工况法";
+                                    break;
+                                case "JZJS":
+                                    if (mainPanel.linemodel.JZJS_HEAVY == "N" && mainPanel.linemodel.JZJS_LIGHT == "N") continue;
+                                    dr["检测方法"] = "加载减速法";
+                                    break;
+                                case "ZYJS":
+                                    if (mainPanel.linemodel.ZYJS == "N") continue;
+                                    dr["检测方法"] = "自由加速法";
+                                    break;
+                                case "SDS":
+                                    if (mainPanel.linemodel.SDS == "N") continue;
+                                    dr["检测方法"] = "双怠速法";
+                                    break;
+                                case "SDSM":
+                                    if (mainPanel.linemodel.SDS == "N") continue;
+                                    dr["检测方法"] = "双怠速法(摩)";
+                                    break;
+                                case "LZ":
+                                    if (mainPanel.linemodel.LZ == "N") continue;
+                                    dr["检测方法"] = "滤纸烟度法";
+                                    break;
+                                default: break;
+                            }
+                            dt_wait.Rows.Add(dr);
+                        }
+                    }
+                    //ref_zt = false;
+                    dataGrid_waitcar.DataSource = dt_wait;
+                    //dataGrid_waitcar.Columns["检测编号"].Visible = true;
+                    dataGrid_waitcar.Columns["登录时间"].Visible = false;
+
+                    if (dataGrid_waitcar.Rows.Count > 0)
+                        dataGrid_waitcar.FirstDisplayedScrollingRowIndex = Carwait_Scroll;
+                    dataGrid_waitcar.Sort(dataGrid_waitcar.Columns["检测编号"], ListSortDirection.Ascending);
+                    ref_zt = true;
+                    if (dataGrid_waitcar.Rows.Count > 0)
+                    {
+                        dataGrid_waitcar.Rows[0].Selected = true;
+                    }
+                    #endregion
+                }
                 else
                 {
                     #region 从本地数据库获取待检列表
@@ -1077,10 +1184,6 @@ namespace exhaustDetect
                     }
                     else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
-                    }
-                    else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
-                    {
-                        dt = logininfcontrol.getAllCarAtWait("Y");
                     }
                     else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)
                     {
@@ -3678,9 +3781,14 @@ namespace exhaustDetect
                 }
             }
         }
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="style">0-按号牌查找，1-按检验流水号查找</param>
+        void searchPlate(int style)
         {
             string daijian_bjclpz = textBoxPlateAtWait.Text.Trim();
+           
             if (daijian_bjclpz == "")
             {
                 MessageBox.Show("请输入车牌号.", "系统提示");
@@ -3688,29 +3796,63 @@ namespace exhaustDetect
             else
             {
                 ref_WaitCar();
-                for (int i = 0; i < dataGrid_waitcar.Rows.Count; i++)
+                if (style==1)
                 {
-                    if (dataGrid_waitcar.Rows[i].Cells["车牌号"].Value.ToString().Trim().Contains(daijian_bjclpz))
+                    if (daijian_bjclpz.Length > 19)
+                        daijian_bjclpz = daijian_bjclpz.Substring(0, 19);
+                    for (int i = 0; i < dataGrid_waitcar.Rows.Count; i++)
                     {
-                        dataGrid_waitcar.Rows[i].Selected = true;
-                        //foreach (DataGridViewRow dr in dataGrid_waitcar.SelectedRows)
-                        //{
-                        //    foreach (DataGridViewCell drcellselected in dr.Cells)
-                        //    {
-                        //        drcellselected.Selected = false;
+                        if (dataGrid_waitcar.Rows[i].Cells["检测编号"].Value.ToString().Trim().Contains(daijian_bjclpz))
+                        {
+                            dataGrid_waitcar.Rows[i].Selected = true;
+                            //foreach (DataGridViewRow dr in dataGrid_waitcar.SelectedRows)
+                            //{
+                            //    foreach (DataGridViewCell drcellselected in dr.Cells)
+                            //    {
+                            //        drcellselected.Selected = false;
 
-                        //    }
-                        //}
-                        //foreach (DataGridViewCell drcell in dataGrid_waitcar.Rows[i].Cells)
-                        //{
-                        //    drcell.Selected = true;
-                        //}
-                        //dataGrid_waitcar.FirstDisplayedScrollingRowIndex = i;
-                        //dataGrid_waitcar.Visible=
-                        return;
+                            //    }
+                            //}
+                            //foreach (DataGridViewCell drcell in dataGrid_waitcar.Rows[i].Cells)
+                            //{
+                            //    drcell.Selected = true;
+                            //}
+                            //dataGrid_waitcar.FirstDisplayedScrollingRowIndex = i;
+                            //dataGrid_waitcar.Visible=
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < dataGrid_waitcar.Rows.Count; i++)
+                    {
+                        if (dataGrid_waitcar.Rows[i].Cells["车牌号"].Value.ToString().Trim().Contains(daijian_bjclpz))
+                        {
+                            dataGrid_waitcar.Rows[i].Selected = true;
+                            //foreach (DataGridViewRow dr in dataGrid_waitcar.SelectedRows)
+                            //{
+                            //    foreach (DataGridViewCell drcellselected in dr.Cells)
+                            //    {
+                            //        drcellselected.Selected = false;
+
+                            //    }
+                            //}
+                            //foreach (DataGridViewCell drcell in dataGrid_waitcar.Rows[i].Cells)
+                            //{
+                            //    drcell.Selected = true;
+                            //}
+                            //dataGrid_waitcar.FirstDisplayedScrollingRowIndex = i;
+                            //dataGrid_waitcar.Visible=
+                            return;
+                        }
                     }
                 }
             }
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            searchPlate(1);
         }
 
         private void textBoxPlateAtWait_KeyPress(object sender, KeyPressEventArgs e)
@@ -5217,6 +5359,11 @@ namespace exhaustDetect
             {
                 mainPanel.isStartTimerInCarlogin = false;
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            searchPlate(0);
         }
     }
 }
