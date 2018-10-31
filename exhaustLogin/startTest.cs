@@ -1940,6 +1940,18 @@ namespace exhaustDetect
                                         mainPanel.capturecontrol.startBackCaptureThread(backpic2);
                                     }
                                 break;//exist in neusoft-mode
+                            case "Finish5025":
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 6, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
+                                break;
                             case "Testing2540":
                                 status = "2540工况";
                                 neusoftstatus = true;
@@ -1962,27 +1974,7 @@ namespace exhaustDetect
                                 {
                                     int ahresult = 0;
                                     string ahErrMsg = "";
-                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 6, out ahresult, out ahErrMsg))
-                                    {
-                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                                    }
-                                }
-                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
-                                {
-                                    int ahresult = 0;
-                                    string ahErrMsg = "";
                                     if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID,7, out ahresult, out ahErrMsg))
-                                    {
-                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
-                                    }
-                                }
-                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
-                                {
-                                    int ahresult = 0;
-                                    string ahErrMsg = "";
-                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 8, out ahresult, out ahErrMsg))
                                     {
                                         ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
                                         //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
@@ -1997,6 +1989,18 @@ namespace exhaustDetect
                                     }
                                // }
                                 break;//exist in neusoft-mode
+                            case "Finish2540":
+                                if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
+                                {
+                                    int ahresult = 0;
+                                    string ahErrMsg = "";
+                                    if (!mainPanel.ahinterface.TakePhoto(mainPanel.lineid, carLogin.carbj.CLID, 8, out ahresult, out ahErrMsg))
+                                    {
+                                        ini.INIIO.saveLogInf("拍照发生错误\r\n" + "错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                        //MessageBox.Show("拍照发生错误\r\n"+"错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
+                                    }
+                                }
+                                break;
                             case "K100Testing":
                                 status = "100%velmaxhp";
                                 neusoftstatus = true;

@@ -1439,8 +1439,8 @@ namespace AhWebClient
                                     carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
                                     carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
                                     carinfo.StrokeCycles = "";
-                                    if (ds.Tables["CarInfo"].Columns.Contains("NominalPower"))
-                                        carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NominalPower"].ToString();
+                                    if (ds.Tables["CarInfo"].Columns.Contains("NorminalPower"))
+                                        carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NorminalPower"].ToString();
                                     else
                                         carinfo.NominalPower = "60";
                                     carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
@@ -1904,8 +1904,8 @@ namespace AhWebClient
                                     carinfo.DeliveryCapacity = ds.Tables["CarInfo"].Rows[i - 1]["DeliveryCapacity"].ToString();
                                     carinfo.Cylinders = ds.Tables["CarInfo"].Rows[i - 1]["Cylinders"].ToString();
                                     carinfo.StrokeCycles = "";
-                                    if (ds.Tables["CarInfo"].Columns.Contains("NominalPower"))
-                                        carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NominalPower"].ToString();
+                                    if (ds.Tables["CarInfo"].Columns.Contains("NorminalPower"))
+                                        carinfo.NominalPower = ds.Tables["CarInfo"].Rows[i - 1]["NorminalPower"].ToString();
                                     else
                                         carinfo.NominalPower = "60";
                                     carinfo.FactoryDate = ds.Tables["CarInfo"].Rows[i - 1]["FactoryDate"].ToString();
