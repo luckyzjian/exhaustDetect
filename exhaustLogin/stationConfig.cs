@@ -39,6 +39,7 @@ namespace exhaustDetect
         public static carinfor.OrtSocketInf ortwebinf = new carinfor.OrtSocketInf();
         public static carinfor.NeusoftSocketInf neusoftsocketinf = new carinfor.NeusoftSocketInf();
         public static carinfor.XBWebInf xbwebinf = new carinfor.XBWebInf();
+        public static carinfor.JXPNWebInf jxpnwebinf = new carinfor.JXPNWebInf();
         public static baseControl basecontrol = new baseControl();
 
 
@@ -164,6 +165,13 @@ namespace exhaustDetect
             ini.INIIO.GetPrivateProfileString("江西联网", "SOCKETPORT", "", temp, 2048, @".\appConfig.ini");
             jxwebinf.socketport = temp.ToString().Trim();
 
+            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServiceUrl", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.Url = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServiceUser", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.User = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServicePwd", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.Pwd = temp.ToString().Trim();
+
             ini.INIIO.GetPrivateProfileString("大理联网", "LINEID", "532923001", temp, 2048, @".\appConfig.ini");
             daliwebinf.LINEID = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("大理联网", "SERVERIP", "192.168.100.100", temp, 2048, @".\appConfig.ini");
@@ -284,6 +292,10 @@ namespace exhaustDetect
             textBoxJXurl.Text = jxwebinf.url;
             textBoxJXSOCKETIP.Text = jxwebinf.socketip;
             textBoxJXSOCKETPORT.Text = jxwebinf.socketport;
+
+            textBoxGxpnUrl.Text = jxpnwebinf.Url;
+            textBoxGxpnUser.Text = jxpnwebinf.User;
+            textBoxGxpnPwd.Text = jxpnwebinf.Pwd;
 
             textBoxHNHYURL.Text = hnhywebinf.weburl;
             textBoxHNHYJCZBH.Text = hnhywebinf.stationid;

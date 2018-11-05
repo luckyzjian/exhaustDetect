@@ -122,6 +122,12 @@ namespace carinfor
         public string certificateNo;	//检测站代码
         public string diskNo;	//检测站代码
     }
+    public class JXPNWebInf
+    {
+        public string Url;
+        public string User;
+        public string Pwd;
+    }
     public class WGcgjSelfDetectInf
     {
         //以下为测功机数据内容	
