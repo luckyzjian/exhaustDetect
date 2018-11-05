@@ -237,7 +237,6 @@ namespace ini
             try
             {
                 str = HttpUtility.UrlDecode(xmlDoc, utf8);
-
             }
             catch
             { }

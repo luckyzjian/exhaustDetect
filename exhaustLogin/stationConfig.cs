@@ -1491,6 +1491,10 @@ namespace exhaustDetect
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "验证上传", mainPanel.zkytwebinf.checkUploadSuccess ? "Y" : "N",  @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "显示结果", mainPanel.zkytwebinf.displayCheckResult ? "Y" : "N",  @".\appConfig.ini");
 
+            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServiceUrl", textBoxGxpnUrl.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServiceUser", textBoxGxpnUser.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServicePwd", textBoxGxpnPwd.Text, @".\appConfig.ini");
+
             ini.INIIO.WritePrivateProfileString("喜邦联网", "ip", textBoxXB_IP.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("喜邦联网", "port", textBoxXB_PORT.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("喜邦联网", "certificateNo", textBoxXB_RZBH.Text, @".\appConfig.ini");
