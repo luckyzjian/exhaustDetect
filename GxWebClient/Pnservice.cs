@@ -54,10 +54,6 @@ namespace GxWebClient
         public Pnservice(string url, string user, string pwd, string cityCode, string stationCode, string lineCode, string factoryNo)
         {
             #region 名称代码初始化
-            PN_inspectionnature.Add("01", "初检");
-            PN_inspectionnature.Add("02", "复检");
-            PN_inspectionnature.Add("03", "多检");
-
             PN_inspectionmethod.Add("A", "SDS");
             PN_inspectionmethod.Add("B", "ASM");
             PN_inspectionmethod.Add("C", "VMAS");
@@ -78,38 +74,15 @@ namespace GxWebClient
             PNR_inspectionmethod.Add("怠速", "H");
             PNR_inspectionmethod.Add("急加速", "I");
 
+            PN_inspectionnature.Add("01", "初检");
+            PN_inspectionnature.Add("02", "复检");
+            PN_inspectionnature.Add("03", "多检");
+
             PN_vlpncolor.Add("01", "蓝色");
             PN_vlpncolor.Add("02", "黄色");
             PN_vlpncolor.Add("03", "黑色");
             PN_vlpncolor.Add("04", "白色");
             PN_vlpncolor.Add("05", "无");
-
-
-            PN_hpzl.Add("01", "大型汽车号牌");
-            PN_hpzl.Add("02", "小型汽车号牌");
-            PN_hpzl.Add("03", "使馆汽车号牌");
-            PN_hpzl.Add("04", "领馆汽车号牌");
-            PN_hpzl.Add("05", "境外汽车号牌");
-            PN_hpzl.Add("06", "外籍汽车号牌");
-            PN_hpzl.Add("07", "两、三轮摩托车号牌");
-            PN_hpzl.Add("08", "轻便摩托车号牌");
-            PN_hpzl.Add("09", "使馆摩托车号牌");
-            PN_hpzl.Add("10", "领馆摩托车号牌");
-            PN_hpzl.Add("11", "境外摩托车号牌");
-            PN_hpzl.Add("12", "外籍摩托车号牌");
-            PN_hpzl.Add("13", "农用运输车号牌");
-            PN_hpzl.Add("14", "拖拉机号牌");
-            PN_hpzl.Add("15", "挂车号牌");
-            PN_hpzl.Add("16", "教练汽车号牌");
-            PN_hpzl.Add("17", "教练摩托车号牌");
-            PN_hpzl.Add("18", "试验汽车号牌");
-            PN_hpzl.Add("19", "试验摩托车号牌");
-            PN_hpzl.Add("20", "临时人境汽车号牌");
-            PN_hpzl.Add("21", "临时人境摩托车号牌");
-            PN_hpzl.Add("22", "临时行驶车号牌");
-            PN_hpzl.Add("23", "警用汽车号牌");
-            PN_hpzl.Add("24", "警用摩托号牌");
-            PN_hpzl.Add("99", "其他号牌");
 
             PN_vehiclebigtype.Add("01", "汽车");
             PN_vehiclebigtype.Add("02", "摩托车");
@@ -146,8 +119,39 @@ namespace GxWebClient
             PN_useofauto.Add("K", "工程抢险");
             PN_useofauto.Add("L", "营转非");
             PN_useofauto.Add("M", "出租转非");
+            PN_useofauto.Add("N", "教练");
+            PN_useofauto.Add("O", "幼儿校车");
+            PN_useofauto.Add("P", "小学生校车");
+            PN_useofauto.Add("Q", "其他校车");
+            PN_useofauto.Add("R", "危化品运输");
             PN_useofauto.Add("Z", "其他");
 
+            PN_hpzl.Add("01", "大型汽车号牌");
+            PN_hpzl.Add("02", "小型汽车号牌");
+            PN_hpzl.Add("03", "使馆汽车号牌");
+            PN_hpzl.Add("04", "领馆汽车号牌");
+            PN_hpzl.Add("05", "境外汽车号牌");
+            PN_hpzl.Add("06", "外籍汽车号牌");
+            PN_hpzl.Add("07", "两、三轮摩托车号牌");
+            PN_hpzl.Add("08", "轻便摩托车号牌");
+            PN_hpzl.Add("09", "使馆摩托车号牌");
+            PN_hpzl.Add("10", "领馆摩托车号牌");
+            PN_hpzl.Add("11", "境外摩托车号牌");
+            PN_hpzl.Add("12", "外籍摩托车号牌");
+            PN_hpzl.Add("13", "农用运输车号牌");
+            PN_hpzl.Add("14", "拖拉机号牌");
+            PN_hpzl.Add("15", "挂车号牌");
+            PN_hpzl.Add("16", "教练汽车号牌");
+            PN_hpzl.Add("17", "教练摩托车号牌");
+            PN_hpzl.Add("18", "试验汽车号牌");
+            PN_hpzl.Add("19", "试验摩托车号牌");
+            PN_hpzl.Add("20", "临时人境汽车号牌");
+            PN_hpzl.Add("21", "临时人境摩托车号牌");
+            PN_hpzl.Add("22", "临时行驶车号牌");
+            PN_hpzl.Add("23", "警用汽车号牌");
+            PN_hpzl.Add("24", "警用摩托号牌");
+            PN_hpzl.Add("99", "其他号牌");
+            
             PN_intakeway.Add("01", "自然吸气");
             PN_intakeway.Add("02", "涡轮增压");
 
@@ -161,16 +165,15 @@ namespace GxWebClient
             PN_fueltype.Add("M", "乙醇");
             PN_fueltype.Add("N", "太阳能");
             PN_fueltype.Add("O", "混合动力");
+            PN_fueltype.Add("P", "氢");
+            PN_fueltype.Add("Q", "生物燃料");
             PN_fueltype.Add("Y", "无");
-            PN_fueltype.Add("Z", "其他");
-            PN_fueltype.Add("A1", "油改气");
-
-
+            
             PN_oilsupplyway.Add("01", "化油器");
             PN_oilsupplyway.Add("02", "闭环电喷");
             PN_oilsupplyway.Add("03", "开环电喷");
-            PN_oilsupplyway.Add("04", "直喷");
-            PN_oilsupplyway.Add("05", "混合喷射");
+            PN_oilsupplyway.Add("04", "自然吸气");
+            PN_oilsupplyway.Add("05", "涡轮增压");
 
             PN_driveform.Add("01", "前驱");
             PN_driveform.Add("02", "后驱");
@@ -191,12 +194,12 @@ namespace GxWebClient
             this.lineCode = lineCode;
             this.factoryNo = factoryNo;
             webservices = new VehicleInspectionService(url);
-            string loginStr = webservices.Login(user, pwd);
-            if (loginStr == "")
+            vit = new VIToken();
+            vit.GuidString = webservices.Login(user, pwd);
+            if (vit.GuidString == "")
                 jk_status = false;
             else
             {
-                vit.GuidString = loginStr;
                 webservices.VITokenValue = vit;
                 jk_status = true;
             }
@@ -777,6 +780,17 @@ namespace GxWebClient
                 XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees>
                 XmlElement xe = xmldoc.CreateElement(bodyName);//创建一个<Node>节点
                 XmlElement xe0 = xmldoc.CreateElement(nodeName);//创建一个<Node>节点
+                //添加固定信息
+                XmlElement xe01 = xmldoc.CreateElement("CityCode");
+                xe01.InnerText = cityCode;
+                XmlElement xe02 = xmldoc.CreateElement("StationCode");
+                xe02.InnerText = stationCode;
+                XmlElement xe03 = xmldoc.CreateElement("SceneCode");
+                xe03.InnerText = lineCode;
+                xe0.AppendChild(xe01);
+                xe0.AppendChild(xe02);
+                xe0.AppendChild(xe03);
+                //添加动态信息
                 foreach (string key in hash_dt.Keys)
                 {
                     XmlElement xe_n = xmldoc.CreateElement(key);
