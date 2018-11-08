@@ -113,6 +113,7 @@ namespace exhaustDetect
         public static DALIWebInf daliwebinf = new DALIWebInf();
         public static GLWebInf glwebinf = new GLWebInf();
         public static XBWebInf xbwebinf = new XBWebInf();
+        public static PNWebInf pnwebinf = new PNWebInf();
         
         public static carinfor.ZKYTWebInf zkytwebinf = new carinfor.ZKYTWebInf();
         public static carinfor.HHZWebInf hhzwebinf = new carinfor.HHZWebInf();
@@ -164,10 +165,10 @@ namespace exhaustDetect
         public static JsCheckLimit jschecklimitmodel = new JsCheckLimit();
         public static JsDemarcateLimit jsdermarcatelimitmodel = new JsDemarcateLimit();
         public static SYS_DAL.ConnForSQL conforsql;
-        /***********************************/
+        /**************喜邦*****************/
         public static List<carinfo.XB_USER> xb_user_list = new List<carinfo.XB_USER>();
-
-
+        /**************平南联网****************/
+        public static GxWebClient.Pnservice pninterface = null;
         public static bool useHyDatabase = false;
 
         Thread threadClient = null; // 创建用于接收服务端消息的 线程；
@@ -290,7 +291,8 @@ namespace exhaustDetect
         public const string HHZNNETMODE = "红河州联网";
         public const string ZKYTNETMODE = "中科宇图联网";
         public const string XBNETMODE = "喜邦联网";
-
+        public const string PNNETMODE = "平南联网";
+        
         public const string TYNETMODE = "通用联网";
 
         public const string NEU_SDRZ = "山东日照";
@@ -1093,6 +1095,27 @@ namespace exhaustDetect
             glwebinf.user = temp.ToString().Trim();
             ini.INIIO.GetPrivateProfileString("桂林联网", "PASSWORD", "123456", temp, 2048, @".\appConfig.ini");
             glwebinf.password = temp.ToString().Trim();
+            return true;
+        }
+        private bool init_pninf()
+        {
+            StringBuilder temp = new StringBuilder();
+            temp.Length = 2048;
+
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServiceUrl", "http://124.226.217.80:10014/VehicleInspectionService.asmx", temp, 2048, @".\appConfig.ini");
+            pnwebinf.Url = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServiceUser", "admin", temp, 2048, @".\appConfig.ini");
+            pnwebinf.User = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServicePwd", "123456", temp, 2048, @".\appConfig.ini");
+            pnwebinf.Pwd = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "cityCode", "537300", temp, 2048, @".\appConfig.ini");
+            pnwebinf.cityCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "stationCode", "53730001", temp, 2048, @".\appConfig.ini");
+            pnwebinf.stationCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "lineCode", "01", temp, 2048, @".\appConfig.ini");
+            pnwebinf.lineCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "factoryNo", "000000", temp, 2048, @".\appConfig.ini");
+            pnwebinf.factoryNo = temp.ToString().Trim();
             return true;
         }
         private bool init_hhzinf()
@@ -2495,6 +2518,49 @@ namespace exhaustDetect
                             ini.INIIO.saveLogInf("工作状态：连接桂林联网服务器失败，将工作在单机模式");
                         }
 
+                    }
+                    catch (Exception er)
+                    {
+                        MessageBox.Show("初始化桂林联网接口失败：" + er.Message);
+                        isNetUsed = false;
+                        toolStripLabel1NetStatus.Text = "工作状态：连接桂林联网服务器失败,将工作在单机模式";
+                        ini.INIIO.saveLogInf("工作状态：连接桂林联网服务器失败,将工作在单机模式");
+                    }
+                }
+                else if(NetMode == PNNETMODE)
+                {
+                    ini.INIIO.WritePrivateProfileString("工作模式", "联网运行", "Y", @".\appConfig.ini");
+                    init_pninf();
+                    try
+                    {
+                        pninterface = new GxWebClient.Pnservice(pnwebinf.Url, pnwebinf.User, pnwebinf.Pwd, pnwebinf.cityCode, pnwebinf.stationCode, pnwebinf.lineCode, pnwebinf.factoryNo);
+                        isNetUsed = true;
+                        toolStripLabel1NetStatus.Text = "工作状态：连接平南联网服务器成功";
+                        ini.INIIO.saveLogInf("工作状态：连接平南联网服务器成功");
+                        string sys_time = "", errmsg = "";
+                        if (pninterface.GetSystemTime(ref sys_time, ref errmsg))
+                        {
+                            try
+                            {
+                                DateTime syntime = DateTime.Parse(sys_time);
+                                SetSystemDateTime.SetLocalTimeByStr(syntime.ToString("yyyy-MM-dd HH:mm:ss"));
+                                ini.INIIO.saveLogInf("同步服务器联网时间成功:" + syntime.ToString("yyyy-MM-dd HH:mm:ss"));
+                            }
+                            catch (Exception er)
+                            {
+                                MessageBox.Show("同步时间失败：" + er.Message);
+                                isNetUsed = false;
+                                toolStripLabel1NetStatus.Text = "工作状态：连接平南联网服务器失败，将工作在单机模式";
+                                ini.INIIO.saveLogInf("工作状态：连接平南联网服务器失败，将工作在单机模式");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("同步时间失败：" + errmsg);
+                            isNetUsed = false;
+                            toolStripLabel1NetStatus.Text = "工作状态：连接平南联网服务器失败，将工作在单机模式";
+                            ini.INIIO.saveLogInf("工作状态：连接平南联网服务器失败，将工作在单机模式");
+                        }
                     }
                     catch (Exception er)
                     {

@@ -39,7 +39,7 @@ namespace exhaustDetect
         public static carinfor.OrtSocketInf ortwebinf = new carinfor.OrtSocketInf();
         public static carinfor.NeusoftSocketInf neusoftsocketinf = new carinfor.NeusoftSocketInf();
         public static carinfor.XBWebInf xbwebinf = new carinfor.XBWebInf();
-        public static carinfor.JXPNWebInf jxpnwebinf = new carinfor.JXPNWebInf();
+        public static carinfor.PNWebInf jxpnwebinf = new carinfor.PNWebInf();
         public static baseControl basecontrol = new baseControl();
 
 
@@ -165,12 +165,20 @@ namespace exhaustDetect
             ini.INIIO.GetPrivateProfileString("江西联网", "SOCKETPORT", "", temp, 2048, @".\appConfig.ini");
             jxwebinf.socketport = temp.ToString().Trim();
 
-            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServiceUrl", "", temp, 2048, @".\appConfig.ini");
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServiceUrl", "", temp, 2048, @".\appConfig.ini");
             jxpnwebinf.Url = temp.ToString().Trim();
-            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServiceUser", "", temp, 2048, @".\appConfig.ini");
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServiceUser", "", temp, 2048, @".\appConfig.ini");
             jxpnwebinf.User = temp.ToString().Trim();
-            ini.INIIO.GetPrivateProfileString("广西平南联网", "WebServicePwd", "", temp, 2048, @".\appConfig.ini");
+            ini.INIIO.GetPrivateProfileString("平南联网", "WebServicePwd", "", temp, 2048, @".\appConfig.ini");
             jxpnwebinf.Pwd = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "cityCode", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.cityCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "stationCode", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.stationCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "lineCode", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.lineCode = temp.ToString().Trim();
+            ini.INIIO.GetPrivateProfileString("平南联网", "factoryNo", "", temp, 2048, @".\appConfig.ini");
+            jxpnwebinf.factoryNo = temp.ToString().Trim();
 
             ini.INIIO.GetPrivateProfileString("大理联网", "LINEID", "532923001", temp, 2048, @".\appConfig.ini");
             daliwebinf.LINEID = temp.ToString().Trim();
@@ -296,6 +304,10 @@ namespace exhaustDetect
             textBoxGxpnUrl.Text = jxpnwebinf.Url;
             textBoxGxpnUser.Text = jxpnwebinf.User;
             textBoxGxpnPwd.Text = jxpnwebinf.Pwd;
+            textBoxGxpnDqbh.Text = jxpnwebinf.cityCode;
+            textBoxGxpnStationID.Text = jxpnwebinf.stationCode;
+            textBoxGxpnLineID.Text = jxpnwebinf.lineCode;
+            textBoxGxpnSbbh.Text = jxpnwebinf.factoryNo;
 
             textBoxHNHYURL.Text = hnhywebinf.weburl;
             textBoxHNHYJCZBH.Text = hnhywebinf.stationid;
@@ -1503,9 +1515,13 @@ namespace exhaustDetect
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "验证上传", mainPanel.zkytwebinf.checkUploadSuccess ? "Y" : "N",  @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("中科宇图联网", "显示结果", mainPanel.zkytwebinf.displayCheckResult ? "Y" : "N",  @".\appConfig.ini");
 
-            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServiceUrl", textBoxGxpnUrl.Text, @".\appConfig.ini");
-            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServiceUser", textBoxGxpnUser.Text, @".\appConfig.ini");
-            ini.INIIO.WritePrivateProfileString("广西平南联网", "WebServicePwd", textBoxGxpnPwd.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "WebServiceUrl", textBoxGxpnUrl.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "WebServiceUser", textBoxGxpnUser.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "WebServicePwd", textBoxGxpnPwd.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "cityCode", textBoxGxpnDqbh.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "stationCode", textBoxGxpnStationID.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "lineCode", textBoxGxpnLineID.Text, @".\appConfig.ini");
+            ini.INIIO.WritePrivateProfileString("平南联网", "factoryNo", textBoxGxpnSbbh.Text, @".\appConfig.ini");
 
             ini.INIIO.WritePrivateProfileString("喜邦联网", "ip", textBoxXB_IP.Text, @".\appConfig.ini");
             ini.INIIO.WritePrivateProfileString("喜邦联网", "port", textBoxXB_PORT.Text, @".\appConfig.ini");

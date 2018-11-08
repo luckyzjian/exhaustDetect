@@ -45,12 +45,14 @@
   <ItemGroup>
     <Compile Include="Glservice.cs" />
     <Compile Include="GxInterface.cs" />
+    <Compile Include="Pnservice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\GxServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="VehicleInspectionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\INIIO\INIIO.csproj">
