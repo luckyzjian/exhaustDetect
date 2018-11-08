@@ -2509,7 +2509,7 @@ namespace exhaustDetect
                     ini.INIIO.WritePrivateProfileString("工作模式", "联网运行", "Y", @".\appConfig.ini");
                     init_xbinf();
                     xbsocket = new carinfo.xbSocketControl();
-                    if(xbsocket.init_equipment(wgsocketinf.IP, wgsocketinf.PORT))
+                    if(xbsocket.init_equipment(xbwebinf.ip, xbwebinf.port))
                     {
                         isNetUsed = true;
                         toolStripLabel1NetStatus.Text = "工作状态：连接喜邦联网服务器成功";
