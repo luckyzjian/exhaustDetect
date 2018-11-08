@@ -122,11 +122,15 @@ namespace carinfor
         public string certificateNo;	//检测站代码
         public string diskNo;	//检测站代码
     }
-    public class JXPNWebInf
+    public class PNWebInf
     {
         public string Url;
         public string User;
         public string Pwd;
+        public string cityCode;
+        public string stationCode;
+        public string lineCode;
+        public string factoryNo;
     }
     public class WGcgjSelfDetectInf
     {

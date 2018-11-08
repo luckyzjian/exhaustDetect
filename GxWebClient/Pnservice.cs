@@ -51,6 +51,10 @@ namespace GxWebClient
         /// <param name="url">接口地址</param>
         /// <param name="user">接口用户名</param>
         /// <param name="pwd">接口用户密码</param>
+        /// <param name="cityCode">需要下载信息的城市行政区划编码</param>
+        /// <param name="stationCode">需要下载信息的站点编码</param>
+        /// <param name="lineCode">检测线编号</param>
+        /// <param name="factoryNo">设备出厂编号</param>
         public Pnservice(string url, string user, string pwd, string cityCode, string stationCode, string lineCode, string factoryNo)
         {
             #region 名称代码初始化
@@ -209,22 +213,40 @@ namespace GxWebClient
         /// 系统时间同步
         /// </summary>
         /// <returns></returns>
-        public string GetSystemTime()
+        public bool GetSystemTime(ref string sys_time, ref string errorInf)
         {
             if (jk_status == false)
-                return "";
+            {
+                errorInf = "联网接口还未正常初始化";
+                return false;
+            }
             try
             {
                 INIIO.saveSocketLogInf("【开始同步系统时间】\r\n");
                 DataSet result = getUploadResult(webservices.GetDateTimeNow());
-                if (result != null && (bool)result.Tables["ResultData"].Rows[0]["Success"] && result.Tables["ResultData"].Rows[0]["Data"].ToString() != "")
-                    return result.Tables["ResultData"].Rows[0]["Data"].ToString();
+                if (result != null)
+                {
+                    if (result.Tables["ResultData"].Rows[0]["Success"].ToString().ToUpper() == "TRUE" && result.Tables["ResultData"].Rows[0]["Error"].ToString() == "")
+                    {
+                        sys_time = result.Tables["ResultData"].Rows[0]["Data"].ToString();
+                        return true;
+                    }
+                    else
+                    {
+                        errorInf = "获取平台时间失败，接口返回信息如下：\r\nSuccess:" + result.Tables["ResultData"].Rows[0]["Success"].ToString() + "|Error:" + result.Tables["ResultData"].Rows[0]["Error"].ToString() + "|Data:" + result.Tables["ResultData"].Rows[0]["Data"].ToString();
+                        return false;
+                    }
+                }
                 else
-                    return "";
+                {
+                    errorInf = "平台未返回或返回消息解析失败";
+                    return false;
+                }
             }
             catch
             {
-                return "";
+                errorInf = "获取平台时间时出错";
+                return false;
             }
         }
 
@@ -250,10 +272,10 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.DownloadAcceptance(cityCode, stationCode, lineCode, jcff, factoryNo));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
-                    errorInf = "Success:" + success.ToString() + "|Error:" + error;
-                    if (success && error == "" && result.Tables["AcceptanceType"] != null)
+                    errorInf = "Success:" + success + "|Error:" + error;
+                    if (success.ToUpper() == "TRUE" && error == "" && result.Tables["AcceptanceType"] != null)
                     {
                         dt_WaitCarList = result.Tables["AcceptanceType"];
                         return true;
@@ -297,10 +319,10 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.DownloadAcceptanceData(cityCode, stationCode, lineCode, jcff, StartTime.ToString("yyyy-MM-dd HH:mm:ss"), EndTime.ToString("yyyy-MM-dd HH:mm:ss"), 0, factoryNo));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
-                    errorInf = "Success:" + success.ToString() + "|Error:" + error;
-                    if (success && error == "" && result.Tables["AcceptanceType"] != null)
+                    errorInf = "Success:" + success + "|Error:" + error;
+                    if (success.ToUpper() == "TRUE" && error == "" && result.Tables["AcceptanceType"] != null)
                     {
                         dt_WaitCarList = result.Tables["AcceptanceType"];
                         return true;
@@ -339,10 +361,10 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.UpInspectionSignal(stationCode, jylsh, lineCode, uniqueStr, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), isStart ? "start" : "stop"));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
 
-                    if (success && error == "")
+                    if (success.ToUpper() == "TRUE" && error == "")
                         return true;
                     else
                     {
@@ -382,11 +404,11 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.DownloadVehicle(stationCode, jylsh, lineCode, jcff));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
                     errorInf = "Success:" + success.ToString() + "|Error:" + error;
                     
-                    if (success && error == "" && result.Tables["Vehicle"] != null)
+                    if (success.ToUpper() == "TRUE" && error == "" && result.Tables["Vehicle"] != null)
                     {
                         dt_CarInfo = result.Tables["Vehicle"];
                         return true;
@@ -451,9 +473,9 @@ namespace GxWebClient
 
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
-                    if (success && error == "")
+                    if (success.ToUpper() == "TRUE" && error == "")
                         return true;
                     else
                     {
@@ -598,9 +620,9 @@ namespace GxWebClient
 
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
-                    if (success && error == "")
+                    if (success.ToUpper() == "TRUE" && error == "")
                         return true;
                     else
                     {
@@ -644,10 +666,10 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.GetParamLimitData(stationCode, jylsh, lineCode, jcff));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
                     errorInf = "Success:" + success.ToString() + "|Error:" + error;
-                    if (success && error == "" && result.Tables["Limit"] != null)
+                    if (success.ToUpper() == "TRUE" && error == "" && result.Tables["Limit"] != null)
                     {
                         dt_XZ = result.Tables["Limit"];
                         return true;
@@ -688,10 +710,10 @@ namespace GxWebClient
                 DataSet result = getUploadResult(webservices.DownloadStationStaff(cityCode, stationCode));
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
                     errorInf = "Success:" + success.ToString() + "|Error:" + error;
-                    if (success && error == "" && result.Tables["StationStaffType"] != null)
+                    if (success.ToUpper() == "TRUE" && error == "" && result.Tables["StationStaffType"] != null)
                     {
                         dt_Users = result.Tables["StationStaffType"];
                         return true;
@@ -840,9 +862,9 @@ namespace GxWebClient
 
                 if (result != null)
                 {
-                    bool success = (bool)result.Tables["ResultData"].Rows[0]["Success"];
+                    string success = result.Tables["ResultData"].Rows[0]["Success"].ToString();
                     string error = result.Tables["ResultData"].Rows[0]["Error"].ToString();
-                    if (success && error == "")
+                    if (success.ToUpper() == "TRUE" && error == "")
                         return true;
                     else
                     {

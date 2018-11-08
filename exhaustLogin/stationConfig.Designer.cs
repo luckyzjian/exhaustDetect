@@ -305,6 +305,13 @@
             this.label86 = new System.Windows.Forms.Label();
             this.textBoxNhLineID = new System.Windows.Forms.TextBox();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.textBoxGxpnPwd = new System.Windows.Forms.TextBox();
+            this.label184 = new System.Windows.Forms.Label();
+            this.textBoxGxpnUser = new System.Windows.Forms.TextBox();
+            this.label185 = new System.Windows.Forms.Label();
+            this.textBoxGxpnUrl = new System.Windows.Forms.TextBox();
+            this.label182 = new System.Windows.Forms.Label();
+            this.label183 = new System.Windows.Forms.Label();
             this.comboBoxAHVERSION = new System.Windows.Forms.ComboBox();
             this.label181 = new System.Windows.Forms.Label();
             this.textBoxAhUrl = new System.Windows.Forms.TextBox();
@@ -497,13 +504,14 @@
             this.label126 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBoxGxpnUrl = new System.Windows.Forms.TextBox();
-            this.label182 = new System.Windows.Forms.Label();
-            this.label183 = new System.Windows.Forms.Label();
-            this.textBoxGxpnPwd = new System.Windows.Forms.TextBox();
-            this.label184 = new System.Windows.Forms.Label();
-            this.textBoxGxpnUser = new System.Windows.Forms.TextBox();
-            this.label185 = new System.Windows.Forms.Label();
+            this.textBoxGxpnSbbh = new System.Windows.Forms.TextBox();
+            this.label186 = new System.Windows.Forms.Label();
+            this.textBoxGxpnDqbh = new System.Windows.Forms.TextBox();
+            this.label187 = new System.Windows.Forms.Label();
+            this.textBoxGxpnStationID = new System.Windows.Forms.TextBox();
+            this.label188 = new System.Windows.Forms.Label();
+            this.textBoxGxpnLineID = new System.Windows.Forms.TextBox();
+            this.label189 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -3520,6 +3528,14 @@
             // tabPage17
             // 
             this.tabPage17.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage17.Controls.Add(this.textBoxGxpnStationID);
+            this.tabPage17.Controls.Add(this.label188);
+            this.tabPage17.Controls.Add(this.textBoxGxpnLineID);
+            this.tabPage17.Controls.Add(this.label189);
+            this.tabPage17.Controls.Add(this.textBoxGxpnSbbh);
+            this.tabPage17.Controls.Add(this.label186);
+            this.tabPage17.Controls.Add(this.textBoxGxpnDqbh);
+            this.tabPage17.Controls.Add(this.label187);
             this.tabPage17.Controls.Add(this.textBoxGxpnPwd);
             this.tabPage17.Controls.Add(this.label184);
             this.tabPage17.Controls.Add(this.textBoxGxpnUser);
@@ -3607,6 +3623,69 @@
             this.tabPage17.Size = new System.Drawing.Size(1022, 447);
             this.tabPage17.TabIndex = 0;
             this.tabPage17.Text = "联网地区";
+            // 
+            // textBoxGxpnPwd
+            // 
+            this.textBoxGxpnPwd.Location = new System.Drawing.Point(938, 139);
+            this.textBoxGxpnPwd.Name = "textBoxGxpnPwd";
+            this.textBoxGxpnPwd.Size = new System.Drawing.Size(78, 26);
+            this.textBoxGxpnPwd.TabIndex = 165;
+            // 
+            // label184
+            // 
+            this.label184.AutoSize = true;
+            this.label184.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label184.Location = new System.Drawing.Point(897, 144);
+            this.label184.Name = "label184";
+            this.label184.Size = new System.Drawing.Size(35, 14);
+            this.label184.TabIndex = 164;
+            this.label184.Text = "密码";
+            // 
+            // textBoxGxpnUser
+            // 
+            this.textBoxGxpnUser.Location = new System.Drawing.Point(798, 139);
+            this.textBoxGxpnUser.Name = "textBoxGxpnUser";
+            this.textBoxGxpnUser.Size = new System.Drawing.Size(93, 26);
+            this.textBoxGxpnUser.TabIndex = 163;
+            // 
+            // label185
+            // 
+            this.label185.AutoSize = true;
+            this.label185.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label185.Location = new System.Drawing.Point(730, 144);
+            this.label185.Name = "label185";
+            this.label185.Size = new System.Drawing.Size(63, 14);
+            this.label185.TabIndex = 162;
+            this.label185.Text = "接口用户";
+            this.label185.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBoxGxpnUrl
+            // 
+            this.textBoxGxpnUrl.Location = new System.Drawing.Point(798, 107);
+            this.textBoxGxpnUrl.Name = "textBoxGxpnUrl";
+            this.textBoxGxpnUrl.Size = new System.Drawing.Size(218, 26);
+            this.textBoxGxpnUrl.TabIndex = 161;
+            // 
+            // label182
+            // 
+            this.label182.AutoSize = true;
+            this.label182.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label182.Location = new System.Drawing.Point(730, 112);
+            this.label182.Name = "label182";
+            this.label182.Size = new System.Drawing.Size(63, 14);
+            this.label182.TabIndex = 160;
+            this.label182.Text = "接口地址";
+            // 
+            // label183
+            // 
+            this.label183.AutoSize = true;
+            this.label183.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
+            this.label183.ForeColor = System.Drawing.Color.Blue;
+            this.label183.Location = new System.Drawing.Point(730, 85);
+            this.label183.Name = "label183";
+            this.label183.Size = new System.Drawing.Size(144, 16);
+            this.label183.TabIndex = 159;
+            this.label183.Text = "广西平南联网信息";
             // 
             // comboBoxAHVERSION
             // 
@@ -4373,7 +4452,8 @@
             "鄂州联网",
             "红河州联网",
             "中科宇图联网",
-            "喜邦联网"});
+            "喜邦联网",
+            "平南联网"});
             this.comboBoxNETMODE.Location = new System.Drawing.Point(89, 3);
             this.comboBoxNETMODE.Name = "comboBoxNETMODE";
             this.comboBoxNETMODE.Size = new System.Drawing.Size(300, 24);
@@ -5644,68 +5724,75 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "检测站资料管理及设置平台";
             // 
-            // textBoxGxpnUrl
+            // textBoxGxpnSbbh
             // 
-            this.textBoxGxpnUrl.Location = new System.Drawing.Point(798, 107);
-            this.textBoxGxpnUrl.Name = "textBoxGxpnUrl";
-            this.textBoxGxpnUrl.Size = new System.Drawing.Size(218, 26);
-            this.textBoxGxpnUrl.TabIndex = 161;
+            this.textBoxGxpnSbbh.Location = new System.Drawing.Point(798, 171);
+            this.textBoxGxpnSbbh.Name = "textBoxGxpnSbbh";
+            this.textBoxGxpnSbbh.Size = new System.Drawing.Size(93, 26);
+            this.textBoxGxpnSbbh.TabIndex = 169;
             // 
-            // label182
+            // label186
             // 
-            this.label182.AutoSize = true;
-            this.label182.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label182.Location = new System.Drawing.Point(730, 112);
-            this.label182.Name = "label182";
-            this.label182.Size = new System.Drawing.Size(63, 14);
-            this.label182.TabIndex = 160;
-            this.label182.Text = "接口地址";
+            this.label186.AutoSize = true;
+            this.label186.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label186.Location = new System.Drawing.Point(730, 176);
+            this.label186.Name = "label186";
+            this.label186.Size = new System.Drawing.Size(63, 14);
+            this.label186.TabIndex = 168;
+            this.label186.Text = "设备编号";
             // 
-            // label183
+            // textBoxGxpnDqbh
             // 
-            this.label183.AutoSize = true;
-            this.label183.Font = new System.Drawing.Font("楷体", 12F, System.Drawing.FontStyle.Bold);
-            this.label183.ForeColor = System.Drawing.Color.Blue;
-            this.label183.Location = new System.Drawing.Point(730, 85);
-            this.label183.Name = "label183";
-            this.label183.Size = new System.Drawing.Size(144, 16);
-            this.label183.TabIndex = 159;
-            this.label183.Text = "广西平南联网信息";
+            this.textBoxGxpnDqbh.Location = new System.Drawing.Point(938, 171);
+            this.textBoxGxpnDqbh.Name = "textBoxGxpnDqbh";
+            this.textBoxGxpnDqbh.Size = new System.Drawing.Size(78, 26);
+            this.textBoxGxpnDqbh.TabIndex = 167;
             // 
-            // textBoxGxpnPwd
+            // label187
             // 
-            this.textBoxGxpnPwd.Location = new System.Drawing.Point(928, 139);
-            this.textBoxGxpnPwd.Name = "textBoxGxpnPwd";
-            this.textBoxGxpnPwd.Size = new System.Drawing.Size(88, 26);
-            this.textBoxGxpnPwd.TabIndex = 165;
+            this.label187.AutoSize = true;
+            this.label187.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label187.Location = new System.Drawing.Point(897, 168);
+            this.label187.Name = "label187";
+            this.label187.Size = new System.Drawing.Size(35, 28);
+            this.label187.TabIndex = 166;
+            this.label187.Text = "city\r\nCode";
+            this.label187.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label184
+            // textBoxGxpnStationID
             // 
-            this.label184.AutoSize = true;
-            this.label184.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label184.Location = new System.Drawing.Point(890, 144);
-            this.label184.Name = "label184";
-            this.label184.Size = new System.Drawing.Size(35, 14);
-            this.label184.TabIndex = 164;
-            this.label184.Text = "密码";
+            this.textBoxGxpnStationID.Location = new System.Drawing.Point(798, 203);
+            this.textBoxGxpnStationID.Name = "textBoxGxpnStationID";
+            this.textBoxGxpnStationID.Size = new System.Drawing.Size(93, 26);
+            this.textBoxGxpnStationID.TabIndex = 173;
             // 
-            // textBoxGxpnUser
+            // label188
             // 
-            this.textBoxGxpnUser.Location = new System.Drawing.Point(815, 139);
-            this.textBoxGxpnUser.Name = "textBoxGxpnUser";
-            this.textBoxGxpnUser.Size = new System.Drawing.Size(69, 26);
-            this.textBoxGxpnUser.TabIndex = 163;
+            this.label188.AutoSize = true;
+            this.label188.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label188.Location = new System.Drawing.Point(730, 208);
+            this.label188.Name = "label188";
+            this.label188.Size = new System.Drawing.Size(63, 14);
+            this.label188.TabIndex = 172;
+            this.label188.Text = "联网站号";
             // 
-            // label185
+            // textBoxGxpnLineID
             // 
-            this.label185.AutoSize = true;
-            this.label185.Font = new System.Drawing.Font("楷体", 10.5F);
-            this.label185.Location = new System.Drawing.Point(732, 138);
-            this.label185.Name = "label185";
-            this.label185.Size = new System.Drawing.Size(77, 28);
-            this.label185.TabIndex = 162;
-            this.label185.Text = "WebService\r\n用户名";
-            this.label185.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.textBoxGxpnLineID.Location = new System.Drawing.Point(938, 203);
+            this.textBoxGxpnLineID.Name = "textBoxGxpnLineID";
+            this.textBoxGxpnLineID.Size = new System.Drawing.Size(78, 26);
+            this.textBoxGxpnLineID.TabIndex = 171;
+            // 
+            // label189
+            // 
+            this.label189.AutoSize = true;
+            this.label189.Font = new System.Drawing.Font("楷体", 10.5F);
+            this.label189.Location = new System.Drawing.Point(897, 208);
+            this.label189.Name = "label189";
+            this.label189.Size = new System.Drawing.Size(35, 14);
+            this.label189.TabIndex = 170;
+            this.label189.Text = "线号";
+            this.label189.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // stationConfig
             // 
@@ -6288,6 +6375,14 @@
         private System.Windows.Forms.Label label184;
         private System.Windows.Forms.TextBox textBoxGxpnUser;
         private System.Windows.Forms.Label label185;
+        private System.Windows.Forms.TextBox textBoxGxpnStationID;
+        private System.Windows.Forms.Label label188;
+        private System.Windows.Forms.TextBox textBoxGxpnLineID;
+        private System.Windows.Forms.Label label189;
+        private System.Windows.Forms.TextBox textBoxGxpnSbbh;
+        private System.Windows.Forms.Label label186;
+        private System.Windows.Forms.TextBox textBoxGxpnDqbh;
+        private System.Windows.Forms.Label label187;
     }
 }
 
