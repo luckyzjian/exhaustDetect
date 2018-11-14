@@ -20681,6 +20681,37 @@ namespace exhaustDetect
 
                     }
                 }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                {
+                    string result;
+                    string errmsg = "";
+                    DataTable dt = new DataTable();
+                    Hashtable ht2 = new Hashtable();
+                    ht2.Add("stationcode", mainPanel.stationid);
+                    ht2.Add("linecode", mainPanel.lineid);
+                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
+                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        return;
+                    }
+                    if (dt != null)
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        hc5025 = double.Parse(dt.Rows[0]["hcel5025"].ToString());
+                        co5025 = double.Parse(dt.Rows[0]["coel5025"].ToString());
+                        no5025 = double.Parse(dt.Rows[0]["noel5025"].ToString());
+                        hc2540 = double.Parse(dt.Rows[0]["hcel2540"].ToString());
+                        co2540 = double.Parse(dt.Rows[0]["coel2540"].ToString());
+                        no2540 = double.Parse(dt.Rows[0]["noel2540"].ToString());
+                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
+                        return;
+
+                    }
+                }
                 else if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.ZKYTNETMODE)
                 {
                     try
@@ -22040,6 +22071,35 @@ namespace exhaustDetect
 
                     }
                 }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                {
+                    string result;
+                    string errmsg = "";
+                    DataTable dt = new DataTable();
+                    Hashtable ht2 = new Hashtable();
+                    ht2.Add("stationcode", mainPanel.stationid);
+                    ht2.Add("linecode", mainPanel.lineid);
+                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
+                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        return;
+                    }
+                    if (dt != null)
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        ZSXZ_LOW = (int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 0.75f, 0));
+                        ZSXZ_HIGH = (int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 1.25f, 0));
+                        GXXZ = double.Parse(dt.Rows[0]["inspectionlimits"].ToString());
+                        GLXZ = double.Parse(carLogin.modelbj.EDGL) / 2.0f;      //初始化功率限值
+                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
+                        return;
+
+                    }
+                }
 
                 ZSXZ_LOW =(int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 0.75f,0));
                 ZSXZ_HIGH =(int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 1.25f,0));
@@ -22210,6 +22270,34 @@ namespace exhaustDetect
                     }
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                {
+                    string result;
+                    string errmsg = "";
+                    DataTable dt = new DataTable();
+                    Hashtable ht2 = new Hashtable();
+                    ht2.Add("stationcode", mainPanel.stationid);
+                    ht2.Add("linecode", mainPanel.lineid);
+                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
+                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        return;
+                    }
+                    if (dt != null)
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        btgxz = double.Parse(dt.Rows[0]["inspectionlimits"].ToString());
+                        btgzsxz = 0;      //初始化功率限值
+                        glzyjsxzstring = dt.Rows[0]["inspectionlimits"].ToString();
+                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
+                        return;
+
+                    }
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
                     string result;
                     string errmsg = "";
@@ -22721,6 +22809,36 @@ namespace exhaustDetect
                     }
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                {
+                    string result;
+                    string errmsg = "";
+                    DataTable dt = new DataTable();
+                    Hashtable ht2 = new Hashtable();
+                    ht2.Add("stationcode", mainPanel.stationid);
+                    ht2.Add("linecode", mainPanel.lineid);
+                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
+                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
+                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        return;
+                    }
+                    if (dt != null)
+                    {
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        λ_XZ = "1.00±0.03";
+                        H_HC_XZ = double.Parse(dt.Rows[0]["hihcl"].ToString());
+                        H_CO_XZ = double.Parse(dt.Rows[0]["hicol"].ToString());
+                        L_HC_XZ = double.Parse(dt.Rows[0]["lihcl"].ToString());
+                        L_CO_XZ = double.Parse(dt.Rows[0]["licol"].ToString());
+                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
+                        return;
+
+                    }
+                }
+                else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
                     string result;
                     string errmsg = "";

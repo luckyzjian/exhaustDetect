@@ -3569,7 +3569,7 @@ namespace exhaustDetect
                 }
             }
             isStartTimerInCarlogin = true;
-           carLogin childcarlogin = new carLogin();
+            carLogin childcarlogin = new carLogin();
             childcarlogin.TopLevel = false;
             panelMain.Controls.Add(childcarlogin);
             childcarlogin.Location = new Point(sc_width / 2 - childcarlogin.Width / 2, 4);
