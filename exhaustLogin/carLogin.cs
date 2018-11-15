@@ -942,7 +942,7 @@ namespace exhaustDetect
                             foreach (carinfo.XB_CARLIST carchild in xbcarlist)
                             {
                                 dr = dt_wait.NewRow();
-                                dr["检测编号"] = carchild.TMBH;
+                                dr["检测编号"] = carchild.JCLSH+"_"+carchild.JCCS;
                                 dr["车牌号"] = carchild.HPHM;
                                 dr["号牌种类"] = carchild.HPZL;
                                 dr["检测方法"] = carchild.JCFF;
@@ -1889,7 +1889,7 @@ namespace exhaustDetect
                                     carbj.JCCS = xbcarinfo.JCCS;
                                     carbj.CZY = "";
                                     carbj.JSY = "";
-                                    carbj.DLY = "";
+                                    carbj.DLY = mainPanel.nowUser.userName;
                                     carbj.JCFY = "";
                                     carbj.TEST = "";
                                     carbj.JCBGBH =xbcarinfo.JCLSH;

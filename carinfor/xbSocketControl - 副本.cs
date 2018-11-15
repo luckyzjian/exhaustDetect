@@ -13,7 +13,6 @@ using System.Linq;
 using System.Reflection;
 using ini;
 using System.Collections;
-using System.Text.RegularExpressions;
 
 namespace carinfo
 {
@@ -755,33 +754,25 @@ namespace carinfo
             string xmlString = sr.ReadToEnd();
             sr.Close();
             stream.Close();
-            string newstring = xmlString.Replace("\r\n", "");
-            newstring = Regex.Replace(newstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-            newstring = newstring.Replace("xml version=\"1.0\"", "xml version=\"1.0\" encoding=\"utf-8\"");
             INIIO.saveSocketLogInf("[SEND]:" + xmlString);
-            byte[] bufferToSend = System.Text.Encoding.GetEncoding("GB2312").GetBytes(newstring);
+            byte[] bufferToSend = System.Text.Encoding.GetEncoding("gb2312").GetBytes(xmlString);
             List<byte> listToSend = new List<byte>();
 
             listToSend.AddRange(BitConverter.GetBytes(frameHead));
+            //listToSend.Add((byte)(frameHead >> 24));
+            //listToSend.Add((byte)(frameHead >> 16));
+            //listToSend.Add((byte)(frameHead >> 8));
+            //listToSend.Add((byte)(frameHead));
             int length = bufferToSend.Length;
             listToSend.AddRange(BitConverter.GetBytes(length));
             listToSend.AddRange(BitConverter.GetBytes(frameHead));
             listToSend.AddRange(BitConverter.GetBytes(length));
+            //listToSend.Add((byte)(length >> 24));
+            //listToSend.Add((byte)(length >> 16));
+            //listToSend.Add((byte)(length >> 8));
+            //listToSend.Add((byte)(length));
             listToSend.AddRange(bufferToSend);
-            //INIIO.saveSocketLogInf("[SEND ARRAY]:" + byteToHexStr(listToSend,0,listToSend.Count-1));
             return listToSend.ToArray();
-        }
-        static string byteToHexStr(List<byte> listbyte, int start, int end)
-        {
-            string returnStr = "";
-            if (listbyte != null)
-            {
-                for (int i = start; i <= end; i++)
-                {
-                    returnStr += " " + listbyte[i].ToString("X2");
-                }
-            }
-            return returnStr;
         }
         /// <summary>  
         /// 将XmlDocument转化为string  
@@ -803,7 +794,6 @@ namespace carinfo
             {
                 point = new IPEndPoint(HostIP, Int32.Parse(port));
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                
                 socket.Connect(point);
                 //thread = new Thread(new ThreadStart(Proccess));
                 //thread.Start();
@@ -948,24 +938,20 @@ namespace carinfo
                         curRcv = socket.Receive(buffer, hasRecv, left, SocketFlags.None);
                         left -= curRcv;
                         hasRecv += curRcv;
-                        //string receivedstring = System.Text.Encoding.GetEncoding("GB2312").GetString(buffer, 0, hasRecv);
-                        INIIO.saveSocketLogInf("[RECEIVED LENGTH]:" + hasRecv.ToString()+" BYTES");
-                        if (hasRecv > 8)//如果接收的长度超过8，则开始判断接收到的总长度是否是帧头长度+8
+                        string receivedstring = System.Text.Encoding.GetEncoding("GB2312").GetString(buffer, 0, hasRecv);
+                        INIIO.saveSocketLogInf("[RECEIVED]:" + receivedstring);
+                        if (hasRecv > 16)//如果接收的长度超过8，则开始判断接收到的总长度是否是帧头长度+8
                         {
                             int length = (int)((buffer[15] << 24) | (buffer[14] << 16) | (buffer[13] << 8) | (buffer[12]));
                             if (hasRecv == length + 16)
                             {
-                                string s = System.Text.Encoding.GetEncoding("GB2312").GetString(buffer, 16, length);
+                                string s = System.Text.Encoding.GetEncoding("GB2312").GetString(buffer, 8, length);
                                 INIIO.saveSocketLogInf("[MESSAGE]:" + s);
                                 receivedMessage = s;
                                 flag = 1;
                                 break;
                             }
-                        } 
-                        else
-                        {
-                            continue;
-                        }                       
+                        }                        
                         if (left == 0)
                         {
                             flag = 0;
@@ -1006,8 +992,8 @@ namespace carinfo
             //INIIO.saveSocketLogInf("RECEIVE:" + receivedMessage);
             return flag;
         }
-
-        public bool Send_AUTHENTCATION(XB_AUTHENTCATION model, out string result, out string info)
+        
+        public bool Send_AUTHENTCATION(XB_AUTHENTCATION model,out string result ,out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -1074,7 +1060,7 @@ namespace carinfo
                     return false;
                 }
             }
-            catch (Exception er)
+            catch(Exception er)
             {
                 result = "-1";
                 info = er.Message;
@@ -1102,7 +1088,7 @@ namespace carinfo
                 xe1.AppendChild(xe101);
                 root.AppendChild(xe1);
                 XmlElement xe2 = xmldoc.CreateElement("body");//创建一个<Node>节点 
-
+               
                 root.AppendChild(xe2);
                 //socket.Send(ConvertXmlToString(xmldoc));
                 if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
@@ -1219,7 +1205,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_USER_LOGIN(string user_name, string password, out string result, out string info)
+        public bool Send_USER_LOGIN(string user_name,string password, out string result, out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -1347,7 +1333,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_MODIFY_PWD(string user_name, string old_pwd, string new_pwd, out string result, out string info)
+        public bool Send_MODIFY_PWD(string user_name, string old_pwd,string new_pwd, out string result, out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -1487,7 +1473,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_GET_REG_CAR_LIST(int number, out List<XB_CARLIST> model, out string result, out string info)
+        public bool Send_GET_REG_CAR_LIST(int number,out List<XB_CARLIST> model, out string result, out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -1569,8 +1555,8 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_QUERY_CAR_INFO(string tmbh, out XB_CARINFO model, out XB_SDSXZ sdsxz, out XB_VMASXZ vmasxz,
-            out XB_LUGDOWNXZ lugdownxz, out XB_BTGXZ btgxz, out XB_LZXZ lzxz,
+        public bool Send_QUERY_CAR_INFO(string tmbh,out XB_CARINFO model,out XB_SDSXZ sdsxz,out XB_VMASXZ vmasxz,
+            out XB_LUGDOWNXZ lugdownxz,out XB_BTGXZ btgxz,out XB_LZXZ lzxz,
             out XB_SDSMXZ sdsmxz, out string result, out string info)
         {
             //socket.Connect(point);
@@ -1825,7 +1811,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_TEST_STOP(string JCLSH, string JCCS, string Reason, out string result, out string info)
+        public bool Send_TEST_STOP(string JCLSH, string JCCS,string Reason, out string result, out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -1940,7 +1926,7 @@ namespace carinfo
                 xe25.AppendChild(xe2505);
                 xe25.AppendChild(xe2506);
                 xe25.AppendChild(xe2507);
-                xe21.InnerText = XB_R_JCFF.GetValue(model.JCFFBH, "");
+                xe21.InnerText =XB_R_JCFF.GetValue( model.JCFFBH,"");
                 xe22.InnerText = model.JCLSH;
                 xe23.InnerText = model.SJXL;
                 xe24.InnerText = model.State;
@@ -2248,7 +2234,7 @@ namespace carinfo
                 return false;
             }
         }
-        public bool Send_TEST_RESULT_DATA<T>(XB_RESULT_PUBLIC_DATA pmodel, T model, out string result, out string info)
+        public bool Send_TEST_RESULT_DATA<T>(XB_RESULT_PUBLIC_DATA pmodel,T model, out string result, out string info)
         {
             //socket.Connect(point);
             result = "0";
@@ -2268,7 +2254,7 @@ namespace carinfo
                 xe1.AppendChild(xe101);
                 root.AppendChild(xe1);
                 XmlElement xe2 = xmldoc.CreateElement("body");
-
+                
                 XmlElement JCFFBH = xmldoc.CreateElement("JCFFBH");//创建一个<Node>节点 
                 XmlElement JCLSH = xmldoc.CreateElement("JCLSH");
                 XmlElement DLY = xmldoc.CreateElement("DLY");
@@ -2278,10 +2264,10 @@ namespace carinfo
                 XmlElement DQY = xmldoc.CreateElement("DQY");
                 XmlElement SD = xmldoc.CreateElement("SD");
                 string dataname = "";
-                switch (pmodel.JCFFBH)
+                switch(pmodel.JCFFBH)
                 {
                     case "SDS":
-                        dataname = "double_idle_speed"; break;
+                        dataname = "double_idle_speed";break;
                     case "VMAS":
                         dataname = "vmas_speed"; break;
                     case "JZJS":
@@ -2290,7 +2276,7 @@ namespace carinfo
                         dataname = "free_acceleration_opaque"; break;
                     case "LZ":
                         dataname = "free_acceleration_filter_smoke"; break;
-                    default: break;
+                    default:break;
 
                 }
                 XmlElement xe25 = xmldoc.CreateElement(dataname);
@@ -2304,8 +2290,8 @@ namespace carinfo
                         el.InnerText = valuelist[i];
                         xe25.AppendChild(el);
                     }
-                }
-                JCFFBH.InnerText = XB_R_JCFF.GetValue(pmodel.JCFFBH, "");
+                }                
+                JCFFBH.InnerText =XB_R_JCFF.GetValue(pmodel.JCFFBH,"");
                 JCLSH.InnerText = pmodel.JCLSH;
                 DLY.InnerText = pmodel.DLY;
                 YCY.InnerText = pmodel.YCY;
@@ -2422,16 +2408,16 @@ namespace carinfo
 
                 }
                 XmlElement xe25 = xmldoc.CreateElement(dataname);
-
-                if (XmlBuilderHelper.GetPorperty(model, out namelist, out valuelist))
-                {
-                    for (int i = 0; i < namelist.Count; i++)
+                
+                    if (XmlBuilderHelper.GetPorperty(model, out namelist, out valuelist))
                     {
-                        XmlElement el = xmldoc.CreateElement(namelist[i]);
-                        el.InnerText = valuelist[i];
-                        xe25.AppendChild(el);
+                        for (int i = 0; i < namelist.Count; i++)
+                        {
+                            XmlElement el = xmldoc.CreateElement(namelist[i]);
+                            el.InnerText = valuelist[i];
+                            xe25.AppendChild(el);
+                        }
                     }
-                }
                 xe2.AppendChild(xe25);
                 root.AppendChild(xe2);
                 //socket.Send(ConvertXmlToString(xmldoc));
@@ -2504,7 +2490,7 @@ namespace carinfo
                         xe2.AppendChild(el);
                     }
                 }
-                string dataname = "YDJ";
+                string dataname = "YDJ";               
                 XmlElement xe25 = xmldoc.CreateElement(dataname);
                 XmlElement StdValue = xmldoc.CreateElement("StdValue");
                 StdValue.InnerText = model.StdValue;
@@ -2663,14 +2649,14 @@ namespace carinfo
     }
     public class XmlBuilderHelper
     {
-
-
+        
+       
         /// <summary>
         /// 获得值
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static bool GetPorperty<T>(T obj, out List<string> propertyName, out List<string> propertyValue)
+        public static bool GetPorperty<T>(T obj,out List<string> propertyName,out List<string> propertyValue)
         {
             propertyName = null;
             propertyValue = null;

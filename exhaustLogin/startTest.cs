@@ -6796,38 +6796,6 @@ namespace exhaustDetect
                                                     MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
                                                     return;
                                                 }
-                                                jxVmasResultData resultdata = new jxVmasResultData(
-                                                    vmasdata.CLID,
-                                                    vmasdata.WD,
-                                                    vmasdata.DQY,
-                                                    vmasdata.SD,
-                                                    vmasdata.BEFORE == "Y" ? vmasdata.HCXZ : "",
-                                                    vmasdata.COXZ,
-                                                    vmasdata.BEFORE == "Y" ? vmasdata.NOXXZ : "",
-                                                    vmasdata.BEFORE == "N" ? vmasdata.HCXZ : "",
-                                                    vmasdata.HCZL,
-                                                    vmasdata.COZL,
-                                                    vmasdata.NOXZL,
-                                                    Math.Round(double.Parse(vmasdata.HCZL) + double.Parse(vmasdata.NOXZL), 2).ToString("0.00"),
-                                                    vmasdata.BEFORE == "Y" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
-                                                    vmasdata.COPD == "不合格" ? "0" : "1",
-                                                    vmasdata.BEFORE == "Y" ? (vmasdata.NOXPD == "不合格" ? "0" : "1") : "",
-                                                    vmasdata.BEFORE == "N" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
-                                                    jcsj.ToString("yyyy-MM-dd HH:mm:ss"),
-                                                    jssj.ToString("yyyy-MM-dd HH:mm:ss")
-                                                    );
-                                                if (!mainPanel.jxinterface.sendSimpleTransientResultData(carLogin.carbj.CLID, resultdata, out code, out msg))
-                                                {
-                                                    MessageBox.Show("sendSimpleTransientResultData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
-                                                    ini.INIIO.saveLogInf("江西联网信息：sendSimpleTransientResultData上传服务器失败");
-                                                    return;
-                                                }
-                                                if (!mainPanel.jxinterface.finish(carLogin.carbj.CLID, out code, out msg))
-                                                {
-                                                    MessageBox.Show("finish上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
-                                                    ini.INIIO.saveLogInf("江西联网信息：finish上传服务器失败");
-                                                    return;
-                                                }
                                                 Msg(label1, panel4, "车辆检测" + vmasdata.ZHPD + ",上传完毕");
                                             }
                                             if (mainPanel.useHyDatabase)
@@ -9526,9 +9494,9 @@ namespace exhaustDetect
                                                         pdata.DLY = carLogin.carbj.DLY;
                                                         pdata.YCY = carLogin.carbj.JSY;
                                                         pdata.JCY = carLogin.carbj.CZY;
-                                                        pdata.WD = sdsdata.WD;
-                                                        pdata.SD = sdsdata.SD;
-                                                        pdata.DQY = sdsdata.DQY;
+                                                        pdata.WD = jzjsdata.WD;
+                                                        pdata.SD = jzjsdata.SD;
+                                                        pdata.DQY = jzjsdata.DQY;
                                                         data.SFZSKZ = "0";
                                                         data.LugTime = glsmds.ToString();
                                                         data.VelLugTime = (velmaxhp100ds+velmaxhp90ds+velmaxhp80ds).ToString();
@@ -9616,37 +9584,6 @@ namespace exhaustDetect
                                                     catch (Exception er)
                                                     {
                                                         MessageBox.Show("发送检测信息命令发生异常:" + er.Message);
-                                                        return;
-                                                    }
-                                                    jxLugdownResultData resultdata = new jxLugdownResultData(
-                                                        jzjsdata.CLID,
-                                                        jzjsdata.WD,
-                                                        jzjsdata.DQY,
-                                                        jzjsdata.SD,
-                                                        jzjsdata.YDXZ,
-                                                        jzjsdata.HK,
-                                                        jzjsdata.NK,
-                                                        jzjsdata.EK,
-                                                        jzjsdata.GLXZ,
-                                                        jzjsdata.MAXLBGL,
-                                                        jzjsdata.RATEREVUP,
-                                                        jzjsdata.RATEREVDOWN,
-                                                        jzjsdata.MAXLBZS,
-                                                        jzjsdata.ZHPD == "不合格" ? "0" : "1",
-                                                        Math.Round(((double.Parse(jzjsdata.MAXLBGL) * 0.5) / double.Parse(jzjsdata.GLXZ)), 3).ToString("0.000"),
-                                                        jcsj.ToString("yyyy-MM-dd HH:mm:ss"),
-                                                        jssj.ToString("yyyy-MM-dd HH:mm:ss")
-                                                        );
-                                                    if (!mainPanel.jxinterface.sendLugDownResultData(carLogin.carbj.CLID, resultdata, out code, out msg))
-                                                    {
-                                                        MessageBox.Show("sendLugDownResultData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
-                                                        ini.INIIO.saveLogInf("江西联网信息：sendLugDownResultData上传服务器失败");
-                                                        return;
-                                                    }
-                                                    if (!mainPanel.jxinterface.finish(carLogin.carbj.CLID, out code, out msg))
-                                                    {
-                                                        MessageBox.Show("finish上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
-                                                        ini.INIIO.saveLogInf("江西联网信息：finish上传服务器失败");
                                                         return;
                                                     }
                                                     Msg(label1, panel4, "车辆检测" + jzjsdata.ZHPD + ",上传完毕");
