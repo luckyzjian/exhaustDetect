@@ -560,7 +560,7 @@ namespace GxWebClient
                 }
                 else
                 {
-                    //r_or_p==true时，发送过程数据
+                    //r_or_p==false时，发送过程数据
                     switch (jcff)
                     {
                         case "ASM":
