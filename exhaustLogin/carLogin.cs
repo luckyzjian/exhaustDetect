@@ -386,10 +386,8 @@ namespace exhaustDetect
                 dt_wait.Columns.Add("检测方法代号");
                 dt_wait.Columns.Add("登录时间");
                 dt_wait.Columns.Add("登录员");
-                //dt_wait.Columns.Add("登录时间");
                 dataGrid_waitcar.DataSource = dt_wait;
                 dataGrid_waitcar.Columns["车牌号"].Width = 120;
-                //dataGrid_waitcar.Columns["登录时间"].Width = 120;
                 dataGrid_waitcar.Columns["检测方法"].Width = 150;
                 dataGrid_waitcar.Columns["检测编号"].Visible = false;
                 dataGrid_waitcar.Columns["检测方法代号"].Visible = false;
@@ -1119,39 +1117,36 @@ namespace exhaustDetect
                 else if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.PNNETMODE))
                 {
                     #region 平南(获取待检车辆列表)
-                    string result, errmsg;
+                    string errmsg;
                     dt_wait.Rows.Clear();
                     DataTable dt = new DataTable();
-                    Hashtable ht2 = new Hashtable();
                     string inspectionmethod = "";
-                    if (radioButtonASM.Checked) inspectionmethod = mainPanel.gxinterface.GLR_inspectionmethod.GetValue("ASM", "");
-                    else if (radioButtonSDS.Checked) inspectionmethod = mainPanel.gxinterface.GLR_inspectionmethod.GetValue("SDS", "");
-                    else if (radioButtonLUG.Checked) inspectionmethod = mainPanel.gxinterface.GLR_inspectionmethod.GetValue("JZJS", "");
-                    else if (radioButtonZYJS.Checked) inspectionmethod = mainPanel.gxinterface.GLR_inspectionmethod.GetValue("ZYJS", "");
-                    ht2.Add("citycode", mainPanel.stationid.Substring(0, 6));
-                    ht2.Add("stationcode", mainPanel.stationid);
-                    ht2.Add("linecode", mainPanel.lineid);
-                    ht2.Add("inspectionmethod", inspectionmethod);
-                    ht2.Add("starttime", dateTimeInput1.Value.ToString("yyyy-MM-dd") + " 00:00:00");
-                    ht2.Add("endtime", dateTimeInput2.Value.ToString("yyyy-MM-dd") + " 23:59:59");
-                    ht2.Add("factoryno", "");
-                    if (!mainPanel.gxinterface.GetVehicleList(ht2, out dt, out result, out errmsg))
+                    if (radioButtonASM.Checked)
+                        inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("ASM", "");
+                    else if
+                        (radioButtonSDS.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("SDS", "");
+                    else if
+                        (radioButtonLUG.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("JZJS", "");
+                    else if
+                        (radioButtonZYJS.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("ZYJS", "");
+                    
+                    if (!mainPanel.pninterface.GetVehicleListByTime(DateTime.Parse(dateTimeInput1.Value.ToString("yyyy-MM-dd") + " 00:00:00"), DateTime.Parse(dateTimeInput2.Value.ToString("yyyy-MM-dd") + " 23:59:59"), inspectionmethod, out dt, out errmsg))
                     {
                         MessageBox.Show("获取待检车辆列表失败:" + errmsg);
                         return;
                     }
-                    DataRow dr = null;
                     if (dt != null)
                     {
+                        DataRow dr = null;
                         foreach (DataRow dR in dt.Rows)
                         {
                             dr = dt_wait.NewRow();
-                            dr["检测编号"] = dR["inspectionnum"].ToString();
-                            dr["车牌号"] = dR["vlpn"].ToString();
-                            dr["检测类型"] = mainPanel.gxinterface.GL_inspectionnature.GetValue(dt.Rows[0]["inspectionnature"].ToString(), "");
-                            dr["登录时间"] = dR["acceptancedate"].ToString();
-                            dr["登录员"] = dR["operator"].ToString();
-                            switch (mainPanel.gxinterface.GL_inspectionmethod.GetValue(dR["inspectionmethod"].ToString(), ""))
+                            dr["检测编号"] = dR["InspectionNum"].ToString();
+                            dr["车牌号"] = dR["VLPN"].ToString();
+                            dr["检测类型"] = mainPanel.pninterface.PN_inspectionnature.GetValue(dt.Rows[0]["InspectionNature"].ToString(), "");
+                            dr["登录时间"] = dR["AcceptanceDate"].ToString();
+                            dr["登录员"] = dR["Operator"].ToString();
+                            switch (mainPanel.pninterface.PN_inspectionmethod.GetValue(dR["InspectionMethod"].ToString(), ""))
                             {
                                 case "ASM":
                                     if (mainPanel.linemodel.ASM == "N") continue;
@@ -1179,7 +1174,7 @@ namespace exhaustDetect
                                     break;
                                 default: break;
                             }
-                            dr["检测方法代号"] = dR["inspectionmethod"].ToString();
+                            dr["检测方法代号"] = dR["InspectionMethod"].ToString();
                             dt_wait.Rows.Add(dr);
                         }
                     }
@@ -2367,15 +2362,9 @@ namespace exhaustDetect
                                     jccsgl = "2";
                                 else if (dataGrid_waitcar.SelectedRows[0].Cells["检测类型"].Value.ToString() == "多检")
                                     jccsgl = "3";
-                                string result;
                                 string errmsg = "";
                                 DataTable dt = new DataTable();
-                                Hashtable ht2 = new Hashtable();
-                                ht2.Add("stationcode", mainPanel.stationid);
-                                ht2.Add("linecode", mainPanel.lineid);
-                                ht2.Add("inspectionnum", inspectionnum);
-                                ht2.Add("inspectionmethod", inspectionmethod);
-                                if (!mainPanel.gxinterface.GetVehicleInf(ht2, out dt, out result, out errmsg))
+                                if (!mainPanel.pninterface.GetCarInfo(inspectionmethod, inspectionnum, out dt, out errmsg))
                                 {
                                     MessageBox.Show("获取待检车辆" + inspectionnum + "信息失败:" + errmsg);
                                     return;
@@ -2383,12 +2372,12 @@ namespace exhaustDetect
                                 if (dt != null)
                                 {
                                     DateTime a, b;
-                                    carbj.CLID = dt.Rows[0]["vlpn"].ToString() + "T" + DateTime.Now.ToString("yyyyMMddHHmmss");//联网时，用外观检验号做车辆ID号
-                                    carbj.DLSJ = DateTime.Parse(acceptancedate);
-                                    carbj.CLHP = dt.Rows[0]["vlpn"].ToString();
-                                    carbj.CPYS = dt.Columns.Contains("vlpncolor") ? mainPanel.gxinterface.GL_vlpncolor.GetValue(dt.Rows[0]["vlpncolor"].ToString(), "") : "";
-                                    carbj.HPZL = dt.Columns.Contains("hpzl") ? mainPanel.gxinterface.GL_hpzl.GetValue(dt.Rows[0]["hpzl"].ToString(), "") : "";
-                                    carbj.XSLC = dt.Columns.Contains("mileage") ? dt.Rows[0]["mileage"].ToString() : "";
+                                    carbj.CLID = dt.Rows[0]["VLPN"].ToString() + "T" + DateTime.Now.ToString("yyyyMMddHHmmss");//联网时，用外观检验号做车辆ID号
+                                    carbj.DLSJ = DateTime.Now;
+                                    carbj.CLHP = dt.Rows[0]["VLPN"].ToString();
+                                    carbj.CPYS = dt.Columns.Contains("VLPNColor") ? mainPanel.pninterface.PN_vlpncolor.GetValue(dt.Rows[0]["VLPNColor"].ToString(), "") : "";
+                                    carbj.HPZL = dt.Columns.Contains("HPZL") ? mainPanel.pninterface.PN_hpzl.GetValue(dt.Rows[0]["HPZL"].ToString(), "") : "";
+                                    carbj.XSLC = dt.Columns.Contains("Mileage") ? dt.Rows[0]["Mileage"].ToString() : "";
                                     carbj.JCCS = jccsgl;
                                     carbj.CZY = "";
                                     carbj.JSY = "";
@@ -2401,73 +2390,66 @@ namespace exhaustDetect
                                     carbj.JCRQ = DateTime.Now;
                                     carbj.BGJCFFYY = "";
                                     carbj.SFCS = "";
-                                    carbj.ECRYPT = dt.Rows[0]["uniquestring"].ToString();//在桂林联网 中用作uniquestring,作唯一标识一辆车
+                                    carbj.ECRYPT = dt.Rows[0]["UniqueString"].ToString();//在桂林联网 中用作uniquestring,作唯一标识一辆车
                                     carbj.JYLSH = inspectionnum;
-                                    //CARINF model = new CARINF();
-                                    modelbj.CLHP = dt.Rows[0]["vlpn"].ToString();
-                                    modelbj.ZCRQ = dt.Columns.Contains("vrdate") ? DateTime.Parse(dt.Rows[0]["vrdate"].ToString()) : DateTime.Now;
-                                    modelbj.CLSBM = dt.Columns.Contains("vin") ? dt.Rows[0]["vin"].ToString() : "";
 
-                                    modelbj.CPYS = dt.Columns.Contains("vlpncolor") ? mainPanel.gxinterface.GL_vlpncolor.GetValue(dt.Rows[0]["vlpncolor"].ToString(), "") : "";
-                                    modelbj.HPZL = dt.Columns.Contains("hpzl") ? mainPanel.gxinterface.GL_hpzl.GetValue(dt.Rows[0]["hpzl"].ToString(), "") : "";
-                                    modelbj.CLLX = dt.Columns.Contains("gavtype") ? mainPanel.logininfcontrol.getComBoBoxItemsNAME("车辆类型", dt.Rows[0]["gavtype"].ToString()) : "";
-
-                                    modelbj.CZ = dt.Columns.Contains("ownername") ? dt.Rows[0]["ownername"].ToString() : "";
-                                    modelbj.SYXZ = dt.Columns.Contains("useofauto") ? mainPanel.gxinterface.GL_useofauto.GetValue(dt.Rows[0]["useofauto"].ToString(), "") : "";
-
-
-                                    modelbj.PP = dt.Columns.Contains("factoryplatemodel") ? dt.Rows[0]["factoryplatemodel"].ToString() : "";
-                                    modelbj.XH = dt.Columns.Contains("factoryplatemodel") ? dt.Rows[0]["factoryplatemodel"].ToString() : "";
-                                    modelbj.FDJHM = dt.Columns.Contains("enginenum") ? dt.Rows[0]["enginenum"].ToString() : "";
-                                    modelbj.FDJXH = dt.Columns.Contains("iuetype") ? dt.Rows[0]["iuetype"].ToString() : "";
-                                    modelbj.SCQY = dt.Columns.Contains("iuvmanu") ? dt.Rows[0]["iuvmanu"].ToString() : "";
-                                    modelbj.HDZK = dt.Columns.Contains("ratedseats") ? dt.Rows[0]["ratedseats"].ToString() : "";
+                                    modelbj.CLHP = dt.Rows[0]["VLPN"].ToString();
+                                    modelbj.ZCRQ = dt.Columns.Contains("VRDATE") ? DateTime.Parse(dt.Rows[0]["VRDATE"].ToString()) : DateTime.Now;
+                                    modelbj.CLSBM = dt.Columns.Contains("VIN") ? dt.Rows[0]["VIN"].ToString() : "";
+                                    modelbj.CPYS = dt.Columns.Contains("VLPNColor") ? mainPanel.pninterface.PN_vlpncolor.GetValue(dt.Rows[0]["VLPNColor"].ToString(), "") : "";
+                                    modelbj.HPZL = dt.Columns.Contains("HPZL") ? mainPanel.pninterface.PN_hpzl.GetValue(dt.Rows[0]["HPZL"].ToString(), "") : "";
+                                    modelbj.CLLX = dt.Columns.Contains("GAVType") ? mainPanel.logininfcontrol.getComBoBoxItemsNAME("车辆类型", dt.Rows[0]["GAVType"].ToString()) : "";
+                                    modelbj.CZ = dt.Columns.Contains("OwnerName") ? dt.Rows[0]["OwnerName"].ToString() : "";
+                                    modelbj.SYXZ = dt.Columns.Contains("UseOfAuto") ? mainPanel.pninterface.PN_useofauto.GetValue(dt.Rows[0]["UseOfAuto"].ToString(), "") : "";
+                                    modelbj.PP = dt.Columns.Contains("FactoryPlateModel") ? dt.Rows[0]["FactoryPlateModel"].ToString() : "";
+                                    modelbj.XH = dt.Columns.Contains("FactoryPlateModel") ? dt.Rows[0]["FactoryPlateModel"].ToString() : "";
+                                    modelbj.FDJHM = dt.Columns.Contains("EngineNum") ? dt.Rows[0]["EngineNum"].ToString() : "";
+                                    modelbj.FDJXH = dt.Columns.Contains("IUETYPE") ? dt.Rows[0]["IUETYPE"].ToString() : "";
+                                    modelbj.SCQY = dt.Columns.Contains("IUVMANU") ? dt.Rows[0]["IUVMANU"].ToString() : "";
+                                    modelbj.HDZK = dt.Columns.Contains("RatedSeats") ? dt.Rows[0]["RatedSeats"].ToString() : "";
                                     modelbj.JSSZK = "1";
-                                    modelbj.ZZL = dt.Columns.Contains("vml") ? dt.Rows[0]["vml"].ToString() : "";
+                                    modelbj.ZZL = dt.Columns.Contains("VML") ? dt.Rows[0]["VML"].ToString() : "";
                                     modelbj.HDZZL = "";
-                                    modelbj.JZZL = dt.Columns.Contains("benchmarkmass") ? dt.Rows[0]["benchmarkmass"].ToString() : "";
-                                    modelbj.ZBZL = dt.Columns.Contains("kerbmass") ? dt.Rows[0]["kerbmass"].ToString() : "";
-
-                                    modelbj.SCRQ = dt.Columns.Contains("productdate") ? DateTime.Parse(dt.Rows[0]["productdate"].ToString()) : DateTime.Now;
-                                    modelbj.FDJPL = dt.Columns.Contains("edspl") ? dt.Rows[0]["edspl"].ToString() : "";
-                                    modelbj.RLZL = dt.Columns.Contains("fueltype") ? mainPanel.gxinterface.GL_fueltype.GetValue(dt.Rows[0]["fueltype"].ToString(), "") : "";
-                                    modelbj.EDGL = dt.Columns.Contains("enginepower") ? dt.Rows[0]["enginepower"].ToString() : "";
-                                    modelbj.EDZS = dt.Columns.Contains("engineratedspeed") ? dt.Rows[0]["engineratedspeed"].ToString() : "";
+                                    modelbj.JZZL = dt.Columns.Contains("BenchmarkMass") ? dt.Rows[0]["BenchmarkMass"].ToString() : "";
+                                    modelbj.ZBZL = dt.Columns.Contains("KerbMass") ? dt.Rows[0]["KerbMass"].ToString() : "";
+                                    modelbj.SCRQ = dt.Columns.Contains("ProductDate") ? DateTime.Parse(dt.Rows[0]["ProductDate"].ToString()) : DateTime.Now;
+                                    modelbj.FDJPL = dt.Columns.Contains("EDSPL") ? dt.Rows[0]["EDSPL"].ToString() : "";
+                                    modelbj.RLZL = dt.Columns.Contains("FuelType") ? mainPanel.pninterface.PN_fueltype.GetValue(dt.Rows[0]["FuelType"].ToString(), "") : "";
+                                    modelbj.EDGL = dt.Columns.Contains("EnginePower") ? dt.Rows[0]["EnginePower"].ToString() : "";
+                                    modelbj.EDZS = dt.Columns.Contains("EngineRatedSpeed") ? dt.Rows[0]["EngineRatedSpeed"].ToString() : "";
                                     if (modelbj.EDZS == "") modelbj.EDZS = "3500";
-                                    modelbj.BSQXS = dt.Columns.Contains("variableform") ? mainPanel.gxinterface.GL_variableform.GetValue(dt.Rows[0]["variableform"].ToString(), "") : "";
-                                    modelbj.DWS = dt.Columns.Contains("gearcount") ? dt.Rows[0]["gearcount"].ToString() : "";
-                                    modelbj.GYFS = dt.Columns.Contains("oilsupplyway") ? mainPanel.gxinterface.GL_oilsupplyway.GetValue(dt.Rows[0]["oilsupplyway"].ToString(), "") : "";
+                                    modelbj.BSQXS = dt.Columns.Contains("VariableForm") ? mainPanel.pninterface.PN_variableform.GetValue(dt.Rows[0]["VariableForm"].ToString(), "") : "";
+                                    modelbj.DWS = dt.Columns.Contains("GearCount") ? dt.Rows[0]["GearCount"].ToString() : "";
+                                    modelbj.GYFS = dt.Columns.Contains("OilSupplyWay") ? mainPanel.pninterface.PN_oilsupplyway.GetValue(dt.Rows[0]["OilSupplyWay"].ToString(), "") : "";
                                     modelbj.DPFS = "";
-                                    modelbj.JQFS = dt.Columns.Contains("intakeway") ? mainPanel.gxinterface.GL_intakeway.GetValue(dt.Rows[0]["intakeway"].ToString(), "") : "";
-                                    modelbj.QGS = dt.Columns.Contains("cylindercount") ? dt.Rows[0]["cylindercount"].ToString() : "";
-                                    modelbj.QDXS = dt.Columns.Contains("driveform") ? mainPanel.gxinterface.GL_driveform.GetValue(dt.Rows[0]["driveform"].ToString(), "") : "";
+                                    modelbj.JQFS = dt.Columns.Contains("IntakeWay") ? mainPanel.pninterface.PN_intakeway.GetValue(dt.Rows[0]["IntakeWay"].ToString(), "") : "";
+                                    modelbj.QGS = dt.Columns.Contains("CylinderCount") ? dt.Rows[0]["CylinderCount"].ToString() : "";
+                                    modelbj.QDXS = dt.Columns.Contains("DriveForm") ? mainPanel.pninterface.PN_driveform.GetValue(dt.Rows[0]["DriveForm"].ToString(), "") : "";
                                     modelbj.CHZZ = "";
                                     modelbj.DLSP = "";
-                                    modelbj.SFSRL = dt.Columns.Contains("isdoublefuel") ? mainPanel.gxinterface.GL_isdoublefuel.GetValue(dt.Rows[0]["isdoublefuel"].ToString(), "") : "";
-                                    if (dt.Rows[0]["hascca"].ToString() == "0" && dt.Rows[0]["hasoxygensensor"].ToString() == "0")
+                                    modelbj.SFSRL = dt.Columns.Contains("IsDoubleFuel") ? mainPanel.pninterface.PN_isdoublefuel.GetValue(dt.Rows[0]["IsDoubleFuel"].ToString(), "") : "";
+                                    if (dt.Columns.Contains("HasCCA") && dt.Columns.Contains("HasOxygenSensor") && dt.Rows[0]["HasCCA"].ToString() == "0" && dt.Rows[0]["HasOxygenSensor"].ToString() == "0")
                                         modelbj.JHZZ = "没有";
                                     else
                                         modelbj.JHZZ = "有";
-                                    modelbj.OBD = dt.Columns.Contains("hasobd") ? mainPanel.gxinterface.GL_hasobd.GetValue(dt.Rows[0]["hasobd"].ToString(), "") : "";//(jxthiscarinf.flagObd == "N" ? "无" : "有");
-                                    modelbj.DKGYYB = "";// (jxthiscarinf.flagDk == "N" ? "无" : "有");
+                                    modelbj.OBD = dt.Columns.Contains("HasOBD") ? mainPanel.pninterface.PN_hasobd.GetValue(dt.Rows[0]["HasOBD"].ToString(), "") : "";//(jxthiscarinf.flagObd == "N" ? "无" : "有");
+                                    modelbj.DKGYYB = "";
                                     modelbj.LXDH = "";
-                                    modelbj.CZDZ = dt.Columns.Contains("address") ? dt.Rows[0]["address"].ToString() : "";
+                                    modelbj.CZDZ = dt.Columns.Contains("Address") ? dt.Rows[0]["Address"].ToString() : "";
                                     modelbj.JCFS = "";
-                                    modelbj.JCLB = "";// (jxthiscarinf.flagDk == "N" ? "无" : "有");
-
-                                    modelbj.CLZL = dt.Columns.Contains("vehicletype") ? mainPanel.gxinterface.GL_vehicletype.GetValue(dt.Rows[0]["vehicletype"].ToString(), "") : "";
+                                    modelbj.JCLB = "";
+                                    modelbj.CLZL = dt.Columns.Contains("VehicleType") ? mainPanel.pninterface.PN_vehicletype.GetValue(dt.Rows[0]["VehicleType"].ToString(), "") : "";
                                     modelbj.SSXQ = "";
                                     modelbj.SFWDZR = "";
                                     modelbj.SFYQBF = "";
                                     modelbj.DKGYYB = "";
                                     modelbj.FDJSCQY = "";
                                     modelbj.QDLTQY = "";
-
                                     modelbj.RYPH = "";
                                     modelbj.ZXBZ = "";
                                     modelbj.CSYS = "";
 
-                                    carbj.JCFF = mainPanel.gxinterface.GL_inspectionmethod.GetValue(inspectionmethod, "");
+                                    carbj.JCFF = mainPanel.pninterface.PN_inspectionmethod.GetValue(inspectionmethod, "");
 
                                     ref_carInf(modelbj, carbj);
                                     buttonStart.Enabled = true;
