@@ -378,42 +378,42 @@ namespace carinfo
         public string NONDCurve{set;get;}
         public string NOZLCurve{set;get;}
         public string PCofCurve{set;get;}
-        public string VelSorbCurve0{set;get;}
-        public string VelSpeedCurve0{set;get;}
-        public string VelForceCurve0{set;get;}
-        public string VelPowerCurve0{set;get;}
-        public string VelPLHPCurve0{set;get;}
-        public string VelRpmCurve0{set;get;}
-        public string VelWDCurve0{set;get;}
-        public string VelSDCurve0{set;get;}
-        public string VelDQYCurve0{set;get;}
-        public string VelNONDCurve0{set;get;}
-        public string VelNOZLCurve0{set;get;}
-        public string VelPCofCurve0{set;get;}
-        public string VelSorbCurve1{set;get;}
-        public string VelSpeedCurve1{set;get;}
-        public string VelForceCurve1{set;get;}
-        public string VelPowerCurve1{set;get;}
-        public string VelPLHPCurve1{set;get;}
-        public string VelRpmCurve1{set;get;}
-        public string VelWDCurve1{set;get;}
-        public string VelSDCurve1{set;get;}
-        public string VelDQYCurve1{set;get;}
-        public string VelPCofCurve1{set;get;}
-        public string VelNONDCurve1{set;get;}
-        public string VelNOZLCurve1{set;get;}
-        public string VelSorbCurve2{set;get;}
-        public string VelSpeedCurve2{set;get;}
-        public string VelForceCurve2{set;get;}
-        public string VelPowerCurve2{set;get;}
-        public string VelPLHPCurve2{set;get;}
-        public string VelRpmCurve2{set;get;}
-        public string VelWDCurve2{set;get;}
-        public string VelSDCurve2{set;get;}
-        public string VelDQYCurve2{set;get;}
-        public string VelNONDCurve2{set;get;}
-        public string VelNOZLCurve2{set;get;}
-        public string VelPCofCurve2{set;get;}
+        public string SorbCurve0{set;get;}
+        public string SpeedCurve0{set;get;}
+        public string ForceCurve0{set;get;}
+        public string PowerCurve0{set;get;}
+        public string PLHPCurve0{set;get;}
+        public string RpmCurve0{set;get;}
+        public string WDCurve0{set;get;}
+        public string SDCurve0{set;get;}
+        public string DQYCurve0{set;get;}
+        public string NONDCurve0{set;get;}
+        public string NOZLCurve0{set;get;}
+        public string PCofCurve0{set;get;}
+        public string SorbCurve1{set;get;}
+        public string SpeedCurve1{set;get;}
+        public string ForceCurve1{set;get;}
+        public string PowerCurve1{set;get;}
+        public string PLHPCurve1{set;get;}
+        public string RpmCurve1{set;get;}
+        public string WDCurve1{set;get;}
+        public string SDCurve1{set;get;}
+        public string DQYCurve1{set;get;}
+        public string PCofCurve1{set;get;}
+        public string NONDCurve1{set;get;}
+        public string NOZLCurve1{set;get;}
+        public string SorbCurve2{set;get;}
+        public string SpeedCurve2{set;get;}
+        public string ForceCurve2{set;get;}
+        public string PowerCurve2{set;get;}
+        public string PLHPCurve2{set;get;}
+        public string RpmCurve2{set;get;}
+        public string WDCurve2{set;get;}
+        public string SDCurve2{set;get;}
+        public string DQYCurve2{set;get;}
+        public string NONDCurve2{set;get;}
+        public string NOZLCurve2{set;get;}
+        public string PCofCurve2{set;get;}
     }
     public class XB_BTG_RESULT_DATA
     {
@@ -2287,9 +2287,9 @@ namespace carinfo
                     case "SDS":
                         dataname = "double_idle_speed"; break;
                     case "VMAS":
-                        dataname = "vmas_speed"; break;
+                        dataname = "vmas_data"; break;
                     case "JZJS":
-                        dataname = "lugdown_speed"; break;
+                        dataname = "lugdown_data"; break;
                     case "ZYJS":
                         dataname = "free_acceleration_opaque"; break;
                     case "LZ":
