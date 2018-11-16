@@ -812,7 +812,7 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ORTNETMODE)//检测站ID+检测设备ID+yyMMddHHmmssfff
                             carLogin.carbj.JCBGBH = mainPanel.stationinfmodel.STATIONID + mainPanel.stationinfmodel.StationCompany + mainPanel.lineid + jcsj.ToString("yyyyMMddHHmmssfff");
-                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
+                        else if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.GUILINNETMODE || mainPanel.NetMode == mainPanel.PNNETMODE))
                         {
                             carLogin.carbj.JCBGBH = mainPanel.stationid.Substring(6, 2) + mainPanel.lineid + stationcount.ToString("000000");//桂林联网，检测站编号+检测线号+顺序号，顺序号暂时取全站全年顺序号
                         }
@@ -2834,6 +2834,19 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                             }
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            if (!mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网结束检测成功");
+                                            }
+                                        }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
@@ -3465,7 +3478,7 @@ namespace exhaustDetect
                                             asmresult.HC5025Result = (asmdata.HC25PD == "合格" ? "1" : "2");
                                             asmresult.CO5025Result = (asmdata.CO25PD == "合格" ? "1" : "2");
                                             asmresult.NO5025Result = (asmdata.NOX25PD == "合格" ? "1" : "2");
-                                            asmresult.HC2540Result = (asmdata.HC40PD == "" ?"0":(asmdata.HC40PD == "合格" ? "1" : "2"));
+                                            asmresult.HC2540Result = (asmdata.HC40PD == "" ? "0" : (asmdata.HC40PD == "合格" ? "1" : "2"));
                                             asmresult.CO2540Result = (asmdata.CO40PD == "" ? "0" : (asmdata.CO40PD == "合格" ? "1" : "2"));
                                             asmresult.NO2540Result = (asmdata.NOX40PD == "" ? "0" : (asmdata.NOX40PD == "合格" ? "1" : "2"));
                                             int ahresult = 0;
@@ -3619,7 +3632,7 @@ namespace exhaustDetect
                                             isCsvAlive = "逐秒数据上传成功";
 
                                             DataTable dt = new DataTable();
-                                            Hashtable ht2 = new Hashtable(); 
+                                            Hashtable ht2 = new Hashtable();
 
                                             ht2.Add("stationcode", mainPanel.stationid);
                                             ht2.Add("linecode", mainPanel.lineid);
@@ -3740,6 +3753,63 @@ namespace exhaustDetect
                                                 pdjg = "0";
                                                 asmdal.Save_ASM(asmdata);
                                                 enableButton(buttonOK, false);
+                                            }
+                                            #endregion
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            #region 平南
+                                            //上传结束信号
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            if (mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网结束检测成功");
+                                                //上传主检测信息
+                                                Hashtable ht_m = new Hashtable();
+
+                                                if (mainPanel.pninterface.UploadMainTestInfo(ht_m, out errmsg))
+                                                {
+                                                    //上传检测结果
+                                                    List<Hashtable> ht_r = new List<Hashtable>();
+                                                    if (mainPanel.pninterface.UploadTestData(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), true, ht_r, out errmsg))
+                                                    {
+                                                        //上传过程数据
+                                                        List<Hashtable> ht_p = new List<Hashtable>();
+                                                        if (mainPanel.pninterface.UploadTestData(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), true, ht_p, out errmsg))
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
+                                                            MessageBox.Show("上传检测结果失败\r\n" + "错误信息：" + errmsg);
+                                                            Msg(label1, panel4, "上传检测结果至联网平台失败");
+                                                            return;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
+                                                        MessageBox.Show("上传检测结果失败\r\n" + "错误信息：" + errmsg);
+                                                        Msg(label1, panel4, "上传检测结果至联网平台失败");
+                                                        return;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网主检测信息失败\r\n错误信息：" + errmsg);
+                                                    MessageBox.Show("上传主检测信息失败\r\n" + "错误信息：" + errmsg);
+                                                    Msg(label1, panel4, "上传主检测信息至联网平台失败");
+                                                    return;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                                MessageBox.Show("上传检测结束信号失败\r\n" + "错误信息：" + errmsg);
+                                                Msg(label1, panel4, "上传检测结束信号至联网平台失败");
+                                                return;
                                             }
                                             #endregion
                                         }
@@ -4115,7 +4185,7 @@ namespace exhaustDetect
                                                 #endregion
                                             }
                                             #region 上传过程数据
-                                            if (dataseconds.Rows.Count>0)
+                                            if (dataseconds.Rows.Count > 0)
                                             {
                                                 ini.INIIO.saveLogInf("过程数据记录有" + dataseconds.Rows.Count.ToString() + "数据");
                                                 ini.INIIO.saveLogInf("开始上传检测过程数据，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
@@ -4230,7 +4300,7 @@ namespace exhaustDetect
                                                         catch
                                                         { }
                                                         ini.INIIO.saveLogInf("上传检测结束失败，超过规定时间未完成上传，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                        MessageBox.Show("上传检测结束指令失败" );
+                                                        MessageBox.Show("上传检测结束指令失败");
                                                         Msg(label1, panel4, "上传检测结束指令失败");
                                                         return;
                                                     }
@@ -4270,7 +4340,7 @@ namespace exhaustDetect
                                                     mainPanel.webthread.hc2540 = 0;
                                                     mainPanel.webthread.co2540 = 0;
                                                     mainPanel.webthread.no2540 = 0;
-                                                    mainPanel.webthread.fdjzs2540 =0;
+                                                    mainPanel.webthread.fdjzs2540 = 0;
                                                     mainPanel.webthread.fdjyw2540 = 0;
                                                 }
                                                 else
@@ -4316,7 +4386,7 @@ namespace exhaustDetect
                                                 if (!isExcedTimeToUpload)
                                                 {
                                                     uploadResultSuccess = true;
-                                                    ini.INIIO.saveLogInf("上传检测结果成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));                                                    
+                                                    ini.INIIO.saveLogInf("上传检测结果成功，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
                                                     mainPanel.xmlanalysis.ReadACKString(mainPanel.webthread.answerString, out result, out info);
                                                     ini.INIIO.saveLogInf("读取平台返回状态：result:" + result + "  info:" + info);
                                                     if (result == "0")
@@ -4324,7 +4394,7 @@ namespace exhaustDetect
                                                         MessageBox.Show(info);
                                                         return;
                                                     }
-                                                    
+
                                                 }
 
 
@@ -4347,77 +4417,77 @@ namespace exhaustDetect
                                             { }
                                             #endregion
                                             #region 读取平台判定结果
-                                            if(mainPanel.zkytwebinf.displayCheckResult)
-                                            try
-                                            {
-                                                string result="", info="";
-                                                string co5025el = ""; string hc5025el = ""; string no5025el = ""; string co2540el = ""; string hc2540el = ""; string no2540el = "";
-                                                string co5025ed = ""; string hc5025ed = ""; string no5025ed = ""; string co2540ed = ""; string hc2540ed = ""; string no2540ed = "";
-                                                string co5025str = ""; string hc5025str = ""; string no5025str = ""; string co2540str = ""; string hc2540str = ""; string no2540str = "";
-                                                string result5 = "";
-                                                if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
+                                            if (mainPanel.zkytwebinf.displayCheckResult)
+                                                try
                                                 {
-                                                    mainPanel.xmlanalysis.ReadAsmCheckResultString(mainPanel.yichangInterface.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
-                                                    out co5025el, out hc5025el, out no5025el, out co2540el, out hc2540el, out no2540el,
-                                                    out co5025ed, out hc5025ed, out no5025ed, out co2540ed, out hc2540ed, out no2540ed,
-                                                    out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
-                                                    out result5);
-                                                }
-                                                else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
-                                                {
-                                                    mainPanel.xmlanalysis.ReadAsmCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
-                                                    out co5025el, out hc5025el, out no5025el, out co2540el, out hc2540el, out no2540el,
-                                                    out co5025ed, out hc5025ed, out no5025ed, out co2540ed, out hc2540ed, out no2540ed,
-                                                    out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
-                                                    out result5);
-                                                }
-                                                else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_YNBS)
+                                                    string result = "", info = "";
+                                                    string co5025el = ""; string hc5025el = ""; string no5025el = ""; string co2540el = ""; string hc2540el = ""; string no2540el = "";
+                                                    string co5025ed = ""; string hc5025ed = ""; string no5025ed = ""; string co2540ed = ""; string hc2540ed = ""; string no2540ed = "";
+                                                    string co5025str = ""; string hc5025str = ""; string no5025str = ""; string co2540str = ""; string hc2540str = ""; string no2540str = "";
+                                                    string result5 = "";
+                                                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
+                                                    {
+                                                        mainPanel.xmlanalysis.ReadAsmCheckResultString(mainPanel.yichangInterface.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
+                                                        out co5025el, out hc5025el, out no5025el, out co2540el, out hc2540el, out no2540el,
+                                                        out co5025ed, out hc5025ed, out no5025ed, out co2540ed, out hc2540ed, out no2540ed,
+                                                        out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
+                                                        out result5);
+                                                    }
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                                                    {
+                                                        mainPanel.xmlanalysis.ReadAsmCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
+                                                        out co5025el, out hc5025el, out no5025el, out co2540el, out hc2540el, out no2540el,
+                                                        out co5025ed, out hc5025ed, out no5025ed, out co2540ed, out hc2540ed, out no2540ed,
+                                                        out co5025str, out hc5025str, out no5025str, out co2540str, out hc2540str, out no2540str,
+                                                        out result5);
+                                                    }
+                                                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                                                     {
                                                         result = "";
                                                         info = "该地区不支持该接口";
                                                     }
-                                                if (result == "1")
-                                                {
-                                                    asmdata.CO25CLZ = co5025str;
-                                                    asmdata.HC25CLZ = hc5025str;
-                                                    asmdata.NOX25CLZ = no5025str;
-                                                    asmdata.CO40CLZ = co2540str;
-                                                    asmdata.HC40CLZ = hc2540str;
-                                                    asmdata.NOX40CLZ = no2540str;
-                                                    asmdata.CO25XZ = co5025el;
-                                                    asmdata.HC25XZ = hc5025el;
-                                                    asmdata.NOX25XZ = no5025el;
-                                                    asmdata.CO40XZ = co2540el;
-                                                    asmdata.HC40XZ = hc2540el;
-                                                    asmdata.NOX40XZ = no2540el;
-                                                    asmdata.CO25PD = co5025ed;
-                                                    asmdata.HC25PD = hc5025ed;
-                                                    asmdata.NOX25PD = no5025ed;
-                                                    asmdata.CO40PD = co2540ed;
-                                                    asmdata.HC40PD = hc2540ed;
-                                                    asmdata.NOX40PD = no2540ed;
-                                                    asmdata.ZHPD = result5;
+                                                    if (result == "1")
+                                                    {
+                                                        asmdata.CO25CLZ = co5025str;
+                                                        asmdata.HC25CLZ = hc5025str;
+                                                        asmdata.NOX25CLZ = no5025str;
+                                                        asmdata.CO40CLZ = co2540str;
+                                                        asmdata.HC40CLZ = hc2540str;
+                                                        asmdata.NOX40CLZ = no2540str;
+                                                        asmdata.CO25XZ = co5025el;
+                                                        asmdata.HC25XZ = hc5025el;
+                                                        asmdata.NOX25XZ = no5025el;
+                                                        asmdata.CO40XZ = co2540el;
+                                                        asmdata.HC40XZ = hc2540el;
+                                                        asmdata.NOX40XZ = no2540el;
+                                                        asmdata.CO25PD = co5025ed;
+                                                        asmdata.HC25PD = hc5025ed;
+                                                        asmdata.NOX25PD = no5025ed;
+                                                        asmdata.CO40PD = co2540ed;
+                                                        asmdata.HC40PD = hc2540ed;
+                                                        asmdata.NOX40PD = no2540ed;
+                                                        asmdata.ZHPD = result5;
+                                                    }
+                                                    else
+                                                    {
+                                                        ini.INIIO.saveLogInf("读取平台结果指令失败:" + info);
+                                                        Msg(label1, panel4, "读取平台结果指令失败:" + info);
+                                                        MessageBox.Show(info);
+                                                        return;
+                                                    }
                                                 }
-                                                else
+                                                catch (Exception er)
                                                 {
-                                                    ini.INIIO.saveLogInf("读取平台结果指令失败:" + info);
-                                                    Msg(label1, panel4, "读取平台结果指令失败:" + info);
-                                                    MessageBox.Show(info);
+                                                    ini.INIIO.saveLogInf("读取平台结果指令异常:" + er.Message);
+                                                    Msg(label1, panel4, "读取平台结果指令异常:" + er.Message);
+                                                    MessageBox.Show("读取平台结果指令异常:" + er.Message);
                                                     return;
                                                 }
-                                            }
-                                            catch (Exception er)
-                                            {
-                                                ini.INIIO.saveLogInf("读取平台结果指令异常:" + er.Message);
-                                                Msg(label1, panel4, "读取平台结果指令异常:" + er.Message);
-                                                MessageBox.Show("读取平台结果指令异常:" + er.Message);
-                                                return;
-                                            }
                                             #endregion
                                             #region 显示结果
                                             if (asmdata.ZHPD == "合格")
                                             {
-                                                mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult?"车辆检测合格":"车辆检测完毕";
+                                                mainPanel.ts2 = mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕";
                                                 ini.INIIO.saveLogInf("联网信息：判定结果合格");
                                                 Msg(label1, panel4, (mainPanel.zkytwebinf.displayCheckResult ? "车辆检测合格" : "车辆检测完毕") + isCsvAlive);
                                                 saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
@@ -7030,6 +7100,19 @@ namespace exhaustDetect
                                             else
                                             {
                                                 ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
+                                            }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            if (!mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网结束检测成功");
                                             }
                                         }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
@@ -9848,6 +9931,19 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                             }
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            if (!mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网结束检测成功");
+                                            }
+                                        }
                                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
@@ -12236,6 +12332,19 @@ namespace exhaustDetect
                                             ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                         }
                                     }
+                                    else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                    {
+                                        string errmsg = "";
+                                        DataTable dt = new DataTable();
+                                        if (!mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                        {
+                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                        }
+                                        else
+                                        {
+                                            ini.INIIO.saveLogInf("发送平南联网结束检测成功");
+                                        }
+                                    }
                                     mainPanel.worklogdata.ProjectID = mainPanel.stationid + mainPanel.lineid + DateTime.Now.ToString("yyMMddHHmmss");//线号“00”代表为登录机进行的操作
                                     mainPanel.worklogdata.ProjectName = "操作日志";
                                     mainPanel.worklogdata.Stationid = mainPanel.stationid;
@@ -12592,7 +12701,20 @@ namespace exhaustDetect
                                                 ini.INIIO.saveLogInf("发送桂林联网结束检测成功");
                                             }
                                         }
-                                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            string errmsg = "";
+                                            DataTable dt = new DataTable();
+                                            if (!mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网结束检测成功");
+                                            }
+                                        }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
                                             mainPanel.opratormode.ID = carLogin.carbj.CLID;
                                             mainPanel.opratormode.LINEID = mainPanel.jhwebinf.lineid;
@@ -20620,33 +20742,26 @@ namespace exhaustDetect
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
-                    string result;
                     string errmsg = "";
                     DataTable dt = new DataTable();
-                    Hashtable ht2 = new Hashtable();
-                    ht2.Add("stationcode", mainPanel.stationid);
-                    ht2.Add("linecode", mainPanel.lineid);
-                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
-                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    if (!mainPanel.pninterface.getTestXZ(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), carLogin.carbj.JYLSH, out dt, out errmsg))
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
-                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取平南联网限值失败\r\n" + "错误信息:" + errmsg);
                         return;
                     }
                     if (dt != null)
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
-                        hc5025 = double.Parse(dt.Rows[0]["hcel5025"].ToString());
-                        co5025 = double.Parse(dt.Rows[0]["coel5025"].ToString());
-                        no5025 = double.Parse(dt.Rows[0]["noel5025"].ToString());
-                        hc2540 = double.Parse(dt.Rows[0]["hcel2540"].ToString());
-                        co2540 = double.Parse(dt.Rows[0]["coel2540"].ToString());
-                        no2540 = double.Parse(dt.Rows[0]["noel2540"].ToString());
-                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值成功");
+                        hc5025 = double.Parse(dt.Rows[0]["HCEL5025"].ToString());
+                        co5025 = double.Parse(dt.Rows[0]["COEL5025"].ToString());
+                        no5025 = double.Parse(dt.Rows[0]["NOEL5025"].ToString());
+                        hc2540 = double.Parse(dt.Rows[0]["HCEL2540"].ToString());
+                        co2540 = double.Parse(dt.Rows[0]["COEL2540"].ToString());
+                        no2540 = double.Parse(dt.Rows[0]["NOEL2540"].ToString());
+                        ini.INIIO.saveLogInf("(平南联网)取限值成功");
                         Msg(labelXZ, panelXZ, "车辆限值：hc5025:" + hc5025.ToString() + "|co5025:" + co5025.ToString() + "|no5025:" + no5025.ToString() + "|hc2540:" + hc2540.ToString() + "|co2540:" + co2540.ToString() + "|no2540:" + no2540.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
-
                     }
                 }
                 else if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.ZKYTNETMODE)
@@ -22010,28 +22125,22 @@ namespace exhaustDetect
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
-                    string result;
                     string errmsg = "";
                     DataTable dt = new DataTable();
-                    Hashtable ht2 = new Hashtable();
-                    ht2.Add("stationcode", mainPanel.stationid);
-                    ht2.Add("linecode", mainPanel.lineid);
-                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
-                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    if (!mainPanel.pninterface.getTestXZ(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), carLogin.carbj.JYLSH, out dt, out errmsg))
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
-                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取平南联网限值失败\r\n" + "错误信息:" + errmsg);
                         return;
                     }
                     if (dt != null)
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值成功");
                         ZSXZ_LOW = (int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 0.75f, 0));
                         ZSXZ_HIGH = (int)(Math.Round(double.Parse(carLogin.modelbj.EDZS) * 1.25f, 0));
-                        GXXZ = double.Parse(dt.Rows[0]["inspectionlimits"].ToString());
+                        GXXZ = double.Parse(dt.Rows[0]["InspectionLimits"].ToString());
                         GLXZ = double.Parse(carLogin.modelbj.EDGL) / 2.0f;      //初始化功率限值
-                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        ini.INIIO.saveLogInf("(平南联网)取限值成功");
                         Msg(labelXZ, panelXZ, "车辆限值：功率限值:" + GLXZ.ToString() + "|烟度限值:" + GXXZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
@@ -22236,27 +22345,21 @@ namespace exhaustDetect
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
-                    string result;
                     string errmsg = "";
                     DataTable dt = new DataTable();
-                    Hashtable ht2 = new Hashtable();
-                    ht2.Add("stationcode", mainPanel.stationid);
-                    ht2.Add("linecode", mainPanel.lineid);
-                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
-                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    if (!mainPanel.pninterface.getTestXZ(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), carLogin.carbj.JYLSH, out dt, out errmsg))
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
-                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取平南联网限值失败\r\n" + "错误信息:" + errmsg);
                         return;
                     }
                     if (dt != null)
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
-                        btgxz = double.Parse(dt.Rows[0]["inspectionlimits"].ToString());
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值成功");
+                        btgxz = double.Parse(dt.Rows[0]["InspectionLimits"].ToString());
                         btgzsxz = 0;      //初始化功率限值
-                        glzyjsxzstring = dt.Rows[0]["inspectionlimits"].ToString();
-                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        glzyjsxzstring = dt.Rows[0]["InspectionLimits"].ToString();
+                        ini.INIIO.saveLogInf("(平南联网)取限值成功");
                         Msg(labelXZ, panelXZ, "车辆限值：烟度限值:" + btgxz.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
 
@@ -22777,32 +22880,25 @@ namespace exhaustDetect
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
                 {
-                    string result;
                     string errmsg = "";
                     DataTable dt = new DataTable();
-                    Hashtable ht2 = new Hashtable();
-                    ht2.Add("stationcode", mainPanel.stationid);
-                    ht2.Add("linecode", mainPanel.lineid);
-                    ht2.Add("inspectionnum", carLogin.carbj.JYLSH);
-                    ht2.Add("inspectionmethod", mainPanel.gxinterface.GLR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""));
-                    if (!mainPanel.gxinterface.GetVehicleXz(ht2, out dt, out result, out errmsg))
+                    if (!mainPanel.pninterface.getTestXZ(mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, ""), carLogin.carbj.JYLSH, out dt, out errmsg))
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值失败");
-                        MessageBox.Show(carLogin.carbj.CLHP + "取桂林联网限值失败\r\n" + "代码:" + result + "\r\n" + "信息:" + errmsg);
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值失败");
+                        MessageBox.Show(carLogin.carbj.CLHP + "取平南联网限值失败\r\n" + "错误信息:" + errmsg);
                         return;
                     }
                     if (dt != null)
                     {
-                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取桂林联网限值成功");
+                        ini.INIIO.saveLogInf(carLogin.carbj.CLHP + "取平南联网限值成功");
                         λ_XZ = "1.00±0.03";
-                        H_HC_XZ = double.Parse(dt.Rows[0]["hihcl"].ToString());
-                        H_CO_XZ = double.Parse(dt.Rows[0]["hicol"].ToString());
-                        L_HC_XZ = double.Parse(dt.Rows[0]["lihcl"].ToString());
-                        L_CO_XZ = double.Parse(dt.Rows[0]["licol"].ToString());
-                        ini.INIIO.saveLogInf("(桂林联网)取限值成功");
+                        H_HC_XZ = double.Parse(dt.Rows[0]["HIHCL"].ToString());
+                        H_CO_XZ = double.Parse(dt.Rows[0]["HICOL"].ToString());
+                        L_HC_XZ = double.Parse(dt.Rows[0]["LIHCL"].ToString());
+                        L_CO_XZ = double.Parse(dt.Rows[0]["LICOL"].ToString());
+                        ini.INIIO.saveLogInf("(平南联网)取限值成功");
                         Msg(labelXZ, panelXZ, "车辆限值：高怠速HC:" + H_HC_XZ.ToString() + "|高怠速CO:" + H_CO_XZ.ToString() + "|怠速HC:" + L_HC_XZ.ToString() + "|怠速CO:" + L_CO_XZ.ToString(), !mainPanel.equipconfig.useJHSCREEN);
                         return;
-
                     }
                 }
                 else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
@@ -23275,7 +23371,7 @@ namespace exhaustDetect
                     model.ZDJGL = modelInf.ZDJGL;
                     model.CYXZ = modelInf.CYXZ;
                 }
-                else if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.AHNETMODE || mainPanel.NetMode == mainPanel.JINGHUANETMODE || mainPanel.NetMode == mainPanel.NHNETMODE || mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.TYNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.ORTNETMODE||mainPanel.NetMode==mainPanel.GUILINNETMODE||mainPanel.NetMode==mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.HHZNNETMODE))
+                else if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.AHNETMODE || mainPanel.NetMode == mainPanel.JINGHUANETMODE || mainPanel.NetMode == mainPanel.NHNETMODE || mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.TYNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.ORTNETMODE||mainPanel.NetMode==mainPanel.GUILINNETMODE || mainPanel.NetMode == mainPanel.PNNETMODE || mainPanel.NetMode==mainPanel.EZNETMODE||mainPanel.NetMode==mainPanel.HHZNNETMODE))
                 {
                     model.CLID = modelWait.CLID;
                     if (mainPanel.NetMode == mainPanel.JINGHUANETMODE)
@@ -23377,10 +23473,7 @@ namespace exhaustDetect
                     model.CCS = modelInf.CCS;
                     model.ZDJGL = modelInf.ZDJGL;
                     model.CYXZ = modelInf.CYXZ;
-
-
                 }
-
                 else if (carLogin.carbj.SOURCE=="1")
                 {
                     model.CLID = modelWait.CLID;

@@ -651,7 +651,7 @@ namespace GxWebClient
         /// <param name="dt_XZ">限值数据</param>
         /// <param name="errorInf">上传错误信息</param>
         /// <returns></returns>
-        public bool GetXZ(string jcff, string jylsh, out DataTable dt_XZ, out string errorInf)
+        public bool getTestXZ(string jcff, string jylsh, out DataTable dt_XZ, out string errorInf)
         {
             dt_XZ = null;
             errorInf = "";
