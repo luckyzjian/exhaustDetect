@@ -1298,7 +1298,7 @@ namespace exhaustDetect
                             data.SlideTime = cgjdata.Hrealtime.ToString("0.000");
                             data.AllowError = "7.0";
                             data.SlideError = cgjdata.Pc1;
-                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "不合格" : "合格";
+                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "F" : "T";
                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送加载滑行标定命令失败,code" + code + ",msg:" + msg);
@@ -1312,7 +1312,7 @@ namespace exhaustDetect
                             data.SlideTime = cgjdata.Lrealtime.ToString("0.000");
                             data.AllowError = "7.0";
                             data.SlideError = cgjdata.Pc2;
-                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "不合格" : "合格";
+                            data.SlideEvl = (double.Parse(data.SlideError) > 7) ? "F" : "T";
                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送加载滑行标定命令失败,code" + code + ",msg:" + msg);
@@ -1909,7 +1909,7 @@ namespace exhaustDetect
                             data.SmokeAvgValue = cgjdata.N501.ToString("0.0");
                             data.AllowSmokeError = "2.0";
                             data.SmokeError = cgjdata.Error501.ToString("0.0");
-                            data.SmokeEvl=(Math.Abs(cgjdata.Error501) > 2) ? "不合格" : "合格";
+                            data.SmokeEvl=(Math.Abs(cgjdata.Error501) > 2) ? "F" : "T";
                             if (!mainPanel.xbsocket.Send_YDJBD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送烟度计标定命令失败,code" + code + ",msg:" + msg);
@@ -2264,8 +2264,9 @@ namespace exhaustDetect
                             data.LLO2AvgValue = cgjdata.Lljo2;
                             data.AllowLLError = "10.0";
                             data.LLError = cgjdata.lljsjllwc.ToString("0.0");
-                            data.LLEvl = (Math.Abs(cgjdata.lljsjllwc) > 10) ? "不合格" : "合格";
-                            data.LLO2Evl = (Math.Abs(double.Parse(cgjdata.Lljo2) - 20.8) > 0.5) ? "不合格" : "合格";
+                            data.AllowLLO2Error = "0.5";
+                            data.LLEvl = (Math.Abs(cgjdata.lljsjllwc) > 10) ? "F" : "T";
+                            data.LLO2Evl = (Math.Abs(double.Parse(cgjdata.Lljo2) - 20.8) > 0.5) ? "F" : "T";
                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送流量计标定命令失败,code" + code + ",msg:" + msg);
@@ -3297,7 +3298,7 @@ namespace exhaustDetect
                             pdata.DQY = "0";
                             pdata.Operator = mainPanel.nowUser.userName;
                             carinfo.XB_SEALCHECK_BD_DATA data = new carinfo.XB_SEALCHECK_BD_DATA();
-                            data.Evl = cgjdata.TightnessResult=="1"?"合格":"不合格";
+                            data.Evl = cgjdata.TightnessResult=="1"?"T":"F";
                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送废气仪自检命令失败,code" + code + ",msg:" + msg);
@@ -4381,7 +4382,7 @@ namespace exhaustDetect
                             pdata.DQY = "0";
                             pdata.Operator = mainPanel.nowUser.userName;
                             carinfo.XB_SEALCHECK_BD_DATA data = new carinfo.XB_SEALCHECK_BD_DATA();
-                            data.Evl = cgjdata.TightnessResult == "1" ? "合格" : "不合格";
+                            data.Evl = cgjdata.TightnessResult == "1" ? "T" : "F";
                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                             {
                                 ini.INIIO.saveLogInf("发送废气仪自检命令失败,code" + code + ",msg:" + msg);

@@ -757,7 +757,7 @@ namespace carinfo
             stream.Close();
             string newstring = xmlString.Replace("\r\n", "");
             newstring = Regex.Replace(newstring, @">\s+<", "><");//去除节点之间所有的空格，回车及其他符号
-            newstring = newstring.Replace("xml version=\"1.0\"", "xml version=\"1.0\" encoding=\"utf-8\"");
+            newstring = newstring.Replace("xml version=\"1.0\"", "xml version=\"1.0\" encoding=\"gb2312\"");
             INIIO.saveSocketLogInf("[SEND]:" + xmlString);
             byte[] bufferToSend = System.Text.Encoding.GetEncoding("GB2312").GetBytes(newstring);
             List<byte> listToSend = new List<byte>();
@@ -1577,12 +1577,12 @@ namespace carinfo
             result = "0";
             info = "";
             model = new XB_CARINFO();
-            sdsxz = null;
-            vmasxz = null;
-            lugdownxz = null;
-            btgxz = null;
-            lzxz = null;
-            sdsmxz = null;
+            sdsxz = new XB_SDSXZ();
+            vmasxz = new XB_VMASXZ();
+            lugdownxz = new XB_LUGDOWNXZ();
+            btgxz = new XB_BTGXZ();
+            lzxz = new XB_LZXZ();
+            sdsmxz = new XB_SDSMXZ();
             try
             {
                 XmlDocument xmldoc, xlmrecivedoc;
@@ -1630,7 +1630,7 @@ namespace carinfo
 
                     if (result == "1")
                     {
-                        dt1 = ds.Tables["evn_set"];
+                        dt1 = ds.Tables["car_inof"];
                         model.JCLSH = dt1.Rows[0]["JCLSH"].ToString();
                         model.JCCS = dt1.Rows[0]["JCCS"].ToString();
                         model.HPHM = dt1.Rows[0]["HPHM"].ToString();
@@ -1692,6 +1692,7 @@ namespace carinfo
                             case "ASM": break;
                             case "VMAS"://瞬态
                                 vmasxz = new XB_VMASXZ();
+                                dt1 = ds.Tables["vmas_std"];
                                 vmasxz.CO2Door = double.Parse(dt1.Rows[0]["CO2Door"].ToString());
                                 if (dt1.Rows[0]["VmasHCStd"].ToString() != "")
                                     vmasxz.VmasHCStd = double.Parse(dt1.Rows[0]["VmasHCStd"].ToString());
@@ -1713,16 +1714,19 @@ namespace carinfo
                                 break;
                             case "LZ"://自由加速滤纸
                                 lzxz = new XB_LZXZ();
+                                dt1 = ds.Tables["free_acceleration_filter_smoke"];
                                 lzxz.TrayStd = double.Parse(dt1.Rows[0]["TrayStd"].ToString());
                                 lzxz.SorbRPM = dt1.Rows[0]["SorbRPM"].ToString() == "1";
                                 break;
                             case "ZYJS"://自由加速不透光
                                 btgxz = new XB_BTGXZ();
+                                dt1 = ds.Tables["free_acceleration_opaque"];
                                 btgxz.SorbStd = double.Parse(dt1.Rows[0]["SorbStd"].ToString());
                                 btgxz.SorbRPM = dt1.Rows[0]["SorbRPM"].ToString() == "1";
                                 break;
                             case "JZJS"://lugdown
                                 lugdownxz = new XB_LUGDOWNXZ();
+                                dt1 = ds.Tables["lugdown_std"];
                                 lugdownxz.LDSorbStd = double.Parse(dt1.Rows[0]["LDSorbStd"].ToString());
                                 lugdownxz.LDMinPower = double.Parse(dt1.Rows[0]["LDMinPower"].ToString());
                                 lugdownxz.LDLRpmStd = double.Parse(dt1.Rows[0]["LDLRpmStd"].ToString());

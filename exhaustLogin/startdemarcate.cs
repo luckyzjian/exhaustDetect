@@ -2523,28 +2523,30 @@ namespace exhaustDetect
                                             data.CO2CheckResult = analysismeterdata.Co2clz.ToString("0.00");
                                             data.NOCheckResult = analysismeterdata.Noclz.ToString("0");
                                             data.PEFCheckResult = analysismeterdata.Pef;
-                                            if (analysismeterdata.Gdjz == "0")//高
-                                            {
-                                                data.HCCabAllowAbsError = (analysismeterdata.Hcbz*0.05).ToString("0");
-                                                data.COCabAllowAbsError = (analysismeterdata.Cobz * 0.05).ToString("0");
-                                                data.CO2CabAllowAbsError = (analysismeterdata.Co2bz * 0.05).ToString("0");
-                                                data.NOCabAllowAbsError = (analysismeterdata.Nobz * 0.08).ToString("0");
-                                                data.HCCheckAllowAbsError = (analysismeterdata.Hcbz * 0.05).ToString("0");
-                                                data.COCheckAllowAbsError = (analysismeterdata.Cobz * 0.05).ToString("0");
-                                                data.CO2CheckAllowAbsError = (analysismeterdata.Co2bz * 0.05).ToString("0");
-                                                data.NOCheckAllowAbsError = (analysismeterdata.Nobz * 0.08).ToString("0");
-                                            }
-                                            else
-                                            {
-                                                data.HCCabAllowAbsError = "4";
-                                                data.COCabAllowAbsError = "0.02";
-                                                data.CO2CabAllowAbsError = "0.3";
-                                                data.NOCabAllowAbsError = "25";
-                                                data.HCCheckAllowAbsError = "4";
-                                                data.COCheckAllowAbsError = "0.02";
-                                                data.CO2CheckAllowAbsError = "0.3";
-                                                data.NOCheckAllowAbsError = "25";
-                                            }
+                                            data.HCCabError =(double.Parse( analysismeterdata.hcabswc) * 100 / analysismeterdata.Hcbz).ToString("0.0");
+                                            data.COCabError = (double.Parse(analysismeterdata.coabswc) * 100 / analysismeterdata.Cobz).ToString("0.0");
+                                            data.CO2CabError = (double.Parse(analysismeterdata.co2abswc) * 100 / analysismeterdata.Co2bz).ToString("0.0");
+                                            data.NOCabError = (double.Parse(analysismeterdata.noabswc) * 100 / analysismeterdata.Nobz).ToString("0.0");
+                                            data.HCCheckError = (double.Parse(analysismeterdata.hcabswc) * 100 / analysismeterdata.Hcbz).ToString("0.0");
+                                            data.COCheckError = (double.Parse(analysismeterdata.coabswc) * 100 / analysismeterdata.Cobz).ToString("0.0");
+                                            data.CO2CheckError = (double.Parse(analysismeterdata.co2abswc) * 100 / analysismeterdata.Co2bz).ToString("0.0");
+                                            data.NOCheckError = (double.Parse(analysismeterdata.noabswc) * 100 / analysismeterdata.Nobz).ToString("0.0");
+                                            data.HCCabAllowError = "5";
+                                            data.COCabAllowError = "5";
+                                            data.CO2CabAllowError = "5";
+                                            data.NOCabAllowError = "8";
+                                            data.HCCheckAllowError = "5";
+                                            data.COCheckAllowError = "5";
+                                            data.CO2CheckAllowError = "5";
+                                            data.NOCheckAllowError = "8";
+                                            data.HCCabAllowAbsError = "4";
+                                            data.COCabAllowAbsError = "0.02";
+                                            data.CO2CabAllowAbsError = "0.3";
+                                            data.NOCabAllowAbsError = "25";
+                                            data.HCCheckAllowAbsError = "4";
+                                            data.COCheckAllowAbsError = "0.02";
+                                            data.CO2CheckAllowAbsError = "0.3";
+                                            data.NOCheckAllowAbsError = "25";
                                             data.HCCabAbsError = analysismeterdata.hcabswc;
                                             data.COCabAbsError = analysismeterdata.coabswc;
                                             data.CO2CabAbsError = analysismeterdata.co2abswc;
@@ -2553,19 +2555,38 @@ namespace exhaustDetect
                                             data.COCheckAbsError = analysismeterdata.coabswc;
                                             data.CO2CheckAbsError = analysismeterdata.co2abswc;
                                             data.NOCheckAbsError = analysismeterdata.noabswc;
-                                            data.HCCabEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "不合格" : "合格";
-                                            data.COCabEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "不合格" : "合格";
-                                            data.CO2CabEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "不合格" : "合格";
-                                            data.NOCabEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "不合格" : "合格";
-                                            data.HCCheckEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "不合格" : "合格";
-                                            data.COCheckEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "不合格" : "合格";
-                                            data.CO2CheckEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "不合格" : "合格";
-                                            data.NOCheckEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "不合格" : "合格";
-                                            if (data.HCCabEvl == "合格" && data.COCabEvl == "合格" && data.CO2CabEvl == "合格" && data.NOCabEvl == "合格")
-                                                data.GasCabEvl = "合格";
+                                            if (analysismeterdata.Gdjz == "0")//高
+                                            {
+                                                data.HCCabEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "F" : "T";
+                                                data.COCabEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "F" : "T";
+                                                data.CO2CabEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "F" : "T";
+                                                data.NOCabEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "F" : "T";
+                                                data.HCCheckEvl = (double.Parse(analysismeterdata.hcabswc) > double.Parse(data.HCCabAllowAbsError)) ? "F" : "T";
+                                                data.COCheckEvl = (double.Parse(analysismeterdata.coabswc) > double.Parse(data.COCabAllowAbsError)) ? "F" : "T";
+                                                data.CO2CheckEvl = (double.Parse(analysismeterdata.co2abswc) > double.Parse(data.CO2CabAllowAbsError)) ? "F" : "T";
+                                                data.NOCheckEvl = (double.Parse(analysismeterdata.noabswc) > double.Parse(data.NOCabAllowAbsError)) ? "F" : "T";
+                                                if (data.HCCabEvl == "T" && data.COCabEvl == "T" && data.CO2CabEvl == "T" && data.NOCabEvl == "T")
+                                                    data.GasCabEvl = "T";
+                                                else
+                                                    data.GasCabEvl = "F";
+                                                data.GasCheckEvl = data.GasCabEvl;
+                                            }
                                             else
-                                                data.GasCabEvl = "不合格";
-                                            data.GasCheckEvl = data.GasCabEvl;
+                                            {
+                                                data.HCCabEvl = (double.Parse(data.HCCabError) > double.Parse(data.HCCabAllowError)) ? "F" : "T";
+                                                data.COCabEvl = (double.Parse(data.COCabError) > double.Parse(data.COCabAllowError)) ? "F" : "T";
+                                                data.CO2CabEvl = (double.Parse(data.CO2CabError) > double.Parse(data.CO2CabAllowError)) ? "F" : "T";
+                                                data.NOCabEvl = (double.Parse(data.NOCabError) > double.Parse(data.NOCabAllowError)) ? "F" : "T";
+                                                data.HCCheckEvl = (double.Parse(data.HCCabError) > double.Parse(data.HCCabAllowError)) ? "F" : "T";
+                                                data.COCheckEvl = (double.Parse(data.COCabError) > double.Parse(data.COCabAllowError)) ? "F" : "T";
+                                                data.CO2CheckEvl = (double.Parse(data.CO2CabError) > double.Parse(data.CO2CabAllowError)) ? "F" : "T";
+                                                data.NOCheckEvl = (double.Parse(data.NOCabError) > double.Parse(data.NOCabAllowError)) ? "F" : "T";
+                                                if (data.HCCabEvl == "T" && data.COCabEvl == "T" && data.CO2CabEvl == "T" && data.NOCabEvl == "T")
+                                                    data.GasCabEvl = "T";
+                                                else
+                                                    data.GasCabEvl = "F";
+                                                data.GasCheckEvl = data.GasCabEvl;
+                                            }
                                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                                             {
                                                 ini.INIIO.saveLogInf("发送废气仪量程检查命令失败,code" + code + ",msg:" + msg);
@@ -3849,7 +3870,7 @@ namespace exhaustDetect
                                                             data.ForceAverageValue = yljdata.Clz1;
                                                             data.ForceError = yljdata.Wc1;
                                                             data.AllowError = "1";
-                                                            data.ForceEvl =(Math.Abs(double.Parse(yljdata.Wc1))>1)?"不合格":"合格";
+                                                            data.ForceEvl =(Math.Abs(double.Parse(yljdata.Wc1))>1)?"F":"T";
                                                             
                                                             if (!mainPanel.xbsocket.Send_BD_RESULT_DATA(pdata, data, out code, out msg))
                                                             {
