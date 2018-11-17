@@ -12833,6 +12833,106 @@ namespace exhaustDetect
                                             Msg(label1, panel4, "车辆检测" + zyjsdata.ZHPD + ",上传完毕");
                                             #endregion
                                         }
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                        {
+                                            #region 平南
+                                            string pdjg = "";
+                                            if (lzResultPd(zyjs_data) == true)
+                                            {
+                                                ini.INIIO.saveLogInf("平南联网信息：本地判定结果合格");
+                                                pdjg = "1";
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("平南联网信息：本地判定结果不合格");
+                                                pdjg = "0";
+                                            }
+                                            zyjsdata.JCBGBH = jcbgbh;
+                                            zyjsdata.SHY = mainPanel.shy;
+                                            zyjsdata.SYNCHDATE = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                                            zyjsdata.JCKSSJ = jcsj.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                                            zyjsdata.JCJSSJ = jssj.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                                            zyjsdata.JCFF = "GB3847-2005";
+
+                                            //上传结束信号
+                                            string errmsg = "";
+                                            if (mainPanel.pninterface.StartOrStopTest(false, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                            {
+                                                ini.INIIO.saveLogInf("发送平南联网检测结束成功");
+                                                List<Hashtable> ht = new List<Hashtable>();
+
+                                                //上传主检测信息
+                                                ht.Add(new Hashtable());
+                                                string jcff_code = mainPanel.pninterface.PNR_inspectionmethod.GetValue(carLogin.carbj.JCFF, "");
+                                                ht[0].Add("InspectionNum", carLogin.carbj.JYLSH);
+                                                ht[0].Add("UniqueString", carLogin.carbj.ECRYPT);
+                                                ht[0].Add("VLPN", carLogin.carbj.CLHP);
+                                                ht[0].Add("VIN", carLogin.modelbj.CLSBM);
+                                                ht[0].Add("InspectionOperator", carLogin.carbj.CZY);
+                                                ht[0].Add("InspectionDriver", carLogin.carbj.JSY);
+                                                ht[0].Add("Temperature", zyjsdata.WD);
+                                                ht[0].Add("Pressure", zyjsdata.DQY);
+                                                ht[0].Add("Humidity", zyjsdata.SD);
+                                                ht[0].Add("IUTID", carLogin.carbj.JCBGBH);
+                                                ht[0].Add("VDCT", pdjg);
+                                                ht[0].Add("IUTYPE", jcff_code);
+                                                ht[0].Add("InspectionStandard", "");
+                                                string jcfs_code = (carLogin.carbj.JCCS == "1") ? "01" : ((carLogin.carbj.JCCS == "2") ? "02" : "03");
+                                                ht[0].Add("InspectionWay", jcfs_code);
+                                                ht[0].Add("InspectionNature", jcfs_code);
+                                                ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("TSM", carLogin.carbj.XSLC);
+                                                ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
+                                                ht[0].Add("DetectStartTime", zyjsdata.JCKSSJ);
+                                                ht[0].Add("DetectEndTime", zyjsdata.JCJSSJ);
+                                                ht[0].Add("VinFlag", "1");
+                                                ht[0].Add("EngineNumFlag", "1");
+                                                ht[0].Add("ICheck", carLogin.carbj.CZY);
+                                                ht[0].Add("CheckTime", zyjsdata.JCRQ.ToString("yyyy-MM-dd HH:mm:ss"));
+                                                ht[0].Add("InspectionReportNo", "");
+                                                if (mainPanel.pninterface.UploadMainTestInfo(ht[0], out errmsg))
+                                                {
+                                                    //上传检测结果
+                                                    ht.Clear();
+                                                    ht.Add(new Hashtable());
+                                                    ht[0].Add("StationCode", mainPanel.pnwebinf.stationCode);
+                                                    ht[0].Add("InspectionNum", carLogin.carbj.JYLSH);
+                                                    ht[0].Add("IRS", zyjsdata.DSZS);
+                                                    ht[0].Add("EL", zyjsdata.YDXZ);
+                                                    ht[0].Add("ER1", zyjsdata.FIRSTDATA);
+                                                    ht[0].Add("ER2", zyjsdata.SECONDDATA);
+                                                    ht[0].Add("ER3", zyjsdata.THIRDDATA);
+                                                    ht[0].Add("ERA", zyjsdata.AVERAGEDATA);
+                                                    ht[0].Add("ED", pdjg);
+
+                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功");
+                                                    else
+                                                    {
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
+                                                        MessageBox.Show("上传检测结果失败\r\n" + "错误信息：" + errmsg);
+                                                        Msg(label1, panel4, "上传检测结果至联网平台失败");
+                                                        return;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网主检测信息失败\r\n错误信息：" + errmsg);
+                                                    MessageBox.Show("上传主检测信息失败\r\n" + "错误信息：" + errmsg);
+                                                    Msg(label1, panel4, "上传主检测信息至联网平台失败");
+                                                    return;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网结束检测失败\r\n错误信息：" + errmsg);
+                                                MessageBox.Show("上传检测结束信号失败\r\n" + "错误信息：" + errmsg);
+                                                Msg(label1, panel4, "上传检测结束信号至联网平台失败");
+                                                return;
+                                            }
+                                            #endregion
+                                        }
                                     }
                                     if (mainPanel.useHyDatabase)
                                     {
