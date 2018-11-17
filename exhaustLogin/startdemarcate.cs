@@ -1693,7 +1693,42 @@ namespace exhaustDetect
                                         }
                                         #endregion
                                     }
-
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                    {
+                                        #region 平南
+                                        string errmsg = "";
+                                        Hashtable ht = new Hashtable();
+                                        if (analysismeterdata.Gdjz == "0")//高
+                                            ht.Add("GasType", "1");
+                                        else
+                                            ht.Add("GasType", "2");
+                                        ht.Add("AdjustTimeStart", DateTime.Now.AddMinutes(-2).ToString("yyyy-MM-dd HH:mm:ss"));
+                                        ht.Add("AdjustTimeEnd", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                                        ht.Add("HCEL", analysismeterdata.Hcbz.ToString("0"));
+                                        ht.Add("HCER", analysismeterdata.Hcclz.ToString("0"));
+                                        ht.Add("HCED", "1");
+                                        ht.Add("COEL", analysismeterdata.Cobz.ToString("0.00"));
+                                        ht.Add("COER", analysismeterdata.Coclz.ToString("0.00"));
+                                        ht.Add("COED", "1");
+                                        ht.Add("NOEL", analysismeterdata.Nobz.ToString("0"));
+                                        ht.Add("NOER", analysismeterdata.Noclz.ToString("0"));
+                                        ht.Add("NOED", "1");
+                                        ht.Add("CO2EL", analysismeterdata.Co2bz.ToString("0.00"));
+                                        ht.Add("CO2ER", analysismeterdata.Co2clz.ToString("0.00"));
+                                        ht.Add("CO2ED", "1");
+                                        ht.Add("O2EL", "0");
+                                        ht.Add("O2ER", "0");
+                                        ht.Add("O2ED", "1");
+                                        ht.Add("PEF", analysismeterdata.Pef);
+                                        ht.Add("C3H8", analysismeterdata.c3h8);
+                                        ht.Add("AdjustResult", (analysismeterdata.Bdjg == "不合格" || analysismeterdata.Bdjg == "0") ? "0" : "1");
+                                        ht.Add("Remark", "");
+                                        if (mainPanel.pninterface.UploadBdZjData(1, ht, out errmsg))
+                                            ini.INIIO.saveLogInf("桂林联网信息：上传汽油线标定信息数据成功");
+                                        else
+                                            ini.INIIO.saveLogInf("上传汽油线标定信息数据失败\r\n" + "错误信息：" + errmsg);
+                                        #endregion
+                                    }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                                     {
                                         #region ezhou
@@ -2957,6 +2992,24 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("桂林联网信息：上传柴油线标定信息数据成功");
                                             }
+                                        #endregion
+                                    }
+                                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                                    {
+                                        #region 平南
+                                        string errmsg = "";
+                                        Hashtable ht = new Hashtable();
+                                        ht.Add("EL", smokedata.Kbz.ToString("0.0"));
+                                        ht.Add("ER", smokedata.Kscz.ToString("0.0"));
+                                        ht.Add("ED", (smokedata.Bdjg == "不合格" || smokedata.Bdjg == "0") ? "0" : "1");
+                                        ht.Add("AdjustTimeStart", DateTime.Now.AddMinutes(-1).ToString("yyyy-MM-dd HH:mm:ss"));
+                                        ht.Add("AdjustTimeEnd", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                                        ht.Add("Remark", "");
+
+                                        if (mainPanel.pninterface.UploadBdZjData(2, ht, out errmsg))
+                                            ini.INIIO.saveLogInf("桂林联网信息：上传柴油线标定信息数据成功");
+                                        else
+                                            ini.INIIO.saveLogInf("上传柴油线标定信息数据失败\r\n" + "错误信息：" + errmsg);
                                         #endregion
                                     }
                                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HNNETMODE)

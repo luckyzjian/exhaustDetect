@@ -2545,6 +2545,18 @@ namespace exhaustDetect
                                 DateTime syntime = DateTime.Parse(sys_time);
                                 SetSystemDateTime.SetLocalTimeByStr(syntime.ToString("yyyy-MM-dd HH:mm:ss"));
                                 ini.INIIO.saveLogInf("同步服务器联网时间成功:" + syntime.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                                #region 发送设备状态
+                                string errmsg2 = "";
+                                Hashtable ht = new Hashtable();
+                                ht.Add("DStatus", "01");
+                                ht.Add("StatusRemark", "");
+                                ht.Add("RecordTime", "");
+                                if (mainPanel.pninterface.UploadBdZjData(3, ht, out errmsg2))
+                                    ini.INIIO.saveLogInf("桂林联网信息：上传检测线状态信息成功");
+                                else
+                                    ini.INIIO.saveLogInf("上传上传检测线状态信息失败\r\n" + "错误信息：" + errmsg2);
+                                #endregion
                             }
                             catch (Exception er)
                             {

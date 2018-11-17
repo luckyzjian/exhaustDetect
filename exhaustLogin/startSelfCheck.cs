@@ -1155,6 +1155,39 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+
+                        if (cgjdata.Jzhxds == "2")
+                        {
+                            ht.Add("HVitualTime", (cgjdata.Hvitualtime * 1000).ToString("0"));
+                            ht.Add("HFloatTime", (cgjdata.Hrealtime * 1000).ToString("0"));
+                            ht.Add("LvitualTime", (cgjdata.Lvitualtime * 1000).ToString("0"));
+                            ht.Add("LFloatTime", (cgjdata.Lrealtime * 1000).ToString("0"));
+                        }
+                        else
+                        {
+                            ht.Add("HVitualTime", "9850");
+                            ht.Add("HFloatTime", "9650");
+                            ht.Add("LvitualTime", (cgjdata.Lvitualtime * 1000).ToString("0"));
+                            ht.Add("LFloatTime", (cgjdata.Lrealtime * 1000).ToString("0"));
+                        }
+                        ht.Add("Hpower", cgjdata.Lpower.ToString("0.0"));
+                        ht.Add("Lpower", "6");
+                        ht.Add("CheckResult", (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1");
+                        ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+                        
+                        if (mainPanel.pninterface.UploadBdZjData(5, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南联网信息：上传自检数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传自检数据失败\r\n" + "错误信息：" + errmsg);
+                        #endregion
+                    }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
                     {
                         #region 中科宇图
@@ -1855,6 +1888,28 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+                        ht.Add("ZeroResult", "1");
+                        ht.Add("LabelValueN50", cgjdata.LabelValueN50);
+                        ht.Add("LabelValueN70", cgjdata.LabelValueN70);
+                        ht.Add("N50", cgjdata.N501);
+                        ht.Add("N70", cgjdata.N701);
+                        ht.Add("Error50", cgjdata.Error501);
+                        ht.Add("Error70", cgjdata.Error701);
+                        ht.Add("CheckResult", (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "0" : "1");
+                        ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+                        if (mainPanel.pninterface.UploadBdZjData(9, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南联网信息：上传不透光烟度计检查数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传不透光烟度计检查数据失败\r\n" + "错误信息：" + errmsg);
+                        #endregion
+                    }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                     {
                         #region ez
@@ -2150,6 +2205,24 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("联网信息：上传流量计自检异常:" + er.Message);
                         }
+                        #endregion
+                    }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+                        ht.Add("AvgFlow", cgjdata.Lljll);
+                        ht.Add("O2Avg", cgjdata.Lljo2);
+                        ht.Add("CheckResult", (cgjdata.CheckResult == "不合格" || cgjdata.CheckResult == "0") ? "0" : "1");
+                        ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+
+                        if (mainPanel.pninterface.UploadBdZjData(7, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南流量计自检：上传自检数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传流量计自检数据失败\r\n" + "错误信息：" + errmsg);
                         #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.TYNETMODE)
@@ -2722,6 +2795,26 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+                        ht.Add("ActualTemperature", cgjdata.ActualTemperature.ToString("0.0"));
+                        ht.Add("Temperature", cgjdata.Temperature.ToString("0.0"));
+                        ht.Add("ActualHumidity", cgjdata.ActualHumidity.ToString("0.0"));
+                        ht.Add("Humidity", cgjdata.Humidity.ToString("0.0"));
+                        ht.Add("ActualAirPressure", cgjdata.ActualAirPressure.ToString("0.0"));
+                        ht.Add("AirPressure", cgjdata.AirPressure.ToString("0.0"));
+                        ht.Add("RheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+                        if (mainPanel.pninterface.UploadBdZjData(4, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南联网信息：上传环境参数感应器校准结果数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传环境参数感应器校准结果数据失败\r\n" + "错误信息：" + errmsg);
+                        #endregion
+                    }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.AHNETMODE)
                     {
                         #region 安徽联网
@@ -3226,6 +3319,21 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+                        ht.Add("TightnessResult", cgjdata.TightnessResult);
+                        ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+                        if (mainPanel.pninterface.UploadBdZjData(8, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南联网信息：上传泄漏检查数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传泄漏检查数据失败\r\n" + "错误信息：" + errmsg);
+                        #endregion
+                    }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                     {
                         #region ezhou
@@ -3646,6 +3754,33 @@ namespace exhaustDetect
                             {
                                 ini.INIIO.saveLogInf("桂林联网信息：上传自检数据成功");
                             }
+                            #endregion
+                        }
+                        if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                        {
+                            #region 平南
+                            string errmsg = "";
+                            Hashtable ht = new Hashtable();
+                            ht.Add("SpeedQJ1", cgjdata.SpeedQJ1);
+                            ht.Add("NameSpeed1", cgjdata.NameSpeed1.ToString("0.0"));
+                            ht.Add("PLHP1", cgjdata.Plhp1.ToString("0.00"));
+                            ht.Add("SpeedQJ2", cgjdata.SpeedQJ2);
+                            ht.Add("NameSpeed2", cgjdata.NameSpeed2.ToString("0.0"));
+                            ht.Add("PLHP2", cgjdata.Plhp2.ToString("0.00"));
+                            ht.Add("SpeedQJ3", cgjdata.SpeedQJ3);
+                            ht.Add("NameSpeed3", cgjdata.NameSpeed3.ToString("0.0"));
+                            ht.Add("PLHP3", cgjdata.Plhp3.ToString("0.00"));
+                            ht.Add("SpeedQJ4", cgjdata.SpeedQJ4);
+                            ht.Add("NameSpeed4", cgjdata.NameSpeed4.ToString("0.0"));
+                            ht.Add("PLHP4", cgjdata.Plhp4.ToString("0.00"));
+                            ht.Add("CheckResult", (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1");
+                            ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                            ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                            ht.Add("Remark", "");
+                            if (mainPanel.pninterface.UploadBdZjData(6, ht, out errmsg))
+                                ini.INIIO.saveLogInf("桂林联网信息：上传自检数据成功");
+                            else
+                                ini.INIIO.saveLogInf("上传自检数据失败\r\n" + "错误信息：" + errmsg);
                             #endregion
                         }
                         if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ZKYTNETMODE)
@@ -4364,6 +4499,24 @@ namespace exhaustDetect
                         {
                             ini.INIIO.saveLogInf("桂林联网信息：上传分析仪氧量程数据成功");
                         }
+                        #endregion
+                    }
+                    if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                    {
+                        #region 平南
+                        string errmsg = "";
+                        Hashtable ht = new Hashtable();
+                        ht.Add("TightnessResult", cgjdata.TightnessResult);
+                        ht.Add("LFlowResult", cgjdata.Yqll);
+                        ht.Add("CanliuHC", cgjdata.CanliuHC);
+                        ht.Add("CheckResult", cgjdata.TightnessResult);
+                        ht.Add("CheckTimeStart", DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("CheckTimeEnd", DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"));
+                        ht.Add("Remark", "");
+                        if (mainPanel.pninterface.UploadBdZjData(10, ht, out errmsg))
+                            ini.INIIO.saveLogInf("平南联网信息：上传双怠速气体分析仪自检结果数据成功");
+                        else
+                            ini.INIIO.saveLogInf("上传双怠速气体分析仪自检结果数据失败\r\n" + "错误信息：" + errmsg);
                         #endregion
                     }
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
