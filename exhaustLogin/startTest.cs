@@ -812,9 +812,13 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ORTNETMODE)//检测站ID+检测设备ID+yyMMddHHmmssfff
                             carLogin.carbj.JCBGBH = mainPanel.stationinfmodel.STATIONID + mainPanel.stationinfmodel.StationCompany + mainPanel.lineid + jcsj.ToString("yyyyMMddHHmmssfff");
-                        else if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.GUILINNETMODE || mainPanel.NetMode == mainPanel.PNNETMODE))
+                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.GUILINNETMODE)
                         {
                             carLogin.carbj.JCBGBH = mainPanel.stationid.Substring(6, 2) + mainPanel.lineid + stationcount.ToString("000000");//桂林联网，检测站编号+检测线号+顺序号，顺序号暂时取全站全年顺序号
+                        }
+                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.PNNETMODE)
+                        {
+                            carLogin.carbj.JCBGBH = mainPanel.pnwebinf.stationCode + mainPanel.pnwebinf.lineCode + DateTime.Now.ToString("yyyyMMdd") + stationcount.ToString("0000");
                         }
                         else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.EZNETMODE)
                         {
@@ -828,7 +832,7 @@ namespace exhaustDetect
                         {
                             if (mainPanel.stationinfmodel.LSHRULE == "永康")
                             {
-                                carLogin.carbj.JCBGBH = mainPanel.stationinfmodel.StationCompany +"-"+ jcsj.ToString("yyyyMMdd") + stationcount.ToString("00000") +"-"+ mainPanel.lineid +"-"+(int.Parse(carLogin.carbj.JCCS)-1).ToString("00");
+                                carLogin.carbj.JCBGBH = mainPanel.stationinfmodel.StationCompany + "-" + jcsj.ToString("yyyyMMdd") + stationcount.ToString("00000") + "-" + mainPanel.lineid + "-" + (int.Parse(carLogin.carbj.JCCS) - 1).ToString("00");
                             }
                             else
                             {
@@ -3907,7 +3911,7 @@ namespace exhaustDetect
                                                             ht.Add(htchild);
                                                         }
                                                         if (mainPanel.pninterface.UploadTestData(jcff_code, false, ht, out errmsg))
-                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功");
+                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
                                                         else
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测过程数据失败\r\n错误信息：" + errmsg);
@@ -8100,7 +8104,7 @@ namespace exhaustDetect
                                                             ht.Add(htchild);
                                                         }
                                                         if (mainPanel.pninterface.UploadTestData(jcff_code, false, ht, out errmsg))
-                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功");
+                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
                                                         else
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测过程数据失败\r\n错误信息：" + errmsg);
@@ -11158,7 +11162,7 @@ namespace exhaustDetect
                                                     ht[0].Add("ED", pdjg);
 
                                                     if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
-                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功");
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
@@ -12907,7 +12911,7 @@ namespace exhaustDetect
                                                     ht[0].Add("ED", pdjg);
 
                                                     if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
-                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功");
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
@@ -14264,7 +14268,7 @@ namespace exhaustDetect
                                                     ht[0].Add("HIHCD", sdsdata.HCHIGHPD == "合格" ? "1" : "0");
 
                                                     if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
-                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功");
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
@@ -20289,7 +20293,7 @@ namespace exhaustDetect
             zyjsdata.FOURTHDATA = zyjs_data.PrepareData;
             zyjsdata.AVERAGEDATA = ((double.Parse(zyjs_data.FirstData) + double.Parse(zyjs_data.SecondData) + double.Parse(zyjs_data.ThirdData)) / 3.0).ToString("0.00");//6
             zyjsdata.YDXZ = btgxz.ToString("0.00");
-            if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.GUILINNETMODE)
+            if(mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.GUILINNETMODE || mainPanel.NetMode == mainPanel.PNNETMODE))
             {
                 zyjsdata.YDXZ = glzyjsxzstring;
             }
