@@ -443,10 +443,9 @@ namespace GxWebClient
                 XmlDocument xmldoc;
                 XmlElement xmlelem;
                 xmldoc = new XmlDocument();
-                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmlelem = xmldoc.CreateElement("", "Data", "");
                 xmldoc.AppendChild(xmlelem);
-                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
-                XmlElement xe = xmldoc.CreateElement("Data");//创建一个<Node>节点
+                XmlNode root = xmldoc.SelectSingleNode("Data");//查找<Employees>
                 XmlElement xe0 = xmldoc.CreateElement("InspectionData");//创建一个<Node>节点
                 XmlElement xe1 = xmldoc.CreateElement("StationCode");
                 xe1.InnerText = stationCode;
@@ -463,8 +462,7 @@ namespace GxWebClient
                     xe_n.InnerText = model[key].ToString();
                     xe0.AppendChild(xe_n);
                 }
-                xe.AppendChild(xe0);
-                root.AppendChild(xe);
+                root.AppendChild(xe0);
                 #endregion
 
                 string xmlstring = ConvertXmlToString(xmldoc);
@@ -513,10 +511,9 @@ namespace GxWebClient
                 XmlDocument xmldoc;
                 XmlElement xmlelem;
                 xmldoc = new XmlDocument();
-                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmlelem = xmldoc.CreateElement("", "Data", "");
                 xmldoc.AppendChild(xmlelem);
-                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees>
-                XmlElement xe = xmldoc.CreateElement("Data");//创建一个<Node>节点
+                XmlNode root = xmldoc.SelectSingleNode("Data");//查找<Employees>
 
                 string bodyName = "";
                 int interface_kind = 0;
@@ -556,7 +553,7 @@ namespace GxWebClient
                         xe_n.InnerText = hash_dt[0][key].ToString();
                         xe_r.AppendChild(xe_n);
                     }
-                    xe.AppendChild(xe_r);
+                    root.AppendChild(xe_r);
                 }
                 else
                 {
@@ -584,10 +581,9 @@ namespace GxWebClient
                             xe_n.InnerText = hash_dt[i][key].ToString();
                             xe_p.AppendChild(xe_n);
                         }
-                        xe.AppendChild(xe_p);
+                        root.AppendChild(xe_p);
                     }
                 }
-                root.AppendChild(xe);
                 #endregion
 
                 string xmlstring = ConvertXmlToString(xmldoc);
@@ -797,10 +793,9 @@ namespace GxWebClient
                 XmlDocument xmldoc;
                 XmlElement xmlelem;
                 xmldoc = new XmlDocument();
-                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmlelem = xmldoc.CreateElement("", "bodyName", "");
                 xmldoc.AppendChild(xmlelem);
-                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees>
-                XmlElement xe = xmldoc.CreateElement(bodyName);//创建一个<Node>节点
+                XmlNode root = xmldoc.SelectSingleNode("bodyName");//查找<Employees>
                 XmlElement xe0 = xmldoc.CreateElement(nodeName);//创建一个<Node>节点
                 //添加固定信息
                 XmlElement xe01 = xmldoc.CreateElement("CityCode");
@@ -819,8 +814,7 @@ namespace GxWebClient
                     xe_n.InnerText = hash_dt[key].ToString();
                     xe0.AppendChild(xe_n);
                 }
-                xe.AppendChild(xe0);
-                root.AppendChild(xe);
+                root.AppendChild(xe0);
                 #endregion
 
                 string xmlstring = ConvertXmlToString(xmldoc);

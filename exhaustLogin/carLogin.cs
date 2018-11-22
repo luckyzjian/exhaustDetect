@@ -1123,14 +1123,15 @@ namespace exhaustDetect
                     string inspectionmethod = "";
                     if (radioButtonASM.Checked)
                         inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("ASM", "");
-                    else if
-                        (radioButtonSDS.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("SDS", "");
-                    else if
-                        (radioButtonLUG.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("JZJS", "");
-                    else if
-                        (radioButtonZYJS.Checked) inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("ZYJS", "");
-                    
-                    if (!mainPanel.pninterface.GetVehicleListByTime(DateTime.Parse(dateTimeInput1.Value.ToString("yyyy-MM-dd") + " 00:00:00"), DateTime.Parse(dateTimeInput2.Value.ToString("yyyy-MM-dd") + " 23:59:59"), inspectionmethod, out dt, out errmsg))
+                    else if(radioButtonSDS.Checked)
+                        inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("SDS", "");
+                    else if(radioButtonLUG.Checked)
+                        inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("JZJS", "");
+                    else if(radioButtonZYJS.Checked)
+                        inspectionmethod = mainPanel.pninterface.PNR_inspectionmethod.GetValue("ZYJS", "");
+
+                    //if (!mainPanel.pninterface.GetVehicleListByTime(DateTime.Parse(dateTimeInput1.Value.ToString("yyyy-MM-dd") + " 00:00:00"), DateTime.Parse(dateTimeInput2.Value.ToString("yyyy-MM-dd") + " 23:59:59"), inspectionmethod, out dt, out errmsg))
+                    if (!mainPanel.pninterface.GetVehicleList(inspectionmethod, out dt, out errmsg))
                     {
                         MessageBox.Show("获取待检车辆列表失败:" + errmsg);
                         return;

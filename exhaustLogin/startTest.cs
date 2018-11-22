@@ -949,9 +949,9 @@ namespace exhaustDetect
                                 string code, msg;
                                 System.Collections.Hashtable ht = new System.Collections.Hashtable();
                                 ht.Add("kssj", DateTime.Now.ToString("yyyyMMddHHmmss"));
-                                ht.Add("jclsh",carLogin.carbj.CLID);
+                                ht.Add("jclsh", carLogin.carbj.CLID);
                                 ht.Add("hphm", carLogin.carbj.CLHP);
-                                ht.Add("hpzl",mainPanel.hninterface.RHN_HPZL.GetValue(carLogin.modelbj.HPZL,""));
+                                ht.Add("hpzl", mainPanel.hninterface.RHN_HPZL.GetValue(carLogin.modelbj.HPZL, ""));
                                 ht.Add("clsbdh", carLogin.modelbj.CLSBM);
                                 ht.Add("jccs", carLogin.carbj.JCCS);
                                 ht.Add("ycy", carLogin.carbj.JSY);
@@ -960,7 +960,7 @@ namespace exhaustDetect
                                 switch (carLogin.carbj.JCFF)
                                 {
                                     case "ASM":
-                                        ht.Add("jcffid", "2");break;
+                                        ht.Add("jcffid", "2"); break;
                                     case "VMAS":
                                         ht.Add("jcffid", "3"); break;
                                     case "JZJS":
@@ -973,17 +973,17 @@ namespace exhaustDetect
                                         ht.Add("jcffid", "5"); break;
 
                                 }
-                                ht.Add("jczt","4");
+                                ht.Add("jczt", "4");
                                 ht.Add("jcbz", "3");
                                 ht.Add("jcrq", DateTime.Now.ToString("yyyyMMdd"));
-                                ht.Add("jyzl", mainPanel.hninterface.RHN_JYZL.GetValue(carLogin.modelbj.JCLB,""));
+                                ht.Add("jyzl", mainPanel.hninterface.RHN_JYZL.GetValue(carLogin.modelbj.JCLB, ""));
                                 DataTable dtinf = new DataTable();
                                 if (!mainPanel.hninterface.startTest(ht, out code, out msg))
                                 {
-                                   
-                                        MessageBox.Show("发送开始检测命令失败\r\ncode:" + code + "\r\nmsg:" + msg);
-                                        ini.INIIO.saveLogInf("发送开始检测命令失败,code" + code + ",msg:" + msg);
-                                        return;
+
+                                    MessageBox.Show("发送开始检测命令失败\r\ncode:" + code + "\r\nmsg:" + msg);
+                                    ini.INIIO.saveLogInf("发送开始检测命令失败,code" + code + ",msg:" + msg);
+                                    return;
                                 }
                             }
                             else if (mainPanel.NetMode == mainPanel.JIANGSHUNETMODE)
@@ -1020,7 +1020,7 @@ namespace exhaustDetect
                             {
                                 int ahresult = 0;
                                 string ahErrMsg = "";
-                                ini.INIIO.saveLogInf("mainPanel.ahinterface.BeginInspect("+ mainPanel.lineid+","+carLogin.carbj.CLID + "," + carLogin.ahDriverID + "," + carLogin.ahOperatorID + ")");
+                                ini.INIIO.saveLogInf("mainPanel.ahinterface.BeginInspect(" + mainPanel.lineid + "," + carLogin.carbj.CLID + "," + carLogin.ahDriverID + "," + carLogin.ahOperatorID + ")");
                                 if (!mainPanel.ahinterface.BeginInspect(mainPanel.lineid, carLogin.carbj.CLID, carLogin.ahDriverID, carLogin.ahOperatorID, out ahresult, out ahErrMsg))
                                 {
                                     MessageBox.Show("错误代码：" + ahresult.ToString() + "\r\n" + "错误信息：" + ahErrMsg);
@@ -1071,9 +1071,9 @@ namespace exhaustDetect
                                         MessageBox.Show("未获取到该车状态信息：dt.Rows.Count = 0");
                                         return;
                                     }
-                                    else if (dt.Rows[0]["ZT"].ToString() ==mainPanel.queryStartTestNotOk )
+                                    else if (dt.Rows[0]["ZT"].ToString() == mainPanel.queryStartTestNotOk)
                                     {
-                                        MessageBox.Show("该车验证未通过，不能开始检测：\r\n"+ dt.Rows[0]["BZ"].ToString());
+                                        MessageBox.Show("该车验证未通过，不能开始检测：\r\n" + dt.Rows[0]["BZ"].ToString());
                                         return;
                                     }
                                     else if (dt.Rows[0]["ZT"].ToString() == mainPanel.queryStartTest)
@@ -1083,11 +1083,11 @@ namespace exhaustDetect
                                     }
                                     else if (dt.Rows[0]["ZT"].ToString() != mainPanel.queryStartTestOK)
                                     {
-                                        MessageBox.Show("该车检测状态有疑点["+ dt.Rows[0]["ZT"].ToString()+"]，不能开始检测");
+                                        MessageBox.Show("该车检测状态有疑点[" + dt.Rows[0]["ZT"].ToString() + "]，不能开始检测");
                                         return;
                                     }
                                 }
-                                catch(Exception er)
+                                catch (Exception er)
                                 {
                                     MessageBox.Show("未获取到该车状态信息：" + er.Message);
                                     return;
@@ -1102,7 +1102,7 @@ namespace exhaustDetect
                                     return;
                                 }
                             }
-                            else if(mainPanel.NetMode==mainPanel.EZNETMODE)
+                            else if (mainPanel.NetMode == mainPanel.EZNETMODE)
                             {
                                 string code, msg;
                                 try
@@ -1121,7 +1121,7 @@ namespace exhaustDetect
                                                              carLogin.modelbj.ZCRQ.ToString("yyyyMMdd"),
                                                              carLogin.modelbj.ZCRQ.ToString("yyyyMMdd"),
                                                              carLogin.modelbj.JHZZ == "无" ? "N" : "Y",
-                                                             "N", 
+                                                             "N",
                                                              mainPanel.ezinterface.EZR_yn.GetValue(carLogin.modelbj.DKGYYB, "N"),
                                                              "Y",
                                                              "N",
@@ -1171,6 +1171,19 @@ namespace exhaustDetect
                                 {
                                     MessageBox.Show("车辆检测开始失败\r\ncode:" + code + "\r\nmsg:" + msg);
                                     ini.INIIO.saveLogInf("车辆检测开始失败,code" + code + ",msg:" + msg);
+                                    return;
+                                }
+                            }
+                            else if (mainPanel.NetMode == mainPanel.PNNETMODE)
+                            {
+                                string errmsg = "";
+                                DataTable dt = new DataTable();
+                                if (mainPanel.pninterface.StartOrStopTest(true, carLogin.carbj.JYLSH, carLogin.carbj.ECRYPT, out errmsg))
+                                    ini.INIIO.saveLogInf("发送平南联网检测开始成功");
+                                else
+                                {
+                                    ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测开始失败\r\n错误信息：" + errmsg);
+                                    MessageBox.Show("发送检测开始命令失败\r\n错误信息：" + errmsg);
                                     return;
                                 }
                             }
@@ -3811,11 +3824,11 @@ namespace exhaustDetect
                                                 ht[0].Add("InspectionWay", jcfs_code);
                                                 ht[0].Add("InspectionNature", jcfs_code);
                                                 ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
-                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("TSM", carLogin.carbj.XSLC);
                                                 ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
-                                                ht[0].Add("DetectStartTime", asmdata.JCKSSJ);
-                                                ht[0].Add("DetectEndTime", asmdata.JCJSSJ);
+                                                ht[0].Add("DetectStartTime", DateTime.Parse(asmdata.JCKSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                ht[0].Add("DetectEndTime", DateTime.Parse(asmdata.JCJSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("VinFlag", "1");
                                                 ht[0].Add("EngineNumFlag", "1");
                                                 ht[0].Add("ICheck", carLogin.carbj.CZY);
@@ -3862,8 +3875,9 @@ namespace exhaustDetect
                                                         ht[0].Add("NOED2540", "");
                                                     }
 
-                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                    if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
                                                     {
+                                                        ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "检测结果上传完成，开始上传过程数据");
                                                         //上传过程数据
                                                         ht.Clear();
                                                         if (dataseconds == null || dataseconds.Rows.Count < 10)
@@ -3873,44 +3887,52 @@ namespace exhaustDetect
                                                             Msg(label1, panel4, "待上传过程数据不足10条");
                                                             return;
                                                         }
-                                                        for (int i = 0; i < dataseconds.Rows.Count; i++)
+                                                        try
                                                         {
-                                                            Hashtable htchild = new Hashtable();
-                                                            DataRow dr = dataseconds.Rows[i];
-                                                            ht[i].Add("StationCode", mainPanel.pnwebinf.stationCode);
-                                                            ht[i].Add("InspectionNum", carLogin.carbj.JYLSH);
-                                                            ht[i].Add("Second_NO", i.ToString());
-                                                            ht[i].Add("Flow_HC", dr["HC实时值"].ToString());
-                                                            ht[i].Add("Flow_CO", dr["CO实时值"].ToString());
-                                                            ht[i].Add("Flow_CO2", dr["CO2实时值"].ToString());
-                                                            ht[i].Add("Flow_NO", dr["NO实时值"].ToString());
-                                                            ht[i].Add("Analyser_O2", dr["O2实时值"].ToString());
-                                                            ht[i].Add("Flowmeter_O2", "");
-                                                            ht[i].Add("ActFlow", "");
-                                                            ht[i].Add("StdFlow", "");
-                                                            ht[i].Add("TailFlow", "");
-                                                            ht[i].Add("Weight_HC", "0");
-                                                            ht[i].Add("Weight_CO", "0");
-                                                            ht[i].Add("Weight_NO", "0");
-                                                            ht[i].Add("LineSpeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
-                                                            ht[i].Add("RotateSpeed", dr["转速"].ToString());
-                                                            ht[i].Add("TotalPower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
-                                                            ht[i].Add("ParasPower", double.Parse(dr["寄生功率"].ToString()).ToString("0.00"));
-                                                            ht[i].Add("IndicPower", double.Parse(dr["加载功率"].ToString()).ToString("0.00"));
-                                                            ht[i].Add("FlowAirPressure", "");
-                                                            ht[i].Add("FlowTemperature", "");
-                                                            ht[i].Add("EnvirTemperature", dr["环境温度"].ToString());
-                                                            ht[i].Add("EnvirAirPressure", dr["大气压力"].ToString());
-                                                            ht[i].Add("EnvirHumidity", dr["相对湿度"].ToString());
-                                                            ht[i].Add("DiluteCorrect", double.Parse(dr["稀释修正系数"].ToString()).ToString("0.00"));
-                                                            ht[i].Add("HumidityCorrect", double.Parse(dr["湿度修正系数"].ToString()).ToString("0.00"));
-                                                            ht[i].Add("DiluteRatio", "1");
-                                                            ht[i].Add("ProcessTime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
-                                                            ht[i].Add("ASMType", "");
-                                                            ht[i].Add("IsTenMCondition", "");
-                                                            ht.Add(htchild);
+                                                            for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                            {
+                                                                Hashtable htchild = new Hashtable();
+                                                                DataRow dr = dataseconds.Rows[i];
+                                                                htchild.Add("StationCode", mainPanel.pnwebinf.stationCode);
+                                                                htchild.Add("InspectionNum", carLogin.carbj.JYLSH);
+                                                                htchild.Add("Second_NO", i.ToString());
+                                                                htchild.Add("Flow_HC", dr["HC实时值"].ToString());
+                                                                htchild.Add("Flow_CO", dr["CO实时值"].ToString());
+                                                                htchild.Add("Flow_CO2", dr["CO2实时值"].ToString());
+                                                                htchild.Add("Flow_NO", dr["NO实时值"].ToString());
+                                                                htchild.Add("Analyser_O2", dr["O2实时值"].ToString());
+                                                                htchild.Add("Flowmeter_O2", "");
+                                                                htchild.Add("ActFlow", "");
+                                                                htchild.Add("StdFlow", "");
+                                                                htchild.Add("TailFlow", "");
+                                                                htchild.Add("Weight_HC", "0");
+                                                                htchild.Add("Weight_CO", "0");
+                                                                htchild.Add("Weight_NO", "0");
+                                                                htchild.Add("LineSpeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
+                                                                htchild.Add("RotateSpeed", dr["转速"].ToString());
+                                                                htchild.Add("TotalPower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
+                                                                htchild.Add("ParasPower", double.Parse(dr["寄生功率"].ToString()).ToString("0.00"));
+                                                                htchild.Add("IndicPower", double.Parse(dr["加载功率"].ToString()).ToString("0.00"));
+                                                                htchild.Add("FlowAirPressure", "");
+                                                                htchild.Add("FlowTemperature", "");
+                                                                htchild.Add("EnvirTemperature", dr["环境温度"].ToString());
+                                                                htchild.Add("EnvirAirPressure", dr["大气压力"].ToString());
+                                                                htchild.Add("EnvirHumidity", dr["相对湿度"].ToString());
+                                                                htchild.Add("DiluteCorrect", double.Parse(dr["稀释修正系数"].ToString()).ToString("0.00"));
+                                                                htchild.Add("HumidityCorrect", double.Parse(dr["湿度修正系数"].ToString()).ToString("0.00"));
+                                                                htchild.Add("DiluteRatio", "1");
+                                                                htchild.Add("ProcessTime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                                htchild.Add("ASMType", "");
+                                                                htchild.Add("IsTenMCondition", "");
+                                                                ht.Add(htchild);
+                                                            }
                                                         }
-                                                        if (mainPanel.pninterface.UploadTestData(jcff_code, false, ht, out errmsg))
+                                                        catch (Exception er)
+                                                        {
+                                                            ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据准备过程出错\r\n错误信息：" + er.Message);
+                                                            return;
+                                                        }
+                                                        if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, false, ht, out errmsg))
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
                                                         else
                                                         {
@@ -8040,7 +8062,7 @@ namespace exhaustDetect
                                                 ht[0].Add("InspectionWay", jcfs_code);
                                                 ht[0].Add("InspectionNature", jcfs_code);
                                                 ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
-                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("TSM", carLogin.carbj.XSLC);
                                                 ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
                                                 ht[0].Add("DetectStartTime", jcsj.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -8064,7 +8086,7 @@ namespace exhaustDetect
                                                     ht[0].Add("MWP", jzjsdata.MAXLBGL);
                                                     ht[0].Add("ED", pdjg);
 
-                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                    if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
                                                     {
                                                         //上传过程数据
                                                         ht.Clear();
@@ -8075,35 +8097,35 @@ namespace exhaustDetect
                                                             Msg(label1, panel4, "待上传过程数据不足10条");
                                                             return;
                                                         }
-                                                        for (int i = 0; i < dataseconds.Rows.Count; i++)
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
                                                         {
                                                             Hashtable htchild = new Hashtable();
                                                             DataRow dr = dataseconds.Rows[i];
-                                                            ht[i].Add("StationCode", mainPanel.pnwebinf.stationCode);
-                                                            ht[i].Add("InspectionNum", carLogin.carbj.JYLSH);
-                                                            ht[i].Add("Second_NO", i.ToString());
-                                                            ht[i].Add("CalVelMaxHp", Math.Round(double.Parse(jzjsdata.VELMAXHP), 2).ToString("0.00"));
-                                                            ht[i].Add("ActVelMaxHp", Math.Round(double.Parse(jzjsdata.REALVELMAXHP), 2).ToString("0.00"));
-                                                            ht[i].Add("PowerPerSec", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
-                                                            ht[i].Add("SpeedPerSec", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
-                                                            ht[i].Add("ActMaxPower", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
-                                                            ht[i].Add("RotateSpeed", dr["转速"].ToString());
-                                                            ht[i].Add("EnvirTemperature", dr["环境温度"].ToString());
-                                                            ht[i].Add("EnvirAirPressure", dr["大气压力"].ToString());
-                                                            ht[i].Add("EnvirHumidity", dr["相对湿度"].ToString());
-                                                            ht[i].Add("PowerCorrect", Math.Round(double.Parse(dr["DCF"].ToString()), 2).ToString("0.00"));
-                                                            ht[i].Add("CorMaxPower", Math.Round(double.Parse(dr["功率"].ToString()) * double.Parse(dr["DCF"].ToString())).ToString("0.00"));
-                                                            ht[i].Add("Smoke_K100", (dr["时序类别"].ToString() == "2") ? dr["光吸收系数K"].ToString() : "");
-                                                            ht[i].Add("Smoke_K90", (dr["时序类别"].ToString() == "3") ? dr["光吸收系数K"].ToString() : "");
-                                                            ht[i].Add("Smoke_K80", (dr["时序类别"].ToString() == "4") ? dr["光吸收系数K"].ToString() : "");
-                                                            ht[i].Add("Speed_K100", (dr["时序类别"].ToString() == "2") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
-                                                            ht[i].Add("Speed_K90", (dr["时序类别"].ToString() == "3") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
-                                                            ht[i].Add("Speed_K80", (dr["时序类别"].ToString() == "4") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
-                                                            ht[i].Add("IdleRotateSpeed", "");
-                                                            ht[i].Add("ProcessTime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                            htchild.Add("StationCode", mainPanel.pnwebinf.stationCode);
+                                                            htchild.Add("InspectionNum", carLogin.carbj.JYLSH);
+                                                            htchild.Add("Second_NO", i.ToString());
+                                                            htchild.Add("CalVelMaxHp", Math.Round(double.Parse(jzjsdata.VELMAXHP), 2).ToString("0.00"));
+                                                            htchild.Add("ActVelMaxHp", Math.Round(double.Parse(jzjsdata.REALVELMAXHP), 2).ToString("0.00"));
+                                                            htchild.Add("PowerPerSec", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
+                                                            htchild.Add("SpeedPerSec", Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00"));
+                                                            htchild.Add("ActMaxPower", Math.Round(double.Parse(dr["功率"].ToString()), 2).ToString("0.00"));
+                                                            htchild.Add("RotateSpeed", dr["转速"].ToString());
+                                                            htchild.Add("EnvirTemperature", dr["环境温度"].ToString());
+                                                            htchild.Add("EnvirAirPressure", dr["大气压力"].ToString());
+                                                            htchild.Add("EnvirHumidity", dr["相对湿度"].ToString());
+                                                            htchild.Add("PowerCorrect", Math.Round(double.Parse(dr["DCF"].ToString()), 2).ToString("0.00"));
+                                                            htchild.Add("CorMaxPower", Math.Round(double.Parse(dr["功率"].ToString()) * double.Parse(dr["DCF"].ToString())).ToString("0.00"));
+                                                            htchild.Add("Smoke_K100", (dr["时序类别"].ToString() == "2") ? dr["光吸收系数K"].ToString() : "");
+                                                            htchild.Add("Smoke_K90", (dr["时序类别"].ToString() == "3") ? dr["光吸收系数K"].ToString() : "");
+                                                            htchild.Add("Smoke_K80", (dr["时序类别"].ToString() == "4") ? dr["光吸收系数K"].ToString() : "");
+                                                            htchild.Add("Speed_K100", (dr["时序类别"].ToString() == "2") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
+                                                            htchild.Add("Speed_K90", (dr["时序类别"].ToString() == "3") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
+                                                            htchild.Add("Speed_K80", (dr["时序类别"].ToString() == "4") ? Math.Round(double.Parse(dr["车速"].ToString()), 2).ToString("0.00") : "");
+                                                            htchild.Add("IdleRotateSpeed", "");
+                                                            htchild.Add("ProcessTime", DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"));
                                                             ht.Add(htchild);
                                                         }
-                                                        if (mainPanel.pninterface.UploadTestData(jcff_code, false, ht, out errmsg))
+                                                        if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, false, ht, out errmsg))
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
                                                         else
                                                         {
@@ -11136,11 +11158,11 @@ namespace exhaustDetect
                                                 ht[0].Add("InspectionWay", jcfs_code);
                                                 ht[0].Add("InspectionNature", jcfs_code);
                                                 ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
-                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("TSM", carLogin.carbj.XSLC);
                                                 ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
-                                                ht[0].Add("DetectStartTime", zyjsdata.JCKSSJ);
-                                                ht[0].Add("DetectEndTime", zyjsdata.JCJSSJ);
+                                                ht[0].Add("DetectStartTime", DateTime.Parse(zyjsdata.JCKSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                ht[0].Add("DetectEndTime", DateTime.Parse(zyjsdata.JCJSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("VinFlag", "1");
                                                 ht[0].Add("EngineNumFlag", "1");
                                                 ht[0].Add("ICheck", carLogin.carbj.CZY);
@@ -11161,7 +11183,7 @@ namespace exhaustDetect
                                                     ht[0].Add("ERA", zyjsdata.AVERAGEDATA);
                                                     ht[0].Add("ED", pdjg);
 
-                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                    if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {
@@ -12885,11 +12907,11 @@ namespace exhaustDetect
                                                 ht[0].Add("InspectionWay", jcfs_code);
                                                 ht[0].Add("InspectionNature", jcfs_code);
                                                 ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
-                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("TSM", carLogin.carbj.XSLC);
                                                 ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
-                                                ht[0].Add("DetectStartTime", zyjsdata.JCKSSJ);
-                                                ht[0].Add("DetectEndTime", zyjsdata.JCJSSJ);
+                                                ht[0].Add("DetectStartTime", DateTime.Parse(zyjsdata.JCKSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                ht[0].Add("DetectEndTime", DateTime.Parse(zyjsdata.JCJSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("VinFlag", "1");
                                                 ht[0].Add("EngineNumFlag", "1");
                                                 ht[0].Add("ICheck", carLogin.carbj.CZY);
@@ -12910,7 +12932,7 @@ namespace exhaustDetect
                                                     ht[0].Add("ERA", zyjsdata.AVERAGEDATA);
                                                     ht[0].Add("ED", pdjg);
 
-                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                    if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {
@@ -14234,11 +14256,11 @@ namespace exhaustDetect
                                                 ht[0].Add("InspectionWay", jcfs_code);
                                                 ht[0].Add("InspectionNature", jcfs_code);
                                                 ht[0].Add("InspectionTimes", carLogin.carbj.JCCS);
-                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyyMMdd"));
+                                                ht[0].Add("IUIDATE", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("TSM", carLogin.carbj.XSLC);
                                                 ht[0].Add("SceneCode", mainPanel.pnwebinf.lineCode);
-                                                ht[0].Add("DetectStartTime", sdsdata.JCKSSJ);
-                                                ht[0].Add("DetectEndTime", sdsdata.JCJSSJ);
+                                                ht[0].Add("DetectStartTime", DateTime.Parse(sdsdata.JCKSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
+                                                ht[0].Add("DetectEndTime", DateTime.Parse(sdsdata.JCJSSJ).ToString("yyyy-MM-dd HH:mm:ss"));
                                                 ht[0].Add("VinFlag", "1");
                                                 ht[0].Add("EngineNumFlag", "1");
                                                 ht[0].Add("ICheck", carLogin.carbj.CZY);
@@ -14251,7 +14273,7 @@ namespace exhaustDetect
                                                     ht.Add(new Hashtable());
                                                     ht[0].Add("StationCode", mainPanel.pnwebinf.stationCode);
                                                     ht[0].Add("InspectionNum", carLogin.carbj.JYLSH);
-                                                    ht[0].Add("EACL", "0.97-1.03");
+                                                    ht[0].Add("EACL", "0.03");
                                                     ht[0].Add("EACR", sdsdata.LAMDAHIGHCLZ);
                                                     ht[0].Add("EACD", sdsdata.LAMDAHIGHPD == "合格" ? "1" : (sdsdata.LAMDAHIGHPD == "不合格" ? "0" : ""));
                                                     ht[0].Add("LICOL", sdsdata.COLOWXZ);
@@ -14267,7 +14289,7 @@ namespace exhaustDetect
                                                     ht[0].Add("HIHCR", sdsdata.HCHIGHCLZ);
                                                     ht[0].Add("HIHCD", sdsdata.HCHIGHPD == "合格" ? "1" : "0");
 
-                                                    if (mainPanel.pninterface.UploadTestData(jcff_code, true, ht, out errmsg))
+                                                    if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
                                                     else
                                                     {

@@ -1374,7 +1374,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 28);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(281, 300);
+            this.tabPage2.Size = new System.Drawing.Size(281, 118);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "车辆管理";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1394,7 +1394,7 @@
             this.panelNhCar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNhCar.Location = new System.Drawing.Point(3, 3);
             this.panelNhCar.Name = "panelNhCar";
-            this.panelNhCar.Size = new System.Drawing.Size(275, 294);
+            this.panelNhCar.Size = new System.Drawing.Size(275, 112);
             this.panelNhCar.TabIndex = 98;
             this.panelNhCar.Visible = false;
             // 
