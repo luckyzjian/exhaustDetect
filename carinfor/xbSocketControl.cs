@@ -1740,8 +1740,8 @@ namespace carinfo
                                 sdsmxz.DSHCStd = double.Parse(dt1.Rows[0]["DSHCStd"].ToString());
                                 sdsmxz.DSCOStd = double.Parse(dt1.Rows[0]["DSCOStd"].ToString());
                                 sdsmxz.CtrlRPM = dt1.Rows[0]["CtrlRPM"].ToString() == "1";
-                                sdsmxz.CarRPMMin = double.Parse(dt1.Rows[0]["CarRPMMin"].ToString());
-                                sdsmxz.CarRPMMax = double.Parse(dt1.Rows[0]["CarRPMMax"].ToString());
+                                sdsmxz.CarRPMMin = 0;// double.Parse(dt1.Rows[0]["CarRPMMin"].ToString());
+                                sdsmxz.CarRPMMax = 1000;// double.Parse(dt1.Rows[0]["CarRPMMax"].ToString());
                                 break;
                             default: break;
                         }
@@ -2285,6 +2285,8 @@ namespace carinfo
                 switch (pmodel.JCFFBH)
                 {
                     case "SDS":
+                        dataname = "double_idle_speed"; break;
+                    case "SDSM":
                         dataname = "double_idle_speed"; break;
                     case "VMAS":
                         dataname = "vmas_data"; break;
