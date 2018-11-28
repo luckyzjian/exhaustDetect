@@ -18386,9 +18386,9 @@ namespace exhaustDetect
                                                         data.DSO2Curve0 = string.Join(",", l_p_o2);
                                                         data.DSO2Curve1 = string.Join(",", l_t_o2);
                                                         data.GDSO2Curve0 = string.Join(",", h_p_o2);
-                                                        data.GDSO2Curve1 = string.Join(",", h_t_lmd);
-                                                        data.GDSLmdCurve1 = string.Join(",", h_p_lmd);
                                                         data.GDSO2Curve1 = string.Join(",", h_t_o2);
+                                                        data.GDSLmdCurve0 = string.Join(",", h_p_lmd);
+                                                        data.GDSLmdCurve1 = string.Join(",", h_t_lmd);
                                                         data.DSRpmCurve0 = string.Join(",", l_p_zs);
                                                         data.DSRpmCurve1 = string.Join(",", l_t_zs);
                                                         data.GDSRpmCurve0 = string.Join(",", h_p_zs);

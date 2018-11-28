@@ -2393,7 +2393,7 @@ namespace AhWebClient
                                 for (int i = 1; i < dtseconds.Rows.Count; i++)
                                 {
                                     DataRow dr = dtseconds.Rows[i];
-                                    if (dr["时序类别"].ToString() == "0")
+                                    if (dr["时序类别"].ToString() == "1")
                                     {
                                         asm5025count++;
                                         XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + asm5025count.ToString("000"));//创建一个<Node>节点 
@@ -2444,7 +2444,7 @@ namespace AhWebClient
                                         xe33.AppendChild(xe57);
                                         root.AppendChild(xe33);
                                     }
-                                    else if (dr["时序类别"].ToString() == "1")
+                                    else if (dr["时序类别"].ToString() == "2")
                                     {
                                         asm2540count++;
                                         XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + asm2540count.ToString("000"));//创建一个<Node>节点 
