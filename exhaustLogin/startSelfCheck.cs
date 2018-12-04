@@ -3457,6 +3457,30 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
+                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+                    {
+                        #region neusoft
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
+                        {
+                            NeusoftUtil.AnalyzerO2Test analyzercalcheckdata = new NeusoftUtil.AnalyzerO2Test();
+                            analyzercalcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                            analyzercalcheckdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            analyzercalcheckdata.STD_RangeO2 = "20.8";
+                            analyzercalcheckdata.MEA_RangeO2 = cgjdata.Yqyq;
+                            analyzercalcheckdata.ERR_RangeO2 = (double.Parse(cgjdata.Yqyq) - 20.8).ToString("0.0");
+                            analyzercalcheckdata.Result = (double.Parse(analyzercalcheckdata.ERR_RangeO2) > 0.1) ? "2" : "1";
+                            string result, inf;
+                            DataTable dtack;
+                            mainPanel.sysocket.UploadAnalyzerO2Test(analyzercalcheckdata, out result, out inf, out dtack);
+
+                            NeusoftUtil.AnalyzerLeakTest analyzerleakcheckdata = new NeusoftUtil.AnalyzerLeakTest();
+                            analyzerleakcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                            analyzerleakcheckdata.StartTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            analyzerleakcheckdata.Result = cgjdata.TightnessResult;
+                            mainPanel.sysocket.UploadAnalyzerLeakTestRequest(analyzerleakcheckdata, out result, out inf, out dtack);
+                        }
+                        #endregion
+                    }
                     //writeExcel.writeSelfCheckData(cgjdata);
                     #endregion
                 }
@@ -4583,6 +4607,30 @@ namespace exhaustDetect
                         else
                         {
                             ini.INIIO.saveLogInf("[上传尾气分析仪泄漏检查自检信息]:成功\r\n");
+                        }
+                        #endregion
+                    }
+                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+                    {
+                        #region neusoft
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
+                        {
+                            NeusoftUtil.AnalyzerO2Test analyzercalcheckdata = new NeusoftUtil.AnalyzerO2Test();
+                            analyzercalcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                            analyzercalcheckdata.BeginTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            analyzercalcheckdata.STD_RangeO2 = "20.8";
+                            analyzercalcheckdata.MEA_RangeO2 = cgjdata.Yqyq;
+                            analyzercalcheckdata.ERR_RangeO2 = (double.Parse(cgjdata.Yqyq) - 20.8).ToString("0.0");
+                            analyzercalcheckdata.Result = (double.Parse(analyzercalcheckdata.ERR_RangeO2) > 0.1) ? "2" : "1";
+                            string result, inf;
+                            DataTable dtack;
+                            mainPanel.sysocket.UploadAnalyzerO2Test(analyzercalcheckdata, out result, out inf, out dtack);
+
+                            NeusoftUtil.AnalyzerLeakTest analyzerleakcheckdata = new NeusoftUtil.AnalyzerLeakTest();
+                            analyzerleakcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                            analyzerleakcheckdata.StartTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            analyzerleakcheckdata.Result = cgjdata.TightnessResult;
+                            mainPanel.sysocket.UploadAnalyzerLeakTestRequest(analyzerleakcheckdata, out result, out inf, out dtack);
                         }
                         #endregion
                     }

@@ -1451,31 +1451,40 @@ namespace NeusoftUtil
                 return false;
             }
         }
-        /*public static DataTable ReadCalStandard(string xmlstring, out string result, out string errorMessage)
+        /*
+        public static bool ReadCalStandard(string xmlstring, out string result, out string inf, out DataTable ack)
         {
             result = "";
-            errorMessage = "";
-            DataSet ds = new DataSet();
-            StringReader stream = new StringReader(xmlstring);
-            XmlTextReader reader = new XmlTextReader(stream);
-            ds.ReadXml(reader);
-            DataTable dt1 = null;
-            dt1 = ds.Tables[1];
-            string respondName = dt1.Rows[0]["Name"].ToString();
-            if (respondName == "Verify")
+            inf = "";
+            ack = null;
+            try
             {
-                ReadACKString(xmlstring, out result, out errorMessage);
-                return null;
+                result = "";
+                inf = "";
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(xmlstring);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+                return true;
             }
-            else
+            catch (Exception er)
             {
-                dt1 = ds.Tables[2];
-                return dt1;
+                result = "-1";
+                inf = er.Message;
+                return false;
             }
-        }
-        public void UploadCoastdownRequest(Coastdown gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf)
+        }*/
+        public bool UploadCoastdownRequest(Coastdown gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf, out DataTable ack)
         {
-            XmlDocument xmldoc, xlmrecivedoc;
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
             XmlNode xmlnode;
             XmlElement xmlelem;
             DataTable dt = null;
@@ -1484,35 +1493,36 @@ namespace NeusoftUtil
             xmldoc = new XmlDocument();
             xmlelem = xmldoc.CreateElement("", "Message", "");
             xmlelem.SetAttribute("Device", EISID);
-            xmldoc.AppendChild(xmlelem);
+                xmlelem.SetAttribute("OutlookID", gasolineresultmodule.OutlookID);//设置该节点genre属性
+                xmldoc.AppendChild(xmlelem);
             XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
             XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
-            xe1.SetAttribute("Name", gasolineresultmodule.name);//设置该节点genre属性 
+            xe1.SetAttribute("Name", gasolineresultmodule.namesy);//设置该节点genre属性 
             XmlElement xe2 = xmldoc.CreateElement("Result");//创建一个<Node>节点           
             XmlElement xe3 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
-            XmlElement xe4 = xmldoc.CreateElement("StartTime");
+            XmlElement xe4 = xmldoc.CreateElement("BeginTime");
             xe4.InnerText = gasolineresultmodule.StartTime;
             XmlElement xe5 = xmldoc.CreateElement("ACDT40");
             xe5.InnerText = gasolineresultmodule.ACDT40;
-            XmlElement xe6 = xmldoc.CreateElement("ACDT24");
+            XmlElement xe6 = xmldoc.CreateElement("ACDT25");
             xe6.InnerText = gasolineresultmodule.ACDT24;
             XmlElement xe7 = xmldoc.CreateElement("PLHP40");
             xe7.InnerText = gasolineresultmodule.PLHP40;
-            XmlElement xe8 = xmldoc.CreateElement("PLHP24");
+            XmlElement xe8 = xmldoc.CreateElement("PLHP25");
             xe8.InnerText = gasolineresultmodule.PLHP24;
             XmlElement xe9 = xmldoc.CreateElement("CCDT40");
             xe9.InnerText = gasolineresultmodule.CCDT40;
-            XmlElement xe10 = xmldoc.CreateElement("CCDT24");
+            XmlElement xe10 = xmldoc.CreateElement("CCDT25");
             xe10.InnerText = gasolineresultmodule.CCDT24;
             XmlElement xe11 = xmldoc.CreateElement("IHP40");
             xe11.InnerText = gasolineresultmodule.IHP40;
-            XmlElement xe12 = xmldoc.CreateElement("IHP24");
+            XmlElement xe12 = xmldoc.CreateElement("IHP25");
             xe12.InnerText = gasolineresultmodule.IHP24;
             XmlElement xe13 = xmldoc.CreateElement("DIW");
             xe13.InnerText = gasolineresultmodule.DIW;
             XmlElement xe14 = xmldoc.CreateElement("Result40");
             xe14.InnerText = gasolineresultmodule.Result40;
-            XmlElement xe15 = xmldoc.CreateElement("Result24");
+            XmlElement xe15 = xmldoc.CreateElement("Result25");
             xe15.InnerText = gasolineresultmodule.Result24;
             xe3.AppendChild(xe4);
             xe3.AppendChild(xe5);
@@ -1531,47 +1541,35 @@ namespace NeusoftUtil
             xe1.AppendChild(xe2);
 
 
-            XmlElement xe32 = xmldoc.CreateElement("ProcessData");//创建一个<Node>节点 
-            for (int i = 1; i < asmdataseconds.Rows.Count; i++)
-            {
-                XmlElement xe33 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
-                DataRow dr = asmdataseconds.Rows[i];
-                XmlElement xe34 = xmldoc.CreateElement("TimeCount");
-                xe34.InnerText = dr["TimeCount"].ToString();
-                XmlElement xe36 = xmldoc.CreateElement("Velocity");
-                xe36.InnerText = dr["Velocity"].ToString();
-                XmlElement xe37 = xmldoc.CreateElement("Torque");
-                xe37.InnerText = dr["Torque"].ToString();//扭矩
-                XmlElement xe38 = xmldoc.CreateElement("Power");
-                xe38.InnerText = dr["Power"].ToString();
-                XmlElement xe39 = xmldoc.CreateElement("Force");
-                xe39.InnerText = dr["Force"].ToString();//轮边力
-                xe33.AppendChild(xe34);
-                xe33.AppendChild(xe36);
-                xe33.AppendChild(xe37);
-                xe33.AppendChild(xe38);
-                xe33.AppendChild(xe39);
-                xe32.AppendChild(xe33);
-            }
-            xe1.AppendChild(xe32);
-
             root.AppendChild(xe1);
-            //socket.Send(ConvertXmlToString(xmldoc));
-            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
-            {
-                return;
+                //socket.Send(ConvertXmlToString(xmldoc));
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
             }
-            Thread.Sleep(100);
-            byte[] buffer = new byte[1024 * 1024];
-            string receivedString = "";
-            if (RecvData(socket, out receivedString) > 0)
+            catch (Exception er)
             {
-                ReadCalibration(receivedString, out result, out inf);
+                result = "-1";
+                inf = er.Message;
+                return false;
             }
         }
-        public void UploadParasiticLoseRequest(ParasiticLose gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf)
+        public bool UploadParasiticLoseRequest(ParasiticLose gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf, out DataTable ack)
         {
-            XmlDocument xmldoc, xlmrecivedoc;
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
             XmlNode xmlnode;
             XmlElement xmlelem;
             DataTable dt = null;
@@ -1583,71 +1581,243 @@ namespace NeusoftUtil
             xmldoc.AppendChild(xmlelem);
             XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
             XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
-            xe1.SetAttribute("Name", gasolineresultmodule.name);//设置该节点genre属性 
+            xe1.SetAttribute("Name", gasolineresultmodule.namesy);//设置该节点genre属性 
             XmlElement xe2 = xmldoc.CreateElement("Result");//创建一个<Node>节点           
             XmlElement xe3 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
-            XmlElement xe4 = xmldoc.CreateElement("StartTime");
+            XmlElement xe4 = xmldoc.CreateElement("BeginTime");
             xe4.InnerText = gasolineresultmodule.StartTime;
-            XmlElement xe5 = xmldoc.CreateElement("ACDT40");
+                XmlElement xe11 = xmldoc.CreateElement("EndTime");
+                xe11.InnerText = gasolineresultmodule.EndTime;
+                XmlElement xe5 = xmldoc.CreateElement("ACDT40");
             xe5.InnerText = gasolineresultmodule.ACDT40;
-            XmlElement xe6 = xmldoc.CreateElement("ACDT24");
+            XmlElement xe6 = xmldoc.CreateElement("ACDT25");
             xe6.InnerText = gasolineresultmodule.ACDT24;
             XmlElement xe7 = xmldoc.CreateElement("PLHP40");
             xe7.InnerText = gasolineresultmodule.PLHP40;
-            XmlElement xe8 = xmldoc.CreateElement("PLHP24");
+            XmlElement xe8 = xmldoc.CreateElement("PLHP25");
             xe8.InnerText = gasolineresultmodule.PLHP24;
-            XmlElement xe13 = xmldoc.CreateElement("DIW");
+                XmlElement xe9= xmldoc.CreateElement("IHP40");
+                xe9.InnerText = gasolineresultmodule.IHP40;
+                XmlElement xe10 = xmldoc.CreateElement("IHP25");
+                xe10.InnerText = gasolineresultmodule.IHP24;
+                XmlElement xe13 = xmldoc.CreateElement("DIW");
             xe13.InnerText = gasolineresultmodule.DIW;
             xe3.AppendChild(xe4);
-            xe3.AppendChild(xe5);
+                xe3.AppendChild(xe11);
+                xe3.AppendChild(xe5);
             xe3.AppendChild(xe6);
             xe3.AppendChild(xe7);
             xe3.AppendChild(xe8);
-            xe3.AppendChild(xe13);
+                xe3.AppendChild(xe9);
+                xe3.AppendChild(xe10);
+                xe3.AppendChild(xe13);
 
             xe2.AppendChild(xe3);
             xe1.AppendChild(xe2);
 
 
-            XmlElement xe32 = xmldoc.CreateElement("ProcessData");//创建一个<Node>节点 
-            for (int i = 1; i < asmdataseconds.Rows.Count; i++)
-            {
-                XmlElement xe33 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
-                DataRow dr = asmdataseconds.Rows[i];
-                XmlElement xe34 = xmldoc.CreateElement("TimeCount");
-                xe34.InnerText = dr["TimeCount"].ToString();
-                XmlElement xe36 = xmldoc.CreateElement("Velocity");
-                xe36.InnerText = dr["Velocity"].ToString();
-                XmlElement xe37 = xmldoc.CreateElement("Torque");
-                xe37.InnerText = dr["Torque"].ToString();//扭矩
-                XmlElement xe38 = xmldoc.CreateElement("Power");
-                xe38.InnerText = dr["Power"].ToString();
-                XmlElement xe39 = xmldoc.CreateElement("Force");
-                xe39.InnerText = dr["Force"].ToString();//轮边力
-                xe33.AppendChild(xe34);
-                xe33.AppendChild(xe36);
-                xe33.AppendChild(xe37);
-                xe33.AppendChild(xe38);
-                xe33.AppendChild(xe39);
-                xe32.AppendChild(xe33);
-            }
-            xe1.AppendChild(xe32);
 
             root.AppendChild(xe1);
-            //socket.Send(ConvertXmlToString(xmldoc));
-            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
-            {
-                return;
+                //socket.Send(ConvertXmlToString(xmldoc));
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
             }
-            Thread.Sleep(100);
-            byte[] buffer = new byte[1024 * 1024];
-            string receivedString = "";
-            if (RecvData(socket, out receivedString) > 0)
+            catch (Exception er)
             {
-                ReadCalibration(receivedString, out result, out inf);
+                result = "-1";
+                inf = er.Message;
+                return false;
             }
         }
-        public void UploadTorqueCalRequest(DataTable asmdataseconds, out string result, out string inf)
+        public bool UploadAnalyzerTest(AnalyzerTest gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf, out DataTable ack)
+        {
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                DataTable dt = null;
+                result = "";
+                inf = "";
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "Message", "");
+                xmlelem.SetAttribute("Device", EISID);
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+                xe1.SetAttribute("Name", gasolineresultmodule.namesy);//设置该节点genre属性 
+                XmlElement xe2 = xmldoc.CreateElement("Result");//创建一个<Node>节点           
+                XmlElement xe3 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+                XmlElement Type = xmldoc.CreateElement("Type");
+                Type.InnerText = gasolineresultmodule.Type;
+                XmlElement BeginTime = xmldoc.CreateElement("BeginTime");
+                BeginTime.InnerText = gasolineresultmodule.BeginTime;
+                XmlElement STD_CH = xmldoc.CreateElement("STD_CH");
+                STD_CH.InnerText = gasolineresultmodule.STD_CH;
+                XmlElement STD_CO = xmldoc.CreateElement("STD_CO");
+                STD_CO.InnerText = gasolineresultmodule.STD_CO;
+                XmlElement STD_CO2 = xmldoc.CreateElement("STD_CO2");
+                STD_CO2.InnerText = gasolineresultmodule.STD_CO2;
+                XmlElement STD_NO = xmldoc.CreateElement("STD_NO");
+                STD_NO.InnerText = gasolineresultmodule.STD_NO;
+                XmlElement STD_O2 = xmldoc.CreateElement("STD_O2");
+                STD_O2.InnerText = gasolineresultmodule.STD_O2;
+                XmlElement MEA_HC = xmldoc.CreateElement("MEA_HC");
+                MEA_HC.InnerText = gasolineresultmodule.MEA_HC;
+                XmlElement MEA_CO = xmldoc.CreateElement("MEA_CO");
+                MEA_CO.InnerText = gasolineresultmodule.MEA_CO;
+                XmlElement MEA_CO2 = xmldoc.CreateElement("MEA_CO2");
+                MEA_CO2.InnerText = gasolineresultmodule.MEA_CO2;
+                XmlElement MEA_NO = xmldoc.CreateElement("MEA_NO");
+                MEA_NO.InnerText = gasolineresultmodule.MEA_NO;
+                XmlElement MEA_O2 = xmldoc.CreateElement("MEA_O2");
+                MEA_O2.InnerText = gasolineresultmodule.MEA_O2;
+                XmlElement PEF = xmldoc.CreateElement("PEF");
+                PEF.InnerText = gasolineresultmodule.PEF;
+                XmlElement Result = xmldoc.CreateElement("Result");
+                Result.InnerText = gasolineresultmodule.Result;
+                xe3.AppendChild(Type);
+                xe3.AppendChild(BeginTime);
+                xe3.AppendChild(STD_CH);
+                xe3.AppendChild(STD_CO);
+                xe3.AppendChild(STD_CO2);
+                xe3.AppendChild(STD_NO);
+                xe3.AppendChild(STD_O2);
+                xe3.AppendChild(MEA_HC);
+                xe3.AppendChild(MEA_CO);
+                xe3.AppendChild(MEA_CO2);
+                xe3.AppendChild(MEA_NO);
+                xe3.AppendChild(MEA_O2);
+                xe3.AppendChild(PEF);
+                xe3.AppendChild(Result);
+
+                xe2.AppendChild(xe3);
+                xe1.AppendChild(xe2);
+
+
+
+                root.AppendChild(xe1);
+                //socket.Send(ConvertXmlToString(xmldoc));
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                inf = er.Message;
+                return false;
+            }
+        }
+        public bool UploadAnalyzerLowGasTest(AnalyzerLowGasTest gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf, out DataTable ack)
+        {
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                DataTable dt = null;
+                result = "";
+                inf = "";
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "Message", "");
+                xmlelem.SetAttribute("Device", EISID);
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+                xe1.SetAttribute("Name", gasolineresultmodule.namesy);//设置该节点genre属性 
+                XmlElement xe2 = xmldoc.CreateElement("Result");//创建一个<Node>节点           
+                XmlElement xe3 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+                XmlElement BeginTime = xmldoc.CreateElement("BeginTime");
+                BeginTime.InnerText = gasolineresultmodule.BeginTime;
+                XmlElement STD_CH = xmldoc.CreateElement("STD_CH");
+                STD_CH.InnerText = gasolineresultmodule.STD_CH;
+                XmlElement STD_CO = xmldoc.CreateElement("STD_CO");
+                STD_CO.InnerText = gasolineresultmodule.STD_CO;
+                XmlElement STD_CO2 = xmldoc.CreateElement("STD_CO2");
+                STD_CO2.InnerText = gasolineresultmodule.STD_CO2;
+                XmlElement STD_NO = xmldoc.CreateElement("STD_NO");
+                STD_NO.InnerText = gasolineresultmodule.STD_NO;
+                XmlElement STD_O2 = xmldoc.CreateElement("STD_O2");
+                STD_O2.InnerText = gasolineresultmodule.STD_O2;
+                XmlElement MEA_HC = xmldoc.CreateElement("MEA_HC");
+                MEA_HC.InnerText = gasolineresultmodule.MEA_HC;
+                XmlElement MEA_CO = xmldoc.CreateElement("MEA_CO");
+                MEA_CO.InnerText = gasolineresultmodule.MEA_CO;
+                XmlElement MEA_CO2 = xmldoc.CreateElement("MEA_CO2");
+                MEA_CO2.InnerText = gasolineresultmodule.MEA_CO2;
+                XmlElement MEA_NO = xmldoc.CreateElement("MEA_NO");
+                MEA_NO.InnerText = gasolineresultmodule.MEA_NO;
+                XmlElement MEA_O2 = xmldoc.CreateElement("MEA_O2");
+                MEA_O2.InnerText = gasolineresultmodule.MEA_O2;
+                XmlElement PEF = xmldoc.CreateElement("PEF");
+                PEF.InnerText = gasolineresultmodule.PEF;
+                XmlElement Result = xmldoc.CreateElement("Result");
+                Result.InnerText = gasolineresultmodule.Result;
+                xe3.AppendChild(BeginTime);
+                xe3.AppendChild(STD_CH);
+                xe3.AppendChild(STD_CO);
+                xe3.AppendChild(STD_CO2);
+                xe3.AppendChild(STD_NO);
+                xe3.AppendChild(STD_O2);
+                xe3.AppendChild(MEA_HC);
+                xe3.AppendChild(MEA_CO);
+                xe3.AppendChild(MEA_CO2);
+                xe3.AppendChild(MEA_NO);
+                xe3.AppendChild(MEA_O2);
+                xe3.AppendChild(PEF);
+                xe3.AppendChild(Result);
+
+                xe2.AppendChild(xe3);
+                xe1.AppendChild(xe2);
+
+
+
+                root.AppendChild(xe1);
+                //socket.Send(ConvertXmlToString(xmldoc));
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                inf = er.Message;
+                return false;
+            }
+        }
+        /*public void UploadTorqueCalRequest(DataTable asmdataseconds, out string result, out string inf)
         {
             XmlDocument xmldoc, xlmrecivedoc;
             XmlNode xmlnode;
@@ -1742,8 +1912,8 @@ namespace NeusoftUtil
             {
                 ReadCalibration(receivedString, out result, out inf);
             }
-        }
-        public void UploadAnalyzerCalCheckRequest(AnalyzerCalCheck gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf)
+        }*/
+        /*public void UploadAnalyzerCalCheckRequest(AnalyzerCalCheck gasolineresultmodule, DataTable asmdataseconds, out string result, out string inf)
         {
             XmlDocument xmldoc, xlmrecivedoc;
             XmlNode xmlnode;
@@ -1884,11 +2054,15 @@ namespace NeusoftUtil
             {
                 ReadCalibration(receivedString, out result, out inf);
             }
-        }
-        public void UploadAnalyzerLeakTestRequest(AnalyzerLeakTest leakdata, out string result, out string inf)
+        }*/
+        public bool UploadAnalyzerLeakTestRequest(AnalyzerLeakTest leakdata, out string result, out string inf, out DataTable ack)
         {
-            //socket.Connect(point);
-            XmlDocument xmldoc, xlmrecivedoc;
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {//socket.Connect(point);
+                XmlDocument xmldoc, xlmrecivedoc;
             XmlNode xmlnode;
             XmlElement xmlelem;
             result = "";
@@ -1896,12 +2070,13 @@ namespace NeusoftUtil
             xmldoc = new XmlDocument();
             xmlelem = xmldoc.CreateElement("", "Message", "");
             xmlelem.SetAttribute("Device", EISID);
+            xmlelem.SetAttribute("OutlookID", leakdata.OutlookID);//设置该节点genre属性
             xmldoc.AppendChild(xmlelem);
             XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
             XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
-            xe1.SetAttribute("Name", "AnalyzerLeakTest");//设置该节点genre属性  
+            xe1.SetAttribute("Name", "Leak");//设置该节点genre属性  
             XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
-            XmlElement xe4 = xmldoc.CreateElement("StartTime");
+            XmlElement xe4 = xmldoc.CreateElement("BeginTime");
             xe4.InnerText = leakdata.StartTime;
             XmlElement xe5 = xmldoc.CreateElement("Result");
             xe5.InnerText = leakdata.Result;
@@ -1909,18 +2084,149 @@ namespace NeusoftUtil
             xe6.AppendChild(xe5);
             xe1.AppendChild(xe6);
             root.AppendChild(xe1);
-            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
-            {
-                return;
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
             }
-            Thread.Sleep(100);
-            byte[] buffer = new byte[1024 * 1024];
-            string receivedString = "";
-            if (RecvData(socket, out receivedString) > 0)
+            catch (Exception er)
             {
-                ReadCalibration(receivedString, out result, out inf);
+                result = "-1";
+                inf = er.Message;
+                return false;
             }
         }
+        public bool UploadAnalyzerO2Test(AnalyzerO2Test leakdata, out string result, out string inf, out DataTable ack)
+        {
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {//socket.Connect(point);
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                result = "";
+                inf = "";
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "Message", "");
+                xmlelem.SetAttribute("Device", EISID);
+                xmlelem.SetAttribute("OutlookID", leakdata.OutlookID);//设置该节点genre属性
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+                xe1.SetAttribute("Name", leakdata.namesy);//设置该节点genre属性  
+                XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+                XmlElement BeginTime = xmldoc.CreateElement("BeginTime");
+                BeginTime.InnerText = leakdata.BeginTime;
+                XmlElement STD_RangeO2 = xmldoc.CreateElement("STD_RangeO2");
+                STD_RangeO2.InnerText = leakdata.STD_RangeO2;
+                XmlElement MEA_RangeO2 = xmldoc.CreateElement("MEA_RangeO2");
+                MEA_RangeO2.InnerText = leakdata.MEA_RangeO2;
+                XmlElement ERR_RangeO2 = xmldoc.CreateElement("ERR_RangeO2");
+                ERR_RangeO2.InnerText = leakdata.ERR_RangeO2;
+                XmlElement Result = xmldoc.CreateElement("Result");
+                Result.InnerText = leakdata.Result;
+                xe6.AppendChild(BeginTime);
+                xe6.AppendChild(STD_RangeO2);
+                xe6.AppendChild(MEA_RangeO2);
+                xe6.AppendChild(ERR_RangeO2);
+                xe6.AppendChild(Result);
+                xe1.AppendChild(xe6);
+                root.AppendChild(xe1);
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                inf = er.Message;
+                return false;
+            }
+        }
+        public bool UploadFlowMeterTest(FlowMeterTest leakdata, out string result, out string inf, out DataTable ack)
+        {
+            result = "";
+            inf = "";
+            ack = null;
+            try
+            {//socket.Connect(point);
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                result = "";
+                inf = "";
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "Message", "");
+                xmlelem.SetAttribute("Device", EISID);
+                xmlelem.SetAttribute("OutlookID", leakdata.OutlookID);//设置该节点genre属性
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+                xe1.SetAttribute("Name", leakdata.namesy);//设置该节点genre属性  
+                XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+                XmlElement BeginTime = xmldoc.CreateElement("BeginTime");
+                BeginTime.InnerText = leakdata.BeginTime;
+                XmlElement STD_HRangeO2 = xmldoc.CreateElement("STD_HRangeO2");
+                STD_HRangeO2.InnerText = leakdata.STD_HRangeO2;
+                XmlElement MEA_HRangeO2 = xmldoc.CreateElement("MEA_HRangeO2");
+                MEA_HRangeO2.InnerText = leakdata.MEA_HRangeO2;
+                XmlElement ERR_HRangeO2 = xmldoc.CreateElement("ERR_HRangeO2");
+                ERR_HRangeO2.InnerText = leakdata.ERR_HRangeO2;
+                XmlElement STD_LRangeO2 = xmldoc.CreateElement("STD_LRangeO2");
+                STD_LRangeO2.InnerText = leakdata.STD_LRangeO2;
+                XmlElement MEA_LRangeO2 = xmldoc.CreateElement("MEA_LRangeO2");
+                MEA_LRangeO2.InnerText = leakdata.MEA_LRangeO2;
+                XmlElement ERR_LRangeO2 = xmldoc.CreateElement("ERR_LRangeO2");
+                ERR_LRangeO2.InnerText = leakdata.ERR_LRangeO2;
+                XmlElement Result = xmldoc.CreateElement("Result");
+                Result.InnerText = leakdata.Result;
+                xe6.AppendChild(BeginTime);
+                xe6.AppendChild(STD_HRangeO2);
+                xe6.AppendChild(MEA_HRangeO2);
+                xe6.AppendChild(ERR_HRangeO2);
+                xe6.AppendChild(STD_LRangeO2);
+                xe6.AppendChild(MEA_LRangeO2);
+                xe6.AppendChild(ERR_LRangeO2);
+                xe6.AppendChild(Result);
+                xe1.AppendChild(xe6);
+                root.AppendChild(xe1);
+                string receivedString = webctrlcenter.Request(ConvertXmlToString(xmldoc));
+                ini.INIIO.saveSocketLogInf(receivedString);
+                DataSet ds = new DataSet();
+                StringReader stream = new StringReader(receivedString);
+                XmlTextReader reader = new XmlTextReader(stream);
+                ds.ReadXml(reader);
+                result = ds.Tables["Row"].Rows[0]["Result"].ToString();
+                inf = ds.Tables["Row"].Rows[0]["ErrorMessage"].ToString();
+                ack = null;
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                inf = er.Message;
+                return false;
+            }
+        }
+        /*
         public void UploadSmokemeterCalRequest(DataTable asmdataseconds, out string result, out string inf)
         {
             XmlDocument xmldoc, xlmrecivedoc;

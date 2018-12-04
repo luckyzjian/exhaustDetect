@@ -219,36 +219,67 @@ namespace exhaustDetect
                                 } 
                                 if (mainPanel.isNetUsed)
                                 {
-                                    if(mainPanel.NetMode==mainPanel.NEUSOFTNETMODE&&mainPanel.neusoftsocketinf.AREA!=mainPanel.NEU_LNAS)
+                                    if(mainPanel.NetMode==mainPanel.NEUSOFTNETMODE)
                                     {
                                         #region neusoft
-                                        if ((glidedata.Bdjg == "合格" || glidedata.Bdjg == "不合格")&&glidedata.NeuFinished=="Y")
+                                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                                         {
-                                            string isCsvAlive = "";
-                                            DataTable dataseconds = csvreader.readCsv(newCsvPath);
-                                            if (dataseconds != null)
+                                            if ((glidedata.Bdjg == "合格" || glidedata.Bdjg == "不合格") && glidedata.NeuFinished == "Y")
                                             {
-                                                isCsvAlive = "过程数据上传成功";
-                                                NeusoftUtil.Coastdown coastdowndata = new NeusoftUtil.Coastdown();
-                                                coastdowndata.StartTime = glidedata.Starttime;
-                                                coastdowndata.ACDT40 = glidedata.Acdt40;
-                                                coastdowndata.ACDT24 = glidedata.Acdt24;
-                                                coastdowndata.CCDT40 =glidedata.Ccdt40;
-                                                coastdowndata.CCDT24 = glidedata.Ccdt24;
-                                                coastdowndata.PLHP40 = glidedata.Plhp40;
-                                                coastdowndata.PLHP24 = glidedata.Plhp24;
-                                                coastdowndata.IHP40 = glidedata.Ihp40;
-                                                coastdowndata.IHP24 = glidedata.Ihp24;
-                                                coastdowndata.DIW = glidedata.Gxdl;
-                                                coastdowndata.Result40 = glidedata.Result40;
-                                                coastdowndata.Result24 = glidedata.Result24;
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                string ackresult, errormessage;
-                                                mainPanel.neusoftsocket.UploadCoastdownRequest(coastdowndata, dataseconds, out ackresult, out errormessage);                                               
+                                                string isCsvAlive = "";
+                                                DataTable dataseconds = csvreader.readCsv(newCsvPath);
+                                                    NeusoftUtil.Coastdown coastdowndata = new NeusoftUtil.Coastdown();
+                                                    coastdowndata.OutlookID = mainPanel.equipmodel.CGJBH;
+                                                    coastdowndata.StartTime = glidedata.Starttime;
+                                                    coastdowndata.ACDT40 = glidedata.Acdt40;
+                                                    coastdowndata.ACDT24 = glidedata.Acdt24;
+                                                    coastdowndata.CCDT40 = glidedata.Ccdt40;
+                                                    coastdowndata.CCDT24 = glidedata.Ccdt24;
+                                                    coastdowndata.PLHP40 = glidedata.Plhp40;
+                                                    coastdowndata.PLHP24 = glidedata.Plhp24;
+                                                    coastdowndata.IHP40 = glidedata.Ihp40;
+                                                    coastdowndata.IHP24 = glidedata.Ihp24;
+                                                    coastdowndata.DIW = glidedata.Gxdl;
+                                                    coastdowndata.Result40 = (glidedata.Result40 == "合格"?"1":"0");
+                                                    coastdowndata.Result24 = (glidedata.Result24 == "合格" ? "1" : "0");
+                                                    coastdowndata.Result = (glidedata.Bdjg == "合格" ? "1" : "0");
+
+
+                                                    string result, inf;
+                                                    DataTable dtack;
+                                                    mainPanel.sysocket.UploadCoastdownRequest(coastdowndata, null, out result, out inf, out dtack);
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            if ((glidedata.Bdjg == "合格" || glidedata.Bdjg == "不合格") && glidedata.NeuFinished == "Y")
                                             {
-                                                isCsvAlive = "过程数据不存在";
+                                                string isCsvAlive = "";
+                                                DataTable dataseconds = csvreader.readCsv(newCsvPath);
+                                                if (dataseconds != null)
+                                                {
+                                                    isCsvAlive = "过程数据上传成功";
+                                                    NeusoftUtil.Coastdown coastdowndata = new NeusoftUtil.Coastdown();
+                                                    coastdowndata.StartTime = glidedata.Starttime;
+                                                    coastdowndata.ACDT40 = glidedata.Acdt40;
+                                                    coastdowndata.ACDT24 = glidedata.Acdt24;
+                                                    coastdowndata.CCDT40 = glidedata.Ccdt40;
+                                                    coastdowndata.CCDT24 = glidedata.Ccdt24;
+                                                    coastdowndata.PLHP40 = glidedata.Plhp40;
+                                                    coastdowndata.PLHP24 = glidedata.Plhp24;
+                                                    coastdowndata.IHP40 = glidedata.Ihp40;
+                                                    coastdowndata.IHP24 = glidedata.Ihp24;
+                                                    coastdowndata.DIW = glidedata.Gxdl;
+                                                    coastdowndata.Result40 = glidedata.Result40;
+                                                    coastdowndata.Result24 = glidedata.Result24;
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    string ackresult, errormessage;
+                                                    mainPanel.neusoftsocket.UploadCoastdownRequest(coastdowndata, dataseconds, out ackresult, out errormessage);
+                                                }
+                                                else
+                                                {
+                                                    isCsvAlive = "过程数据不存在";
+                                                }
                                             }
                                         }
                                         #endregion
@@ -627,33 +658,56 @@ namespace exhaustDetect
                                 }
                                 if (mainPanel.isNetUsed)
                                 {
-                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
                                     {
-                                        #region neusoft
-                                        if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
+                                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                                         {
-                                            ini.INIIO.WritePrivateProfileString("测功机上次运转时间", "时间", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), @".\detectConfig.ini");
-
-                                            string isCsvAlive = "";
-                                            DataTable dataseconds = csvreader.readCsv(newCsvPath);
-                                            if (dataseconds != null)
+                                            if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
                                             {
-                                                isCsvAlive = "过程数据上传成功";
                                                 NeusoftUtil.ParasiticLose parasiticlosedata = new NeusoftUtil.ParasiticLose();
+                                                parasiticlosedata.OutlookID = mainPanel.equipmodel.CGJBH;
                                                 parasiticlosedata.StartTime = parasiticdata.Starttime;
+                                                parasiticlosedata.EndTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                                                 parasiticlosedata.ACDT40 = parasiticdata.Acdt40;
                                                 parasiticlosedata.ACDT24 = parasiticdata.Acdt24;
                                                 parasiticlosedata.PLHP40 = parasiticdata.Plhp40;
                                                 parasiticlosedata.PLHP24 = parasiticdata.Plhp24;
+                                                parasiticlosedata.IHP40 = "0";
+                                                parasiticlosedata.IHP24 = "0";
                                                 parasiticlosedata.DIW = parasiticdata.Diw;
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                string ackresult, errormessage;
-                                                mainPanel.neusoftsocket.UploadParasiticLoseRequest(parasiticlosedata, dataseconds, out ackresult, out errormessage);
-                                                Msg(label1, panel4, "附加损耗测试成功," + isCsvAlive);
+                                                string result, inf;
+                                                DataTable dtack;
+                                                mainPanel.sysocket.UploadParasiticLoseRequest(parasiticlosedata, null, out result, out inf, out dtack);
                                             }
-                                            else
+                                        }
+                                        else
+                                        {
+                                            #region neusoft
+                                            if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
                                             {
-                                                Msg(label1, panel4, "附加损耗测试失败,没有找到过程数据");
+                                                ini.INIIO.WritePrivateProfileString("测功机上次运转时间", "时间", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), @".\detectConfig.ini");
+
+                                                string isCsvAlive = "";
+                                                DataTable dataseconds = csvreader.readCsv(newCsvPath);
+                                                if (dataseconds != null)
+                                                {
+                                                    isCsvAlive = "过程数据上传成功";
+                                                    NeusoftUtil.ParasiticLose parasiticlosedata = new NeusoftUtil.ParasiticLose();
+                                                    parasiticlosedata.StartTime = parasiticdata.Starttime;
+                                                    parasiticlosedata.ACDT40 = parasiticdata.Acdt40;
+                                                    parasiticlosedata.ACDT24 = parasiticdata.Acdt24;
+                                                    parasiticlosedata.PLHP40 = parasiticdata.Plhp40;
+                                                    parasiticlosedata.PLHP24 = parasiticdata.Plhp24;
+                                                    parasiticlosedata.DIW = parasiticdata.Diw;
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    string ackresult, errormessage;
+                                                    mainPanel.neusoftsocket.UploadParasiticLoseRequest(parasiticlosedata, dataseconds, out ackresult, out errormessage);
+                                                    Msg(label1, panel4, "附加损耗测试成功," + isCsvAlive);
+                                                }
+                                                else
+                                                {
+                                                    Msg(label1, panel4, "附加损耗测试失败,没有找到过程数据");
+                                                }
                                             }
                                         }
                                     }
@@ -1253,88 +1307,116 @@ namespace exhaustDetect
                                 }
                                 if (mainPanel.isNetUsed)
                                 {
-                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
                                     {
                                         #region neusoft
-                                        if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
+                                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                                         {
-                                            string isCsvAlive = "";
-                                            DataTable dataseconds = csvreader.readCsv(newCsvPath);
-                                            if (dataseconds != null)
+                                            if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
                                             {
-                                                NeusoftUtil.AnalyzerCalCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerCalCheck();
-                                                analyzercalcheckdata.StartTime = analysismeterdata.Starttime;
-                                                analyzercalcheckdata.HCTag = analysismeterdata.Hcbz.ToString();
-                                                analyzercalcheckdata.COTag = analysismeterdata.Cobz.ToString();
-                                                analyzercalcheckdata.CO2Tag = analysismeterdata.Co2bz.ToString();
-                                                analyzercalcheckdata.NOTag = analysismeterdata.Nobz.ToString();
-                                                analyzercalcheckdata.HCCheckResult = analysismeterdata.Hcclz.ToString();
-                                                analyzercalcheckdata.COCheckResult = analysismeterdata.Coclz.ToString();
-                                                analyzercalcheckdata.CO2CheckResult = analysismeterdata.Co2clz.ToString();
-                                                analyzercalcheckdata.NOCheckResult = analysismeterdata.Noclz.ToString();
-                                                analyzercalcheckdata.CheckHCTag = analysismeterdata.Hcbz.ToString();
-                                                analyzercalcheckdata.CheckCOTag = analysismeterdata.Cobz.ToString();
-                                                analyzercalcheckdata.CheckCO2Tag = analysismeterdata.Co2bz.ToString();
-                                                analyzercalcheckdata.CheckNOTag = analysismeterdata.Co2bz.ToString();
-                                                bool pdjg = true;
-                                                if (analysismeterdata.Gdjz == "0")//high check
-                                                {
-                                                    if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) * 100.0 / analysismeterdata.Hcbz > float.Parse(calstandarddata.HCCalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Cobz > float.Parse(calstandarddata.COCalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Co2bz > float.Parse(calstandarddata.CO2CalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) * 100.0 / analysismeterdata.Nobz > float.Parse(calstandarddata.NOCalRel))
-                                                        pdjg = false;
-                                                }
-                                                else
-                                                {
-                                                    if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) > float.Parse(calstandarddata.HCCalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) > float.Parse(calstandarddata.COCalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) > float.Parse(calstandarddata.CO2CalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) > float.Parse(calstandarddata.NOCalAbs))
-                                                        pdjg = false;
-                                                }
-                                                analyzercalcheckdata.COT10 = "1.2";
-                                                analyzercalcheckdata.HCT10 = "1.3";
-                                                analyzercalcheckdata.CO2T10 = "1.2";
-                                                analyzercalcheckdata.NOT10 = "2.3";
-                                                analyzercalcheckdata.O2T10 = "2.5";
-                                                analyzercalcheckdata.COT90 = "6.5";
-                                                analyzercalcheckdata.HCT90 = "6.4";
-                                                analyzercalcheckdata.CO2T90 = "6.5";
-                                                analyzercalcheckdata.NOT90 = "7.3";
-                                                analyzercalcheckdata.O2T90 = "8.6";
+                                                NeusoftUtil.AnalyzerTest analyzercalcheckdata = new NeusoftUtil.AnalyzerTest();
+                                                analyzercalcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                                                analyzercalcheckdata.Type = (analysismeterdata.Gdjz == "0" ? "4" : "1");
+                                                analyzercalcheckdata.BeginTime = analysismeterdata.Starttime;
+                                                analyzercalcheckdata.STD_CH = analysismeterdata.c3h8;
+                                                analyzercalcheckdata.STD_CO = analysismeterdata.Cobz.ToString("0.00");
+                                                analyzercalcheckdata.STD_CO2 = analysismeterdata.Co2bz.ToString("0.00");
+                                                analyzercalcheckdata.STD_NO = analysismeterdata.Nobz.ToString("0");
+                                                analyzercalcheckdata.STD_O2 = "0";
+                                                analyzercalcheckdata.MEA_HC = analysismeterdata.Hcclz.ToString("0");
+                                                analyzercalcheckdata.MEA_CO = analysismeterdata.Coclz.ToString("0.00");
+                                                analyzercalcheckdata.MEA_CO2 = analysismeterdata.Co2clz.ToString("0.00");
+                                                analyzercalcheckdata.MEA_NO = analysismeterdata.Noclz.ToString("0");
+                                                analyzercalcheckdata.MEA_O2 = "0";
                                                 analyzercalcheckdata.PEF = analysismeterdata.Pef;
-                                                analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
-                                                NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
-                                                analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                                analyzerleakdata.Result = "1";
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                string ackresult, errormessage;
-                                                mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
-                                                if (ackresult != "-1")
+                                                analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格"?"1":"0");
+                                                string result, inf;
+                                                DataTable dtack;
+                                                mainPanel.sysocket.UploadAnalyzerTest(analyzercalcheckdata, null, out result, out inf, out dtack);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
+                                            {
+                                                string isCsvAlive = "";
+                                                DataTable dataseconds = csvreader.readCsv(newCsvPath);
+                                                if (dataseconds != null)
                                                 {
-                                                    if (pdjg)
-                                                        Msg(label1, panel4, "废气仪检查合格," + isCsvAlive);
+                                                    NeusoftUtil.AnalyzerCalCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerCalCheck();
+                                                    analyzercalcheckdata.StartTime = analysismeterdata.Starttime;
+                                                    analyzercalcheckdata.HCTag = analysismeterdata.Hcbz.ToString();
+                                                    analyzercalcheckdata.COTag = analysismeterdata.Cobz.ToString();
+                                                    analyzercalcheckdata.CO2Tag = analysismeterdata.Co2bz.ToString();
+                                                    analyzercalcheckdata.NOTag = analysismeterdata.Nobz.ToString();
+                                                    analyzercalcheckdata.HCCheckResult = analysismeterdata.Hcclz.ToString();
+                                                    analyzercalcheckdata.COCheckResult = analysismeterdata.Coclz.ToString();
+                                                    analyzercalcheckdata.CO2CheckResult = analysismeterdata.Co2clz.ToString();
+                                                    analyzercalcheckdata.NOCheckResult = analysismeterdata.Noclz.ToString();
+                                                    analyzercalcheckdata.CheckHCTag = analysismeterdata.Hcbz.ToString();
+                                                    analyzercalcheckdata.CheckCOTag = analysismeterdata.Cobz.ToString();
+                                                    analyzercalcheckdata.CheckCO2Tag = analysismeterdata.Co2bz.ToString();
+                                                    analyzercalcheckdata.CheckNOTag = analysismeterdata.Co2bz.ToString();
+                                                    bool pdjg = true;
+                                                    if (analysismeterdata.Gdjz == "0")//high check
+                                                    {
+                                                        if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) * 100.0 / analysismeterdata.Hcbz > float.Parse(calstandarddata.HCCalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Cobz > float.Parse(calstandarddata.COCalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Co2bz > float.Parse(calstandarddata.CO2CalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) * 100.0 / analysismeterdata.Nobz > float.Parse(calstandarddata.NOCalRel))
+                                                            pdjg = false;
+                                                    }
                                                     else
-                                                        Msg(label1, panel4, "废气仪检查不合格," + isCsvAlive);
+                                                    {
+                                                        if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) > float.Parse(calstandarddata.HCCalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) > float.Parse(calstandarddata.COCalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) > float.Parse(calstandarddata.CO2CalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) > float.Parse(calstandarddata.NOCalAbs))
+                                                            pdjg = false;
+                                                    }
+                                                    analyzercalcheckdata.COT10 = "1.2";
+                                                    analyzercalcheckdata.HCT10 = "1.3";
+                                                    analyzercalcheckdata.CO2T10 = "1.2";
+                                                    analyzercalcheckdata.NOT10 = "2.3";
+                                                    analyzercalcheckdata.O2T10 = "2.5";
+                                                    analyzercalcheckdata.COT90 = "6.5";
+                                                    analyzercalcheckdata.HCT90 = "6.4";
+                                                    analyzercalcheckdata.CO2T90 = "6.5";
+                                                    analyzercalcheckdata.NOT90 = "7.3";
+                                                    analyzercalcheckdata.O2T90 = "8.6";
+                                                    analyzercalcheckdata.PEF = analysismeterdata.Pef;
+                                                    analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
+                                                    NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
+                                                    analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    analyzerleakdata.Result = "1";
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    string ackresult, errormessage;
+                                                    mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
+                                                    if (ackresult != "-1")
+                                                    {
+                                                        if (pdjg)
+                                                            Msg(label1, panel4, "废气仪检查合格," + isCsvAlive);
+                                                        else
+                                                            Msg(label1, panel4, "废气仪检查不合格," + isCsvAlive);
+                                                    }
+                                                    else
+                                                    {
+                                                        Msg(label1, panel4, "检查失败，数据上传失败");
+                                                        MessageBox.Show(errormessage, "警告");
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    Msg(label1, panel4, "检查失败，数据上传失败");
-                                                    MessageBox.Show(errormessage, "警告");
+                                                    Msg(label1, panel4, "检查失败,没有找到过程数据");
                                                 }
-                                            }
-                                            else
-                                            {
-                                                Msg(label1, panel4, "检查失败,没有找到过程数据");
                                             }
                                         }
                                         #endregion
@@ -1891,88 +1973,115 @@ namespace exhaustDetect
                                 }
                                 if (mainPanel.isNetUsed&&(analysismeterdata.Bdjg == "合格"|| analysismeterdata.Bdjg == "不合格"))
                                 {
-                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
                                     {
                                         #region neusoft
-                                        if (parasiticdata.Bdjg == "合格" || parasiticdata.Bdjg == "不合格")
+                                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                                         {
-                                            string isCsvAlive = "";
-                                            DataTable dataseconds = csvreader.readCsv(newCsvPath);
-                                            if (dataseconds != null)
+                                            if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
                                             {
-                                                NeusoftUtil.AnalyzerCalCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerCalCheck();
-                                                analyzercalcheckdata.StartTime = analysismeterdata.Starttime;
-                                                analyzercalcheckdata.HCTag = analysismeterdata.Hcbz.ToString();
-                                                analyzercalcheckdata.COTag = analysismeterdata.Cobz.ToString();
-                                                analyzercalcheckdata.CO2Tag = analysismeterdata.Co2bz.ToString();
-                                                analyzercalcheckdata.NOTag = analysismeterdata.Nobz.ToString();
-                                                analyzercalcheckdata.HCCheckResult = analysismeterdata.Hcclz.ToString();
-                                                analyzercalcheckdata.COCheckResult = analysismeterdata.Coclz.ToString();
-                                                analyzercalcheckdata.CO2CheckResult = analysismeterdata.Co2clz.ToString();
-                                                analyzercalcheckdata.NOCheckResult = analysismeterdata.Noclz.ToString();
-                                                analyzercalcheckdata.CheckHCTag = analysismeterdata.Hcbz.ToString();
-                                                analyzercalcheckdata.CheckCOTag = analysismeterdata.Cobz.ToString();
-                                                analyzercalcheckdata.CheckCO2Tag = analysismeterdata.Co2bz.ToString();
-                                                analyzercalcheckdata.CheckNOTag = analysismeterdata.Co2bz.ToString();
-                                                bool pdjg = true;
-                                                if (analysismeterdata.Gdjz == "0")//high check
-                                                {
-                                                    if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) * 100.0 / analysismeterdata.Hcbz > float.Parse(calstandarddata.HCCalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Cobz > float.Parse(calstandarddata.COCalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Co2bz > float.Parse(calstandarddata.CO2CalRel))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) * 100.0 / analysismeterdata.Nobz > float.Parse(calstandarddata.NOCalRel))
-                                                        pdjg = false;
-                                                }
-                                                else
-                                                {
-                                                    if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) > float.Parse(calstandarddata.HCCalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) > float.Parse(calstandarddata.COCalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) > float.Parse(calstandarddata.CO2CalAbs))
-                                                        pdjg = false;
-                                                    if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) > float.Parse(calstandarddata.NOCalAbs))
-                                                        pdjg = false;
-                                                }
-                                                analyzercalcheckdata.COT10 = "1.2";
-                                                analyzercalcheckdata.HCT10 = "1.3";
-                                                analyzercalcheckdata.CO2T10 = "1.2";
-                                                analyzercalcheckdata.NOT10 = "2.3";
-                                                analyzercalcheckdata.O2T10 = "2.5";
-                                                analyzercalcheckdata.COT90 = "6.5";
-                                                analyzercalcheckdata.HCT90 = "6.4";
-                                                analyzercalcheckdata.CO2T90 = "6.5";
-                                                analyzercalcheckdata.NOT90 = "7.3";
-                                                analyzercalcheckdata.O2T90 = "8.6";
+                                                NeusoftUtil.AnalyzerLowGasTest analyzercalcheckdata = new NeusoftUtil.AnalyzerLowGasTest();
+                                                analyzercalcheckdata.OutlookID = mainPanel.equipmodel.FXYBH;
+                                                analyzercalcheckdata.BeginTime = analysismeterdata.Starttime;
+                                                analyzercalcheckdata.STD_CH = analysismeterdata.c3h8;
+                                                analyzercalcheckdata.STD_CO = analysismeterdata.Cobz.ToString("0.00");
+                                                analyzercalcheckdata.STD_CO2 = analysismeterdata.Co2bz.ToString("0.00");
+                                                analyzercalcheckdata.STD_NO = analysismeterdata.Nobz.ToString("0");
+                                                analyzercalcheckdata.STD_O2 = "0";
+                                                analyzercalcheckdata.MEA_HC = analysismeterdata.Hcclz.ToString("0");
+                                                analyzercalcheckdata.MEA_CO = analysismeterdata.Coclz.ToString("0.00");
+                                                analyzercalcheckdata.MEA_CO2 = analysismeterdata.Co2clz.ToString("0.00");
+                                                analyzercalcheckdata.MEA_NO = analysismeterdata.Noclz.ToString("0");
+                                                analyzercalcheckdata.MEA_O2 = "0";
                                                 analyzercalcheckdata.PEF = analysismeterdata.Pef;
-                                                analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
-                                                NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
-                                                analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                                analyzerleakdata.Result = "1";
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                string ackresult, errormessage;
-                                                mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
-                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
-                                                if (ackresult != "-1")
+                                                analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格" ? "1" : "0");
+                                                string result, inf;
+                                                DataTable dtack;
+                                                mainPanel.sysocket.UploadAnalyzerLowGasTest(analyzercalcheckdata, null, out result, out inf, out dtack);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
+                                            {
+                                                string isCsvAlive = "";
+                                                DataTable dataseconds = csvreader.readCsv(newCsvPath);
+                                                if (dataseconds != null)
                                                 {
-                                                    if (pdjg)
-                                                        Msg(label1, panel4, "废气仪检查合格," + isCsvAlive);
+                                                    NeusoftUtil.AnalyzerCalCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerCalCheck();
+                                                    analyzercalcheckdata.StartTime = analysismeterdata.Starttime;
+                                                    analyzercalcheckdata.HCTag = analysismeterdata.Hcbz.ToString();
+                                                    analyzercalcheckdata.COTag = analysismeterdata.Cobz.ToString();
+                                                    analyzercalcheckdata.CO2Tag = analysismeterdata.Co2bz.ToString();
+                                                    analyzercalcheckdata.NOTag = analysismeterdata.Nobz.ToString();
+                                                    analyzercalcheckdata.HCCheckResult = analysismeterdata.Hcclz.ToString();
+                                                    analyzercalcheckdata.COCheckResult = analysismeterdata.Coclz.ToString();
+                                                    analyzercalcheckdata.CO2CheckResult = analysismeterdata.Co2clz.ToString();
+                                                    analyzercalcheckdata.NOCheckResult = analysismeterdata.Noclz.ToString();
+                                                    analyzercalcheckdata.CheckHCTag = analysismeterdata.Hcbz.ToString();
+                                                    analyzercalcheckdata.CheckCOTag = analysismeterdata.Cobz.ToString();
+                                                    analyzercalcheckdata.CheckCO2Tag = analysismeterdata.Co2bz.ToString();
+                                                    analyzercalcheckdata.CheckNOTag = analysismeterdata.Co2bz.ToString();
+                                                    bool pdjg = true;
+                                                    if (analysismeterdata.Gdjz == "0")//high check
+                                                    {
+                                                        if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) * 100.0 / analysismeterdata.Hcbz > float.Parse(calstandarddata.HCCalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Cobz > float.Parse(calstandarddata.COCalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) * 100.0 / analysismeterdata.Co2bz > float.Parse(calstandarddata.CO2CalRel))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) * 100.0 / analysismeterdata.Nobz > float.Parse(calstandarddata.NOCalRel))
+                                                            pdjg = false;
+                                                    }
                                                     else
-                                                        Msg(label1, panel4, "废气仪检查不合格," + isCsvAlive);
+                                                    {
+                                                        if (Math.Abs(analysismeterdata.Hcbz - analysismeterdata.Hcclz) > float.Parse(calstandarddata.HCCalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Cobz - analysismeterdata.Coclz) > float.Parse(calstandarddata.COCalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Co2bz - analysismeterdata.Coclz) > float.Parse(calstandarddata.CO2CalAbs))
+                                                            pdjg = false;
+                                                        if (Math.Abs(analysismeterdata.Nobz - analysismeterdata.Noclz) > float.Parse(calstandarddata.NOCalAbs))
+                                                            pdjg = false;
+                                                    }
+                                                    analyzercalcheckdata.COT10 = "1.2";
+                                                    analyzercalcheckdata.HCT10 = "1.3";
+                                                    analyzercalcheckdata.CO2T10 = "1.2";
+                                                    analyzercalcheckdata.NOT10 = "2.3";
+                                                    analyzercalcheckdata.O2T10 = "2.5";
+                                                    analyzercalcheckdata.COT90 = "6.5";
+                                                    analyzercalcheckdata.HCT90 = "6.4";
+                                                    analyzercalcheckdata.CO2T90 = "6.5";
+                                                    analyzercalcheckdata.NOT90 = "7.3";
+                                                    analyzercalcheckdata.O2T90 = "8.6";
+                                                    analyzercalcheckdata.PEF = analysismeterdata.Pef;
+                                                    analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
+                                                    NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
+                                                    analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    analyzerleakdata.Result = "1";
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    string ackresult, errormessage;
+                                                    mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
+                                                    if (ackresult != "-1")
+                                                    {
+                                                        if (pdjg)
+                                                            Msg(label1, panel4, "废气仪检查合格," + isCsvAlive);
+                                                        else
+                                                            Msg(label1, panel4, "废气仪检查不合格," + isCsvAlive);
+                                                    }
+                                                    else
+                                                    {
+                                                        Msg(label1, panel4, "检查失败，数据上传失败");
+                                                        MessageBox.Show(errormessage, "警告");
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    Msg(label1, panel4, "检查失败，数据上传失败");
-                                                    MessageBox.Show(errormessage, "警告");
+                                                    Msg(label1, panel4, "检查失败,没有找到过程数据");
                                                 }
-                                            }
-                                            else
-                                            {
-                                                Msg(label1, panel4, "检查失败,没有找到过程数据");
                                             }
                                         }
                                         #endregion
@@ -2907,6 +3016,28 @@ namespace exhaustDetect
                                             MessageBox.Show("sendSelfCheckData上传服务器失败\r\ncode=" + code + "\r\nmsg=" + msg, "错误提示");
                                             ini.INIIO.saveLogInf("江西联网信息：sendSelfCheckData上传服务器失败");
                                         }
+                                    }
+                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+                                    {
+                                        #region neusoft
+                                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
+                                        {
+                                            NeusoftUtil.FlowMeterTest flowmetercheckdata = new NeusoftUtil.FlowMeterTest();
+                                            flowmetercheckdata.OutlookID = mainPanel.equipmodel.LLJBH;
+                                            flowmetercheckdata.BeginTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            flowmetercheckdata.STD_HRangeO2 = flowmeterdata.O2glcbz.ToString("0.0");
+                                            flowmetercheckdata.MEA_HRangeO2 = flowmeterdata.O2glcclz.ToString("0.0");
+                                            flowmetercheckdata.ERR_HRangeO2 = flowmeterdata.O2glcwc.ToString("0.0");
+                                            flowmetercheckdata.STD_LRangeO2 = flowmeterdata.O2dlcbz.ToString("0.0");
+                                            flowmetercheckdata.MEA_LRangeO2 = flowmeterdata.O2dlcclz.ToString("0.0");
+                                            flowmetercheckdata.ERR_LRangeO2 = flowmeterdata.O2dlcwc.ToString("0.0");
+                                            string result, inf;
+                                            DataTable dtack;
+                                            mainPanel.sysocket.UploadFlowMeterTest(flowmetercheckdata, out result, out inf, out dtack);
+                                           
+                                        }
+                                        #endregion
                                     }
                                 }
                                 File.Delete(newPath);
@@ -4000,9 +4131,12 @@ namespace exhaustDetect
                                                 if (mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.NEUSOFTNETMODE)
                                                 {
 
-                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                    string ackresult, errormessage;
-                                                    mainPanel.neusoftsocket.UploadTorqueCalRequest(dataseconds, out ackresult, out errormessage);
+                                                    if (mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                                                    {
+                                                        mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                        string ackresult, errormessage;
+                                                        mainPanel.neusoftsocket.UploadTorqueCalRequest(dataseconds, out ackresult, out errormessage);
+                                                    }
 
                                                 }
                                                 //Msg(label1, panel4, "扭矩标定成功," + isCsvAlive);
@@ -4339,11 +4473,12 @@ namespace exhaustDetect
 
                                                 if (mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.NEUSOFTNETMODE)
                                                 {
-
-                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                                                    string ackresult, errormessage;
-                                                    mainPanel.neusoftsocket.UploadSpeedCalRequest(dataseconds, out ackresult, out errormessage);
-
+                                                    if (mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                                                    {
+                                                        mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                        string ackresult, errormessage;
+                                                        mainPanel.neusoftsocket.UploadSpeedCalRequest(dataseconds, out ackresult, out errormessage);
+                                                    }
                                                 }
                                                 //Msg(label1, panel4, "速度标定成功," + isCsvAlive);
                                             }
@@ -4437,9 +4572,26 @@ namespace exhaustDetect
             Msg(label1, panel4, "正在进行" + _bdnr);   
             if(mainPanel.isNetUsed)
             {
-                if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
                 {
-                    if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YNKM|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)
+                    if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
+                    {
+                        string result, inf, timestring;
+                        if (!mainPanel.sysocket.loginUser(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", out result, out inf))
+                        {
+                            MessageBox.Show("异常:" + result + "|信息:" + inf, "错误");
+                            return;
+                        }
+                        else
+                        {
+                            if (result != "0")
+                            {
+                                MessageBox.Show("代码:" + result + "|信息:" + inf, "登录失败");
+                                return;
+                            }
+                        }
+                    }
+                    else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YNKM|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)
                     {
                         mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                         string result = "";

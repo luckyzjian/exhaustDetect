@@ -1419,7 +1419,8 @@ namespace AhWebClient
                                     AhCarInfo_V27 carinfo = new AhCarInfo_V27();
                                     carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
                                     carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
-                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();
+                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();//太湖用的
+                                    //carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();//定远用的
                                     carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
                                     carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
                                     carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();
@@ -1884,7 +1885,8 @@ namespace AhWebClient
                                     AhCarInfo_V27 carinfo = new AhCarInfo_V27();
                                     carinfo.InspectID = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectID"].ToString();
                                     carinfo.InspectMethod = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectMethod"].ToString();
-                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();
+                                    carinfo.InspectCount = ds.Tables["Inspect_" + i.ToString()].Rows[0]["InspectCount"].ToString();//太湖用的
+                                    //carinfo.InspectCount = ds.Tables["CarInfo"].Rows[i - 1]["InspectCount"].ToString();//定远用的
                                     carinfo.VIN = ds.Tables["CarInfo"].Rows[i - 1]["VIN"].ToString();
                                     carinfo.PlateID = ds.Tables["CarInfo"].Rows[i - 1]["PlateID"].ToString();
                                     carinfo.PlateType = ds.Tables["CarInfo"].Rows[i - 1]["PlateType"].ToString();

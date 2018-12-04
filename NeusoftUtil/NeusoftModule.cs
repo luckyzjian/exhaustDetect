@@ -484,6 +484,8 @@ namespace NeusoftUtil
     public class Coastdown
     {
         public string EISID;
+        public string OutlookID;
+        public string namesy = "Skidding";
         public string name = "Coastdown";
         public string StartTime;
         public string ACDT40;
@@ -498,6 +500,7 @@ namespace NeusoftUtil
         public string DIW;//YYYY-MM-DD HH:mm:SS
         public string Result40;//引起检测中止或者无效的原因 0=无故障 1=底盘测功机故障 2=底气分析仪故障 3=烟度计故障 4=转速计故障 5=超过允许重检次数 6=气体稀释 7=采样管被堵 8=车辆故障 9=用户主动终止 10=其他设备故障 11=其他原因
         public string Result24;//引起检测中止或者无效的原因 0=无故障 1=底盘测功机故障 2=底气分析仪故障 3=烟度计故障 4=转速计故障 5=超过允许重检次数 6=气体稀释 7=采样管被堵 8=车辆故障 9=用户主动终止 10=其他设备故障 11=其他原因
+        public string Result;
         /*********************************ProcessData*******************************/
         //public string TimeCount;//从0开始，每100ms递增1
         //public string Velocity;//工况类型：0：功率扫描中；1：恢复到100%VelMaxHP过程中；2：100%VelMaxHP点检测过程；3：90%VelMaxHP点检测过程 4；80%VelMaxHP点检测过程 80%速度点以后的数据不要
@@ -505,16 +508,22 @@ namespace NeusoftUtil
         //public string Power;//发动机转速
         //public string Force;//功率
     }
+    
 
     public class ParasiticLose
     {
         public string EISID;
+        public string OutlookID;
+        public string namesy = "Loss";
         public string name = "ParasiticLose";
         public string StartTime;
+        public string EndTime;
         public string ACDT40;
         public string ACDT24;
         public string PLHP40;
         public string PLHP24;
+        public string IHP40;
+        public string IHP24;
         public string DIW;
         /*********************************ProcessData*******************************/
         //public string TimeCount;//从0开始，每100ms递增1
@@ -545,12 +554,78 @@ namespace NeusoftUtil
     }
     public class AnalyzerLeakTest
     {
-
+        public string OutlookID;
         public string StartTime;
         public string Result;//0= 失败 1=成功
 
     }
+    public class AnalyzerTest
+    {
+        public string EISID;
+        public string OutlookID;
+        public string namesy = "Analyser";
+        public string Type;
+        public string BeginTime;
+        public string STD_CH;
+        public string STD_CO;
+        public string STD_CO2;
+        public string STD_NO;
+        public string STD_O2;
+        public string MEA_HC;
+        public string MEA_CO;
+        public string MEA_CO2;
+        public string MEA_NO;
+        public string MEA_O2;
+        public string PEF;
+        public string Result;//0= 失败 1=成功
 
+    }
+    public class AnalyzerLowGasTest
+    {
+        public string EISID;
+        public string OutlookID;
+        public string namesy = "LowGas";
+        public string BeginTime;
+        public string STD_CH;
+        public string STD_CO;
+        public string STD_CO2;
+        public string STD_NO;
+        public string STD_O2;
+        public string MEA_HC;
+        public string MEA_CO;
+        public string MEA_CO2;
+        public string MEA_NO;
+        public string MEA_O2;
+        public string PEF;
+        public string Result;//0= 失败 1=成功
+
+    }
+    public class AnalyzerO2Test
+    {
+        public string EISID;
+        public string OutlookID;
+        public string namesy = "RangeO2";
+        public string BeginTime;
+        public string STD_RangeO2;
+        public string MEA_RangeO2;
+        public string ERR_RangeO2;
+        public string Result;
+    }
+    public class FlowMeterTest
+    {
+        public string EISID;
+        public string OutlookID;
+        public string namesy = "Flowmeter";
+        public string BeginTime;
+        public string STD_HRangeO2;
+        public string MEA_HRangeO2;
+        public string ERR_HRangeO2;
+        public string STD_LRangeO2;
+        public string MEA_LRangeO2;
+        public string ERR_LRangeO2;
+        public string Result;//0= 失败 1=成功
+
+    }
     public class AnalyzerCalCheck
     {
         public string EISID;
