@@ -2386,6 +2386,11 @@ namespace AhWebClient
                         xe2.InnerText = "90";
                         root.AppendChild(xe1);
                         root.AppendChild(xe2);
+                        int asmprecount = 0;
+                        int asmacc5025count = 0;
+                        int asmacc2540count = 0;
+                        int asmtest5025count = 0;
+                        int asmtest2540count = 0;
                         int asm5025count = 0;
                         int asm2540count = 0;
                         if (dtseconds != null)
@@ -2514,9 +2519,157 @@ namespace AhWebClient
                                 for (int i = 1; i < dtseconds.Rows.Count; i++)
                                 {
                                     DataRow dr = dtseconds.Rows[i];
+                                    if (dr["时序类别"].ToString() == "0")
+                                    {
+                                        asm5025count++;
+                                        XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + asm5025count.ToString("000"));//创建一个<Node>节点 
+                                        XmlElement xe34 = xmldoc.CreateElement("TimeStamp");
+                                        xe34.InnerText = DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
+                                        XmlElement DataType = xmldoc.CreateElement("DataType");
+                                        DataType.InnerText = "0";//v2.7
+                                        XmlElement Torsion = xmldoc.CreateElement("Torsion");
+                                        Torsion.InnerText = dr["扭力"].ToString();//v2.7
+                                        XmlElement DymoLoad = xmldoc.CreateElement("DymoLoad");
+                                        DymoLoad.InnerText = dr["加载功率"].ToString();//v2.7
+                                        XmlElement xe35 = xmldoc.CreateElement("Time");
+                                        xe35.InnerText = asm5025count.ToString();
+                                        XmlElement xe36 = xmldoc.CreateElement("CarSpeed");
+                                        xe36.InnerText = dr["实时车速"].ToString();
+                                        XmlElement xe37 = xmldoc.CreateElement("RPM");
+                                        xe37.InnerText = dr["转速"].ToString();
+                                        XmlElement xe38 = xmldoc.CreateElement("HC");
+                                        xe38.InnerText = dr["HC实时值"].ToString();
+                                        XmlElement xe39 = xmldoc.CreateElement("CO");
+                                        xe39.InnerText = dr["CO实时值"].ToString();
+                                        XmlElement xe40 = xmldoc.CreateElement("NO");
+                                        xe40.InnerText = dr["NO实时值"].ToString();
+                                        XmlElement xe41 = xmldoc.CreateElement("O2");
+                                        xe41.InnerText = dr["O2实时值"].ToString();
+                                        XmlElement xe42 = xmldoc.CreateElement("CO2");
+                                        xe42.InnerText = dr["CO2实时值"].ToString();
+                                        XmlElement xe50 = xmldoc.CreateElement("LoadPower");
+                                        xe50.InnerText = dr["加载功率"].ToString();
+                                        XmlElement WattlessOutput = xmldoc.CreateElement("WattlessOutput");
+                                        WattlessOutput.InnerText = dr["寄生功率"].ToString();//v2.7
+                                        XmlElement IndicatedPower = xmldoc.CreateElement("IndicatedPower");
+                                        IndicatedPower.InnerText = dr["指示功率"].ToString();//v2.7
+                                        XmlElement OilTemperature = xmldoc.CreateElement("OilTemperature");
+                                        OilTemperature.InnerText = dr["油温"].ToString();//v2.7
+                                        XmlElement xe51 = xmldoc.CreateElement("Temperature");
+                                        xe51.InnerText = dr["环境温度"].ToString();
+                                        XmlElement xe52 = xmldoc.CreateElement("Humidity");
+                                        xe52.InnerText = dr["相对湿度"].ToString();
+                                        XmlElement xe53 = xmldoc.CreateElement("Baro");
+                                        xe53.InnerText = dr["大气压力"].ToString();
+                                        XmlElement xe56 = xmldoc.CreateElement("Humidity_Modify");
+                                        xe56.InnerText = dr["湿度修正系数"].ToString();
+                                        XmlElement xe57 = xmldoc.CreateElement("Dilution_Modify");
+                                        xe57.InnerText = dr["稀释修正系数"].ToString();
+                                        xe33.AppendChild(xe34);
+                                        xe33.AppendChild(xe35);
+                                        xe33.AppendChild(xe36);
+                                        xe33.AppendChild(xe37);
+                                        xe33.AppendChild(xe38);
+                                        xe33.AppendChild(xe39);
+                                        xe33.AppendChild(xe40);
+                                        xe33.AppendChild(xe41);
+                                        xe33.AppendChild(xe42);
+                                        xe33.AppendChild(xe50);
+                                        xe33.AppendChild(xe51);
+                                        xe33.AppendChild(xe52);
+                                        xe33.AppendChild(xe53);
+                                        xe33.AppendChild(xe56);
+                                        xe33.AppendChild(xe57);
+                                        xe33.AppendChild(DataType);
+                                        xe33.AppendChild(Torsion);
+                                        xe33.AppendChild(DymoLoad);
+                                        xe33.AppendChild(WattlessOutput);
+                                        xe33.AppendChild(IndicatedPower);
+                                        xe33.AppendChild(OilTemperature);
+                                        root.AppendChild(xe33);
+                                    }
+                                }
+                                for (int i = 1; i < dtseconds.Rows.Count; i++)
+                                {
+                                    DataRow dr = dtseconds.Rows[i];
+                                    if (dr["时序类别"].ToString() == "3")
+                                    {
+                                        asm5025count++;
+                                        XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + asm5025count.ToString("000"));//创建一个<Node>节点 
+                                        XmlElement xe34 = xmldoc.CreateElement("TimeStamp");
+                                        xe34.InnerText = DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
+                                        XmlElement DataType = xmldoc.CreateElement("DataType");
+                                        DataType.InnerText = "3";//v2.7
+                                        XmlElement Torsion = xmldoc.CreateElement("Torsion");
+                                        Torsion.InnerText = dr["扭力"].ToString();//v2.7
+                                        XmlElement DymoLoad = xmldoc.CreateElement("DymoLoad");
+                                        DymoLoad.InnerText = dr["加载功率"].ToString();//v2.7
+                                        XmlElement xe35 = xmldoc.CreateElement("Time");
+                                        xe35.InnerText = asm5025count.ToString();
+                                        XmlElement xe36 = xmldoc.CreateElement("CarSpeed");
+                                        xe36.InnerText = dr["实时车速"].ToString();
+                                        XmlElement xe37 = xmldoc.CreateElement("RPM");
+                                        xe37.InnerText = dr["转速"].ToString();
+                                        XmlElement xe38 = xmldoc.CreateElement("HC");
+                                        xe38.InnerText = dr["HC实时值"].ToString();
+                                        XmlElement xe39 = xmldoc.CreateElement("CO");
+                                        xe39.InnerText = dr["CO实时值"].ToString();
+                                        XmlElement xe40 = xmldoc.CreateElement("NO");
+                                        xe40.InnerText = dr["NO实时值"].ToString();
+                                        XmlElement xe41 = xmldoc.CreateElement("O2");
+                                        xe41.InnerText = dr["O2实时值"].ToString();
+                                        XmlElement xe42 = xmldoc.CreateElement("CO2");
+                                        xe42.InnerText = dr["CO2实时值"].ToString();
+                                        XmlElement xe50 = xmldoc.CreateElement("LoadPower");
+                                        xe50.InnerText = dr["加载功率"].ToString();
+                                        XmlElement WattlessOutput = xmldoc.CreateElement("WattlessOutput");
+                                        WattlessOutput.InnerText = dr["寄生功率"].ToString();//v2.7
+                                        XmlElement IndicatedPower = xmldoc.CreateElement("IndicatedPower");
+                                        IndicatedPower.InnerText = dr["指示功率"].ToString();//v2.7
+                                        XmlElement OilTemperature = xmldoc.CreateElement("OilTemperature");
+                                        OilTemperature.InnerText = dr["油温"].ToString();//v2.7
+                                        XmlElement xe51 = xmldoc.CreateElement("Temperature");
+                                        xe51.InnerText = dr["环境温度"].ToString();
+                                        XmlElement xe52 = xmldoc.CreateElement("Humidity");
+                                        xe52.InnerText = dr["相对湿度"].ToString();
+                                        XmlElement xe53 = xmldoc.CreateElement("Baro");
+                                        xe53.InnerText = dr["大气压力"].ToString();
+                                        XmlElement xe56 = xmldoc.CreateElement("Humidity_Modify");
+                                        xe56.InnerText = dr["湿度修正系数"].ToString();
+                                        XmlElement xe57 = xmldoc.CreateElement("Dilution_Modify");
+                                        xe57.InnerText = dr["稀释修正系数"].ToString();
+                                        xe33.AppendChild(xe34);
+                                        xe33.AppendChild(xe35);
+                                        xe33.AppendChild(xe36);
+                                        xe33.AppendChild(xe37);
+                                        xe33.AppendChild(xe38);
+                                        xe33.AppendChild(xe39);
+                                        xe33.AppendChild(xe40);
+                                        xe33.AppendChild(xe41);
+                                        xe33.AppendChild(xe42);
+                                        xe33.AppendChild(xe50);
+                                        xe33.AppendChild(xe51);
+                                        xe33.AppendChild(xe52);
+                                        xe33.AppendChild(xe53);
+                                        xe33.AppendChild(xe56);
+                                        xe33.AppendChild(xe57);
+                                        xe33.AppendChild(DataType);
+                                        xe33.AppendChild(Torsion);
+                                        xe33.AppendChild(DymoLoad);
+                                        xe33.AppendChild(WattlessOutput);
+                                        xe33.AppendChild(IndicatedPower);
+                                        xe33.AppendChild(OilTemperature);
+                                        root.AppendChild(xe33);
+                                    }
+                                }
+
+                                for (int i = 1; i < dtseconds.Rows.Count; i++)
+                                {
+                                    DataRow dr = dtseconds.Rows[i];
                                     if (dr["时序类别"].ToString() == "1")
                                     {
                                         asm5025count++;
+                                        asmtest5025count++;
                                         XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + asm5025count.ToString("000"));//创建一个<Node>节点 
                                         XmlElement xe34 = xmldoc.CreateElement("TimeStamp");
                                         xe34.InnerText = DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
@@ -2583,9 +2736,95 @@ namespace AhWebClient
                                         xe33.AppendChild(OilTemperature);
                                         root.AppendChild(xe33);
                                     }
-                                    else if (dr["时序类别"].ToString() == "2")
+                                }
+
+                                for (int i = asmtest5025count + 1; i <= 90; i++)
+                                {
+                                    XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + (asm5025count + i - asmtest5025count).ToString("000"));
+                                    root.AppendChild(xe33);
+                                }
+
+                                for (int i = 1; i < dtseconds.Rows.Count; i++)
+                                {
+                                    DataRow dr = dtseconds.Rows[i];
+                                    if (dr["时序类别"].ToString() == "4")
+                                    {
+                                        asm5025count++;
+                                        XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + asm2540count.ToString("000"));//创建一个<Node>节点 
+                                        XmlElement xe34 = xmldoc.CreateElement("TimeStamp");
+                                        xe34.InnerText = DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
+                                        XmlElement DataType = xmldoc.CreateElement("DataType");
+                                        DataType.InnerText = "3";//v2.7
+                                        XmlElement Torsion = xmldoc.CreateElement("Torsion");
+                                        Torsion.InnerText = dr["扭力"].ToString();//v2.7
+                                        XmlElement DymoLoad = xmldoc.CreateElement("DymoLoad");
+                                        DymoLoad.InnerText = dr["加载功率"].ToString();//v2.7
+                                        XmlElement xe35 = xmldoc.CreateElement("Time");
+                                        xe35.InnerText = asm5025count.ToString();
+                                        XmlElement xe36 = xmldoc.CreateElement("CarSpeed");
+                                        xe36.InnerText = dr["实时车速"].ToString();
+                                        XmlElement xe37 = xmldoc.CreateElement("RPM");
+                                        xe37.InnerText = dr["转速"].ToString();
+                                        XmlElement xe38 = xmldoc.CreateElement("HC");
+                                        xe38.InnerText = dr["HC实时值"].ToString();
+                                        XmlElement xe39 = xmldoc.CreateElement("CO");
+                                        xe39.InnerText = dr["CO实时值"].ToString();
+                                        XmlElement xe40 = xmldoc.CreateElement("NO");
+                                        xe40.InnerText = dr["NO实时值"].ToString();
+                                        XmlElement xe41 = xmldoc.CreateElement("O2");
+                                        xe41.InnerText = dr["O2实时值"].ToString();
+                                        XmlElement xe42 = xmldoc.CreateElement("CO2");
+                                        xe42.InnerText = dr["CO2实时值"].ToString();
+                                        XmlElement xe50 = xmldoc.CreateElement("LoadPower");
+                                        xe50.InnerText = dr["加载功率"].ToString();
+                                        XmlElement WattlessOutput = xmldoc.CreateElement("WattlessOutput");
+                                        WattlessOutput.InnerText = dr["寄生功率"].ToString();//v2.7
+                                        XmlElement IndicatedPower = xmldoc.CreateElement("IndicatedPower");
+                                        IndicatedPower.InnerText = dr["指示功率"].ToString();//v2.7
+                                        XmlElement OilTemperature = xmldoc.CreateElement("OilTemperature");
+                                        OilTemperature.InnerText = dr["油温"].ToString();//v2.7
+                                        XmlElement xe51 = xmldoc.CreateElement("Temperature");
+                                        xe51.InnerText = dr["环境温度"].ToString();
+                                        XmlElement xe52 = xmldoc.CreateElement("Humidity");
+                                        xe52.InnerText = dr["相对湿度"].ToString();
+                                        XmlElement xe53 = xmldoc.CreateElement("Baro");
+                                        xe53.InnerText = dr["大气压力"].ToString();
+                                        XmlElement xe56 = xmldoc.CreateElement("Humidity_Modify");
+                                        xe56.InnerText = dr["湿度修正系数"].ToString();
+                                        XmlElement xe57 = xmldoc.CreateElement("Dilution_Modify");
+                                        xe57.InnerText = dr["稀释修正系数"].ToString();
+                                        xe33.AppendChild(xe34);
+                                        xe33.AppendChild(xe35);
+                                        xe33.AppendChild(xe36);
+                                        xe33.AppendChild(xe37);
+                                        xe33.AppendChild(xe38);
+                                        xe33.AppendChild(xe39);
+                                        xe33.AppendChild(xe40);
+                                        xe33.AppendChild(xe41);
+                                        xe33.AppendChild(xe42);
+                                        xe33.AppendChild(xe50);
+                                        xe33.AppendChild(xe51);
+                                        xe33.AppendChild(xe52);
+                                        xe33.AppendChild(xe53);
+                                        xe33.AppendChild(xe56);
+                                        xe33.AppendChild(xe57);
+                                        xe33.AppendChild(DataType);
+                                        xe33.AppendChild(Torsion);
+                                        xe33.AppendChild(DymoLoad);
+                                        xe33.AppendChild(WattlessOutput);
+                                        xe33.AppendChild(IndicatedPower);
+                                        xe33.AppendChild(OilTemperature);
+                                        root.AppendChild(xe33);
+                                    }
+                                }
+
+                                for (int i = 1; i < dtseconds.Rows.Count; i++)
+                                {
+                                    DataRow dr = dtseconds.Rows[i];
+                                    if (dr["时序类别"].ToString() == "2")
                                     {
                                         asm2540count++;
+                                        asmtest2540count++;
                                         XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + asm2540count.ToString("000"));//创建一个<Node>节点 
                                         XmlElement xe34 = xmldoc.CreateElement("TimeStamp");
                                         xe34.InnerText = DateTime.Parse(dr["全程时序"].ToString()).ToString("yyyy-MM-dd HH:mm:ss");
@@ -2653,14 +2892,9 @@ namespace AhWebClient
                                         root.AppendChild(xe33);
                                     }
                                 }
-                                for (int i = asm5025count + 1; i <= 90; i++)
+                                for (int i = asmtest2540count + 1; i <= 90; i++)
                                 {
-                                    XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + i.ToString("000"));
-                                    root.AppendChild(xe33);
-                                }
-                                for (int i = asm2540count + 1; i <= 90; i++)
-                                {
-                                    XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + i.ToString("000"));
+                                    XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + (asm2540count + i - asmtest2540count).ToString("000"));
                                     root.AppendChild(xe33);
                                 }
                             }
