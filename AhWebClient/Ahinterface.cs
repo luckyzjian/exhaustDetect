@@ -2379,13 +2379,7 @@ namespace AhWebClient
                         xmlelem = xmldoc.CreateElement("", "body", "");
                         xmldoc.AppendChild(xmlelem);
                         XmlNode root = xmldoc.SelectSingleNode("body");//查找<Employees> 
-                        XmlElement xe1 = xmldoc.CreateElement("ASM5025_Count");
-                        xe1.InnerText = "90";
-
-                        XmlElement xe2 = xmldoc.CreateElement("ASM2540_Count");
-                        xe2.InnerText = "90";
-                        root.AppendChild(xe1);
-                        root.AppendChild(xe2);
+                        
                         int asmprecount = 0;
                         int asmacc5025count = 0;
                         int asmacc2540count = 0;
@@ -2397,6 +2391,13 @@ namespace AhWebClient
                         {
                             if (version == version_V23)
                             {
+                                XmlElement xe1 = xmldoc.CreateElement("ASM5025_Count");
+                                xe1.InnerText = "90";
+
+                                XmlElement xe2 = xmldoc.CreateElement("ASM2540_Count");
+                                xe2.InnerText = "90";
+                                root.AppendChild(xe1);
+                                root.AppendChild(xe2);
                                 for (int i = 1; i < dtseconds.Rows.Count; i++)
                                 {
                                     DataRow dr = dtseconds.Rows[i];
@@ -2740,7 +2741,8 @@ namespace AhWebClient
 
                                 for (int i = asmtest5025count + 1; i <= 90; i++)
                                 {
-                                    XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + (asm5025count + i - asmtest5025count).ToString("000"));
+                                    asm5025count++;
+                                    XmlElement xe33 = xmldoc.CreateElement("ASM5025_" + asm5025count.ToString("000"));
                                     root.AppendChild(xe33);
                                 }
 
@@ -2894,9 +2896,17 @@ namespace AhWebClient
                                 }
                                 for (int i = asmtest2540count + 1; i <= 90; i++)
                                 {
-                                    XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + (asm2540count + i - asmtest2540count).ToString("000"));
+                                    asm2540count++;
+                                    XmlElement xe33 = xmldoc.CreateElement("ASM2540_" + asm2540count.ToString("000"));
                                     root.AppendChild(xe33);
                                 }
+                                XmlElement xe1 = xmldoc.CreateElement("ASM5025_Count");
+                                xe1.InnerText = asm5025count.ToString();
+
+                                XmlElement xe2 = xmldoc.CreateElement("ASM2540_Count");
+                                xe2.InnerText = asm2540count.ToString();
+                                root.AppendChild(xe1);
+                                root.AppendChild(xe2);
                             }
                         }
                         xmlstring = ConvertXmlToString(xmldoc);
