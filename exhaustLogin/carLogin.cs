@@ -1410,6 +1410,7 @@ namespace exhaustDetect
                                     case "黄牌": cpys = "1"; break;
                                     case "黑牌": cpys = "2"; break;
                                     case "白牌": cpys = "3"; break;
+                                    case "小黄牌": cpys = "4"; break;
                                     default: break;
                                 }
                                 if (!mainPanel.sysocket.VehicleRequest(dataGrid_waitcar.SelectedRows[0].Cells["车牌号"].Value.ToString(), cpys, "", out result, out inf, out outLookID, out vehicledataset))
@@ -1428,6 +1429,7 @@ namespace exhaustDetect
                                     case "黄牌": cpys = "1"; break;
                                     case "黑牌": cpys = "2"; break;
                                     case "白牌": cpys = "3"; break;
+                                    case "小黄牌": cpys = "4"; break;
                                     default: break;
                                 }
                                 vehicledataset = mainPanel.neusoftsocket.VehicleRequest(dataGrid_waitcar.SelectedRows[0].Cells["车牌号"].Value.ToString(), cpys, "", out result, out inf, out outLookID);
