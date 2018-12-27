@@ -394,8 +394,8 @@ namespace exhaustDetect
         public static Dictionary<string, string> acDicYN = new Dictionary<string, string>();
         public enum acJzNameLn { 车速校准,扭力校准,寄生功率校准,加载滑行校准,废气校准,烟度校准};
         public static string[] acJzNoLn = { "01", "02", "03", "04", "05", "06" };
-        public enum acZjNameLn { 加载滑行检查, 附加功率损失检查, 分析仪检查, 泄露检查, 分析仪氧量程检查,低标气检查,流量计检查};
-        public static string[] acZjNoLn = { "01", "02", "03", "04", "05", "06","07","08" };
+        public enum acZjNameLn { 加载滑行检查, 附加功率损失检查, 分析仪检查, 泄露检查, 分析仪氧量程检查,低标气检查,流量计检查,备用,电子环境检查};
+        public static string[] acZjNoLn = { "01", "02", "03", "04", "05", "06","07","08","09" };
 
 
         public static bool isStartTimerInCarlogin = false;

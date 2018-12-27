@@ -2604,6 +2604,32 @@ namespace exhaustDetect
                         #region general
                         if (mainPanel.tynettype == mainPanel.TYNETTYPE_NNDL)
                         {
+                            Hashtable hstb = new Hashtable();
+                            hstb.Add("SBBH", "");
+                            hstb.Add("ZJLX", mainPanel.acZjNoLn[(int)mainPanel.acZjNameLn.电子环境检查]);
+                            hstb.Add("ZJSJ", DateTime.Now);
+                            hstb.Add("ZJJG", (cgjdata.Zjjg == "不合格" || cgjdata.Zjjg == "0") ? "0" : "1");
+                            hstb.Add("JCZBH", mainPanel.stationid);
+                            hstb.Add("JCGWH", mainPanel.lineid);
+                            hstb.Add("ZT", "0");
+                            hstb.Add("DATA1", "1");
+                            hstb.Add("DATA2", cgjdata.ActualTemperature.ToString());
+                            hstb.Add("DATA3", cgjdata.ActualHumidity.ToString());
+                            hstb.Add("DATA4", cgjdata.ActualAirPressure.ToString());
+                            hstb.Add("DATA5", cgjdata.Temperature.ToString());
+                            hstb.Add("DATA6", cgjdata.Humidity.ToString());
+                            hstb.Add("DATA7", cgjdata.AirPressure.ToString());
+                            hstb.Add("DATA8", cgjdata.CheckTimeStart);
+                            hstb.Add("DATA9", cgjdata.CheckTimeEnd);
+
+                            if (mainPanel.conforsql.Insert("设备自检数据", hstb) > 0)
+                            {
+                                ini.INIIO.saveLogInf("保存电子环境自检信息语句成功");
+                            }
+                            else
+                            {
+                                ini.INIIO.saveLogInf("保存电子环境自检信息语句失败");
+                            }
                         }
                         else if (mainPanel.tynettype == mainPanel.TYNETTYPE_SDYT)
                         {

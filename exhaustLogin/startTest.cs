@@ -15036,7 +15036,7 @@ namespace exhaustDetect
                                                 mainPanel.ts2 = mainPanel.equipconfig.displayJudge ? "车辆检测不合格" : "车辆驶离";
                                                 if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.DALINETMODE||mainPanel.NetMode==mainPanel.EZNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
-                                                    Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
+                                                    Msg(label1, panel4, "车辆检测不合格,正在上传结果数据...");
                                                 }
                                                 else
                                                     Msg(label1, panel4, "车辆检测不合格" + isCsvAlive);

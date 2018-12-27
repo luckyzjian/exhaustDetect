@@ -562,6 +562,9 @@ namespace exhaustDetect
                                     case "3":
                                         dr["车牌颜色"] = "白牌";
                                         break;
+                                    case "4":
+                                        dr["车牌颜色"] = "小黄牌";
+                                        break;
                                     default: break;
                                 }
                                 dr["检测方法"] = "";
