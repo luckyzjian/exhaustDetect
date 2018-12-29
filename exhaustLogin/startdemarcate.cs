@@ -219,7 +219,7 @@ namespace exhaustDetect
                                 } 
                                 if (mainPanel.isNetUsed)
                                 {
-                                    if(mainPanel.NetMode==mainPanel.NEUSOFTNETMODE)
+                                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
                                     {
                                         #region neusoft
                                         if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
@@ -228,26 +228,26 @@ namespace exhaustDetect
                                             {
                                                 string isCsvAlive = "";
                                                 DataTable dataseconds = csvreader.readCsv(newCsvPath);
-                                                    NeusoftUtil.Coastdown coastdowndata = new NeusoftUtil.Coastdown();
-                                                    coastdowndata.OutlookID = mainPanel.equipmodel.CGJBH;
-                                                    coastdowndata.StartTime = glidedata.Starttime;
-                                                    coastdowndata.ACDT40 = glidedata.Acdt40;
-                                                    coastdowndata.ACDT24 = glidedata.Acdt24;
-                                                    coastdowndata.CCDT40 = glidedata.Ccdt40;
-                                                    coastdowndata.CCDT24 = glidedata.Ccdt24;
-                                                    coastdowndata.PLHP40 = glidedata.Plhp40;
-                                                    coastdowndata.PLHP24 = glidedata.Plhp24;
-                                                    coastdowndata.IHP40 = glidedata.Ihp40;
-                                                    coastdowndata.IHP24 = glidedata.Ihp24;
-                                                    coastdowndata.DIW = glidedata.Gxdl;
-                                                    coastdowndata.Result40 = (glidedata.Result40 == "合格"?"1":"0");
-                                                    coastdowndata.Result24 = (glidedata.Result24 == "合格" ? "1" : "0");
-                                                    coastdowndata.Result = (glidedata.Bdjg == "合格" ? "1" : "0");
+                                                NeusoftUtil.Coastdown coastdowndata = new NeusoftUtil.Coastdown();
+                                                coastdowndata.OutlookID = mainPanel.equipmodel.CGJBH;
+                                                coastdowndata.StartTime = glidedata.Starttime;
+                                                coastdowndata.ACDT40 = glidedata.Acdt40;
+                                                coastdowndata.ACDT24 = glidedata.Acdt24;
+                                                coastdowndata.CCDT40 = glidedata.Ccdt40;
+                                                coastdowndata.CCDT24 = glidedata.Ccdt24;
+                                                coastdowndata.PLHP40 = glidedata.Plhp40;
+                                                coastdowndata.PLHP24 = glidedata.Plhp24;
+                                                coastdowndata.IHP40 = glidedata.Ihp40;
+                                                coastdowndata.IHP24 = glidedata.Ihp24;
+                                                coastdowndata.DIW = glidedata.Gxdl;
+                                                coastdowndata.Result40 = (glidedata.Result40 == "合格" ? "1" : "0");
+                                                coastdowndata.Result24 = (glidedata.Result24 == "合格" ? "1" : "0");
+                                                coastdowndata.Result = (glidedata.Bdjg == "合格" ? "1" : "0");
 
 
-                                                    string result, inf;
-                                                    DataTable dtack;
-                                                    mainPanel.sysocket.UploadCoastdownRequest(coastdowndata, null, out result, out inf, out dtack);
+                                                string result, inf;
+                                                DataTable dtack;
+                                                mainPanel.sysocket.UploadCoastdownRequest(coastdowndata, null, out result, out inf, out dtack);
                                             }
                                         }
                                         else
@@ -1392,12 +1392,12 @@ namespace exhaustDetect
                                                     analyzercalcheckdata.O2T90 = "8.6";
                                                     analyzercalcheckdata.PEF = analysismeterdata.Pef;
                                                     analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
-                                                    NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
-                                                    analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                                    analyzerleakdata.Result = "1";
-                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    //NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
+                                                    //analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    //analyzerleakdata.Result = "1";
+                                                    //mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                                                     string ackresult, errormessage;
-                                                    mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+                                                    //mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
                                                     mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                                                     mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
                                                     if (ackresult != "-1")
@@ -2000,6 +2000,32 @@ namespace exhaustDetect
                                                 mainPanel.sysocket.UploadAnalyzerLowGasTest(analyzercalcheckdata, null, out result, out inf, out dtack);
                                             }
                                         }
+                                        else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU)
+                                        {
+                                            if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
+                                            {
+                                                NeusoftUtil.LowStandardGasCheck analyzercalcheckdata = new NeusoftUtil.LowStandardGasCheck();
+                                                analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd");
+                                                analyzercalcheckdata.jckssj =DateTime.Parse( analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
+                                                analyzercalcheckdata.c3h8nd = analysismeterdata.c3h8;
+                                                analyzercalcheckdata.cond = analysismeterdata.Cobz.ToString("0.00");
+                                                analyzercalcheckdata.co2nd = analysismeterdata.Co2bz.ToString("0.00");
+                                                analyzercalcheckdata.nond = analysismeterdata.Nobz.ToString("0");
+                                                analyzercalcheckdata.o2nd = "0";
+                                                analyzercalcheckdata.hcjcz = analysismeterdata.Hcclz.ToString("0");
+                                                analyzercalcheckdata.cojcz = analysismeterdata.Coclz.ToString("0.00");
+                                                analyzercalcheckdata.co2jcz = analysismeterdata.Co2clz.ToString("0.00");
+                                                analyzercalcheckdata.nojcz = analysismeterdata.Noclz.ToString("0");
+                                                analyzercalcheckdata.o2jcz = "0";
+                                                analyzercalcheckdata.pef = analysismeterdata.Pef;
+                                                analyzercalcheckdata.jcjg = (analysismeterdata.Bdjg == "合格" ? "1" : "0");
+                                                string ackresult, errormessage;
+                                                //mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+                                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                mainPanel.neusoftsocket.UploadLowStandardGasCheck(analyzercalcheckdata, out ackresult, out errormessage);
+                                                
+                                            }
+                                        }
                                         else
                                         {
                                             if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
@@ -2057,15 +2083,15 @@ namespace exhaustDetect
                                                     analyzercalcheckdata.O2T90 = "8.6";
                                                     analyzercalcheckdata.PEF = analysismeterdata.Pef;
                                                     analyzercalcheckdata.Result = (analysismeterdata.Bdjg == "合格") ? "1" : "0";
-                                                    NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
-                                                    analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                                    analyzerleakdata.Result = "1";
-                                                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                                    //NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
+                                                    //analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                                    //analyzerleakdata.Result = "1";
+                                                    //mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                                                     string ackresult, errormessage;
-                                                    mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+                                                    //mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
                                                     mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                                                     mainPanel.neusoftsocket.UploadAnalyzerCalCheckRequest(analyzercalcheckdata, dataseconds, out ackresult, out errormessage);
-                                                    if (ackresult != "-1")
+                                                    /*if (ackresult != "-1")
                                                     {
                                                         if (pdjg)
                                                             Msg(label1, panel4, "废气仪检查合格," + isCsvAlive);
@@ -2076,7 +2102,7 @@ namespace exhaustDetect
                                                     {
                                                         Msg(label1, panel4, "检查失败，数据上传失败");
                                                         MessageBox.Show(errormessage, "警告");
-                                                    }
+                                                    }*/
                                                 }
                                                 else
                                                 {
@@ -3037,6 +3063,24 @@ namespace exhaustDetect
                                             mainPanel.sysocket.UploadFlowMeterTest(flowmetercheckdata, out result, out inf, out dtack);
                                            
                                         }
+                                        else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU)
+                                        {
+                                            NeusoftUtil.FlowO2Cal flowmetercheckdata = new NeusoftUtil.FlowO2Cal();
+                                            flowmetercheckdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            flowmetercheckdata.O2HStandard = flowmeterdata.O2glcbz.ToString("0.0");
+                                            flowmetercheckdata.O2HMeasure = flowmeterdata.O2glcclz.ToString("0.0");
+                                            flowmetercheckdata.O2HAccuracy = flowmeterdata.O2glcwc.ToString("0.0");
+                                            flowmetercheckdata.O2LStandard = flowmeterdata.O2dlcbz.ToString("0.0");
+                                            flowmetercheckdata.O2LMeasure = flowmeterdata.O2dlcclz.ToString("0.0");
+                                            flowmetercheckdata.O2LAccuracy = flowmeterdata.O2dlcwc.ToString("0.0");
+                                            mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                            string ackresult, errormessage;
+                                            mainPanel.neusoftsocket.UploadFlowO2Cal(flowmetercheckdata, out ackresult, out errormessage);
+
+                                        }
+
+
                                         #endregion
                                     }
                                 }
@@ -4597,13 +4641,13 @@ namespace exhaustDetect
                         string result = "";
                         string inf = "";
                         DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationFj(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", out result, out inf);
-                        switch (result)
+                        /*switch (result)
                         {
                             case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             default: break;
-                        }
+                        }*/
                         calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
                         calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
                         calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
@@ -4646,19 +4690,19 @@ namespace exhaustDetect
                         calstandarddata.Velocity = limiecalibration.Rows[0]["Velocity"].ToString();
                         calstandarddata.ParasiticLoss = limiecalibration.Rows[0]["ParasiticLoss"].ToString();
                     }
-                    else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V202)
+                    else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V202 || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU)
                     {
                         mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
                         string result = "";
                         string inf = "";
                         DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationV202(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, out result, out inf);
-                        switch (result)
+                        /*switch (result)
                         {
                             case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             default: break;
-                        }
+                        }*/
                         calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
                         calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
                         calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
@@ -4707,7 +4751,7 @@ namespace exhaustDetect
                         string result = "";
                         string inf = "";
                         DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibration(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out inf);
-                        switch (result)
+                        /*switch (result)
                         {
                             case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
@@ -4718,7 +4762,7 @@ namespace exhaustDetect
                             case "11": MessageBox.Show("该车已检测，不能再次检测！", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
                             default: break;
-                        }
+                        }*/
                         calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
                         calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
                         calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();

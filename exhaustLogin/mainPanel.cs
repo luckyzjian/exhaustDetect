@@ -304,6 +304,7 @@ namespace exhaustDetect
         public const string NEU_V301 = "V3.01";
         public const string NEU_V202 = "V2.2";
         public const string NEU_GANSU = "甘肃";
+        public const string NEU_YINGKOU = "辽宁营口";
 
         public const string ACAREA_NN = "辽宁";
         public const string ACAREA_OTHER = "其他";
@@ -2867,7 +2868,7 @@ namespace exhaustDetect
                                 disable_function("0");//登录前未获得权限
                             }
                         }
-                        else if (mainPanel.neusoftsocketinf.AREA == NEU_V202)
+                        else if (mainPanel.neusoftsocketinf.AREA == NEU_V202|| mainPanel.neusoftsocketinf.AREA == NEU_YINGKOU)
                         {
                             mainPanel.nowUser.ycyuserName = mainPanel.neusoftsocketinf.YCY;
                             mainPanel.nowUser.ycyuserPassword = logininfcontrol.requestUserPassword(mainPanel.nowUser.ycyuserName);

@@ -431,6 +431,45 @@ namespace NeusoftUtil
         public string CheckO2;
 
     }
+    public struct AnalyzerO2RangeCheck
+    {
+        public string jcrq;
+        public string jckssj;
+        public string o2lcbz;
+        public string o2lcclz;
+        public string o2lcwc;
+        public string jcjg;
+
+    }
+    public struct LowStandardGasCheck
+    {
+        public string jcrq;
+        public string jckssj;
+        public string c3h8nd;
+        public string cond;
+        public string co2nd;
+        public string nond;
+        public string o2nd;
+        public string hcjcz;
+        public string cojcz;
+        public string co2jcz;
+        public string nojcz;
+        public string o2jcz;
+        public string pef;
+        public string jcjg;
+    }
+    public struct FlowO2Cal
+    {
+        public string StartTime;
+        public string O2HStandard;
+        public string O2HMeasure;
+        public string O2HAccuracy;
+        public string O2LStandard;
+        public string O2LMeasure;
+        public string O2LAccuracy;
+        public string Result;
+
+    }
     public class Status
     {
         public string EISID;

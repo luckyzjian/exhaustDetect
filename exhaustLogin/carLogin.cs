@@ -1635,7 +1635,7 @@ namespace exhaustDetect
                                         }
 
                                     }
-                                    else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_SDRZ)//福建省和山东日照平台指令检测方法
+                                    else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_SDRZ)//福建省和山东日照平台指令检测方法
                                     {
                                         //补充说明：设备商要根据服务器返回的检测方法要求进行检测（YellowToGreen的值）, 在正式检测之前一定要给检测人员确认提示"该车用XXX检测方法检测",操作人员可以取消本次检测.但是检测人员不能选择用哪种检测方法检测。
 
@@ -4171,7 +4171,7 @@ namespace exhaustDetect
                                     return;
                                 }
                             }
-                            else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_V202)
+                            else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS||mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_V202 || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU)
                             {
                                 mainPanel.nowUser.ycyuserName = comboBoxJGY.Text;
                                 mainPanel.nowUser.ycyuserPassword = (mainPanel.logininfcontrol.getStaffByName(mainPanel.nowUser.ycyuserName)).Rows[0]["PASSWORD"].ToString();

@@ -2859,6 +2859,180 @@ namespace NeusoftUtil
                 ReadCalibration(receivedString, out result, out inf);
             }
         }
+        public void UploadAnalyzerO2RangeCheck(AnalyzerO2RangeCheck leakdata, out string result, out string inf)
+        {
+            //socket.Connect(point);
+            XmlDocument xmldoc, xlmrecivedoc;
+            XmlNode xmlnode;
+            XmlElement xmlelem;
+            result = "";
+            inf = "";
+            xmldoc = new XmlDocument();
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmlelem.SetAttribute("Device", EISID);
+            xmldoc.AppendChild(xmlelem);
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+            XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+            xe1.SetAttribute("Name", "AnalyzerO2RangeCheck");//设置该节点genre属性  
+            XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+            XmlElement jcrq = xmldoc.CreateElement("jcrq");
+            jcrq.InnerText = leakdata.jcrq;
+            XmlElement jckssj = xmldoc.CreateElement("jckssj");
+            jckssj.InnerText = leakdata.jckssj;
+            XmlElement o2lcbz = xmldoc.CreateElement("o2lcbz");
+            o2lcbz.InnerText = leakdata.o2lcbz;
+            XmlElement o2lcclz = xmldoc.CreateElement("o2lcclz");
+            o2lcclz.InnerText = leakdata.o2lcclz;
+            XmlElement o2lcwc = xmldoc.CreateElement("o2lcwc");
+            o2lcwc.InnerText = leakdata.o2lcwc;
+            XmlElement jcjg = xmldoc.CreateElement("jcjg");
+            jcjg.InnerText = leakdata.jcjg;
+            xe6.AppendChild(jcrq);
+            xe6.AppendChild(jckssj);
+            xe6.AppendChild(o2lcbz);
+            xe6.AppendChild(o2lcclz);
+            xe6.AppendChild(o2lcwc);
+            xe6.AppendChild(jcjg);
+            xe1.AppendChild(xe6);
+            root.AppendChild(xe1);
+            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+            {
+                return;
+            }
+            Thread.Sleep(100);
+            byte[] buffer = new byte[10 * 1024];
+            string receivedString = "";
+            if (RecvData(socket, out receivedString) > 0)
+            {
+                ReadCalibration(receivedString, out result, out inf);
+            }
+        }
+        public void UploadLowStandardGasCheck(LowStandardGasCheck leakdata, out string result, out string inf)
+        {
+            //socket.Connect(point);
+            XmlDocument xmldoc, xlmrecivedoc;
+            XmlNode xmlnode;
+            XmlElement xmlelem;
+            result = "";
+            inf = "";
+            xmldoc = new XmlDocument();
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmlelem.SetAttribute("Device", EISID);
+            xmldoc.AppendChild(xmlelem);
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+            XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+            xe1.SetAttribute("Name", "LowStandardGasCheck");//设置该节点genre属性  
+            XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+            XmlElement jcrq = xmldoc.CreateElement("jcrq");
+            jcrq.InnerText = leakdata.jcrq;
+            XmlElement jckssj = xmldoc.CreateElement("jckssj");
+            jckssj.InnerText = leakdata.jckssj;
+            XmlElement c3h8nd = xmldoc.CreateElement("c3h8nd");
+            c3h8nd.InnerText = leakdata.c3h8nd;
+            XmlElement cond = xmldoc.CreateElement("cond");
+            cond.InnerText = leakdata.cond;
+            XmlElement co2nd = xmldoc.CreateElement("co2nd");
+            co2nd.InnerText = leakdata.co2nd;
+            XmlElement nond = xmldoc.CreateElement("nond");
+            nond.InnerText = leakdata.nond;
+            XmlElement o2nd = xmldoc.CreateElement("o2nd");
+            o2nd.InnerText = leakdata.o2nd;
+            XmlElement hcjcz = xmldoc.CreateElement("hcjcz");
+            hcjcz.InnerText = leakdata.hcjcz;
+            XmlElement cojcz = xmldoc.CreateElement("cojcz");
+            cojcz.InnerText = leakdata.cojcz;
+            XmlElement co2jcz = xmldoc.CreateElement("co2jcz");
+            co2jcz.InnerText = leakdata.co2jcz;
+            XmlElement nojcz = xmldoc.CreateElement("nojcz");
+            nojcz.InnerText = leakdata.nojcz;
+            XmlElement o2jcz = xmldoc.CreateElement("o2jcz");
+            o2jcz.InnerText = leakdata.o2jcz;
+            XmlElement pef = xmldoc.CreateElement("pef");
+            pef.InnerText = leakdata.pef;
+            XmlElement jcjg = xmldoc.CreateElement("jcjg");
+            jcjg.InnerText = leakdata.jcjg;
+            xe6.AppendChild(jcrq);
+            xe6.AppendChild(jckssj);
+            xe6.AppendChild(c3h8nd);
+            xe6.AppendChild(cond);
+            xe6.AppendChild(co2nd);
+            xe6.AppendChild(nond);
+            xe6.AppendChild(o2nd);
+            xe6.AppendChild(hcjcz);
+            xe6.AppendChild(cojcz);
+            xe6.AppendChild(co2jcz);
+            xe6.AppendChild(nojcz);
+            xe6.AppendChild(o2jcz);
+            xe6.AppendChild(pef);
+            xe6.AppendChild(jcjg);
+            xe1.AppendChild(xe6);
+            root.AppendChild(xe1);
+            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+            {
+                return;
+            }
+            Thread.Sleep(100);
+            byte[] buffer = new byte[10 * 1024];
+            string receivedString = "";
+            if (RecvData(socket, out receivedString) > 0)
+            {
+                ReadCalibration(receivedString, out result, out inf);
+            }
+        }
+        public void UploadFlowO2Cal(FlowO2Cal leakdata, out string result, out string inf)
+        {
+            //socket.Connect(point);
+            XmlDocument xmldoc, xlmrecivedoc;
+            XmlNode xmlnode;
+            XmlElement xmlelem;
+            result = "";
+            inf = "";
+            xmldoc = new XmlDocument();
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmlelem.SetAttribute("Device", EISID);
+            xmldoc.AppendChild(xmlelem);
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
+            XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
+            xe1.SetAttribute("Name", "LowStandardGasCheck");//设置该节点genre属性  
+            XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
+            XmlElement StartTime = xmldoc.CreateElement("StartTime");
+            StartTime.InnerText = leakdata.StartTime;
+            XmlElement O2HStandard = xmldoc.CreateElement("O2HStandard");
+            O2HStandard.InnerText = leakdata.O2HStandard;
+            XmlElement O2HMeasure = xmldoc.CreateElement("O2HMeasure");
+            O2HMeasure.InnerText = leakdata.O2HMeasure;
+            XmlElement O2HAccuracy = xmldoc.CreateElement("O2HAccuracy");
+            O2HAccuracy.InnerText = leakdata.O2HAccuracy;
+            XmlElement O2LStandard = xmldoc.CreateElement("O2LStandard");
+            O2LStandard.InnerText = leakdata.O2LStandard;
+            XmlElement O2LMeasure = xmldoc.CreateElement("O2LMeasure");
+            O2LMeasure.InnerText = leakdata.O2LMeasure;
+            XmlElement O2LAccuracy = xmldoc.CreateElement("O2LAccuracy");
+            O2LAccuracy.InnerText = leakdata.O2LAccuracy;
+            XmlElement Result = xmldoc.CreateElement("Result");
+            Result.InnerText = leakdata.Result;
+            xe6.AppendChild(StartTime);
+            xe6.AppendChild(O2HStandard);
+            xe6.AppendChild(O2HMeasure);
+            xe6.AppendChild(O2HAccuracy);
+            xe6.AppendChild(O2LStandard);
+            xe6.AppendChild(O2LMeasure);
+            xe6.AppendChild(O2LAccuracy);
+            xe6.AppendChild(Result);
+            xe1.AppendChild(xe6);
+            root.AppendChild(xe1);
+            if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+            {
+                return;
+            }
+            Thread.Sleep(100);
+            byte[] buffer = new byte[10 * 1024];
+            string receivedString = "";
+            if (RecvData(socket, out receivedString) > 0)
+            {
+                ReadCalibration(receivedString, out result, out inf);
+            }
+        }
         /*
         public void UploadSmokemeterCalRequest(DataTable asmdataseconds, out string result, out string inf)
         {
@@ -3051,6 +3225,7 @@ namespace NeusoftUtil
                 ReadCalibration(receivedString, out result, out inf);
             }
         }
+
     }
 
 }

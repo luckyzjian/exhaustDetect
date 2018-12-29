@@ -50,6 +50,7 @@ namespace exhaustDetect
 
         Thread th_wait = null;
         string zjfinishstring = "";
+        public static NeusoftUtil.RespondCalStandard calstandarddata = new NeusoftUtil.RespondCalStandard();
 
         bool isqxzcheck = false, isfqycheck = false, isbtgcheck = false, iscgjcheck = false, islljcheck = false, iszsjcheck = false;
         public startSelfCheck()
@@ -650,6 +651,7 @@ namespace exhaustDetect
                         { }
                         #endregion
                     }
+
                     if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.ACNETMODE)
                     {
                         #region ac
@@ -1657,28 +1659,35 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
-                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE )
                     {
                         #region 东软
-                        try
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                         {
-                            ini.INIIO.saveLogInf("联网信息：上传烟度计自检");
-                            NeusoftUtil.UploadSmokemeterCal coastdowndata = new NeusoftUtil.UploadSmokemeterCal();
-                            coastdowndata.StartTime = cgjdata.CheckTimeStart;
-                            coastdowndata.Nominal = cgjdata.LabelValueN50.ToString("0.00");
-                            coastdowndata.Check = cgjdata.N501.ToString("0.00");
-                            coastdowndata.Result = Math.Abs(cgjdata.Error501)>2?"0":"1";
-                            coastdowndata.Nominal2 = cgjdata.LabelValueN70.ToString("0.00");
-                            coastdowndata.Check2 = cgjdata.N701.ToString("0.00");
-                            coastdowndata.Result2 = Math.Abs(cgjdata.Error701) > 2 ? "0" : "1";                            
-                            mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                            string ackresult, errormessage;
-                            mainPanel.neusoftsocket.UploadSmokemeterCalRequest(coastdowndata, out ackresult, out errormessage);
-                            ini.INIIO.saveLogInf("联网信息：上传烟度计自检成功:result=" + ackresult);
+                            ini.INIIO.saveLogInf("联网信息：辽宁鞍山版本不上传烟度计");
                         }
-                        catch (Exception er)
+                        else
                         {
-                            ini.INIIO.saveLogInf("联网信息：上传烟度计自检异常:" + er.Message);
+                            try
+                            {
+                                ini.INIIO.saveLogInf("联网信息：上传烟度计自检");
+                                NeusoftUtil.UploadSmokemeterCal coastdowndata = new NeusoftUtil.UploadSmokemeterCal();
+                                coastdowndata.StartTime = cgjdata.CheckTimeStart;
+                                coastdowndata.Nominal = cgjdata.LabelValueN50.ToString("0.00");
+                                coastdowndata.Check = cgjdata.N501.ToString("0.00");
+                                coastdowndata.Result = Math.Abs(cgjdata.Error501) > 2 ? "0" : "1";
+                                coastdowndata.Nominal2 = cgjdata.LabelValueN70.ToString("0.00");
+                                coastdowndata.Check2 = cgjdata.N701.ToString("0.00");
+                                coastdowndata.Result2 = Math.Abs(cgjdata.Error701) > 2 ? "0" : "1";
+                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                string ackresult, errormessage;
+                                mainPanel.neusoftsocket.UploadSmokemeterCalRequest(coastdowndata, out ackresult, out errormessage);
+                                ini.INIIO.saveLogInf("联网信息：上传烟度计自检成功:result=" + ackresult);
+                            }
+                            catch (Exception er)
+                            {
+                                ini.INIIO.saveLogInf("联网信息：上传烟度计自检异常:" + er.Message);
+                            }
                         }
                         #endregion
                     }
@@ -2181,29 +2190,41 @@ namespace exhaustDetect
                         }
                         #endregion
                     }
-                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE && mainPanel.neusoftsocketinf.AREA != mainPanel.NEU_LNAS)
+                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
                     {
                         #region 东软
-                        try
+                        if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                         {
-                            ini.INIIO.saveLogInf("联网信息：上传流量计自检");
-                            NeusoftUtil.UploadFlowO2Cal coastdowndata = new NeusoftUtil.UploadFlowO2Cal();
-                            coastdowndata.StartTime = cgjdata.CheckTimeStart;
-                            coastdowndata.Nominal = cgjdata.lljmyll.ToString("0.00");
-                            coastdowndata.CheckFlow = cgjdata.lljsjll.ToString("0.00");
-                            coastdowndata.CheckO2 = cgjdata.Lljo2;
-                            double llwc = cgjdata.lljmyll - cgjdata.lljsjll;
-                            double llrelwc = Math.Abs(llwc * 100) / cgjdata.lljmyll;
-                            double o2wc =Math.Abs( double.Parse(cgjdata.Lljo2) - 20.8);
-                            coastdowndata.Result = (llrelwc<10&&o2wc<0.5)?"1":"0";
-                            mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
-                            string ackresult, errormessage;
-                            mainPanel.neusoftsocket.UploadFlowO2CalRequest(coastdowndata, out ackresult, out errormessage);
-                            ini.INIIO.saveLogInf("联网信息：上传流量计自检成功:result=" + ackresult);
+                            ini.INIIO.saveLogInf("联网信息：辽宁鞍山版本不上传流量计自检信息");
                         }
-                        catch (Exception er)
+                        else if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YINGKOU)
                         {
-                            ini.INIIO.saveLogInf("联网信息：上传流量计自检异常:" + er.Message);
+
+                            ini.INIIO.saveLogInf("联网信息：辽宁营口版本不上传流量计自检信息");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                ini.INIIO.saveLogInf("联网信息：上传流量计自检");
+                                NeusoftUtil.UploadFlowO2Cal coastdowndata = new NeusoftUtil.UploadFlowO2Cal();
+                                coastdowndata.StartTime = cgjdata.CheckTimeStart;
+                                coastdowndata.Nominal = cgjdata.lljmyll.ToString("0.00");
+                                coastdowndata.CheckFlow = cgjdata.lljsjll.ToString("0.00");
+                                coastdowndata.CheckO2 = cgjdata.Lljo2;
+                                double llwc = cgjdata.lljmyll - cgjdata.lljsjll;
+                                double llrelwc = Math.Abs(llwc * 100) / cgjdata.lljmyll;
+                                double o2wc = Math.Abs(double.Parse(cgjdata.Lljo2) - 20.8);
+                                coastdowndata.Result = (llrelwc < 10 && o2wc < 0.5) ? "1" : "0";
+                                mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                                string ackresult, errormessage;
+                                mainPanel.neusoftsocket.UploadFlowO2CalRequest(coastdowndata, out ackresult, out errormessage);
+                                ini.INIIO.saveLogInf("联网信息：上传流量计自检成功:result=" + ackresult);
+                            }
+                            catch (Exception er)
+                            {
+                                ini.INIIO.saveLogInf("联网信息：上传流量计自检异常:" + er.Message);
+                            }
                         }
                         #endregion
                     }
@@ -3485,6 +3506,16 @@ namespace exhaustDetect
                     }
                     if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
                     {
+                        NeusoftUtil.AnalyzerLeakTest analyzerleakdata = new NeusoftUtil.AnalyzerLeakTest();
+                        analyzerleakdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        analyzerleakdata.Result = cgjdata.TightnessResult;
+                        mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                        string ackresult, errormessage;
+                        mainPanel.neusoftsocket.UploadAnalyzerLeakTestRequest(analyzerleakdata, out ackresult, out errormessage);
+
+                    }
+                    if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+                    {
                         #region neusoft
                         if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                         {
@@ -3504,6 +3535,19 @@ namespace exhaustDetect
                             analyzerleakcheckdata.StartTime = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
                             analyzerleakcheckdata.Result = cgjdata.TightnessResult;
                             mainPanel.sysocket.UploadAnalyzerLeakTestRequest(analyzerleakcheckdata, out result, out inf, out dtack);
+                        }
+                        else if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YINGKOU)
+                        {
+                            NeusoftUtil.AnalyzerO2RangeCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerO2RangeCheck();
+                            analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd");
+                            analyzercalcheckdata.jckssj = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
+                            analyzercalcheckdata.o2lcbz = "20.8";
+                            analyzercalcheckdata.o2lcclz = cgjdata.Yqyq;
+                            analyzercalcheckdata.o2lcwc = (double.Parse(cgjdata.Yqyq) - 20.8).ToString("0.0");
+                            analyzercalcheckdata.jcjg = (double.Parse(analyzercalcheckdata.o2lcwc) > 0.1) ? "0" : "1";
+                            mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                            string ackresult, errormessage;
+                            mainPanel.neusoftsocket.UploadAnalyzerO2RangeCheck(analyzercalcheckdata, out ackresult, out errormessage);
                         }
                         #endregion
                     }
@@ -4831,6 +4875,248 @@ namespace exhaustDetect
             //Msg(label1, panel4, "正在进行" + _bdnr);    
             
                 button5.Visible = false;
+            if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
+            {
+                if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
+                {
+                    string result, inf, timestring;
+                    if (!mainPanel.sysocket.loginUser(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", out result, out inf))
+                    {
+                        MessageBox.Show("异常:" + result + "|信息:" + inf, "错误");
+                        return;
+                    }
+                    else
+                    {
+                        if (result != "0")
+                        {
+                            MessageBox.Show("代码:" + result + "|信息:" + inf, "登录失败");
+                            return;
+                        }
+                    }
+                }
+                else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_FJS || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNZT || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YNKM || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_GZCJ)
+                {
+                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                    string result = "";
+                    string inf = "";
+                    DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationFj(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", out result, out inf);
+                    /*switch (result)
+                    {
+                        case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        default: break;
+                    }*/
+                    calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
+                    calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
+                    calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
+                    calstandarddata.CO2ChkAbs = limiecalibration.Rows[0]["CO2ChkAbs"].ToString();
+                    calstandarddata.O2ChkAbs = limiecalibration.Rows[0]["O2ChkAbs"].ToString();
+                    calstandarddata.COChkRel = limiecalibration.Rows[0]["COChkRel"].ToString();
+                    calstandarddata.HCChkRel = limiecalibration.Rows[0]["HCChkRel"].ToString();
+                    calstandarddata.NOChkRel = limiecalibration.Rows[0]["NOChkRel"].ToString();
+                    calstandarddata.CO2ChkRel = limiecalibration.Rows[0]["CO2ChkRel"].ToString();
+                    calstandarddata.O2ChkRel = limiecalibration.Rows[0]["O2ChkRel"].ToString();
+                    calstandarddata.COCalAbs = limiecalibration.Rows[0]["COCalAbs"].ToString();
+                    calstandarddata.HCCalAbs = limiecalibration.Rows[0]["HCCalAbs"].ToString();
+                    calstandarddata.NOCalAbs = limiecalibration.Rows[0]["NOCalAbs"].ToString();
+                    calstandarddata.CO2CalAbs = limiecalibration.Rows[0]["CO2CalAbs"].ToString();
+                    calstandarddata.O2CalAbs = limiecalibration.Rows[0]["O2CalAbs"].ToString();
+                    calstandarddata.COCalRel = limiecalibration.Rows[0]["COCalRel"].ToString();
+                    calstandarddata.HCCalRel = limiecalibration.Rows[0]["HCCalRel"].ToString();
+                    calstandarddata.NOCalRel = limiecalibration.Rows[0]["NOCalRel"].ToString();
+                    calstandarddata.CO2CalRel = limiecalibration.Rows[0]["CO2CalRel"].ToString();
+                    calstandarddata.O2CalRel = limiecalibration.Rows[0]["O2CalRel"].ToString();
+
+                    calstandarddata.COT90 = limiecalibration.Rows[0]["COT90"].ToString();
+                    calstandarddata.HCT90 = limiecalibration.Rows[0]["HCT90"].ToString();
+                    calstandarddata.NOT90 = limiecalibration.Rows[0]["NOT90"].ToString();
+                    calstandarddata.CO2T90 = limiecalibration.Rows[0]["CO2T90"].ToString();
+                    calstandarddata.O2T90 = limiecalibration.Rows[0]["O2T90"].ToString();
+                    calstandarddata.COT10 = limiecalibration.Rows[0]["COT10"].ToString();
+                    calstandarddata.HCT10 = limiecalibration.Rows[0]["HCT10"].ToString();
+                    calstandarddata.NOT10 = limiecalibration.Rows[0]["NOT10"].ToString();
+                    calstandarddata.CO2T10 = limiecalibration.Rows[0]["CO2T10"].ToString();
+                    calstandarddata.O2T10 = limiecalibration.Rows[0]["O2T10"].ToString();
+
+                    calstandarddata.Smoke = limiecalibration.Rows[0]["Smoke"].ToString();
+                    calstandarddata.Rev = limiecalibration.Rows[0]["Rev"].ToString();
+                    calstandarddata.Temperature = limiecalibration.Rows[0]["Temperature"].ToString();
+                    calstandarddata.Humidity = limiecalibration.Rows[0]["Humidity"].ToString();
+                    calstandarddata.AirPressure = limiecalibration.Rows[0]["AirPressure"].ToString();
+                    calstandarddata.Coastdown = limiecalibration.Rows[0]["Coastdown"].ToString();
+                    calstandarddata.Torque = limiecalibration.Rows[0]["Torque"].ToString();
+                    calstandarddata.Velocity = limiecalibration.Rows[0]["Velocity"].ToString();
+                    calstandarddata.ParasiticLoss = limiecalibration.Rows[0]["ParasiticLoss"].ToString();
+                }
+                else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V202 || mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_YINGKOU)
+                {
+                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                    string result = "";
+                    string inf = "";
+                    DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationV202(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, out result, out inf);
+                    /*switch (result)
+                    {
+                        case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        default: break;
+                    }*/
+                    calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
+                    calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
+                    calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
+                    calstandarddata.CO2ChkAbs = limiecalibration.Rows[0]["CO2ChkAbs"].ToString();
+                    calstandarddata.O2ChkAbs = limiecalibration.Rows[0]["O2ChkAbs"].ToString();
+                    calstandarddata.COChkRel = limiecalibration.Rows[0]["COChkRel"].ToString();
+                    calstandarddata.HCChkRel = limiecalibration.Rows[0]["HCChkRel"].ToString();
+                    calstandarddata.NOChkRel = limiecalibration.Rows[0]["NOChkRel"].ToString();
+                    calstandarddata.CO2ChkRel = limiecalibration.Rows[0]["CO2ChkRel"].ToString();
+                    calstandarddata.O2ChkRel = limiecalibration.Rows[0]["O2ChkRel"].ToString();
+                    calstandarddata.COCalAbs = limiecalibration.Rows[0]["COCalAbs"].ToString();
+                    calstandarddata.HCCalAbs = limiecalibration.Rows[0]["HCCalAbs"].ToString();
+                    calstandarddata.NOCalAbs = limiecalibration.Rows[0]["NOCalAbs"].ToString();
+                    calstandarddata.CO2CalAbs = limiecalibration.Rows[0]["CO2CalAbs"].ToString();
+                    calstandarddata.O2CalAbs = limiecalibration.Rows[0]["O2CalAbs"].ToString();
+                    calstandarddata.COCalRel = limiecalibration.Rows[0]["COCalRel"].ToString();
+                    calstandarddata.HCCalRel = limiecalibration.Rows[0]["HCCalRel"].ToString();
+                    calstandarddata.NOCalRel = limiecalibration.Rows[0]["NOCalRel"].ToString();
+                    calstandarddata.CO2CalRel = limiecalibration.Rows[0]["CO2CalRel"].ToString();
+                    calstandarddata.O2CalRel = limiecalibration.Rows[0]["O2CalRel"].ToString();
+
+                    calstandarddata.COT90 = limiecalibration.Rows[0]["COT90"].ToString();
+                    calstandarddata.HCT90 = limiecalibration.Rows[0]["HCT90"].ToString();
+                    calstandarddata.NOT90 = limiecalibration.Rows[0]["NOT90"].ToString();
+                    calstandarddata.CO2T90 = limiecalibration.Rows[0]["CO2T90"].ToString();
+                    calstandarddata.O2T90 = limiecalibration.Rows[0]["O2T90"].ToString();
+                    calstandarddata.COT10 = limiecalibration.Rows[0]["COT10"].ToString();
+                    calstandarddata.HCT10 = limiecalibration.Rows[0]["HCT10"].ToString();
+                    calstandarddata.NOT10 = limiecalibration.Rows[0]["NOT10"].ToString();
+                    calstandarddata.CO2T10 = limiecalibration.Rows[0]["CO2T10"].ToString();
+                    calstandarddata.O2T10 = limiecalibration.Rows[0]["O2T10"].ToString();
+
+                    calstandarddata.Smoke = limiecalibration.Rows[0]["Smoke"].ToString();
+                    calstandarddata.Rev = limiecalibration.Rows[0]["Rev"].ToString();
+                    calstandarddata.Temperature = limiecalibration.Rows[0]["Temperature"].ToString();
+                    calstandarddata.Humidity = limiecalibration.Rows[0]["Humidity"].ToString();
+                    calstandarddata.AirPressure = limiecalibration.Rows[0]["AirPressure"].ToString();
+                    calstandarddata.Coastdown = limiecalibration.Rows[0]["Coastdown"].ToString();
+                    calstandarddata.Torque = limiecalibration.Rows[0]["Torque"].ToString();
+                    calstandarddata.Velocity = limiecalibration.Rows[0]["Velocity"].ToString();
+                    calstandarddata.ParasiticLoss = limiecalibration.Rows[0]["ParasiticLoss"].ToString();
+                }
+                else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_SDRZ)
+                {
+                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                    string result = "";
+                    string inf = "";
+                    DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibration(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out inf);
+                    /*switch (result)
+                    {
+                        case "0": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "1": MessageBox.Show("该用户无此操作权限", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "2": MessageBox.Show("系统没有查到该车的车辆信息", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "8": MessageBox.Show("外观检查不合格，不能检测！", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "9": MessageBox.Show("该用户不存在", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "10": MessageBox.Show("该车没有交费，不能检测！", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "11": MessageBox.Show("该车已检测，不能再次检测！", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        case "-1": MessageBox.Show("服务器故障", "警告"); Msg(label1, panel4, "用户登录未成功，请重新选择用户"); return; break;
+                        default: break;
+                    }*/
+                    calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
+                    calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
+                    calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
+                    calstandarddata.CO2ChkAbs = limiecalibration.Rows[0]["CO2ChkAbs"].ToString();
+                    calstandarddata.O2ChkAbs = limiecalibration.Rows[0]["O2ChkAbs"].ToString();
+                    calstandarddata.COChkRel = limiecalibration.Rows[0]["COChkRel"].ToString();
+                    calstandarddata.HCChkRel = limiecalibration.Rows[0]["HCChkRel"].ToString();
+                    calstandarddata.NOChkRel = limiecalibration.Rows[0]["NOChkRel"].ToString();
+                    calstandarddata.CO2ChkRel = limiecalibration.Rows[0]["CO2ChkRel"].ToString();
+                    calstandarddata.O2ChkRel = limiecalibration.Rows[0]["O2ChkRel"].ToString();
+                    calstandarddata.COCalAbs = limiecalibration.Rows[0]["COCalAbs"].ToString();
+                    calstandarddata.HCCalAbs = limiecalibration.Rows[0]["HCCalAbs"].ToString();
+                    calstandarddata.NOCalAbs = limiecalibration.Rows[0]["NOCalAbs"].ToString();
+                    calstandarddata.CO2CalAbs = limiecalibration.Rows[0]["CO2CalAbs"].ToString();
+                    calstandarddata.O2CalAbs = limiecalibration.Rows[0]["O2CalAbs"].ToString();
+                    calstandarddata.COCalRel = limiecalibration.Rows[0]["COCalRel"].ToString();
+                    calstandarddata.HCCalRel = limiecalibration.Rows[0]["HCCalRel"].ToString();
+                    calstandarddata.NOCalRel = limiecalibration.Rows[0]["NOCalRel"].ToString();
+                    calstandarddata.CO2CalRel = limiecalibration.Rows[0]["CO2CalRel"].ToString();
+                    calstandarddata.O2CalRel = limiecalibration.Rows[0]["O2CalRel"].ToString();
+
+                    calstandarddata.COT90 = limiecalibration.Rows[0]["COT90"].ToString();
+                    calstandarddata.HCT90 = limiecalibration.Rows[0]["HCT90"].ToString();
+                    calstandarddata.NOT90 = limiecalibration.Rows[0]["NOT90"].ToString();
+                    calstandarddata.CO2T90 = limiecalibration.Rows[0]["CO2T90"].ToString();
+                    calstandarddata.O2T90 = limiecalibration.Rows[0]["O2T90"].ToString();
+                    calstandarddata.COT10 = limiecalibration.Rows[0]["COT10"].ToString();
+                    calstandarddata.HCT10 = limiecalibration.Rows[0]["HCT10"].ToString();
+                    calstandarddata.NOT10 = limiecalibration.Rows[0]["NOT10"].ToString();
+                    calstandarddata.CO2T10 = limiecalibration.Rows[0]["CO2T10"].ToString();
+                    calstandarddata.O2T10 = limiecalibration.Rows[0]["O2T10"].ToString();
+
+                    calstandarddata.Smoke = limiecalibration.Rows[0]["Smoke"].ToString();
+                    calstandarddata.Rev = limiecalibration.Rows[0]["Rev"].ToString();
+                    calstandarddata.Temperature = limiecalibration.Rows[0]["Temperature"].ToString();
+                    calstandarddata.Humidity = limiecalibration.Rows[0]["Humidity"].ToString();
+                    calstandarddata.AirPressure = limiecalibration.Rows[0]["AirPressure"].ToString();
+                    calstandarddata.Coastdown = limiecalibration.Rows[0]["Coastdown"].ToString();
+                    calstandarddata.Torque = limiecalibration.Rows[0]["Torque"].ToString();
+                    calstandarddata.Velocity = limiecalibration.Rows[0]["Velocity"].ToString();
+                    calstandarddata.ParasiticLoss = limiecalibration.Rows[0]["ParasiticLoss"].ToString();
+                }
+                else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301)
+                {
+                    string result, info;
+                    mainPanel.neusoftsocket.init_equipment(mainPanel.neusoftsocketinf.IP, mainPanel.neusoftsocketinf.PORT);
+                    DataTable limiecalibration = mainPanel.neusoftsocket.loginUserCalibrationv301(mainPanel.nowUser.userName, mainPanel.nowUser.userPassword, "1", mainPanel.nowUser.ycyuserName, mainPanel.nowUser.ycyuserPassword, out result, out info);
+                    if (result != "1")
+                    {
+                        MessageBox.Show(info, "警告");
+                        return;
+                    }
+                    calstandarddata.COChkAbs = limiecalibration.Rows[0]["COChkAbs"].ToString();
+                    calstandarddata.HCChkAbs = limiecalibration.Rows[0]["HCChkAbs"].ToString();
+                    calstandarddata.NOChkAbs = limiecalibration.Rows[0]["NOChkAbs"].ToString();
+                    calstandarddata.CO2ChkAbs = limiecalibration.Rows[0]["CO2ChkAbs"].ToString();
+                    calstandarddata.O2ChkAbs = limiecalibration.Rows[0]["O2ChkAbs"].ToString();
+                    calstandarddata.COChkRel = limiecalibration.Rows[0]["COChkRel"].ToString();
+                    calstandarddata.HCChkRel = limiecalibration.Rows[0]["HCChkRel"].ToString();
+                    calstandarddata.NOChkRel = limiecalibration.Rows[0]["NOChkRel"].ToString();
+                    calstandarddata.CO2ChkRel = limiecalibration.Rows[0]["CO2ChkRel"].ToString();
+                    calstandarddata.O2ChkRel = limiecalibration.Rows[0]["O2ChkRel"].ToString();
+                    calstandarddata.COCalAbs = limiecalibration.Rows[0]["COCalAbs"].ToString();
+                    calstandarddata.HCCalAbs = limiecalibration.Rows[0]["HCCalAbs"].ToString();
+                    calstandarddata.NOCalAbs = limiecalibration.Rows[0]["NOCalAbs"].ToString();
+                    calstandarddata.CO2CalAbs = limiecalibration.Rows[0]["CO2CalAbs"].ToString();
+                    calstandarddata.O2CalAbs = limiecalibration.Rows[0]["O2CalAbs"].ToString();
+                    calstandarddata.COCalRel = limiecalibration.Rows[0]["COCalRel"].ToString();
+                    calstandarddata.HCCalRel = limiecalibration.Rows[0]["HCCalRel"].ToString();
+                    calstandarddata.NOCalRel = limiecalibration.Rows[0]["NOCalRel"].ToString();
+                    calstandarddata.CO2CalRel = limiecalibration.Rows[0]["CO2CalRel"].ToString();
+                    calstandarddata.O2CalRel = limiecalibration.Rows[0]["O2CalRel"].ToString();
+
+                    calstandarddata.COT90 = limiecalibration.Rows[0]["COT90"].ToString();
+                    calstandarddata.HCT90 = limiecalibration.Rows[0]["HCT90"].ToString();
+                    calstandarddata.NOT90 = limiecalibration.Rows[0]["NOT90"].ToString();
+                    calstandarddata.CO2T90 = limiecalibration.Rows[0]["CO2T90"].ToString();
+                    calstandarddata.O2T90 = limiecalibration.Rows[0]["O2T90"].ToString();
+                    calstandarddata.COT10 = limiecalibration.Rows[0]["COT10"].ToString();
+                    calstandarddata.HCT10 = limiecalibration.Rows[0]["HCT10"].ToString();
+                    calstandarddata.NOT10 = limiecalibration.Rows[0]["NOT10"].ToString();
+                    calstandarddata.CO2T10 = limiecalibration.Rows[0]["CO2T10"].ToString();
+                    calstandarddata.O2T10 = limiecalibration.Rows[0]["O2T10"].ToString();
+
+                    calstandarddata.Smoke = limiecalibration.Rows[0]["Smoke"].ToString();
+                    calstandarddata.Rev = limiecalibration.Rows[0]["Rev"].ToString();
+                    calstandarddata.Temperature = limiecalibration.Rows[0]["Temperature"].ToString();
+                    calstandarddata.Humidity = limiecalibration.Rows[0]["Humidity"].ToString();
+                    calstandarddata.AirPressure = limiecalibration.Rows[0]["AirPressure"].ToString();
+                    calstandarddata.Coastdown = limiecalibration.Rows[0]["Coastdown"].ToString();
+                    calstandarddata.Torque = limiecalibration.Rows[0]["Torque"].ToString();
+                    calstandarddata.Velocity = limiecalibration.Rows[0]["Velocity"].ToString();
+                    calstandarddata.ParasiticLoss = limiecalibration.Rows[0]["ParasiticLoss"].ToString();
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

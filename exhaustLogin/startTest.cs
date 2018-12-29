@@ -14450,7 +14450,7 @@ namespace exhaustDetect
                                             hthhz1.Add("hscoresult", double.Parse(sdsdata.COHIGHCLZ).ToString("0.0"));
                                             hthhz1.Add("hscojudge", mainPanel.hhzinterface.HhzR_RESULT_PDJG.GetValue(sdsdata.COHIGHPD, ""));
                                             hthhz1.Add("hshclimit", double.Parse(sdsdata.HCHIGHXZ).ToString("0"));
-                                            hthhz1.Add("hshcresult", double.Parse(sdsdata.COHIGHXZ).ToString("0"));
+                                            hthhz1.Add("hshcresult", double.Parse(sdsdata.HCHIGHCLZ).ToString("0"));
                                             hthhz1.Add("hshcjudge", mainPanel.hhzinterface.HhzR_RESULT_PDJG.GetValue(sdsdata.HCHIGHPD, ""));
                                             hthhz1.Add("gdszs", sdsdata.ZSHIGH);
                                             hthhz1.Add("dszs", sdsdata.ZSLOW);
