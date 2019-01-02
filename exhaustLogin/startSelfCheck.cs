@@ -3539,7 +3539,7 @@ namespace exhaustDetect
                         else if(mainPanel.neusoftsocketinf.AREA==mainPanel.NEU_YINGKOU)
                         {
                             NeusoftUtil.AnalyzerO2RangeCheck analyzercalcheckdata = new NeusoftUtil.AnalyzerO2RangeCheck();
-                            analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd");
+                            analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                             analyzercalcheckdata.jckssj = DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss");
                             analyzercalcheckdata.o2lcbz = "20.8";
                             analyzercalcheckdata.o2lcclz = cgjdata.Yqyq;

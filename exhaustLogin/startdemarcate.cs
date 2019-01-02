@@ -2005,7 +2005,7 @@ namespace exhaustDetect
                                             if (analysismeterdata.Bdjg == "合格" || analysismeterdata.Bdjg == "不合格")
                                             {
                                                 NeusoftUtil.LowStandardGasCheck analyzercalcheckdata = new NeusoftUtil.LowStandardGasCheck();
-                                                analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd");
+                                                analyzercalcheckdata.jcrq = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                                                 analyzercalcheckdata.jckssj =DateTime.Parse( analysismeterdata.Starttime).ToString("yyyy-MM-dd HH:mm:ss");
                                                 analyzercalcheckdata.c3h8nd = analysismeterdata.c3h8;
                                                 analyzercalcheckdata.cond = analysismeterdata.Cobz.ToString("0.00");
@@ -2971,7 +2971,7 @@ namespace exhaustDetect
                                             hstb.Add("BDR", mainPanel.nowUser.userName);
                                             hstb.Add("BDLX", BDLX_LLJJC);
                                             hstb.Add("BDSJ", DateTime.Now);
-                                            hstb.Add("BDJG", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            hstb.Add("BDJG", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             hstb.Add("JCZBH", mainPanel.stationid);
                                             hstb.Add("JCGWH", mainPanel.lineid);
                                             hstb.Add("ZT", "0");
@@ -2982,7 +2982,7 @@ namespace exhaustDetect
                                             hstb.Add("DATA5", flowmeterdata.O2dlcbz.ToString("0.0"));
                                             hstb.Add("DATA6", flowmeterdata.O2dlcclz.ToString("0.0"));
                                             hstb.Add("DATA7", flowmeterdata.O2dlcwc.ToString("0.0"));
-                                            hstb.Add("DATA8", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            hstb.Add("DATA8", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             if (mainPanel.conforsql.Insert("设备标定数据", hstb) > 0)
                                             {
                                                 ini.INIIO.saveLogInf("保存流量计标定信息语句成功");
@@ -2999,7 +2999,7 @@ namespace exhaustDetect
                                             hstb.Add("BDR", mainPanel.nowUser.userName);
                                             hstb.Add("BDLX", BDLX_LLJJC);
                                             hstb.Add("BDSJ", DateTime.Now);
-                                            hstb.Add("BDJG", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            hstb.Add("BDJG", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             hstb.Add("JCZBH", mainPanel.stationid);
                                             hstb.Add("JCGWH", mainPanel.lineid);
                                             hstb.Add("ZT", "0");
@@ -3010,7 +3010,7 @@ namespace exhaustDetect
                                             hstb.Add("DATA5", flowmeterdata.O2dlcbz.ToString("0.0"));
                                             hstb.Add("DATA6", flowmeterdata.O2dlcclz.ToString("0.0"));
                                             hstb.Add("DATA7", flowmeterdata.O2dlcwc.ToString("0.0"));
-                                            hstb.Add("DATA8", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            hstb.Add("DATA8", (flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             if (mainPanel.conforsql.Insert("设备标定数据", hstb) > 0)
                                             {
                                                 ini.INIIO.saveLogInf("保存流量计标定信息语句成功");
@@ -3051,7 +3051,7 @@ namespace exhaustDetect
                                             NeusoftUtil.FlowMeterTest flowmetercheckdata = new NeusoftUtil.FlowMeterTest();
                                             flowmetercheckdata.OutlookID = mainPanel.equipmodel.LLJBH;
                                             flowmetercheckdata.BeginTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             flowmetercheckdata.STD_HRangeO2 = flowmeterdata.O2glcbz.ToString("0.0");
                                             flowmetercheckdata.MEA_HRangeO2 = flowmeterdata.O2glcclz.ToString("0.0");
                                             flowmetercheckdata.ERR_HRangeO2 = flowmeterdata.O2glcwc.ToString("0.0");
@@ -3067,7 +3067,7 @@ namespace exhaustDetect
                                         {
                                             NeusoftUtil.FlowO2Cal flowmetercheckdata = new NeusoftUtil.FlowO2Cal();
                                             flowmetercheckdata.StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "0") ? "0" : "1");
+                                            flowmetercheckdata.Result = ((flowmeterdata.Bdjg == "不合格" || flowmeterdata.Bdjg == "-1") ? "0" : "1");
                                             flowmetercheckdata.O2HStandard = flowmeterdata.O2glcbz.ToString("0.0");
                                             flowmetercheckdata.O2HMeasure = flowmeterdata.O2glcclz.ToString("0.0");
                                             flowmetercheckdata.O2HAccuracy = flowmeterdata.O2glcwc.ToString("0.0");

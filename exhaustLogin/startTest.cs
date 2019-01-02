@@ -18575,12 +18575,12 @@ namespace exhaustDetect
             int index = 0;
             if (mainPanel.NetMode == mainPanel.HHZNNETMODE)
             {
-                if (File.Exists(frontpic1) && File.Exists(backpic1))
+                if (File.Exists(frontpic2) && File.Exists(backpic2))
                 {
                     ht.Clear();
                     ht.Add("jcdjbm", carLogin.carbj.JCBGBH);
-                    ht.Add("h_image", PushTxt(frontpic1));
-                    ht.Add("e_image", PushTxt(backpic1));
+                    ht.Add("h_image", PushTxt(frontpic2));
+                    ht.Add("e_image", PushTxt(backpic2));
                     ht.Add("create_date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     try
                     {

@@ -2993,7 +2993,7 @@ namespace NeusoftUtil
             xmldoc.AppendChild(xmlelem);
             XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees> 
             XmlElement xe1 = xmldoc.CreateElement("Request");//创建一个<Node>节点 
-            xe1.SetAttribute("Name", "LowStandardGasCheck");//设置该节点genre属性  
+            xe1.SetAttribute("Name", "FlowO2Cal");//设置该节点genre属性  
             XmlElement xe6 = xmldoc.CreateElement("Row");//创建一个<Node>节点 
             XmlElement StartTime = xmldoc.CreateElement("StartTime");
             StartTime.InnerText = leakdata.StartTime;
