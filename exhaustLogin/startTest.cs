@@ -12616,7 +12616,35 @@ namespace exhaustDetect
                                                 {
                                                     #region 喜邦
                                                     string code, msg;
-                                                   
+                                                    try
+                                                    {
+                                                        int index = 0;
+                                                        for (int i = 1; i < dataseconds.Rows.Count; i++)
+                                                        {
+                                                            DataRow dr = dataseconds.Rows[i];
+                                                            carinfo.XB_BTG_PROCESS_DATA data = new carinfo.XB_BTG_PROCESS_DATA();
+                                                            index++;
+                                                            data.JCFFBH = carLogin.carbj.JCFF;
+                                                            data.JCLSH = carLogin.carbj.JYLSH;
+                                                            data.SJXL = index.ToString();
+                                                            data.State = dr["时序类别"].ToString();
+                                                            data.Sorb = dr["烟度值读数"].ToString();                                                            
+                                                            data.WD = dr["环境温度"].ToString();
+                                                            data.SD = dr["相对湿度"].ToString();
+                                                            data.DQY = dr["大气压力"].ToString();
+                                                            data.Rpm = dr["发动机转速"].ToString();
+                                                            data.JYWD = dr["油温"].ToString();                                                            
+                                                            if (!mainPanel.xbsocket.Send_BTG_PROCESS_DATA(data, out code, out msg))
+                                                            {
+                                                                ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                            }
+                                                        }
+                                                    }
+                                                    catch (Exception er)
+                                                    {
+                                                        MessageBox.Show("发送过程数据命令发生异常:" + er.Message);
+                                                        return;
+                                                    }
                                                     try
                                                     {
                                                         carinfo.XB_RESULT_PUBLIC_DATA pdata = new carinfo.XB_RESULT_PUBLIC_DATA();

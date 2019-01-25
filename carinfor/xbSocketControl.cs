@@ -247,6 +247,19 @@ namespace carinfo
         public string DQY;
         public string PCof;
     }
+    public class XB_BTG_PROCESS_DATA
+    {
+        public string JCFFBH;
+        public string JCLSH;
+        public string SJXL;
+        public string State;
+        public string Sorb;
+        public string Rpm;
+        public string JYWD;
+        public string WD;
+        public string SD;
+        public string DQY;
+    }
     public class XB_RESULT_PUBLIC_DATA
     {
         public string JCFFBH { set; get; }
@@ -2174,6 +2187,9 @@ namespace carinfo
                 XmlElement xe23 = xmldoc.CreateElement("SJXL");
                 XmlElement xe24 = xmldoc.CreateElement("State");
                 XmlElement xe25 = xmldoc.CreateElement("lugdown_data");
+                XmlElement Sorb = xmldoc.CreateElement("Sorb");
+                XmlElement Rpm = xmldoc.CreateElement("Rpm");
+                XmlElement JYWD = xmldoc.CreateElement("JYWD");
                 XmlElement Speed = xmldoc.CreateElement("Speed");
                 XmlElement Force = xmldoc.CreateElement("Force");
                 XmlElement Power = xmldoc.CreateElement("Power");
@@ -2184,6 +2200,9 @@ namespace carinfo
                 XmlElement SD = xmldoc.CreateElement("SD");
                 XmlElement DQY = xmldoc.CreateElement("DQY");
                 XmlElement PCof = xmldoc.CreateElement("PCof");
+                Sorb.InnerText = model.Sorb;
+                Rpm.InnerText = model.Rpm;
+                JYWD.InnerText = model.JYWD;
                 Speed.InnerText = model.Speed;
                 Force.InnerText = model.Force;
                 Power.InnerText = model.Power;
@@ -2194,6 +2213,9 @@ namespace carinfo
                 SD.InnerText = model.SD;
                 DQY.InnerText = model.DQY;
                 PCof.InnerText = model.PCof;
+                xe25.AppendChild(Sorb);
+                xe25.AppendChild(Rpm);
+                xe25.AppendChild(JYWD);
                 xe25.AppendChild(Speed);
                 xe25.AppendChild(Force);
                 xe25.AppendChild(Power);
@@ -2204,6 +2226,97 @@ namespace carinfo
                 xe25.AppendChild(SD);
                 xe25.AppendChild(DQY);
                 xe25.AppendChild(PCof);
+                xe21.InnerText = XB_R_JCFF.GetValue(model.JCFFBH, "");
+                xe22.InnerText = model.JCLSH;
+                xe23.InnerText = model.SJXL;
+                xe24.InnerText = model.State;
+                xe2.AppendChild(xe21);
+                xe2.AppendChild(xe22);
+                xe2.AppendChild(xe23);
+                xe2.AppendChild(xe24);
+                xe2.AppendChild(xe25);
+                root.AppendChild(xe2);
+                //socket.Send(ConvertXmlToString(xmldoc));
+                if (SendData(socket, ConvertXmlToString(xmldoc)) < 0)
+                {
+                    result = "-1";
+                    info = "Send Failure";
+                    return false;
+                }
+                Thread.Sleep(100);
+                byte[] buffer = new byte[10 * 1024];
+                string receivedString = "";
+                if (RecvData(socket, out receivedString) > 0)
+                {
+                    DataSet ds = new DataSet();
+                    StringReader stream = new StringReader(receivedString);
+                    XmlTextReader reader = new XmlTextReader(stream);
+                    ds.ReadXml(reader);
+                    DataTable dt1 = ds.Tables["head"];
+                    result = dt1.Rows[0]["code"].ToString();
+                    info = dt1.Rows[0]["info"].ToString();
+                    if (result == "1")
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    result = "-1";
+                    info = "no answer";
+                    return false;
+                }
+            }
+            catch (Exception er)
+            {
+                result = "-1";
+                info = er.Message;
+                return false;
+            }
+        }
+        public bool Send_BTG_PROCESS_DATA(XB_BTG_PROCESS_DATA model, out string result, out string info)
+        {
+            //socket.Connect(point);
+            result = "0";
+            info = "";
+            try
+            {
+                XmlDocument xmldoc, xlmrecivedoc;
+                XmlNode xmlnode;
+                XmlElement xmlelem;
+                xmldoc = new XmlDocument();
+                xmlelem = xmldoc.CreateElement("", "root", "");
+                xmldoc.AppendChild(xmlelem);
+                XmlNode root = xmldoc.SelectSingleNode("root");//查找<Employees> 
+                XmlElement xe1 = xmldoc.CreateElement("head");//创建一个<Node>节点 
+                XmlElement xe101 = xmldoc.CreateElement("cmd");//创建一个<Node>节点 
+                xe101.InnerText = "TEST_PROCESS_DATA";
+                xe1.AppendChild(xe101);
+                root.AppendChild(xe1);
+                XmlElement xe2 = xmldoc.CreateElement("body");
+                XmlElement xe21 = xmldoc.CreateElement("JCFFBH");//创建一个<Node>节点 
+                XmlElement xe22 = xmldoc.CreateElement("JCLSH");
+                XmlElement xe23 = xmldoc.CreateElement("SJXL");
+                XmlElement xe24 = xmldoc.CreateElement("State");
+                XmlElement xe25 = xmldoc.CreateElement("free_acceleration_opaque");
+                XmlElement Sorb = xmldoc.CreateElement("Sorb");
+                XmlElement Rpm = xmldoc.CreateElement("Rpm");
+                XmlElement JYWD = xmldoc.CreateElement("JYWD");
+                XmlElement WD = xmldoc.CreateElement("WD");
+                XmlElement SD = xmldoc.CreateElement("SD");
+                XmlElement DQY = xmldoc.CreateElement("DQY");
+                Sorb.InnerText = model.Sorb;
+                Rpm.InnerText = model.Rpm;
+                JYWD.InnerText = model.JYWD;
+                WD.InnerText = model.WD;
+                SD.InnerText = model.SD;
+                DQY.InnerText = model.DQY;
+                xe25.AppendChild(Sorb);
+                xe25.AppendChild(Rpm);
+                xe25.AppendChild(JYWD);
+                xe25.AppendChild(WD);
+                xe25.AppendChild(SD);
+                xe25.AppendChild(DQY);
                 xe21.InnerText = XB_R_JCFF.GetValue(model.JCFFBH, "");
                 xe22.InnerText = model.JCLSH;
                 xe23.InnerText = model.SJXL;
