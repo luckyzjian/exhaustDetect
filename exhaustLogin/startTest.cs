@@ -16011,13 +16011,14 @@ namespace exhaustDetect
                                                     List<string> h_t_yw = new List<string>();
                                                     try
                                                     {
+                                                        int index = 0;
                                                         for (int i = 1; i < dataseconds.Rows.Count; i++)
                                                         {
                                                             DataRow dr = dataseconds.Rows[i];
                                                             carinfo.XB_SDS_PROCESS_DATA data = new carinfo.XB_SDS_PROCESS_DATA();
                                                             data.JCFFBH = carLogin.carbj.JCFF;
                                                             data.JCLSH = carLogin.carbj.JYLSH;
-                                                            data.SJXL = i.ToString();
+                                                            data.SJXL = index.ToString();
                                                             data.State = dr["时序类别"].ToString();
                                                             data.HC = dr["HC"].ToString();
                                                             data.CO = dr["CO"].ToString();
@@ -16069,10 +16070,14 @@ namespace exhaustDetect
                                                                 h_t_zs.Add(data.Rpm);
                                                                 h_t_yw.Add(data.JYWD);
                                                                 h_t_count++;
-                                                            }                                                       
-                                                            if (!mainPanel.xbsocket.Send_SDS_PROCESS_DATA(data, out code, out msg))
+                                                            }
+                                                            if (data.State != "0")
                                                             {
-                                                                ini.INIIO.saveLogInf("发送过程数据[" + i.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                                if (!mainPanel.xbsocket.Send_SDS_PROCESS_DATA(data, out code, out msg))
+                                                                {
+                                                                    ini.INIIO.saveLogInf("发送过程数据[" + index.ToString() + "]命令失败,code" + code + ",msg:" + msg);
+                                                                }
+                                                                index++;
                                                             }
                                                         }
                                                     }
