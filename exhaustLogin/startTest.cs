@@ -3933,7 +3933,13 @@ namespace exhaustDetect
                                                             return;
                                                         }
                                                         if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, false, ht, out errmsg))
+                                                        {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
+
+                                                            asmdal.Save_ASM(asmdata);
+                                                            ini.INIIO.saveSocketLogInf("保存检测结果信息");
+                                                            enableButton(buttonOK, false);
+                                                        }
                                                         else
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测过程数据失败\r\n错误信息：" + errmsg);
@@ -5696,6 +5702,7 @@ namespace exhaustDetect
                                 vmas_data = vmasdatacontrol.readVmasData(newPath);
                                 if (vmas_data.Cozl == "-1")
                                 {
+                                    #region 检测终止
                                     Msg(label1, panel4, "设备未完成检测退出,无检测结果数据");
                                     mainPanel.ts1 = "设备未完成检测退出";
                                     mainPanel.ts2 = "无检测结果数据";
@@ -5714,7 +5721,7 @@ namespace exhaustDetect
                                         }
                                         if (mainPanel.NetMode == mainPanel.NEUSOFTNETMODE)
                                         {
-                                                NeusoftUtil.UploadVmasResult vmasresult = new NeusoftUtil.UploadVmasResult();
+                                            NeusoftUtil.UploadVmasResult vmasresult = new NeusoftUtil.UploadVmasResult();
                                             vmasresult.OutlookID = carLogin.outLookID;
                                             vmasresult.Temperature = "";
                                             vmasresult.AirPressure = "";
@@ -5862,7 +5869,7 @@ namespace exhaustDetect
                                             {
                                                 mainPanel.yichangInterface.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
-                                            else 
+                                            else
                                             {
                                                 mainPanel.yichangInterfaceOther.sendMessage(carLogin.carbj.JYLSH, mainPanel.zkytwebinf.regcode, "04", "");
                                             }
@@ -5908,9 +5915,11 @@ namespace exhaustDetect
                                     mainPanel.worklogdata.Date = DateTime.Now;
                                     mainPanel.worklogdata.Bzsm = "";
                                     mainPanel.demarcatecontrol.saveWordLogByIni(mainPanel.worklogdata);
+                                    #endregion
                                 }
                                 else
                                 {
+                                    #region 检测有效
                                     ini.INIIO.saveLogInf("检测完成，检测结果数据有效");
                                     Msg(labelStatus, panelStatus, "检测完成");
                                     mainPanel.ts1 = "检测完成";
@@ -6074,9 +6083,9 @@ namespace exhaustDetect
                                                 }
                                             }
                                         }
-                                        else if(mainPanel.isNetUsed&&mainPanel.NetMode==mainPanel.JINGHUANETMODE)
+                                        else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JINGHUANETMODE)
                                         {
-                                            
+
                                             if (vmasResultPd(vmas_data) == true)
                                             {
                                                 ini.INIIO.saveLogInf("金华联网信息：本地判定结果合格");
@@ -6300,7 +6309,7 @@ namespace exhaustDetect
                                                 mainPanel.webthread.businessId = carLogin.carbj.JYLSH;
                                                 mainPanel.webthread.registCode = mainPanel.zkytwebinf.regcode;
                                                 mainPanel.webthread.bgCO = 0.0;
-                                                mainPanel.webthread.bgNO =0;
+                                                mainPanel.webthread.bgNO = 0;
                                                 mainPanel.webthread.bgHC = 0;
 
                                                 mainPanel.webthread.canliuHC = double.Parse(vmas_data.ResidualHC);
@@ -6313,9 +6322,9 @@ namespace exhaustDetect
                                                 ThreadStart threadstart = new ThreadStart(mainPanel.webthread.sendAirHC);
                                                 Thread thread = new Thread(threadstart);
                                                 ini.INIIO.saveLogInf("开始上传HC残留，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH+ ","
+                                                ini.INIIO.saveLogInf("mainPanel.yichangInterface.bgAirHC(" + carLogin.carbj.JYLSH + ","
                                                     + mainPanel.zkytwebinf.regcode + ","
-                                                    + 0.0+ ","
+                                                    + 0.0 + ","
                                                     + 0 + ","
                                                     + 0 + ","
                                                     + 0 + ","
@@ -6366,7 +6375,7 @@ namespace exhaustDetect
                                             {
                                                 ini.INIIO.saveLogInf("过程数据记录有" + dataseconds.Rows.Count.ToString() + "数据");
                                                 ini.INIIO.saveLogInf("开始上传检测过程数据，time=" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                                                
+
                                                 try
                                                 {
                                                     int timecount = dataseconds.Rows.Count - 1;
@@ -6508,7 +6517,7 @@ namespace exhaustDetect
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["相对湿度"].ToString()), 1).ToString() + "," +
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["稀释修正系数"].ToString()), 3).ToString() + "," +
                                                                 Math.Round(double.Parse(dataseconds.Rows[i]["湿度修正系数"].ToString()), 3).ToString() + "," +
-                                                                Math.Round(double.Parse(dataseconds.Rows[i]["稀释比"].ToString()), 3).ToString()  + ")");
+                                                                Math.Round(double.Parse(dataseconds.Rows[i]["稀释比"].ToString()), 3).ToString() + ")");
                                                         }
                                                         Thread.Sleep(10);
                                                     }
@@ -6618,59 +6627,59 @@ namespace exhaustDetect
                                             #region 读取平台判定结果   
                                             if (mainPanel.zkytwebinf.displayCheckResult)
                                                 try
-                                            {
-                                                string result, info;
-                                                string zkytvmasbefore;
-                                                string valueCO = ""; string valueHC = ""; string valueNO = ""; string valueHCNO = ""; string valueCOLimit = ""; string valueHCLimit = ""; string valueNOLimit = "";
-                                                string valueHCNOLimit = ""; string valueCOResult = ""; string valueHCResult = ""; string valueNOResult = ""; string valueHCNOResult = ""; string result1 = "";
+                                                {
+                                                    string result, info;
+                                                    string zkytvmasbefore;
+                                                    string valueCO = ""; string valueHC = ""; string valueNO = ""; string valueHCNO = ""; string valueCOLimit = ""; string valueHCLimit = ""; string valueNOLimit = "";
+                                                    string valueHCNOLimit = ""; string valueCOResult = ""; string valueHCResult = ""; string valueNOResult = ""; string valueHCNOResult = ""; string result1 = "";
 
-                                                if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
-                                                {
-                                                    mainPanel.xmlanalysis.ReadVmasCheckResultString(mainPanel.yichangInterface.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
-                                                    out valueCO, out valueHC, out valueNO, out valueHCNO, out valueCOLimit, out valueHCLimit, out valueNOLimit, out valueHCNOLimit, out valueCOResult, out valueHCResult, out valueNOResult, out valueHCNOResult, out result1, out zkytvmasbefore);
-                                                }
-                                                else
-                                                {
-                                                    mainPanel.xmlanalysis.ReadVmasCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
-                                                       out valueCO, out valueHC, out valueNO, out valueHCNO, out valueCOLimit, out valueHCLimit, out valueNOLimit, out valueHCNOLimit, out valueCOResult, out valueHCResult, out valueNOResult, out valueHCNOResult, out result1, out zkytvmasbefore);
-                                                }
-                                                if (result == "1")
-                                                {
-                                                    vmasdata.BEFORE = zkytvmasbefore;
-                                                    vmasdata.COXZ = valueCOLimit;
-                                                    vmasdata.COPD = valueCOResult;
-                                                    vmasdata.HCPD = valueHCResult;
-                                                    if (zkytvmasbefore == "Y")
+                                                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD)
                                                     {
-                                                        vmasdata.HCXZ = valueHCLimit;
-                                                        vmasdata.NOXXZ = valueNOLimit;
-                                                        vmasdata.HCPD = valueHCResult;
-                                                        vmasdata.NOXPD = valueNOResult;
+                                                        mainPanel.xmlanalysis.ReadVmasCheckResultString(mainPanel.yichangInterface.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
+                                                        out valueCO, out valueHC, out valueNO, out valueHCNO, out valueCOLimit, out valueHCLimit, out valueNOLimit, out valueHCNOLimit, out valueCOResult, out valueHCResult, out valueNOResult, out valueHCNOResult, out result1, out zkytvmasbefore);
                                                     }
                                                     else
                                                     {
-                                                        vmasdata.HCXZ = valueHCNOLimit;
-                                                        vmasdata.NOXXZ = valueHCNOLimit;
-                                                        vmasdata.HCPD = valueHCNOResult;
-                                                        vmasdata.NOXPD = valueHCNOResult;
+                                                        mainPanel.xmlanalysis.ReadVmasCheckResultString(mainPanel.yichangInterfaceOther.getCheckResult(mainPanel.zkytwebinf.regcode, carLogin.carbj.JYLSH), out result, out info,
+                                                           out valueCO, out valueHC, out valueNO, out valueHCNO, out valueCOLimit, out valueHCLimit, out valueNOLimit, out valueHCNOLimit, out valueCOResult, out valueHCResult, out valueNOResult, out valueHCNOResult, out result1, out zkytvmasbefore);
                                                     }
-                                                    vmasdata.ZHPD = result1;
+                                                    if (result == "1")
+                                                    {
+                                                        vmasdata.BEFORE = zkytvmasbefore;
+                                                        vmasdata.COXZ = valueCOLimit;
+                                                        vmasdata.COPD = valueCOResult;
+                                                        vmasdata.HCPD = valueHCResult;
+                                                        if (zkytvmasbefore == "Y")
+                                                        {
+                                                            vmasdata.HCXZ = valueHCLimit;
+                                                            vmasdata.NOXXZ = valueNOLimit;
+                                                            vmasdata.HCPD = valueHCResult;
+                                                            vmasdata.NOXPD = valueNOResult;
+                                                        }
+                                                        else
+                                                        {
+                                                            vmasdata.HCXZ = valueHCNOLimit;
+                                                            vmasdata.NOXXZ = valueHCNOLimit;
+                                                            vmasdata.HCPD = valueHCNOResult;
+                                                            vmasdata.NOXPD = valueHCNOResult;
+                                                        }
+                                                        vmasdata.ZHPD = result1;
+                                                    }
+                                                    else
+                                                    {
+                                                        ini.INIIO.saveLogInf("读取平台结果指令失败:" + info);
+                                                        Msg(label1, panel4, "读取平台结果指令失败:" + info);
+                                                        MessageBox.Show(info);
+                                                        return;
+                                                    }
                                                 }
-                                                else
+                                                catch (Exception er)
                                                 {
-                                                    ini.INIIO.saveLogInf("读取平台结果指令失败:" + info);
-                                                    Msg(label1, panel4, "读取平台结果指令失败:" + info);
-                                                    MessageBox.Show(info);
+                                                    ini.INIIO.saveLogInf("读取平台结果指令异常:" + er.Message);
+                                                    Msg(label1, panel4, "读取平台结果指令异常:" + er.Message);
+                                                    MessageBox.Show("读取平台结果指令异常:" + er.Message);
                                                     return;
                                                 }
-                                            }
-                                            catch (Exception er)
-                                            {
-                                                ini.INIIO.saveLogInf("读取平台结果指令异常:" + er.Message);
-                                                Msg(label1, panel4, "读取平台结果指令异常:" + er.Message);
-                                                MessageBox.Show("读取平台结果指令异常:" + er.Message);
-                                                return;
-                                            }                                         
                                             #endregion
                                             #region 显示结果
                                             isCsvAlive = "逐秒数据上传成功";
@@ -6712,7 +6721,7 @@ namespace exhaustDetect
                                             if (vmasResultPd(vmas_data) == true)
                                             {
                                                 ini.INIIO.saveLogInf("检测结果：合格");
-                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE||mainPanel.NetMode==mainPanel.XBNETMODE))
+                                                if (mainPanel.isNetUsed && (mainPanel.NetMode == mainPanel.JXNETMODE || mainPanel.NetMode == mainPanel.HNNETMODE || mainPanel.NetMode == mainPanel.XBNETMODE))
                                                 {
                                                     Msg(label1, panel4, "车辆检测合格,正在上传结果数据...");
                                                 }
@@ -6767,10 +6776,10 @@ namespace exhaustDetect
                                                 teststate.JCFF = carLogin.carbj.JCFF;
                                                 mainPanel.logininfcontrol.Save_TestState(teststate);
                                             }
-                                            else if (mainPanel.isNetUsed&&mainPanel.NetMode == mainPanel.JXNETMODE)
+                                            else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.JXNETMODE)
                                             {
                                                 string code, msg;
-                                                
+
                                                 int startindex = 1;
                                                 if (dataseconds.Rows.Count > 195) startindex = dataseconds.Rows.Count - 195;
                                                 for (int i = 1; i < dataseconds.Rows.Count; i++)
@@ -6778,8 +6787,8 @@ namespace exhaustDetect
                                                     DataRow dr = dataseconds.Rows[i];
                                                     jxVmasProcessData processdata = new jxVmasProcessData(
                                                         dr["全程时序"].ToString(),
-                                                        
-                                                        (i>=startindex)?"2":"1",
+
+                                                        (i >= startindex) ? "2" : "1",
                                                         i.ToString(),
                                                         dr["发动机转速"].ToString(),
                                                          dr["HC实时值"].ToString(),
@@ -6821,18 +6830,18 @@ namespace exhaustDetect
                                                     vmasdata.WD,
                                                     vmasdata.DQY,
                                                     vmasdata.SD,
-                                                    vmasdata.BEFORE=="Y"?vmasdata.HCXZ:"",
+                                                    vmasdata.BEFORE == "Y" ? vmasdata.HCXZ : "",
                                                     vmasdata.COXZ,
                                                     vmasdata.BEFORE == "Y" ? vmasdata.NOXXZ : "",
                                                     vmasdata.BEFORE == "N" ? vmasdata.HCXZ : "",
                                                     vmasdata.HCZL,
                                                     vmasdata.COZL,
                                                     vmasdata.NOXZL,
-                                                    Math.Round(double.Parse(vmasdata.HCZL)+double.Parse(vmasdata.NOXZL),2).ToString("0.00"),
-                                                    vmasdata.BEFORE == "Y" ? (vmasdata.HCPD == "不合格" ? "0" : "1"):"",
+                                                    Math.Round(double.Parse(vmasdata.HCZL) + double.Parse(vmasdata.NOXZL), 2).ToString("0.00"),
+                                                    vmasdata.BEFORE == "Y" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
                                                     vmasdata.COPD == "不合格" ? "0" : "1",
-                                                    vmasdata.BEFORE == "Y" ? (vmasdata.NOXPD == "不合格" ? "0" : "1"):"",
-                                                    vmasdata.BEFORE == "N" ? (vmasdata.HCPD == "不合格" ? "0" : "1"):"",
+                                                    vmasdata.BEFORE == "Y" ? (vmasdata.NOXPD == "不合格" ? "0" : "1") : "",
+                                                    vmasdata.BEFORE == "N" ? (vmasdata.HCPD == "不合格" ? "0" : "1") : "",
                                                     jcsj.ToString("yyyy-MM-dd HH:mm:ss"),
                                                     jssj.ToString("yyyy-MM-dd HH:mm:ss")
                                                     );
@@ -6848,12 +6857,12 @@ namespace exhaustDetect
                                                     ini.INIIO.saveLogInf("江西联网信息：finish上传服务器失败");
                                                     return;
                                                 }
-                                                Msg(label1, panel4,"车辆检测"+vmasdata.ZHPD+ ",上传完毕");
+                                                Msg(label1, panel4, "车辆检测" + vmasdata.ZHPD + ",上传完毕");
                                             }
                                             else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.XBNETMODE)
                                             {
                                                 string code, msg;
-                                                string hjo2="";
+                                                string hjo2 = "";
                                                 List<string> colist = new List<string>();
                                                 List<string> hclist = new List<string>();
                                                 List<string> nolist = new List<string>();
@@ -6894,7 +6903,7 @@ namespace exhaustDetect
                                                         data.JCLSH = carLogin.carbj.JYLSH;
                                                         data.SJXL = (i - startindex + 1).ToString();
                                                         if (i - startindex + 1 <= 28) data.State = "1";
-                                                        else if(i - startindex + 1 <= 96) data.State = "2";
+                                                        else if (i - startindex + 1 <= 96) data.State = "2";
                                                         else data.State = "3";
                                                         data.HC = dr["HC实时值"].ToString();
                                                         data.CO = dr["CO实时值"].ToString();
@@ -6980,7 +6989,7 @@ namespace exhaustDetect
                                                     data.VmasNO = vmasdata.NOXZL;
                                                     data.TestKilomter = vmasdata.XSLC;
                                                     data.CurveCount = "195";
-                                                    data.BJO2 =hjo2;
+                                                    data.BJO2 = hjo2;
                                                     data.COCurve = string.Join(",", colist);
                                                     data.HCCurve = string.Join(",", hclist);
                                                     data.NOCurve = string.Join(",", nolist);
@@ -7007,7 +7016,7 @@ namespace exhaustDetect
                                                     data.HCZLCurve = string.Join(",", hczllist);
                                                     data.COZLCurve = string.Join(",", cozllist);
                                                     data.NOZLCurve = string.Join(",", nozllist);
-                                                    
+
                                                     if (!mainPanel.xbsocket.Send_TEST_RESULT_DATA(pdata, data, out code, out msg))
                                                     {
                                                         ini.INIIO.saveLogInf("发送结果数据命令失败,code" + code + ",msg:" + msg);
@@ -7042,6 +7051,7 @@ namespace exhaustDetect
                                         isCsvAlive = "逐秒数据读取失败";
                                         Msg(label1, panel4, "未找到过程数据，检测无效");
                                     }
+                                    #endregion
                                 }
                                 File.Delete(newPath);
                                 break;
@@ -8126,7 +8136,13 @@ namespace exhaustDetect
                                                             ht.Add(htchild);
                                                         }
                                                         if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, false, ht, out errmsg))
+                                                        {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
+
+                                                            jzjsdal.Save_JZJS(jzjsdata);
+                                                            ini.INIIO.saveSocketLogInf("保存检测结果信息");
+                                                            enableButton(buttonOK, false);
+                                                        }
                                                         else
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测过程数据失败\r\n错误信息：" + errmsg);
@@ -11184,7 +11200,13 @@ namespace exhaustDetect
                                                     ht[0].Add("ED", pdjg);
 
                                                     if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
+                                                    {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
+
+                                                        zyjsdal.Save_Zyjs_Btg(zyjsdata);
+                                                        ini.INIIO.saveSocketLogInf("保存检测结果信息");
+                                                        enableButton(buttonOK, false);
+                                                    }
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
@@ -12961,7 +12983,13 @@ namespace exhaustDetect
                                                     ht[0].Add("ED", pdjg);
 
                                                     if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
+                                                    {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
+
+                                                        zyjsdal.Save_Zyjs_Btg(zyjsdata);
+                                                        ini.INIIO.saveSocketLogInf("保存检测结果信息");
+                                                        enableButton(buttonOK, false);
+                                                    }
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
@@ -14318,7 +14346,13 @@ namespace exhaustDetect
                                                     ht[0].Add("HIHCD", sdsdata.HCHIGHPD == "合格" ? "1" : "0");
 
                                                     if (mainPanel.pninterface.UploadTestData(carLogin.carbj.JCFF, true, ht, out errmsg))
+                                                    {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
+
+                                                        sdsdal.Save_SDS(sdsdata);
+                                                        ini.INIIO.saveSocketLogInf("保存检测结果信息");
+                                                        enableButton(buttonOK, false);
+                                                    }
                                                     else
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "发送平南联网检测结果失败\r\n错误信息：" + errmsg);
