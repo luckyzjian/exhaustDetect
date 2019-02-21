@@ -1547,23 +1547,30 @@ namespace carinfo
 
                     if (result == "1")
                     {
-                        dt1 = ds.Tables["reg_car"];
-                        for (int i = 0; i < dt1.Rows.Count; i++)
+                        if (ds.Tables.Contains("reg_car"))
                         {
-                            XB_CARLIST carlist = new XB_CARLIST();
-                            carlist.JCLSH = dt1.Rows[i]["JCLSH"].ToString();
-                            carlist.JCCS = dt1.Rows[i]["JCCS"].ToString();
-                            carlist.HPHM = dt1.Rows[i]["HPHM"].ToString();
-                            carlist.HPZLBH = dt1.Rows[i]["HPZLBH"].ToString();
-                            carlist.HPZL = dt1.Rows[i]["HPZL"].ToString();
-                            carlist.JCFFBH = XB_JCFF.GetValue(dt1.Rows[i]["JCFFBH"].ToString(), "");
-                            carlist.JCFF = dt1.Rows[i]["JCFF"].ToString();
-                            carlist.JCLB = dt1.Rows[i]["JCLB"].ToString();
-                            carlist.JCRLZL = XB_RLZL.GetValue(dt1.Rows[i]["JCRLZL"].ToString(), "");
-                            carlist.TMBH = dt1.Rows[i]["TMBH"].ToString();
-                            model.Add(carlist);
+                            dt1 = ds.Tables["reg_car"];
+                            for (int i = 0; i < dt1.Rows.Count; i++)
+                            {
+                                XB_CARLIST carlist = new XB_CARLIST();
+                                carlist.JCLSH = dt1.Rows[i]["JCLSH"].ToString();
+                                carlist.JCCS = dt1.Rows[i]["JCCS"].ToString();
+                                carlist.HPHM = dt1.Rows[i]["HPHM"].ToString();
+                                carlist.HPZLBH = dt1.Rows[i]["HPZLBH"].ToString();
+                                carlist.HPZL = dt1.Rows[i]["HPZL"].ToString();
+                                carlist.JCFFBH = XB_JCFF.GetValue(dt1.Rows[i]["JCFFBH"].ToString(), "");
+                                carlist.JCFF = dt1.Rows[i]["JCFF"].ToString();
+                                carlist.JCLB = dt1.Rows[i]["JCLB"].ToString();
+                                carlist.JCRLZL = XB_RLZL.GetValue(dt1.Rows[i]["JCRLZL"].ToString(), "");
+                                carlist.TMBH = dt1.Rows[i]["TMBH"].ToString();
+                                model.Add(carlist);
+                            }
+                            return true;
                         }
-                        return true;
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else
                         return false;

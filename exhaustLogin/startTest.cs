@@ -16035,7 +16035,7 @@ namespace exhaustDetect
                                                                 //h_p_lmd.Add(data.Lmd);
                                                                 l_p_zs.Add(data.Rpm);
                                                                 l_p_yw.Add(data.JYWD);
-                                                                l_p_count = 0;
+                                                                l_p_count++;
                                                             }
                                                             else if (data.State == "2")
                                                             {
@@ -16046,7 +16046,7 @@ namespace exhaustDetect
                                                                 //h_p_lmd.Add(data.Lmd);
                                                                 l_t_zs.Add(data.Rpm);
                                                                 l_t_yw.Add(data.JYWD);
-                                                                l_t_count = 0;
+                                                                l_t_count++;
                                                             }
                                                             else if (data.State == "3")
                                                             {
@@ -16057,7 +16057,7 @@ namespace exhaustDetect
                                                                 h_p_lmd.Add(data.Lmd);
                                                                 h_p_zs.Add(data.Rpm);
                                                                 h_p_yw.Add(data.JYWD);
-                                                                h_p_count = 0;
+                                                                h_p_count++;
                                                             }
                                                             else if (data.State == "4")
                                                             {
@@ -16068,7 +16068,7 @@ namespace exhaustDetect
                                                                 h_t_lmd.Add(data.Lmd);
                                                                 h_t_zs.Add(data.Rpm);
                                                                 h_t_yw.Add(data.JYWD);
-                                                                h_t_count = 0;
+                                                                h_t_count++;
                                                             }                                                       
                                                             if (!mainPanel.xbsocket.Send_SDS_PROCESS_DATA(data, out code, out msg))
                                                             {
