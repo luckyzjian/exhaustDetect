@@ -1147,7 +1147,7 @@ namespace exhaustDetect
                             dr = dt_wait.NewRow();
                             dr["检测编号"] = dR["InspectionNum"].ToString();
                             dr["车牌号"] = dR["VLPN"].ToString();
-                            dr["检测类型"] = mainPanel.pninterface.PN_inspectionnature.GetValue(dt.Rows[0]["InspectionNature"].ToString(), "");
+                            dr["检测类型"] = mainPanel.pninterface.PN_inspectionnature.GetValue(dR["InspectionNature"].ToString(), "");
                             dr["登录时间"] = dR["AcceptanceDate"].ToString();
                             dr["登录员"] = dR["Operator"].ToString();
                             switch (mainPanel.pninterface.PN_inspectionmethod.GetValue(dR["InspectionMethod"].ToString(), ""))
