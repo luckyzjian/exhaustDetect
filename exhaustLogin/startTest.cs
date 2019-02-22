@@ -3936,6 +3936,10 @@ namespace exhaustDetect
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
 
+                                                            if (pdjg == "1")
+                                                                saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
+                                                            else
+                                                                saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                             asmdal.Save_ASM(asmdata);
                                                             ini.INIIO.saveSocketLogInf("保存检测结果信息");
                                                             enableButton(buttonOK, false);
@@ -8139,6 +8143,10 @@ namespace exhaustDetect
                                                         {
                                                             ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "过程数据发送成功，检测完成");
 
+                                                            if (pdjg == "1")
+                                                                saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
+                                                            else
+                                                                saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                             jzjsdal.Save_JZJS(jzjsdata);
                                                             ini.INIIO.saveSocketLogInf("保存检测结果信息");
                                                             enableButton(buttonOK, false);
@@ -11203,6 +11211,10 @@ namespace exhaustDetect
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
 
+                                                        if (pdjg == "1")
+                                                            saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
+                                                        else
+                                                            saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                         zyjsdal.Save_Zyjs_Btg(zyjsdata);
                                                         ini.INIIO.saveSocketLogInf("保存检测结果信息");
                                                         enableButton(buttonOK, false);
@@ -14349,6 +14361,10 @@ namespace exhaustDetect
                                                     {
                                                         ini.INIIO.saveLogInf("JYLSH:" + carLogin.carbj.JYLSH + "|ECRYPT:" + carLogin.carbj.ECRYPT + "结果发送成功，检测完成");
 
+                                                        if (pdjg == "1")
+                                                            saveBjclInf(carLogin.modelbj, carLogin.carbj, "合格");
+                                                        else
+                                                            saveBjclInf(carLogin.modelbj, carLogin.carbj, "不合格");
                                                         sdsdal.Save_SDS(sdsdata);
                                                         ini.INIIO.saveSocketLogInf("保存检测结果信息");
                                                         enableButton(buttonOK, false);
