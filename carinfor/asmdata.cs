@@ -748,11 +748,11 @@ namespace carinfor
                     asm_data.BackgroundNO = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("检测结果", "背景O2", "20.8", temp, 2048, filePath);
                     asm_data.BackgroundO2 = temp.ToString();
-                    ini.INIIO.GetPrivateProfileString("检测结果", "5025加载功率", "", temp, 2048, filePath);
+                    ini.INIIO.GetPrivateProfileString("检测结果", "5025加载功率", "0", temp, 2048, filePath);
                     asm_data.Power5025 = temp.ToString();
-                    ini.INIIO.GetPrivateProfileString("检测结果", "5025转速结果", "", temp, 2048, filePath);
+                    ini.INIIO.GetPrivateProfileString("检测结果", "5025转速结果", "0", temp, 2048, filePath);
                     asm_data.Rev5025 = temp.ToString();
-                    ini.INIIO.GetPrivateProfileString("检测结果", "5025lambda值", "", temp, 2048, filePath);
+                    ini.INIIO.GetPrivateProfileString("检测结果", "5025lambda值", "0", temp, 2048, filePath);
                     asm_data.Lambda5025 = temp.ToString();
                     ini.INIIO.GetPrivateProfileString("检测结果", "2540加载功率", "0", temp, 2048, filePath);
                     asm_data.Power2540 = temp.ToString();

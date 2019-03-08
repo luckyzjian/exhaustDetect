@@ -1239,6 +1239,60 @@ namespace exhaustDetect
                                 out ackresult,
                                 out errormessage);
                             }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.cgjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    cgjdata.Hvitualtime,
+                                    cgjdata.Hrealtime,
+                                    cgjdata.Lvitualtime,
+                                    cgjdata.Lrealtime,
+                                    cgjdata.Hpower,
+                                    cgjdata.Lpower,
+                                   (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.cgjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    cgjdata.Hvitualtime,
+                                    cgjdata.Hrealtime,
+                                    cgjdata.Lvitualtime,
+                                    cgjdata.Lrealtime,
+                                    cgjdata.Hpower,
+                                    cgjdata.Lpower,
+                                   (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceLncy.cgjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    cgjdata.Hvitualtime,
+                                    cgjdata.Hrealtime,
+                                    cgjdata.Lvitualtime,
+                                    cgjdata.Lrealtime,
+                                    cgjdata.Hpower,
+                                    cgjdata.Lpower,
+                                   (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
                             else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
@@ -1617,6 +1671,63 @@ namespace exhaustDetect
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.ydjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    "1",
+                                    cgjdata.LabelValueN50,
+                                    cgjdata.LabelValueN70,
+                                    cgjdata.N501,
+                                    cgjdata.N701,
+                                    cgjdata.Error501,
+                                    cgjdata.Error701,
+                                   cgjdata.Zjjg == "通过" ? "1" : "0",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.ydjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    "1",
+                                    cgjdata.LabelValueN50,
+                                    cgjdata.LabelValueN70,
+                                    cgjdata.N501,
+                                    cgjdata.N701,
+                                    cgjdata.Error501,
+                                    cgjdata.Error701,
+                                   cgjdata.Zjjg == "通过" ? "1" : "0",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.ydjSelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                    "1",
+                                    cgjdata.LabelValueN50,
+                                    cgjdata.LabelValueN70,
+                                    cgjdata.N501,
+                                    cgjdata.N701,
+                                    cgjdata.Error501,
+                                    cgjdata.Error701,
+                                   cgjdata.Zjjg == "通过" ? "1" : "0",
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceLncy.ydjSelfcheck(
                                     mainPanel.zkytwebinf.regcode,
                                     "1",
                                     cgjdata.LabelValueN50,
@@ -2168,6 +2279,48 @@ namespace exhaustDetect
                                   out ackresult,
                                   out errormessage);
                             }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                  mainPanel.yichangInterfaceJz.lljSelfcheck(
+                                      mainPanel.zkytwebinf.regcode,
+                                      cgjdata.lljsjll,
+                                      double.Parse(cgjdata.Lljo2),
+                                      cgjdata.CheckResult,
+                                      DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      ""),
+                                  out ackresult,
+                                  out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                  mainPanel.yichangInterfaceJz.lljSelfcheck(
+                                      mainPanel.zkytwebinf.regcode,
+                                      cgjdata.lljsjll,
+                                      double.Parse(cgjdata.Lljo2),
+                                      cgjdata.CheckResult,
+                                      DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      ""),
+                                  out ackresult,
+                                  out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                  mainPanel.yichangInterfaceLncy.lljSelfcheck(
+                                      mainPanel.zkytwebinf.regcode,
+                                      cgjdata.lljsjll,
+                                      double.Parse(cgjdata.Lljo2),
+                                      cgjdata.CheckResult,
+                                      DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                      ""),
+                                  out ackresult,
+                                  out errormessage);
+                            }
                             ini.INIIO.saveLogInf("联网信息：lljSelfcheck(" +"\r\n"+
                                 mainPanel.zkytwebinf.regcode + ",\r\n" +
                                     cgjdata.lljsjll.ToString("0.0") + ",\r\n" +
@@ -2518,6 +2671,57 @@ namespace exhaustDetect
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                     mainPanel.yichangInterfaceOther.hjcsgyqSelfcheck(
+                                        mainPanel.zkytwebinf.regcode,
+                                         cgjdata.ActualTemperature,
+                                         cgjdata.Temperature,
+                                         cgjdata.ActualHumidity,
+                                         cgjdata.Humidity,
+                                         cgjdata.ActualAirPressure,
+                                         cgjdata.AirPressure,
+                                        DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        ""),
+                                    out ackresult,
+                                    out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                    mainPanel.yichangInterfaceJz.hjcsgyqSelfcheck(
+                                        mainPanel.zkytwebinf.regcode,
+                                         cgjdata.ActualTemperature,
+                                         cgjdata.Temperature,
+                                         cgjdata.ActualHumidity,
+                                         cgjdata.Humidity,
+                                         cgjdata.ActualAirPressure,
+                                         cgjdata.AirPressure,
+                                        DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        ""),
+                                    out ackresult,
+                                    out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                    mainPanel.yichangInterfaceJz.hjcsgyqSelfcheck(
+                                        mainPanel.zkytwebinf.regcode,
+                                         cgjdata.ActualTemperature,
+                                         cgjdata.Temperature,
+                                         cgjdata.ActualHumidity,
+                                         cgjdata.Humidity,
+                                         cgjdata.ActualAirPressure,
+                                         cgjdata.AirPressure,
+                                        DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                        ""),
+                                    out ackresult,
+                                    out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                    mainPanel.yichangInterfaceLncy.hjcsgyqSelfcheck(
                                         mainPanel.zkytwebinf.regcode,
                                          cgjdata.ActualTemperature,
                                          cgjdata.Temperature,
@@ -3086,6 +3290,30 @@ namespace exhaustDetect
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.wqfxySelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.wqfxySelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceLncy.wqfxySelfcheck(
                                     mainPanel.zkytwebinf.regcode,
                                      cgjdata.TightnessResult,
                                     DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
@@ -3937,6 +4165,56 @@ namespace exhaustDetect
                                       out ackresult,
                                       out errormessage);
                                 }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(
+                                      mainPanel.yichangInterfaceJz.cgjPLHPSelfcheck(
+                                          mainPanel.zkytwebinf.regcode,
+                                          cgjdata.SpeedQJ1,
+                                          cgjdata.NameSpeed1,
+                                          cgjdata.Plhp1,
+                                          cgjdata.SpeedQJ2,
+                                          cgjdata.NameSpeed2,
+                                          cgjdata.Plhp2,
+                                          cgjdata.SpeedQJ3,
+                                          cgjdata.NameSpeed3,
+                                          cgjdata.Plhp3,
+                                          cgjdata.SpeedQJ4,
+                                          cgjdata.NameSpeed4,
+                                          cgjdata.Plhp4,
+                                          cgjdata.MaxSpeed,
+                                           (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                          DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          ""),
+                                      out ackresult,
+                                      out errormessage);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(
+                                      mainPanel.yichangInterfaceLncy.cgjPLHPSelfcheck(
+                                          mainPanel.zkytwebinf.regcode,
+                                          cgjdata.SpeedQJ1,
+                                          cgjdata.NameSpeed1,
+                                          cgjdata.Plhp1,
+                                          cgjdata.SpeedQJ2,
+                                          cgjdata.NameSpeed2,
+                                          cgjdata.Plhp2,
+                                          cgjdata.SpeedQJ3,
+                                          cgjdata.NameSpeed3,
+                                          cgjdata.Plhp3,
+                                          cgjdata.SpeedQJ4,
+                                          cgjdata.NameSpeed4,
+                                          cgjdata.Plhp4,
+                                          cgjdata.MaxSpeed,
+                                           (cgjdata.ChecckResult == "不合格" || cgjdata.ChecckResult == "0") ? "0" : "1",
+                                          DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                          ""),
+                                      out ackresult,
+                                      out errormessage);
+                                }
                                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(
@@ -4451,6 +4729,36 @@ namespace exhaustDetect
                             {
                                 mainPanel.xmlanalysis.ReadACKString(
                                 mainPanel.yichangInterfaceOther.sdsqtfxySelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
+                                     "1",
+                                     cgjdata.CanliuHC,
+                                     cgjdata.CheckResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceJz.sdsqtfxySelfcheck(
+                                    mainPanel.zkytwebinf.regcode,
+                                     cgjdata.TightnessResult,
+                                     "1",
+                                     cgjdata.CanliuHC,
+                                     cgjdata.CheckResult,
+                                    DateTime.Parse(cgjdata.CheckTimeStart).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    DateTime.Parse(cgjdata.CheckTimeEnd).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    ""),
+                                out ackresult,
+                                out errormessage);
+                            }
+                            else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                            {
+                                mainPanel.xmlanalysis.ReadACKString(
+                                mainPanel.yichangInterfaceLncy.sdsqtfxySelfcheck(
                                     mainPanel.zkytwebinf.regcode,
                                      cgjdata.TightnessResult,
                                      "1",

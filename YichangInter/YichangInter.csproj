@@ -48,6 +48,8 @@
     </Compile>
     <Compile Include="ynbsInter.cs" />
     <Compile Include="zkytInterface.cs" />
+    <Compile Include="zkytInterfaceLNCY.cs" />
+    <Compile Include="zkytInterface荆州.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\INIIO\INIIO.csproj">

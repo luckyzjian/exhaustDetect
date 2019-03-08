@@ -119,8 +119,10 @@ namespace exhaustDetect
         public static carinfor.HHZWebInf hhzwebinf = new carinfor.HHZWebInf();
         public static YichangInter.DeviceSwapIfaceImplService yichangInterface = null;
         public static DeviceSwapIfaceImplServiceOther yichangInterfaceOther = null;
+        public static zkytInterfaceJZ.DeviceSwapIfaceImplServiceJz yichangInterfaceJz = null;
         public static DeviceSwapIfaceImplServiceYnBs yichangInterfaceYnbs = null;
         public static YichangInter.xmlAnalysis xmlanalysis = new YichangInter.xmlAnalysis();
+        public static zkytInterfaceLNCY.DeviceSwapIfaceImplService yichangInterfaceLncy = null;
         public static carinfo.xbSocketControl xbsocket =null;
         public static string xbLoginUserName="";
         public static WebThread webthread = null;
@@ -319,7 +321,9 @@ namespace exhaustDetect
 
         public const string ZKYTAREA_CD = "成都";
         public const string ZKYTAREA_OTHER = "其他";
+        public const string ZKYTAREA_JZ = "荆州";
         public const string ZKYTAREA_YNBS = "云南保山";
+        public const string ZKYTAREA_LNCY = "辽宁朝阳";
         public struct neu_accountV301
         {
             public string account;
@@ -2340,6 +2344,14 @@ namespace exhaustDetect
                         {
                             yichangInterfaceOther = new DeviceSwapIfaceImplServiceOther(zkytwebinf.weburl);
                         }
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                        {
+                            yichangInterfaceJz = new zkytInterfaceJZ.DeviceSwapIfaceImplServiceJz(zkytwebinf.weburl);
+                        }
+                        else if(mainPanel.zkytwebinf.add==mainPanel.ZKYTAREA_LNCY)
+                        {
+                            yichangInterfaceLncy = new zkytInterfaceLNCY.DeviceSwapIfaceImplService(zkytwebinf.weburl);
+                        }
                         else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                         {
                             string result = "";
@@ -3538,6 +3550,14 @@ namespace exhaustDetect
                     {
                         xmlanalysis.ReadACKString(yichangInterfaceOther.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceJz.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceLncy.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
                         string accesstoken = "";
@@ -4065,6 +4085,14 @@ namespace exhaustDetect
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
                         xmlanalysis.ReadACKString(yichangInterfaceOther.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceJz.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                    {
+                        xmlanalysis.ReadACKString(yichangInterfaceLncy.softVersion(zkytwebinf.regcode, equipmodel.SBXH), out result, out info);
                     }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {

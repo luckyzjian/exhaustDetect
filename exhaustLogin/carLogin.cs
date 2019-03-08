@@ -1574,12 +1574,25 @@ namespace exhaustDetect
                                     modelbj.BSQXS = dtinf.Rows[0]["GearBoxType"].ToString();
                                     modelbj.DWS = "";
                                     modelbj.GYFS = "";//25
-                                    switch (dtinf.Rows[0]["SupplyMode"].ToString())
+                                    if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_LNAS)
                                     {
-                                        case "0": modelbj.DPFS = "化油器"; break;
-                                        case "1": modelbj.DPFS = "开环电喷"; break;
-                                        case "2": modelbj.DPFS = "闭环电喷"; break;
-                                        case "3": modelbj.DPFS = "直喷"; break;
+                                        switch (dtinf.Rows[0]["SupplyMode"].ToString())
+                                        {
+                                            case "0": modelbj.DPFS = "化油器"; break;
+                                            case "1": modelbj.DPFS = "化油器改造"; break;
+                                            case "2": modelbj.DPFS = "开环电喷"; break;
+                                            case "3": modelbj.DPFS = "闭环电喷"; break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        switch (dtinf.Rows[0]["SupplyMode"].ToString())
+                                        {
+                                            case "0": modelbj.DPFS = "化油器"; break;
+                                            case "1": modelbj.DPFS = "开环电喷"; break;
+                                            case "2": modelbj.DPFS = "闭环电喷"; break;
+                                            case "3": modelbj.DPFS = "直喷"; break;
+                                        }
                                     }
                                     modelbj.JQFS = dtinf.Rows[0]["AdmissionMode"].ToString();
                                     modelbj.QGS = dtinf.Rows[0]["Cylinder"].ToString();
@@ -4568,6 +4581,14 @@ namespace exhaustDetect
                         {
                             mainPanel.xmlanalysis.ReadStateString(mainPanel.yichangInterfaceOther.getSatate(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
                         }
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                        {
+                            mainPanel.xmlanalysis.ReadStateString(mainPanel.yichangInterfaceJz.getSatate(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
+                        }
+                        else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                        {
+                            mainPanel.xmlanalysis.ReadStateString(mainPanel.yichangInterfaceLncy.getSatate(mainPanel.zkytwebinf.regcode), out result, out info, out state, out bussnessId, out methodId);
+                        }
                         else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                         {
                             
@@ -4605,6 +4626,14 @@ namespace exhaustDetect
                                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                 {
                                     mainPanel.xmlanalysis.ReadCarInfoString(mainPanel.yichangInterfaceOther.getCarInfo(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                                {
+                                    mainPanel.xmlanalysis.ReadCarInfoString(mainPanel.yichangInterfaceJz.getCarInfo(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                                {
+                                    mainPanel.xmlanalysis.ReadCarInfoString(mainPanel.yichangInterfaceLncy.getCarInfo(bussnessId, mainPanel.zkytwebinf.regcode), out result, out info, out carCardNumber, out maxWeight, out standardWeight, out motorPower, out motorRate, out speedChanger, out fuelType, out airInflow, out oilSupply, out isSYJHQ);
                                 }
                                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                                 {
@@ -4804,6 +4833,14 @@ namespace exhaustDetect
                                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                                 {
                                     mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceJz.sendMessage("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
+                                }
+                                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                                {
+                                    mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceLncy.sendMessage("", mainPanel.zkytwebinf.regcode, "02", ""), out result, out info);
                                 }
                                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                                 {
@@ -5272,6 +5309,14 @@ namespace exhaustDetect
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
                     }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceJz.sendMessage("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceLncy.sendMessage("", mainPanel.zkytwebinf.regcode, "07", ""), out result, out info);
+                    }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
                         string accesstoken = "";
@@ -5549,6 +5594,14 @@ namespace exhaustDetect
                     else if(mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                     {
                         mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceOther.sendMessage("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceJz.sendMessage("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
+                    }
+                    else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                    {
+                        mainPanel.xmlanalysis.ReadACKString(mainPanel.yichangInterfaceLncy.sendMessage("", mainPanel.zkytwebinf.regcode, "06", ""), out result, out info);
                     }
                     else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                     {
