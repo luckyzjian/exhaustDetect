@@ -1540,6 +1540,7 @@ namespace exhaustDetect
                                     {
                                         case "0": modelbj.SYXZ = "客车"; break;
                                         case "1": modelbj.SYXZ = "货车"; break;
+                                        default: modelbj.SYXZ = ""; break;
                                     }
                                     modelbj.PP = dtinf.Rows[0]["Model"].ToString();//5
                                     modelbj.XH = dtinf.Rows[0]["Model"].ToString();
@@ -1568,6 +1569,26 @@ namespace exhaustDetect
                                         case "4": modelbj.RLZL = "双燃料"; break;
                                         case "5": modelbj.RLZL = "乙醇"; break;
                                         case "6": modelbj.RLZL = "其他"; break;
+                                        case "A": modelbj.RLZL = "汽油"; break;
+                                        case "B": modelbj.RLZL = "柴油"; break;
+                                        case "C": modelbj.RLZL = "电"; break;
+                                        case "D": modelbj.RLZL = "混合油"; break;
+                                        case "E": modelbj.RLZL = "天然气"; break;
+                                        case "F": modelbj.RLZL = "液化石油气"; break;
+                                        case "L": modelbj.RLZL = "甲醇"; break;
+                                        case "M": modelbj.RLZL = "乙醇"; break;
+                                        case "N": modelbj.RLZL = "太阳能"; break;
+                                        case "O": modelbj.RLZL = "混合动力"; break;
+                                        case "X": modelbj.RLZL = "双燃料"; break;
+                                        case "Y": modelbj.RLZL = "无"; break;
+                                        case "Z": modelbj.RLZL = "其他"; break;
+                                        case "AC": modelbj.RLZL = "汽油电力混合"; break;
+                                        case "BC": modelbj.RLZL = "柴油电力混合"; break;
+                                        case "AE": modelbj.RLZL = "汽油天然气混合"; break;
+                                        case "BE": modelbj.RLZL = "柴油天然气混合"; break;
+                                        case "AF": modelbj.RLZL = "汽油液化石油气混合"; break;
+                                        case "BF": modelbj.RLZL = "柴油天然气混合"; break;
+                                        default:modelbj.RLZL = "";break;
                                     }
                                     modelbj.EDGL = dtinf.Rows[0]["RatedPower"].ToString();
                                     modelbj.EDZS = dtinf.Rows[0]["RatedRev"].ToString();
@@ -1582,6 +1603,7 @@ namespace exhaustDetect
                                             case "1": modelbj.DPFS = "化油器改造"; break;
                                             case "2": modelbj.DPFS = "开环电喷"; break;
                                             case "3": modelbj.DPFS = "闭环电喷"; break;
+                                            default: modelbj.DPFS = ""; break;
                                         }
                                     }
                                     else
@@ -1592,6 +1614,7 @@ namespace exhaustDetect
                                             case "1": modelbj.DPFS = "开环电喷"; break;
                                             case "2": modelbj.DPFS = "闭环电喷"; break;
                                             case "3": modelbj.DPFS = "直喷"; break;
+                                            default: modelbj.DPFS = ""; break;
                                         }
                                     }
                                     modelbj.JQFS = dtinf.Rows[0]["AdmissionMode"].ToString();
@@ -1602,6 +1625,7 @@ namespace exhaustDetect
                                         case "1": modelbj.QDXS = "后驱"; break;
                                         case "2": modelbj.QDXS = "四驱"; break;
                                         case "3": modelbj.QDXS = "全时四驱"; break;
+                                        default: modelbj.QDXS = ""; break;
                                     }
                                     modelbj.CHZZ = "";//30
                                     modelbj.DLSP = "";
@@ -1619,6 +1643,7 @@ namespace exhaustDetect
                                     {
                                         case "0": modelbj.DKGYYB = "否"; break;
                                         case "1": modelbj.DKGYYB = "有"; break;
+                                        default: modelbj.DKGYYB = ""; break;
                                     }
                                     modelbj.LXDH = dtinf.Rows[0]["Phone"].ToString();
                                     modelbj.CZDZ = dtinf.Rows[0]["Address"].ToString();
@@ -1663,6 +1688,7 @@ namespace exhaustDetect
                                             case "4": carbj.JCFF = "ZYJS"; break;
                                             case "5": carbj.JCFF = "LZ"; break;
                                             case "6": carbj.JCFF = "ASM"; break;
+                                            default: carbj.JCFF = ""; break;
                                         }
                                     }
                                     else if (mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V301|| mainPanel.neusoftsocketinf.AREA == mainPanel.NEU_V202)//福建省和山东日照平台指令检测方法
@@ -1683,6 +1709,7 @@ namespace exhaustDetect
                                             case "F": carbj.JCFF = "ZYJS"; break;
                                             case "E": carbj.JCFF = "LZ"; break;
                                             case "B": carbj.JCFF = "ASM"; break;
+                                            default: carbj.JCFF = ""; break;
                                         }
                                     }
                                     else//其他地区需要自己判定方法
@@ -1701,7 +1728,7 @@ namespace exhaustDetect
                                     limitdatainf.BackgroundHCUp = limitinf.Rows[0]["BackgroundHCUp"].ToString();
                                     limitdatainf.BackgroundNOUp = limitinf.Rows[0]["BackgroundNOUp"].ToString();
                                     limitdatainf.ResidualHCUp = limitinf.Rows[0]["ResidualHCUp"].ToString();*/
-                                    if (dtinf.Rows[0]["FuelType"].ToString() != "1")
+                                    if (carbj.JCFF=="SDS"||carbj.JCFF=="VMAS"||carbj.JCFF=="ASM")
                                     {
                                         if (!limitinf.Columns.Contains("COAndCO2") && checktimes <= 3)
                                         {
