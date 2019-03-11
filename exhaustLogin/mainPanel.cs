@@ -2321,7 +2321,7 @@ namespace exhaustDetect
                     {
                         isNetUsed = true;
                         init_zkytinf();
-                        if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                        if (mainPanel.zkytwebinf.add != mainPanel.ZKYTAREA_YNBS)
                         {
                             if (get_zkytRegCode())
                             {
@@ -3523,7 +3523,7 @@ namespace exhaustDetect
             {
                 try
                 {
-                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                    if (mainPanel.zkytwebinf.add != mainPanel.ZKYTAREA_YNBS)
                     {
                         if (get_zkytRegCode())
                         {
@@ -4059,7 +4059,7 @@ namespace exhaustDetect
             {
                 try
                 {
-                    if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_CD || mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
+                    if (mainPanel.zkytwebinf.add != mainPanel.ZKYTAREA_YNBS)
                     {
                         if (get_zkytRegCode())
                         {
