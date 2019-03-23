@@ -3913,9 +3913,9 @@ namespace exhaustDetect
                                                                 htchild.Add("ActFlow", "");
                                                                 htchild.Add("StdFlow", "");
                                                                 htchild.Add("TailFlow", "");
-                                                                htchild.Add("Weight_HC", "0");
-                                                                htchild.Add("Weight_CO", "0");
-                                                                htchild.Add("Weight_NO", "0");
+                                                                htchild.Add("Weight_HC", "");
+                                                                htchild.Add("Weight_CO", "");
+                                                                htchild.Add("Weight_NO", "");
                                                                 htchild.Add("LineSpeed", double.Parse(dr["实时车速"].ToString()).ToString("0.00"));
                                                                 htchild.Add("RotateSpeed", dr["转速"].ToString());
                                                                 htchild.Add("TotalPower", (double.Parse(dr["加载功率"].ToString()) + double.Parse(dr["寄生功率"].ToString())).ToString("0.00"));
