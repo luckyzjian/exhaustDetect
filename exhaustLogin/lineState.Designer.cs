@@ -502,6 +502,7 @@
             this.buttonJL.TabIndex = 82;
             this.buttonJL.Text = "进入检查";
             this.buttonJL.UseVisualStyleBackColor = true;
+            this.buttonJL.Click += new System.EventHandler(this.buttonJL_Click);
             // 
             // labelJLSJ
             // 

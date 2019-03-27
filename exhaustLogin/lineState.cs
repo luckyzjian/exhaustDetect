@@ -411,5 +411,9 @@ namespace exhaustDetect
             childcarlogin.Show();
         }
 
+        private void buttonJL_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

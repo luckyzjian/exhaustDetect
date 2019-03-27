@@ -96,6 +96,7 @@ namespace exhaustDetect
         public double smokeValue1 { set; get; }
         public double smokeValue2 { set; get; }
         public double smokeValue3 { set; get; }
+        public string dszs { set; get; }
         //
         //general
         public double tempreture { set; get; }
@@ -140,6 +141,16 @@ namespace exhaustDetect
                     answerString = mainPanel.yichangInterfaceOther.doubleIdleData(businessId, registCode, lrotateSpeed, hrotateSpeed, coLowValue, hcLowValue,
                    coHighValue, hcHighValue, lambdaValue, tempreture, humidity, airPressure, timeStart, timeEnd);
                 }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.doubleIdleData(businessId, registCode, lrotateSpeed, hrotateSpeed, coLowValue, hcLowValue,
+                   coHighValue, hcHighValue, lambdaValue, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.doubleIdleData(businessId, registCode, lrotateSpeed, hrotateSpeed, coLowValue, hcLowValue,
+                   coHighValue, hcHighValue, lambdaValue, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                 {
                     answerString = mainPanel.yichangInterfaceYnbs.sdsJgsj(businessId, registCode, lrotateSpeed, hrotateSpeed, coLowValue, hcLowValue,
@@ -177,6 +188,16 @@ namespace exhaustDetect
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                 {
                     answerString = mainPanel.yichangInterfaceOther.loadDownData(businessId, registCode, smokeK100, smokeK90, smokeK80, power,
+                speed, mortorSpeed, idleRotateSpeed, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.loadDownData(businessId, registCode, smokeK100, smokeK90, smokeK80, power,
+                speed, mortorSpeed, idleRotateSpeed, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.loadDownData(businessId, registCode, smokeK100, smokeK90, smokeK80, power,
                 speed, mortorSpeed, idleRotateSpeed, tempreture, humidity, airPressure, timeStart, timeEnd);
                 }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
@@ -220,6 +241,16 @@ namespace exhaustDetect
                     answerString = mainPanel.yichangInterfaceOther.vasmData(businessId, registCode, hc5025, co5025, no5025, fdjzs5025, fdjyw5025, hc2540, co2540, no2540,
                 fdjzs2540, fdjyw2540, tempreture, humidity, airPressure, timeStart, timeEnd);
                 }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.vasmData(businessId, registCode, hc5025, co5025, no5025, fdjzs5025, fdjyw5025, hc2540, co2540, no2540,
+                fdjzs2540, fdjyw2540, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.vasmData(businessId, registCode, hc5025, co5025, no5025, fdjzs5025, fdjyw5025, hc2540, co2540, no2540,
+                fdjzs2540, fdjyw2540, tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                 {
                     answerString = mainPanel.yichangInterfaceYnbs.wtJgsj(businessId, registCode, hc5025, co5025, no5025, fdjzs5025, fdjyw5025, hc2540, co2540, no2540,
@@ -248,6 +279,12 @@ namespace exhaustDetect
                 cs_asm, zs_asm, clzO2_asm, clzCO2_asm, xsxzxs_asm, sdxzxs_asm, totalPower_asm, parasPower_asm, indicPower_asm,
                 envirTemperature_asm, envirAirPressure_asm, envirHumidity_asm, yw_asm);
                 }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.vasmLog(businessId, registCode, inspectNum_asm, clzHC_asm, clzCO_asm, clzNO_asm,
+                cs_asm, zs_asm, clzO2_asm, clzCO2_asm, xsxzxs_asm, sdxzxs_asm, totalPower_asm, parasPower_asm, indicPower_asm,
+                envirTemperature_asm, envirAirPressure_asm, envirHumidity_asm, yw_asm);
+                }
             }
             catch (Exception er)
             {
@@ -268,6 +305,16 @@ namespace exhaustDetect
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                 {
                     answerString = mainPanel.yichangInterfaceOther.lightproofSmokeData(businessId, registCode, smokeValue1, smokeValue2, smokeValue3,
+                    tempreture, humidity, airPressure, timeStart, timeEnd);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.lightproofSmokeData(businessId, registCode, smokeValue1, smokeValue2, smokeValue3,
+                    tempreture, humidity, airPressure, timeStart, timeEnd,dszs);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.lightproofSmokeData(businessId, registCode, smokeValue1, smokeValue2, smokeValue3,
                     tempreture, humidity, airPressure, timeStart, timeEnd);
                 }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
@@ -296,6 +343,14 @@ namespace exhaustDetect
                 {
                     answerString = mainPanel.yichangInterfaceOther.sendMessage(businessId, registCode, "03", "");
                 }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.sendMessage(businessId, registCode, "03", "");
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.sendMessage(businessId, registCode, "03", "");
+                }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                 {
                     answerString = mainPanel.yichangInterfaceYnbs.xxtz(businessId, registCode, "03", "");
@@ -319,6 +374,14 @@ namespace exhaustDetect
                 {
                     answerString = mainPanel.yichangInterfaceOther.sendMessage(businessId, registCode, "05", "");
                 }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.sendMessage(businessId, registCode, "05", "");
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.sendMessage(businessId, registCode, "05", "");
+                }
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_YNBS)
                 {
                     answerString = mainPanel.yichangInterfaceYnbs.xxtz(businessId, registCode, "05", "");
@@ -341,6 +404,14 @@ namespace exhaustDetect
                 else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_OTHER)
                 {
                     answerString = mainPanel.yichangInterfaceOther.bgAirHC(businessId, registCode, bgCO, bgNO, bgHC, canliuHC, IFlowResult, O2Avg, checkResult, checkTimeStart, checkTimeEnd, remark);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_LNCY)
+                {
+                    answerString = mainPanel.yichangInterfaceLncy.bgAirHC(businessId, registCode, bgCO, bgNO, bgHC, canliuHC, IFlowResult, O2Avg, checkResult, checkTimeStart, checkTimeEnd, remark);
+                }
+                else if (mainPanel.zkytwebinf.add == mainPanel.ZKYTAREA_JZ)
+                {
+                    answerString = mainPanel.yichangInterfaceJz.bgAirHC(businessId, registCode, bgCO, bgNO, bgHC, canliuHC, IFlowResult, O2Avg, checkResult, checkTimeStart, checkTimeEnd, remark);
                 }
             }
             catch (Exception er)
