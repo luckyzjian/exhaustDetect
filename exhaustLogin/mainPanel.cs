@@ -452,12 +452,13 @@ namespace exhaustDetect
             acDicHpzl.Add("17", "教练摩托车");
             acDicHpzl.Add("18", "试验汽车");
             acDicHpzl.Add("19", "试验摩托车");
-            acDicHpzl.Add("20", "临时人境汽车");
-            acDicHpzl.Add("21", "临时人境摩托车");
+            acDicHpzl.Add("20", "临时入境汽车");
+            acDicHpzl.Add("21", "临时入境摩托车");
             acDicHpzl.Add("22", "临时行驶车");
             acDicHpzl.Add("23", "警用汽车");
             acDicHpzl.Add("24", "警用摩托");
-            acDicHpzl.Add("99", "其他");
+            acDicHpzl.Add("25", "其他");
+            acDicHpzl.Add("26", "低速车");
             acDicSyxz.Add("A", "非营运");
             acDicSyxz.Add("B", "公路客运");
             acDicSyxz.Add("C", "公交客运");
