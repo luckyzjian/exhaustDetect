@@ -78,10 +78,11 @@ namespace HhzWebClient
     public class Hhzclient
     {
         string url = "";
-        public enum DATALX {JCZXX,JCZRY,JCZRYKZ,JCXXX,CLXX,CXXX,FDJXX,BZXX,SXJLSB,WJDLXX,JYXX,PICTURE,JCXX,CLXXCX,WGCLXXCX,SDSXZCX,VMASXZCX,ASMXZCX,JZJSXZCX,ZYJSXZCX,JCRYJBXX,JCBHGCLXX,JCXJBXX,JCZJBXX}
+        public enum DATALX {JCZXX,JCZRY,JCZRYKZ,JCXXX,CLXX,CXXX,FDJXX,BZXX,SXJLSB,WJDLXX,JYXX,PICTURE,JCXX,CLXXCX,WGCLXXCX,SDSXZCX,VMASXZCX,ASMXZCX,JZJSXZCX,ZYJSXZCX,JCRYJBXX,JCBHGCLXX,JCXJBXX,JCZJBXX,JCXX1}
         public string[] DATAPATH = {"unit_task", "unit_person_task", "unit_person_ext_task", "check_device_task", "vehicle_task",
             "vehicle_model_task","engine_task","sign_task","sxjlsb_task","wjdlxx_task","jyxx_task","uploadimage_task",
-            "upload_task","vehicle_query","wgcl_query","dsjcxz_limit","jystgkjcxz_limit","jywtgkjcxz_limit","jsjsgkxz_limit","zyjsjcxz_ limit","unitperson_query","jcbhgcl_query","checkdevice_query","unit_query"};
+            "upload_task","vehicle_query","wgcl_query","dsjcxz_limit","jystgkjcxz_limit","jywtgkjcxz_limit","jsjsgkxz_limit",
+            "zyjsjcxz_ limit","unitperson_query","jcbhgcl_query","checkdevice_query","unit_query","upload_task1"};
         public Dictionary<string, string> Hhz_AckCode = new Dictionary<string, string>();
         public Dictionary<string, string> Hhz_JCZ_JJLX = new Dictionary<string, string>();
         public Dictionary<string, string> Hhz_JCZ_YESORNO = new Dictionary<string, string>();

@@ -826,7 +826,8 @@ namespace exhaustDetect
                         }
                         else if (mainPanel.isNetUsed && mainPanel.NetMode == mainPanel.HHZNNETMODE)//由19位数字组成，前9位为检测站编码，后10位为顺序号,在注册登记 的时候已经生成
                         {
-                            carLogin.carbj.JCBGBH = mainPanel.stationid + DateTime.Now.ToString("yyMMddHHmmss") + stationcount.ToString("0000");
+                            //carLogin.carbj.JCBGBH = mainPanel.stationid + DateTime.Now.ToString("yyMMddHHmmss") + stationcount.ToString("0000");
+                            carLogin.carbj.JCBGBH = "Z"+mainPanel.stationid + DateTime.Now.ToString("yyyyMMdd") + stationcount.ToString("0000");//2019《接口更新文档》更改方式，这里改为格式：检测编码,第一位“Z”自定义编码标识，第2-7位：行政区划代码；第8-9位：检验机构联网顺序号；第10-17位：检测数据上传日期，如20160902表示2016年9月2日；,第18位-第21位：每天从0开始的流水号
                         }
                         else
                         {
@@ -4124,25 +4125,26 @@ namespace exhaustDetect
 
                                             //hthhz2.Add("type", "UPLOAD");
                                             //hthhz2.Add("JCZBM", mainPanel.stationid);
-                                            hthhz2.Add("jcff", "WTGK_RESULT");
+                                            hthhz2.Add("jcff", "wtgk_result"); //hthhz2.Add("jcff", "WTGK_RESULT");
                                             // hthhz2.Add("jcff", "DOUBLE_IDLE");
                                             // hthhz2.Add("CHECK_REGIST_TASK", hthhz);
                                             hthhz2.Add("jcjbxx", hthhz);
                                             //hthhz2.Add("DOUBLE_IDLE_TASK", hthhz1);
-                                            hthhz2.Add("WTGK_RESULT", hthhz1);
+                                            hthhz2.Add("wtgk_result", hthhz1);
                                             #endregion
                                             try
                                             {
                                                 string hhz_jcbgbh = "";
-                                                sendPicture(asmdata.ZHPD);
                                                 string code, msg;
                                                 Newtonsoft.Json.Linq.JObject queryJobject = new Newtonsoft.Json.Linq.JObject();
-                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX, out code, out msg, out queryJobject))
+                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX1, out code, out msg, out queryJobject))
                                                 {
                                                     try
                                                     {
                                                         if (code == "0" || code == "051")
                                                         {
+                                                            carLogin.carbj.JCBGBH = queryJobject["testno"].ToString();
+                                                            ini.INIIO.saveLogInf("平台返回报告单编号=" + carLogin.carbj.JCBGBH);
                                                             ini.INIIO.saveLogInf("上传成功,code=" + code);
                                                         }
                                                         else
@@ -4177,7 +4179,7 @@ namespace exhaustDetect
                                                 Msg(label1, panel4, "上传检测数据至联网平台失败,发生异常");
                                                 return;
                                             }
-
+                                            sendPicture(asmdata.ZHPD);
                                             isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
@@ -8509,27 +8511,28 @@ namespace exhaustDetect
                                             hthhz1.Add("powerjudge", mainPanel.hhzinterface.HhzR_RESULT_PDJG.GetValue(jzjsdata.GLPD, ""));
                                              hthhz1.Add("exchangetime", DateTime.Now.ToString("yyyy-MM-dd"));
 
-                                           // hthhz2.Add("type", "UPLOAD");
+                                            // hthhz2.Add("type", "UPLOAD");
                                             //hthhz2.Add("JCZBM", mainPanel.stationid);
-                                            hthhz2.Add("jcff", "JZJS_RESULT");
+                                            hthhz2.Add("jcff", "jzjs_result"); //hthhz2.Add("jcff", "JZJS_RESULT");
                                             // hthhz2.Add("jcff", "DOUBLE_IDLE");
                                             // hthhz2.Add("CHECK_REGIST_TASK", hthhz);
                                             hthhz2.Add("jcjbxx", hthhz);
                                             //hthhz2.Add("DOUBLE_IDLE_TASK", hthhz1);
-                                            hthhz2.Add("JZJS_RESULT", hthhz1);
+                                            hthhz2.Add("jzjs_result", hthhz1);
                                             #endregion
                                             try
                                             {
                                                 string hhz_jcbgbh = "";
-                                                sendPicture(asmdata.ZHPD);
                                                 string code, msg;
                                                 Newtonsoft.Json.Linq.JObject queryJobject = new Newtonsoft.Json.Linq.JObject();
-                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX, out code, out msg, out queryJobject))
+                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX1, out code, out msg, out queryJobject))
                                                 {
                                                     try
                                                     {
                                                         if (code == "0" || code == "051")
                                                         {
+                                                            carLogin.carbj.JCBGBH = queryJobject["testno"].ToString();
+                                                            ini.INIIO.saveLogInf("平台返回报告单编号=" + carLogin.carbj.JCBGBH);
                                                             ini.INIIO.saveLogInf("上传成功,code=" + code);
                                                         }
                                                         else
@@ -8565,6 +8568,7 @@ namespace exhaustDetect
                                                 return;
                                             }
 
+                                            sendPicture(jzjsdata.ZHPD);
 
                                             isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
@@ -11695,25 +11699,26 @@ namespace exhaustDetect
 
                                             //hthhz2.Add("type", "UPLOAD");
                                             //hthhz2.Add("JCZBM", mainPanel.stationid);
-                                            hthhz2.Add("jcff", "BTGYD_RESULT");
+                                            hthhz2.Add("jcff", "btgyd_result"); //hthhz2.Add("jcff", "BTGYD_RESULT");
                                             // hthhz2.Add("jcff", "DOUBLE_IDLE");
                                             // hthhz2.Add("CHECK_REGIST_TASK", hthhz);
                                             hthhz2.Add("jcjbxx", hthhz);
                                             //hthhz2.Add("DOUBLE_IDLE_TASK", hthhz1);
-                                            hthhz2.Add("BTGYD_RESULT", hthhz1);
+                                            hthhz2.Add("btgyd_result", hthhz1);
                                             #endregion
                                             try
                                             {
                                                 string hhz_jcbgbh = "";
-                                                sendPicture(asmdata.ZHPD);
                                                 string code, msg;
                                                 Newtonsoft.Json.Linq.JObject queryJobject = new Newtonsoft.Json.Linq.JObject();
-                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX, out code, out msg, out queryJobject))
+                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX1, out code, out msg, out queryJobject))
                                                 {
                                                     try
                                                     {
                                                         if (code == "0" || code == "051")
                                                         {
+                                                            carLogin.carbj.JCBGBH = queryJobject["testno"].ToString();
+                                                            ini.INIIO.saveLogInf("平台返回报告单编号=" + carLogin.carbj.JCBGBH);
                                                             ini.INIIO.saveLogInf("上传成功,code=" + code);
                                                         }
                                                         else
@@ -11748,6 +11753,7 @@ namespace exhaustDetect
                                                 Msg(label1, panel4, "上传检测数据至联网平台失败,发生异常");
                                                 return;
                                             }
+                                            sendPicture(zyjsdata.ZHPD);
                                             isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
@@ -14899,25 +14905,26 @@ namespace exhaustDetect
 
                                             //hthhz2.Add("type", "UPLOAD");
                                             //hthhz2.Add("JCZBM", mainPanel.stationid);
-                                            hthhz2.Add("jcff", "SDS_RESULT");
+                                            hthhz2.Add("jcff", "sds_result"); //hthhz2.Add("jcff", "SDS_RESULT");
                                             // hthhz2.Add("jcff", "DOUBLE_IDLE");
                                             // hthhz2.Add("CHECK_REGIST_TASK", hthhz);
                                             hthhz2.Add("jcjbxx", hthhz);
                                             //hthhz2.Add("DOUBLE_IDLE_TASK", hthhz1);
-                                            hthhz2.Add("SDS_RESULT", hthhz1);
+                                            hthhz2.Add("sds_result", hthhz1);
                                             #endregion
                                             try
                                             {
                                                 string hhz_jcbgbh = "";
-                                                sendPicture(asmdata.ZHPD);
                                                 string code, msg;
                                                 Newtonsoft.Json.Linq.JObject queryJobject = new Newtonsoft.Json.Linq.JObject();
-                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX, out code, out msg, out queryJobject))
+                                                if (mainPanel.hhzinterface.uploadJsonArray(mainPanel.stationid, hthhz2, HhzWebClient.Hhzclient.DATALX.JCXX1, out code, out msg, out queryJobject))
                                                 {
                                                     try
                                                     {
                                                         if (code == "0" || code == "051")
                                                         {
+                                                            carLogin.carbj.JCBGBH = queryJobject["testno"].ToString();
+                                                            ini.INIIO.saveLogInf("平台返回报告单编号=" + carLogin.carbj.JCBGBH);
                                                             ini.INIIO.saveLogInf("上传成功,code=" + code);
                                                         }
                                                         else
@@ -14952,6 +14959,7 @@ namespace exhaustDetect
                                                 Msg(label1, panel4, "上传检测数据至联网平台失败,发生异常");
                                                 return;
                                             }
+                                            sendPicture(sdsdata.ZHPD);
                                             isCsvAlive = "逐秒数据上传成功";
                                             if (pdjg == "1")
                                             {
